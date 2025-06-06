@@ -4,5 +4,5 @@
     "git-status"
   ],
   "is_downloadable": true,
-  "requires_repo": false
+  "requires_repo": true
 }
