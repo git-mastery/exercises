@@ -4,5 +4,9 @@
     "git-add",
     "git-commit"
   ],
-  "is_downloadable": true
+  "is_downloadable": true,
+  "requires_repo": true,
+  "resources": {
+    "shopping-list.txt": "shopping-list.txt"
+  }
 }
