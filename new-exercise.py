@@ -10,7 +10,8 @@ def main():
     exercise_name = input("Exercise name: ")
     tags = input("Tags (space separated): ").split(" ")
     cur_path = pathlib.Path(os.getcwd())
-    exercise_dir = cur_path / exercise_name
+    exercise_dir_name = exercise_name.replace("-", "_")
+    exercise_dir = cur_path / exercise_dir_name
     os.makedirs(exercise_dir)
     with open(exercise_dir / ".gitmastery-exercise.json", "w") as exercise_config_file:
         exercise_config = {
@@ -86,6 +87,7 @@ def main():
 
     tests_dir = exercise_dir / "tests"
     os.makedirs(tests_dir, exist_ok=True)
+    open(tests_dir / "__init__.py", "a").close()
 
     with open(tests_dir / "test_verify.py", "w") as test_grade_file:
         test_grade = f"""
@@ -95,7 +97,7 @@ def main():
 
         REPOSITORY_NAME = "{exercise_name}"
 
-        loader = GitAutograderTestLoader(REPOSITORY_NAME, verify)
+        loader = GitAutograderTestLoader(__file__, REPOSITORY_NAME, verify)
 
 
         def test():
