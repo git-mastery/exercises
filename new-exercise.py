@@ -27,6 +27,7 @@ def main():
             "tags": tags,
             "is_downloadable": True,
             "requires_repo": requires_repo,
+            "resources": {},
         }
         exercise_config_str = json.dumps(exercise_config, indent=2)
         exercise_config_file.write(exercise_config_str)
