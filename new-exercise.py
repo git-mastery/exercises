@@ -63,6 +63,7 @@ def main():
         """
         readme_file.write(textwrap.dedent(readme).lstrip())
 
+    # TODO: conditionally add the git tagging only when requires_repo is True
     with open(exercise_dir / "download.py", "w") as download_script_file:
         download_script = """
         import subprocess
