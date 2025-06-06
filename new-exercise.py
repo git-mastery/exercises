@@ -8,7 +8,9 @@ import textwrap
 
 def main():
     exercise_name = input("Exercise name: ")
-    tags = input("Tags (space separated): ").split(" ")
+    tags_str = input("Tags (space separated): ")
+    tags = [] if tags_str.strip() == "" else tags_str.split(" ")
+
     cur_path = pathlib.Path(os.getcwd())
     exercise_dir_name = exercise_name.replace("-", "_")
     exercise_dir = cur_path / exercise_dir_name
