@@ -11,7 +11,11 @@ def main():
     tags_str = input("Tags (space separated): ")
     tags = [] if tags_str.strip() == "" else tags_str.split(" ")
     requires_repo_str = input("Requires repo? (defaults to y) y/N: ")
-    requires_repo = requires_repo_str == "y" or requires_repo_str == "Y"
+    requires_repo = (
+        requires_repo_str.strip() == ""
+        or requires_repo_str == "y"
+        or requires_repo_str == "Y"
+    )
 
     cur_path = pathlib.Path(os.getcwd())
     exercise_dir_name = exercise_name.replace("-", "_")
@@ -58,16 +62,37 @@ def main():
         """
         readme_file.write(textwrap.dedent(readme).lstrip())
 
-    with open(exercise_dir / "download.sh", "w") as download_script_file:
+    with open(exercise_dir / "download.py", "w") as download_script_file:
         download_script = """
-        #!/bin/bash
+        import subprocess
+        from typing import List, Optional
 
-        first_commit_hash=$(git log --reverse --pretty=format:'%h' | head -n 1)
-        if [ $(git tag -l "git-mastery-start-$first_commit_hash") ]; then
-          git tag -d "git-mastery-start-$first_commit_hash"
-        fi
 
-        git tag "git-mastery-start-$first_commit_hash"
+        def run_command(command: List[str], verbose: bool) -> Optional[str]:
+            try:
+                result = subprocess.run(
+                    command,
+                    capture_output=True,
+                    text=True,
+                    check=True,
+                )
+                if verbose:
+                    print(result.stdout)
+                return result.stdout
+            except subprocess.CalledProcessError as e:
+                if verbose:
+                    print(e.stderr)
+                exit(1)
+
+
+        def setup(verbose: bool = False):
+            commits_str = run_command(
+                ["git", "log", "--reverse", "--pretty=format:%h"], verbose
+            )
+            assert commits_str is not None
+            first_commit = commits_str.split("\n")[0]
+            tag_name = f"git-mastery-start-{first_commit}"
+            run_command(["git", "tag", tag_name], verbose)
         """
         download_script_file.write(textwrap.dedent(download_script).lstrip())
 
