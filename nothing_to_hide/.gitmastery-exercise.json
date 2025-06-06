@@ -6,6 +6,6 @@
   "is_downloadable": true,
   "requires_repo": true,
   "resources": {
-    "hidden.png": "hidden.png"
+    "hidden.png": "res/hidden.png"
   }
 }
