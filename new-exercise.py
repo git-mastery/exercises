@@ -10,6 +10,8 @@ def main():
     exercise_name = input("Exercise name: ")
     tags_str = input("Tags (space separated): ")
     tags = [] if tags_str.strip() == "" else tags_str.split(" ")
+    requires_repo_str = input("Requires repo? (defaults to y) y/N: ")
+    requires_repo = requires_repo_str == "y" or requires_repo_str == "Y"
 
     cur_path = pathlib.Path(os.getcwd())
     exercise_dir_name = exercise_name.replace("-", "_")
@@ -20,6 +22,7 @@ def main():
             "exercise_name": exercise_name,
             "tags": tags,
             "is_downloadable": True,
+            "requires_repo": requires_repo,
         }
         exercise_config_str = json.dumps(exercise_config, indent=2)
         exercise_config_file.write(exercise_config_str)
@@ -68,6 +71,8 @@ def main():
         """
         download_script_file.write(textwrap.dedent(download_script).lstrip())
 
+    os.makedirs(exercise_dir / "res", exist_ok=True)
+
     with open(exercise_dir / "verify.py", "w") as verify_script_file:
         verify_script = """
         from typing import List
@@ -85,8 +90,6 @@ def main():
         verify_script_file.write(textwrap.dedent(verify_script).lstrip())
 
     open(exercise_dir / "__init__.py", "a").close()
-
-    os.makedirs(exercise_dir / "res", exist_ok=True)
 
     tests_dir = exercise_dir / "tests"
     os.makedirs(tests_dir, exist_ok=True)
