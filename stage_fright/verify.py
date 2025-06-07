@@ -1,7 +1,4 @@
-from typing import List
-
-from git_autograder import GitAutograderOutput, GitAutograderRepo
-
+from git_autograder import GitAutograderOutput, GitAutograderRepo, GitAutograderStatus
 
 EXPECTED_FILES = {"alice.txt", "bob.txt", "jim.txt", "joe.txt", "carrey.txt"}
 
@@ -18,5 +15,6 @@ def verify(repo: GitAutograderRepo) -> GitAutograderOutput:
         raise repo.wrong_answer([f"Did not add {file}" for file in missing_files])
 
     return repo.to_output(
-        ["Great work! You have successfully checked in all the actors!"]
+        ["Great work! You have successfully checked in all the actors!"],
+        status=GitAutograderStatus.SUCCESSFUL,
     )
