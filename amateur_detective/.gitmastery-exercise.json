@@ -5,5 +5,7 @@
   ],
   "is_downloadable": true,
   "requires_repo": true,
-  "resources": {}
+  "resources": {
+    "answers.txt": "answers.txt"
+  }
 }
