@@ -21,10 +21,4 @@ def run_command(command: List[str], verbose: bool) -> Optional[str]:
 
 
 def setup(verbose: bool = False):
-    commits_str = run_command(
-        ["git", "log", "--reverse", "--pretty=format:%h"], verbose
-    )
-    assert commits_str is not None
-    first_commit = commits_str.split("\n")[0]
-    tag_name = f"git-mastery-start-{first_commit}"
-    run_command(["git", "tag", tag_name], verbose)
+    pass
