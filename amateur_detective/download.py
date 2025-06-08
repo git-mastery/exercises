@@ -26,14 +26,16 @@ def setup(verbose: bool = False):
             continue
         open(f"file{i}.txt", "a").close()
 
-    run_command(["git", "add", "file*.txt"], verbose)
+    run_command(
+        ["git", "add"] + [f"file{i}.txt" for i in range(1, 101) if i != 77], verbose
+    )
     run_command(["git", "commit", "-m", "Change 1"], verbose)
 
     with open("file14.txt", "a") as file:
         file.write("This is a change")
 
     open("file77.txt", "a").close()
-    run_command(["chmod", "-w", "file{1..100}.txt"], verbose)
+    run_command(["chmod", "-w"] + [f"file{i}.txt" for i in range(1, 101)], verbose)
 
     commits_str = run_command(
         ["git", "log", "--reverse", "--pretty=format:%h"], verbose
