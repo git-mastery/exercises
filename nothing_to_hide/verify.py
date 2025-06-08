@@ -12,9 +12,9 @@ QUESTION_FOUR = "What is the pattern used to only show sensitive/names.txt?"
 
 
 def verify(repo: GitAutograderRepo) -> GitAutograderOutput:
-    repo.answers.validate_question(
-        QUESTION_ONE,
-        [
+    (
+        repo.answers.add_validation(
+            QUESTION_ONE,
             NotEmptyRule(),
             HasExactListRule(
                 [
@@ -28,25 +28,23 @@ def verify(repo: GitAutograderRepo) -> GitAutograderOutput:
                 ],
                 is_case_sensitive=True,
             ),
-        ],
-    ).validate_question(
-        QUESTION_TWO,
-        [
+        )
+        .add_validation(
+            QUESTION_TWO,
             NotEmptyRule(),
             HasExactValueRule(".gitignore", is_case_sensitive=True),
-        ],
-    ).validate_question(
-        QUESTION_THREE,
-        [
+        )
+        .add_validation(
+            QUESTION_THREE,
             NotEmptyRule(),
             HasExactValueRule("sensitive/*", is_case_sensitive=True),
-        ],
-    ).validate_question(
-        QUESTION_FOUR,
-        [
+        )
+        .add_validation(
+            QUESTION_FOUR,
             NotEmptyRule(),
             HasExactValueRule("!sensitive/names.txt", is_case_sensitive=True),
-        ],
+        )
+        .validate()
     )
 
     return repo.to_output(
