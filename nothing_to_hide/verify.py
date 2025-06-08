@@ -12,7 +12,6 @@ QUESTION_FOUR = "What is the pattern used to only show sensitive/names.txt?"
 
 
 def verify(repo: GitAutograderRepo) -> GitAutograderOutput:
-    print(repo.answers.qna)
     repo.answers.validate_question(
         QUESTION_ONE,
         [
