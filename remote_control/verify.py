@@ -1,12 +1,16 @@
 from typing import List
 
-from git_autograder import GitAutograderOutput, GitAutograderRepo
+from git_autograder import GitAutograderOutput, GitAutograderStatus
 
 
-def verify(repo: GitAutograderRepo) -> GitAutograderOutput:
-    comments: List[str] = []
-
+def verify() -> GitAutograderOutput:
     res = input("hi: ")
     print(res)
 
-    return repo.to_output(comments)
+    return GitAutograderOutput(
+        status=GitAutograderStatus.SUCCESSFUL,
+        started_at=None,
+        completed_at=None,
+        comments=[],
+        exercise_name="remote-control",
+    )
