@@ -16,6 +16,12 @@ def main():
         or requires_repo_str == "y"
         or requires_repo_str == "Y"
     )
+    requires_github_str = input("Requires Github? (defaults to y) y/N: ")
+    requires_github = (
+        requires_github_str.strip() == ""
+        or requires_github_str == "y"
+        or requires_github_str == "Y"
+    )
 
     cur_path = pathlib.Path(os.getcwd())
     exercise_dir_name = exercise_name.replace("-", "_")
@@ -27,6 +33,7 @@ def main():
             "tags": tags,
             "is_downloadable": True,
             "requires_repo": requires_repo,
+            "requires_github": requires_github,
             "resources": {},
         }
         exercise_config_str = json.dumps(exercise_config, indent=2)
