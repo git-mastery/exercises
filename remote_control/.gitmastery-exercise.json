@@ -3,5 +3,6 @@
   "tags": [],
   "is_downloadable": true,
   "requires_repo": false,
+  "requires_github": true,
   "resources": {}
 }
