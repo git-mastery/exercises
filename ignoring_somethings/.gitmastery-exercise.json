@@ -1,0 +1,12 @@
+{
+  "exercise_name": "ignoring-somethings",
+  "tags": [
+    "gitignore"
+  ],
+  "is_downloadable": true,
+  "requires_repo": true,
+  "requires_github": false,
+  "resources": {
+    ".gitignore": ".gitignore"
+  }
+}
