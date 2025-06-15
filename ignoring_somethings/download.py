@@ -31,6 +31,9 @@ def create_file(filename: str, contents: Optional[str] = None) -> None:
             file.write(contents)
 
 
+__resources__ = {".gitignore": ".gitignore"}
+
+
 def setup(verbose: bool = False):
     # Running these before since we want to generate the new files after to avoid
     # committing them
