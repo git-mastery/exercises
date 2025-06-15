@@ -20,7 +20,8 @@ jobs:
       - name: Generate exercise-directory.md
         run: |
           python create-exercise-directory.py
-          mv exercise-directory.md index.md
+          rm README.md
+          mv exercise-directory.md README.md
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
