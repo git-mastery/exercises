@@ -4,6 +4,8 @@ from pathlib import Path
 from sys import exit
 from typing import List, Optional
 
+__resources__ = {".gitignore": ".gitignore"}
+
 
 def run_command(command: List[str], verbose: bool) -> Optional[str]:
     try:
@@ -29,9 +31,6 @@ def create_file(filename: str, contents: Optional[str] = None) -> None:
     else:
         with open(filename, "a") as file:
             file.write(contents)
-
-
-__resources__ = {".gitignore": ".gitignore"}
 
 
 def setup(verbose: bool = False):
