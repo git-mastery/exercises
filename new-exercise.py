@@ -77,6 +77,8 @@ def main():
         from sys import exit
         from typing import List, Optional
 
+        __resources__ = {}
+
 
         def run_command(command: List[str], verbose: bool) -> Optional[str]:
             try:
