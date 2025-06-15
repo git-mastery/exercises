@@ -1,0 +1,5 @@
+- Milk
+- Eggs
+- Bread
+- Apples
+- Ham

@@ -1,0 +1,13 @@
+Q: What files are missing from Git, but found on your local repository?
+A:
+-
+
+Q: What is responsible for the hidden files?
+A: ...
+
+Q: What is the general pattern used to hide the sensitive/ folder?
+A: ...
+
+Q: What is the pattern used to only show sensitive/names.txt?
+A: ...
+

@@ -1,0 +1,3 @@
+mypy
+git-autograder==4.*
+pytest

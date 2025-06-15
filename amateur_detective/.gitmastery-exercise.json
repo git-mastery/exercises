@@ -1,0 +1,11 @@
+{
+  "exercise_name": "amateur-detective",
+  "tags": [
+    "git-status"
+  ],
+  "is_downloadable": true,
+  "requires_repo": true,
+  "resources": {
+    "answers.txt": "answers.txt"
+  }
+}
