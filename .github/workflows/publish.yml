@@ -20,8 +20,7 @@ jobs:
       - name: Generate exercise-directory.md
         run: |
           python create-exercise-directory.py
-          rm README.md
-          mv exercise-directory.md README.md
+          mv exercise-directory.md index.md
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
@@ -29,4 +28,3 @@ jobs:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
           publish_dir: ./
-          force_orphan: true
