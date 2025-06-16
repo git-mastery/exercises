@@ -32,6 +32,9 @@ def verify() -> GitAutograderOutput:
             exercise_name="remote-control",
         )
 
+    username = username.strip()
+    print(username)
+
     print(f"Create a repo called gitmastery-{username}-remote-control")
     url = input("Enter the url of your remote repository: ")
     if not url.startswith(f"https://github.com/gitmastery-{username}-remote-control"):
