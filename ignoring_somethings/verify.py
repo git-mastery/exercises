@@ -3,10 +3,16 @@ from typing import List
 
 from git_autograder import GitAutograderOutput, GitAutograderRepo
 
+MISSING_COMMITS = "You have not made any commits yet!"
+
 
 def verify(repo: GitAutograderRepo) -> GitAutograderOutput:
     comments: List[str] = []
     main_branch = repo.branches.branch("main")
+
+    if len(main_branch.user_commits) == 0:
+        raise repo.wrong_answer([MISSING_COMMITS])
+
     main_branch.latest_commit.checkout()
 
     # Read the file and parse it
