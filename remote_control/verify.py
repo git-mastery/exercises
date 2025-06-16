@@ -7,13 +7,16 @@ from git_autograder import GitAutograderOutput, GitAutograderStatus
 
 
 def run_command(command: List[str]) -> Optional[str]:
-    result = subprocess.run(
-        command,
-        capture_output=True,
-        text=True,
-        check=True,
-    )
-    return result.stdout
+    try:
+        result = subprocess.run(
+            command,
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        return result.stdout
+    except subprocess.CalledProcessError:
+        return None
 
 
 def verify() -> GitAutograderOutput:
