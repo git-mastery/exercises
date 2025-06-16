@@ -33,7 +33,6 @@ def verify() -> GitAutograderOutput:
         )
 
     username = username.strip()
-    print(username)
 
     print(f"Create a repo called gitmastery-{username}-remote-control")
     url = input("Enter the url of your remote repository: ")
