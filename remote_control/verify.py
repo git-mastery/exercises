@@ -36,7 +36,9 @@ def verify() -> GitAutograderOutput:
 
     print(f"Create a repo called gitmastery-{username}-remote-control")
     url = input("Enter the url of your remote repository: ")
-    if not url.startswith(f"https://github.com/gitmastery-{username}-remote-control"):
+    if not url.startswith(
+        f"https://github.com/{username}/gitmastery-{username}-remote-control"
+    ):
         return GitAutograderOutput(
             status=GitAutograderStatus.UNSUCCESSFUL,
             started_at=started_at,
