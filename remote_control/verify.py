@@ -14,7 +14,7 @@ def run_command(command: List[str]) -> Optional[str]:
             text=True,
             check=True,
         )
-        return result.stdout
+        return result.stdout.strip()
     except subprocess.CalledProcessError:
         return None
 
