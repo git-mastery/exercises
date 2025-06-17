@@ -1,3 +1,4 @@
+import os
 from typing import List
 
 from git_autograder import GitAutograderOutput, GitAutograderRepo, GitAutograderStatus
@@ -25,13 +26,12 @@ def verify(repo: GitAutograderRepo) -> GitAutograderOutput:
     main_branch.latest_commit.checkout()
 
     # Read the file and parse it
-    with open(".gitignore", "r") as gitignore_file:
+    with open(os.path.join(repo.repo_path, ".gitignore"), "r") as gitignore_file:
         lines = [
             line.strip() for line in gitignore_file.readlines() if line.strip() != ""
         ]
 
     comments: List[str] = []
-    print(lines)
     if "!many/file22.txt" not in lines:
         comments.append(STILL_IGNORING_FILE_22)
 
