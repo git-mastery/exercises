@@ -26,7 +26,9 @@ def verify(repo: GitAutograderRepo) -> GitAutograderOutput:
 
     # Read the file and parse it
     with open(".gitignore", "r") as gitignore_file:
-        lines = [line for line in gitignore_file.readlines() if line.strip() != ""]
+        lines = [
+            line.strip() for line in gitignore_file.readlines() if line.strip() != ""
+        ]
 
     comments: List[str] = []
     print(lines)
