@@ -29,6 +29,7 @@ def verify(repo: GitAutograderRepo) -> GitAutograderOutput:
         lines = [line for line in gitignore_file.readlines() if line.strip() == ""]
 
     comments: List[str] = []
+    print(lines)
     if "!many/file22.txt" not in lines:
         comments.append(STILL_IGNORING_FILE_22)
 
