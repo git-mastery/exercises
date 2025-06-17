@@ -1,12 +1,36 @@
-from git_autograder import GitAutograderTestLoader
+from git_autograder import GitAutograderStatus, GitAutograderTestLoader, assert_output
 
-from ..verify import verify
+from ..verify import (
+    NOT_IGNORING_IGNORE_ME,
+    NOT_IGNORING_RUNAWAY,
+    STILL_HIDING,
+    STILL_IGNORING_FILE_22,
+    verify,
+)
 
 REPOSITORY_NAME = "ignoring-somethings"
 
 loader = GitAutograderTestLoader(__file__, REPOSITORY_NAME, verify)
 
 
-def test():
-    with loader.load("specs/base.yml", "start"):
-        pass
+def test_valid():
+    with loader.load("specs/valid.yml", "start") as output:
+        assert_output(
+            output,
+            GitAutograderStatus.SUCCESSFUL,
+            ["Great work using .gitignore!"],
+        )
+
+
+def test_no_change():
+    with loader.load("specs/no_change.yml", "start") as output:
+        assert_output(
+            output,
+            GitAutograderStatus.UNSUCCESSFUL,
+            [
+                STILL_IGNORING_FILE_22,
+                STILL_HIDING,
+                NOT_IGNORING_IGNORE_ME,
+                NOT_IGNORING_RUNAWAY,
+            ],
+        )
