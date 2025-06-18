@@ -3,6 +3,7 @@ from git_autograder import GitAutograderStatus, GitAutograderTestLoader, assert_
 from ..verify import (
     NOT_IGNORING_IGNORE_ME,
     NOT_IGNORING_RUNAWAY,
+    NOT_PATTERN_MATCHING_RUNAWAY,
     STILL_HIDING,
     STILL_IGNORING_FILE_22,
     verify,
@@ -33,4 +34,13 @@ def test_no_change():
                 NOT_IGNORING_IGNORE_ME,
                 NOT_IGNORING_RUNAWAY,
             ],
+        )
+
+
+def test_not_pattern_matching():
+    with loader.load("specs/not_pattern_matching.yml", "start") as output:
+        assert_output(
+            output,
+            GitAutograderStatus.UNSUCCESSFUL,
+            [NOT_PATTERN_MATCHING_RUNAWAY],
         )
