@@ -17,6 +17,12 @@
 |----------|------------------|
 | under-control | `gitmastery download under-control` |
 
+# git-remote
+
+| Exercise | Download Command |
+|----------|------------------|
+| link-me | `gitmastery download link-me` |
+
 # git-status
 
 | Exercise | Download Command |
