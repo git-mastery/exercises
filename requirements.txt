@@ -1,3 +1,4 @@
 mypy
 git-autograder==4.*
 pytest
+repo-smith
