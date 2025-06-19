@@ -47,6 +47,7 @@ def verify() -> GitAutograderOutput:
     repo = GitAutograderRepo("push-over", repo_name)
 
     main_branch = repo.branches.branch("main")
+    print(main_branch.commits)
     if len(main_branch.commits) == 1:
         raise repo.wrong_answer([MISSING_COMMIT])
 
