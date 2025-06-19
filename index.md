@@ -10,6 +10,7 @@
 | Exercise | Download Command |
 |----------|------------------|
 | grocery-shopping | `gitmastery download grocery-shopping` |
+| push-over | `gitmastery download push-over` |
 
 # git-init
 
@@ -17,11 +18,18 @@
 |----------|------------------|
 | under-control | `gitmastery download under-control` |
 
+# git-push
+
+| Exercise | Download Command |
+|----------|------------------|
+| push-over | `gitmastery download push-over` |
+
 # git-remote
 
 | Exercise | Download Command |
 |----------|------------------|
 | link-me | `gitmastery download link-me` |
+| push-over | `gitmastery download push-over` |
 
 # git-status
 

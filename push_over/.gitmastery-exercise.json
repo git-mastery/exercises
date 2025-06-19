@@ -1,0 +1,12 @@
+{
+  "exercise_name": "push-over",
+  "tags": [
+    "git-remote",
+    "git-commit",
+    "git-push"
+  ],
+  "is_downloadable": true,
+  "requires_repo": false,
+  "requires_github": true,
+  "resources": {}
+}
