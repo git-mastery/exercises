@@ -33,6 +33,9 @@ def verify() -> GitAutograderOutput:
     username = run_command(["gh", "api", "user", "-q", ".login"], verbose=False)
     repo_name = f"{username}-gitmastery-push-over"
 
+    print(os.getcwd())
+    print(os.listdir())
+
     if not os.path.isdir(repo_name):
         return GitAutograderOutput(
             status=GitAutograderStatus.UNSUCCESSFUL,
