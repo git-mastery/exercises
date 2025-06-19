@@ -38,7 +38,6 @@ def setup(verbose: bool = False):
         ],
         verbose,
     )
-    print(has_fork)
 
     if has_fork != "true":
         run_command(
