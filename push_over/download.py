@@ -18,7 +18,7 @@ def run_command(command: List[str], verbose: bool) -> Optional[str]:
     except subprocess.CalledProcessError as e:
         if verbose:
             print(e.stderr)
-        exit(1)
+        return None
 
 
 def setup(verbose: bool = False):
@@ -39,7 +39,7 @@ def setup(verbose: bool = False):
         verbose,
     )
 
-    if not has_fork:
+    if has_fork != "true":
         run_command(
             [
                 "gh",
