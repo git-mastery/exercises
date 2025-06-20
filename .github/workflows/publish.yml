@@ -22,6 +22,11 @@ jobs:
           python create-exercise-directory.py
           mv exercise-directory.md index.md
 
+      - name: Add Jekyll config
+        run: |
+          echo "title: Exercises" > _config.yml
+          echo "theme: minima" >> _config.yml
+
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
