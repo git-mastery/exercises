@@ -31,7 +31,7 @@ def parse_configs(config_files):
                 data = json.load(f)
             exercise_name = data.get("exercise_name")
             tags = data.get("tags", [])
-            for tag in tags:
+            for tag in set(tags):
                 tag_map[tag].append(
                     (exercise_name, f"gitmastery download {exercise_name}")
                 )
