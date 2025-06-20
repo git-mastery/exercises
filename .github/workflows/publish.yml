@@ -26,6 +26,7 @@ jobs:
         run: |
           echo "title: Exercises" > _config.yml
           echo "theme: minima" >> _config.yml
+          echo "header_pages: []" >> _config.yml
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
