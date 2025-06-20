@@ -24,7 +24,7 @@ jobs:
 
       - name: Add Jekyll config
         run: |
-          gem install no-style-please
+          gem install no-style-please --user-install
           echo "title: Exercises" > _config.yml
           echo "theme: no-style-please" >> _config.yml
 
