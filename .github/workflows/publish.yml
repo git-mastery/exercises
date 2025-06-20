@@ -25,8 +25,7 @@ jobs:
       - name: Add Jekyll config
         run: |
           echo "title: Exercises" > _config.yml
-          echo "theme: minima" >> _config.yml
-          echo "header_pages: []" >> _config.yml
+          echo "theme: no-style-please" >> _config.yml
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
