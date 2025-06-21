@@ -8,7 +8,7 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     current = Path.cwd()
     for parent in [current] + list(current.parents):
         if (parent / ".gitmastery-exercise.json").is_file():
-            if (parent / ".git").is_dir():
+            if (parent / "control-me" / ".git").is_dir():
                 return exercise.to_output(
                     [
                         "You successfully used git init to initialize this folder as a Git repository!"
