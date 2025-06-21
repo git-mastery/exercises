@@ -24,14 +24,20 @@ jobs:
 
       - name: Add Jekyll config
         run: |
-          gem install no-style-please --user-install
-          echo "title: Exercises" > _config.yml
-          echo "theme: no-style-please" >> _config.yml
+          gem install jekyll bundle
+          bundle init
+          echo 'gem "jekyll"' >> Gemfile
+          echo 'gem "no-style-please"' >> Gemfile
+          bundle install
+
+      - name: Build Jekyll site
+        run: |
+          bundle exec jekyll build
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
-          publish_dir: ./
+          publish_dir: ./_site
           enable_jekyll: true
