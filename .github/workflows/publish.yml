@@ -22,26 +22,10 @@ jobs:
           python create-exercise-directory.py
           mv exercise-directory.md index.md
 
-      - name: Install Ruby
-        uses: ruby/setup-ruby@v1
-        with:
-          ruby-version: "3.3"
-          bundler-cache: true
-
-      - name: Add Jekyll config
-        run: |
-          echo 'source "https://rubygems.org"' > Gemfile
-          echo 'gem "jekyll"' >> Gemfile
-          echo 'gem "no-style-please"' >> Gemfile
-          echo 'title: Exercises' >> _config.yml
-          echo 'theme: no-style-please' >> _config.yml
-          bundle install
-          bundle exec jekyll build
-
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_branch: gh-pages
-          publish_dir: ./_site
+          publish_dir: ./
           enable_jekyll: true
