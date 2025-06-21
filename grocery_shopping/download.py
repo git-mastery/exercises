@@ -1,6 +1,8 @@
 import subprocess
 from typing import List, Optional
 
+__resources__ = {"shopping-list.txt": "shopping-list.txt"}
+
 
 def run_command(command: List[str], verbose: bool) -> Optional[str]:
     try:
