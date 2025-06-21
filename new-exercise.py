@@ -55,7 +55,13 @@ def main():
             "verification": "Run gitmastery verify in this exercise repository.",
             "hints": ["Enter hints"],
         }
-        yaml.dump(instructions, instructions_file, default_flow_style=False, indent=2)
+        yaml.dump(
+            instructions,
+            instructions_file,
+            default_flow_style=False,
+            indent=2,
+            sort_keys=False,
+        )
 
     with open(exercise_dir / "README.md", "w") as readme_file:
         readme = f"""
@@ -63,17 +69,9 @@ def main():
 
         <!--- Insert exercise description -->
 
-        ## Learning outcomes
-
-        <!--- Insert exercise learning outcomes -->
-
         ## Task
 
         <!--- Insert exercise task, simplify what needs to be done -->
-
-        ## Verification
-
-        Run `gitmastery verify` in this exercise folder.
 
         ## Hints
 
