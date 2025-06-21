@@ -3,8 +3,14 @@
   "tags": [
     "gitignore"
   ],
-  "is_downloadable": true,
-  "requires_repo": true,
+  "requires_git": true,
   "requires_github": false,
-  "resources": {}
+  "base_files": {},
+  "exercise_repo": {
+    "repo_type": "local",
+    "repo_name": "files",
+    "init": true,
+    "create_fork": null,
+    "repo_title": null
+  }
 }
