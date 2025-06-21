@@ -39,30 +39,6 @@ def main():
         exercise_config_str = json.dumps(exercise_config, indent=2)
         exercise_config_file.write(exercise_config_str)
 
-    def str_presenter(dumper, data):
-        if isinstance(data, str) and "\n" in data:
-            return dumper.represent_scalar("tag:yaml.org,2002:str", data, style="|")
-        return dumper.represent_scalar("tag:yaml.org,2002:str", data)
-
-    yaml.add_representer(str, str_presenter)
-
-    with open(exercise_dir / "instructions.yml", "w") as instructions_file:
-        instructions = {
-            "exercise_name": exercise_name,
-            "description": "Enter description\n",
-            "outcomes": ["Enter outcomes"],
-            "task": "Enter task\n",
-            "verification": "Run gitmastery verify in this exercise repository.",
-            "hints": ["Enter hints"],
-        }
-        yaml.dump(
-            instructions,
-            instructions_file,
-            default_flow_style=False,
-            indent=2,
-            sort_keys=False,
-        )
-
     with open(exercise_dir / "README.md", "w") as readme_file:
         readme = f"""
         # {exercise_name}
