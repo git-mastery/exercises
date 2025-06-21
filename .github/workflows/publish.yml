@@ -34,9 +34,6 @@ jobs:
           echo 'gem "jekyll"' >> Gemfile
           echo 'gem "no-style-please"' >> Gemfile
           bundle install
-
-      - name: Build Jekyll site
-        run: |
           bundle exec jekyll build
 
       - name: Deploy to gh-pages
