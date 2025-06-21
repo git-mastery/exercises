@@ -11,6 +11,8 @@
   "exercise_repo": {
     "repo_type": "custom",
     "repo_name": "crime-scene",
+    "repo_title": null,
+    "create_fork": null,
     "init": true
   }
 }
