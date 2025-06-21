@@ -15,7 +15,7 @@ loader = GitAutograderTestLoader(__file__, REPOSITORY_NAME, verify)
 
 
 def test_valid():
-    with loader.load("specs/valid.yml", "start") as output:
+    with loader.load("specs/valid.yml") as output:
         assert_output(
             output,
             GitAutograderStatus.SUCCESSFUL,
@@ -24,7 +24,7 @@ def test_valid():
 
 
 def test_no_change():
-    with loader.load("specs/no_change.yml", "start") as output:
+    with loader.load("specs/no_change.yml") as output:
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,
@@ -38,7 +38,7 @@ def test_no_change():
 
 
 def test_not_pattern_matching():
-    with loader.load("specs/not_pattern_matching.yml", "start") as output:
+    with loader.load("specs/not_pattern_matching.yml") as output:
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,

@@ -9,7 +9,9 @@ loader = GitAutograderTestLoader(__file__, REPOSITORY_NAME, verify)
 
 
 def test_no_answers():
-    with loader.load("specs/no_answers.yml", "start") as output:
+    with loader.load(
+        "specs/no_answers.yml", mock_answers={QUESTION_ONE: "", QUESTION_TWO: ""}
+    ) as output:
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,
@@ -21,7 +23,10 @@ def test_no_answers():
 
 
 def test_one_answer():
-    with loader.load("specs/partial_answer.yml", "start") as output:
+    with loader.load(
+        "specs/partial_answer.yml",
+        mock_answers={QUESTION_ONE: "file77.txt", QUESTION_TWO: ""},
+    ) as output:
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,
@@ -32,7 +37,10 @@ def test_one_answer():
 
 
 def test_mixed_answers():
-    with loader.load("specs/mixed_answer.yml", "start") as output:
+    with loader.load(
+        "specs/mixed_answer.yml",
+        mock_answers={QUESTION_ONE: "file75.txt", QUESTION_TWO: ""},
+    ) as output:
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,
@@ -44,5 +52,8 @@ def test_mixed_answers():
 
 
 def test_valid_answers():
-    with loader.load("specs/valid_answers.yml", "start") as output:
+    with loader.load(
+        "specs/valid_answers.yml",
+        mock_answers={QUESTION_ONE: "file77.txt", QUESTION_TWO: "file14.txt"},
+    ) as output:
         assert_output(output, GitAutograderStatus.SUCCESSFUL)

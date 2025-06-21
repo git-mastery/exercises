@@ -4,6 +4,8 @@ import subprocess
 import textwrap
 from typing import List, Optional
 
+__resources__ = {"hidden.png": "res/hidden.png"}
+
 
 def run_command(command: List[str], verbose: bool) -> Optional[str]:
     try:

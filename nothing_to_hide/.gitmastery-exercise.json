@@ -3,10 +3,16 @@
   "tags": [
     "git-status"
   ],
-  "is_downloadable": true,
-  "requires_repo": true,
-  "resources": {
-    "hidden.png": "res/hidden.png",
+  "requires_git": true,
+  "requires_github": false,
+  "base_files": {
     "answers.txt": "answers.txt"
+  },
+  "exercise_repo": {
+    "repo_type": "local",
+    "repo_name": "repo",
+    "init": true,
+    "create_fork": null,
+    "repo_title": null
   }
 }
