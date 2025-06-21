@@ -1,4 +1,9 @@
-from git_autograder import GitAutograderOutput, GitAutograderRepo, GitAutograderStatus
+from git_autograder import (
+    GitAutograderExercise,
+    GitAutograderOutput,
+    GitAutograderRepo,
+    GitAutograderStatus,
+)
 from git_autograder.answers.rules import (
     HasExactListRule,
     HasExactValueRule,
@@ -11,9 +16,9 @@ QUESTION_THREE = "What is the general pattern used to hide the sensitive/ folder
 QUESTION_FOUR = "What is the pattern used to only show sensitive/names.txt?"
 
 
-def verify(repo: GitAutograderRepo) -> GitAutograderOutput:
+def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     (
-        repo.answers.add_validation(
+        exercise.answers.add_validation(
             QUESTION_ONE,
             NotEmptyRule(),
             HasExactListRule(
@@ -47,7 +52,7 @@ def verify(repo: GitAutograderRepo) -> GitAutograderOutput:
         .validate()
     )
 
-    return repo.to_output(
+    return exercise.to_output(
         ["Great work in identifying how .gitignore works!"],
-        status=GitAutograderStatus.SUCCESSFUL,
+        GitAutograderStatus.SUCCESSFUL,
     )
