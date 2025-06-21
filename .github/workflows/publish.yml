@@ -24,7 +24,7 @@ jobs:
 
       - name: Add Jekyll config
         run: |
-          gem install jekyll bundle
+          gem install jekyll bundle --user-install
           bundle init
           echo 'gem "jekyll"' >> Gemfile
           echo 'gem "no-style-please"' >> Gemfile
