@@ -1,7 +1,11 @@
 import os
 from typing import List
 
-from git_autograder import GitAutograderOutput, GitAutograderRepo, GitAutograderStatus
+from git_autograder import (
+    GitAutograderExercise,
+    GitAutograderOutput,
+    GitAutograderStatus,
+)
 
 MISSING_COMMITS = "You have not made any commits yet!"
 STILL_IGNORING_FILE_22 = "You are still ignoring many/file22.txt."
@@ -17,16 +21,18 @@ NOT_PATTERN_MATCHING_RUNAWAY = (
 )
 
 
-def verify(repo: GitAutograderRepo) -> GitAutograderOutput:
-    main_branch = repo.branches.branch("main")
+def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
+    main_branch = exercise.repo.branches.branch("main")
 
     if len(main_branch.user_commits) == 0:
-        raise repo.wrong_answer([MISSING_COMMITS])
+        raise exercise.wrong_answer([MISSING_COMMITS])
 
     main_branch.latest_commit.checkout()
 
     # Read the file and parse it
-    with open(os.path.join(repo.repo_path, ".gitignore"), "r") as gitignore_file:
+    with open(
+        os.path.join(exercise.repo.repo_path, ".gitignore"), "r"
+    ) as gitignore_file:
         lines = [
             line.strip() for line in gitignore_file.readlines() if line.strip() != ""
         ]
@@ -49,8 +55,8 @@ def verify(repo: GitAutograderRepo) -> GitAutograderOutput:
     main_branch.checkout()
 
     if comments:
-        raise repo.wrong_answer(comments)
+        raise exercise.wrong_answer(comments)
 
-    return repo.to_output(
+    return exercise.to_output(
         ["Great work using .gitignore!"], status=GitAutograderStatus.SUCCESSFUL
     )
