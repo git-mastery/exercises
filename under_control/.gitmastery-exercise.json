@@ -9,7 +9,7 @@
   "exercise_repo": {
     "repo_type": "local",
     "repo_name": "control-me",
-    "init": true,
+    "init": false,
     "create_fork": null,
     "repo_title": null
   }
