@@ -1,8 +1,8 @@
 from typing import List
 
 from git_autograder import (
+    GitAutograderExercise,
     GitAutograderOutput,
-    GitAutograderRepo,
     GitAutograderStatus,
 )
 from git_autograder.diff import GitAutograderDiffHelper
@@ -14,25 +14,25 @@ NO_REMOVE = "There are no grocery list items removed from the shopping list."
 WRONG_FILE = "You haven't edited shopping-list.txt."
 
 
-def verify(repo: GitAutograderRepo) -> GitAutograderOutput:
+def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     comments: List[str] = []
 
-    main_branch = repo.branches.branch("main")
+    main_branch = exercise.repo.branches.branch("main")
 
     # Verify that not all commits are empty
     if not main_branch.has_non_empty_commits():
-        raise repo.wrong_answer([EMPTY_COMMITS])
+        raise exercise.wrong_answer([EMPTY_COMMITS])
 
     # Check if they edited the shopping-list.md at least once
     if not main_branch.has_edited_file("shopping-list.txt"):
-        raise repo.wrong_answer([WRONG_FILE])
+        raise exercise.wrong_answer([WRONG_FILE])
 
     # Verify if the final state of the file has additions and removals
     file_diff = GitAutograderDiffHelper.get_file_diff(
         main_branch.start_commit, main_branch.latest_commit, "shopping-list.txt"
     )
     if file_diff is None:
-        raise repo.wrong_answer([NO_DIFF])
+        raise exercise.wrong_answer([NO_DIFF])
 
     if not file_diff[0].has_added_line():
         comments.append(NO_ADD)
@@ -41,10 +41,11 @@ def verify(repo: GitAutograderRepo) -> GitAutograderOutput:
         comments.append(NO_REMOVE)
 
     if comments:
-        raise repo.wrong_answer(comments)
-    return repo.to_output(
+        raise exercise.wrong_answer(comments)
+
+    return exercise.to_output(
         [
             "Great work! You have successfully used `git add` and `git commit` to modify the shopping list! Keep it up!"
         ],
-        status=GitAutograderStatus.SUCCESSFUL,
+        GitAutograderStatus.SUCCESSFUL,
     )
