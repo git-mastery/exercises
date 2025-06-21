@@ -1,5 +1,5 @@
 mypy
-git-autograder==4.*
+git-autograder==5.*
 pytest
 repo-smith
 PyYAML
