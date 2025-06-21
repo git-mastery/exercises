@@ -11,7 +11,6 @@ QUESTION_TWO = "Which file was edited?"
 
 
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
-    print(os.listdir(exercise.repo.repo_path))
     (
         exercise.answers.add_validation(QUESTION_ONE, NotEmptyRule())
         .add_validation(QUESTION_ONE, HasExactValueRule("file77.txt"))

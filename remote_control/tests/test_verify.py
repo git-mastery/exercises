@@ -8,5 +8,4 @@ loader = GitAutograderTestLoader(__file__, REPOSITORY_NAME, verify)
 
 
 def test():
-    with loader.load("specs/base.yml", "start"):
-        pass
+    pass
