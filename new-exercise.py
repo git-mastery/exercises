@@ -36,13 +36,13 @@ class ExerciseConfig:
 
 
 def confirm(prompt: str, default: bool) -> bool:
-    str_result = input(f"{prompt} (defaults to {'y' if default else 'N'})  [y/N]:")
+    str_result = input(f"{prompt} (defaults to {'y' if default else 'N'})  [y/N]: ")
     bool_value = default if str_result.strip() == "" else str_result.lower() == "y"
     return bool_value
 
 
 def prompt(prompt: str, default: str) -> str:
-    str_result = input(f"{prompt} (defaults to '{default}'):")
+    str_result = input(f"{prompt} (defaults to '{default}'): ")
     if str_result.strip() == "":
         return default
     return str_result.strip()
@@ -56,7 +56,7 @@ def get_exercise_config() -> ExerciseConfig:
     requires_github = confirm("Requires Github?", True)
     exercise_repo_type = prompt("Exercise repo type (custom or link)", "custom").lower()
 
-    if exercise_repo_type != "custom" or exercise_repo_type != "link":
+    if exercise_repo_type != "custom" and exercise_repo_type != "link":
         print("Invalid exercise_repo_type, only custom and link allowed")
         sys.exit(1)
 
@@ -77,7 +77,7 @@ def get_exercise_config() -> ExerciseConfig:
         requires_github=requires_github,
         base_files={},
         exercise_repo=ExerciseConfig.ExerciseRepoConfig(
-            repo_type=exercise_repo_type,
+            repo_type=exercise_repo_type,  # type: ignore
             repo_name=exercise_repo_name,
             link=link,
             create_fork=create_fork,
@@ -105,7 +105,7 @@ def create_readme_file(config: ExerciseConfig) -> None:
         ## Hints
 
         <!--- Insert hints here -->
-        <!--- 
+        <!---
             Use Github Markdown's collapsible content:
             <details>
             <summary>...</summary>
