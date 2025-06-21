@@ -11,6 +11,7 @@
   "exercise_repo": {
     "repo_type": "remote",
     "repo_name": "crime-scene",
+    "repo_title": "test",
     "init": true
   }
 }
