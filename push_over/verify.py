@@ -1,6 +1,4 @@
 import os
-import subprocess
-from typing import List, Optional
 
 from git_autograder import (
     GitAutograderExercise,
@@ -15,26 +13,8 @@ MISSING_COMMIT_REMOTE = (
 )
 
 
-def run_command(command: List[str], verbose: bool) -> Optional[str]:
-    try:
-        result = subprocess.run(
-            command,
-            capture_output=True,
-            text=True,
-            check=True,
-        )
-        if verbose:
-            print(result.stdout)
-        return result.stdout.strip()
-    except subprocess.CalledProcessError as e:
-        if verbose:
-            print(e.stderr)
-        return None
-
-
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
-    username = run_command(["gh", "api", "user", "-q", ".login"], verbose=False)
-    repo_name = f"{username}-gitmastery-push-over"
+    repo_name = exercise.config.exercise_repo.repo_name
 
     if not os.path.isdir(repo_name):
         raise exercise.wrong_answer([MISSING_REPO.format(repo=repo_name)])
