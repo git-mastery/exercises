@@ -17,14 +17,48 @@ REPOSITORY_NAME = "nothing-to-hide"
 
 loader = GitAutograderTestLoader(__file__, REPOSITORY_NAME, verify)
 
+QUESTION_ONE_ANSWER = """
+- res/hidden.png
+- sensitive/sensitive_1.txt
+- sensitive/sensitive_2.txt
+- sensitive/sensitive_3.txt
+- sensitive/sensitive_4.txt
+- sensitive/sensitive_5.txt
+- src/.env
+"""
+
+INCOMPLETE_QUESTION_ONE_ANSWER = """
+- res/hidden.png
+- sensitive/sensitive_1.txt
+- sensitive/sensitive_2.txt
+- sensitive/sensitive_5.txt
+- src/.env
+"""
+
 
 def test_correct():
-    with loader.load("specs/valid_answers.yml", "start") as output:
+    with loader.load(
+        "specs/valid_answers.yml",
+        mock_answers={
+            QUESTION_ONE: QUESTION_ONE_ANSWER,
+            QUESTION_TWO: ".gitignore",
+            QUESTION_THREE: "sensitive/*",
+            QUESTION_FOUR: "!sensitive/names.txt",
+        },
+    ) as output:
         assert_output(output, GitAutograderStatus.SUCCESSFUL)
 
 
 def test_incomplete_hidden_files():
-    with loader.load("specs/incomplete_hidden_files.yml", "start") as output:
+    with loader.load(
+        "specs/incomplete_hidden_files.yml",
+        mock_answers={
+            QUESTION_ONE: INCOMPLETE_QUESTION_ONE_ANSWER,
+            QUESTION_TWO: ".gitignore",
+            QUESTION_THREE: "sensitive/*",
+            QUESTION_FOUR: "!sensitive/names.txt",
+        },
+    ) as output:
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,
@@ -33,8 +67,15 @@ def test_incomplete_hidden_files():
 
 
 def test_wrong_question_two():
-    with loader.load("specs/wrong_question_two.yml", "start") as output:
-        print(output.comments)
+    with loader.load(
+        "specs/wrong_question_two.yml",
+        mock_answers={
+            QUESTION_ONE: QUESTION_ONE_ANSWER,
+            QUESTION_TWO: "src/script.py",
+            QUESTION_THREE: "sensitive/*",
+            QUESTION_FOUR: "!sensitive/names.txt",
+        },
+    ) as output:
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,
@@ -43,7 +84,15 @@ def test_wrong_question_two():
 
 
 def test_wrong_question_three():
-    with loader.load("specs/wrong_question_three.yml", "start") as output:
+    with loader.load(
+        "specs/wrong_question_three.yml",
+        mock_answers={
+            QUESTION_ONE: QUESTION_ONE_ANSWER,
+            QUESTION_TWO: ".gitignore",
+            QUESTION_THREE: "src/",
+            QUESTION_FOUR: "!sensitive/names.txt",
+        },
+    ) as output:
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,
@@ -52,7 +101,15 @@ def test_wrong_question_three():
 
 
 def test_wrong_question_four():
-    with loader.load("specs/wrong_question_four.yml", "start") as output:
+    with loader.load(
+        "specs/wrong_question_four.yml",
+        mock_answers={
+            QUESTION_ONE: QUESTION_ONE_ANSWER,
+            QUESTION_TWO: ".gitignore",
+            QUESTION_THREE: "sensitive/*",
+            QUESTION_FOUR: "src",
+        },
+    ) as output:
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,
