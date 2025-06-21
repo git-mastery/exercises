@@ -2,44 +2,44 @@
 
 | Exercise | Download Command |
 |----------|------------------|
-| grocery-shopping | `gitmastery download grocery-shopping` |
-| stage-fright | `gitmastery download stage-fright` |
+| [grocery-shopping](https://git-mastery.github.io/exercises/grocery_shopping) | `gitmastery download grocery-shopping` |
+| [stage-fright](https://git-mastery.github.io/exercises/stage_fright) | `gitmastery download stage-fright` |
 
 # git-commit
 
 | Exercise | Download Command |
 |----------|------------------|
-| grocery-shopping | `gitmastery download grocery-shopping` |
-| push-over | `gitmastery download push-over` |
+| [grocery-shopping](https://git-mastery.github.io/exercises/grocery_shopping) | `gitmastery download grocery-shopping` |
+| [push-over](https://git-mastery.github.io/exercises/push_over) | `gitmastery download push-over` |
 
 # git-init
 
 | Exercise | Download Command |
 |----------|------------------|
-| under-control | `gitmastery download under-control` |
+| [under-control](https://git-mastery.github.io/exercises/under_control) | `gitmastery download under-control` |
 
 # git-push
 
 | Exercise | Download Command |
 |----------|------------------|
-| push-over | `gitmastery download push-over` |
+| [push-over](https://git-mastery.github.io/exercises/push_over) | `gitmastery download push-over` |
 
 # git-remote
 
 | Exercise | Download Command |
 |----------|------------------|
-| link-me | `gitmastery download link-me` |
-| push-over | `gitmastery download push-over` |
+| [link-me](https://git-mastery.github.io/exercises/link_me) | `gitmastery download link-me` |
+| [push-over](https://git-mastery.github.io/exercises/push_over) | `gitmastery download push-over` |
 
 # git-status
 
 | Exercise | Download Command |
 |----------|------------------|
-| amateur-detective | `gitmastery download amateur-detective` |
-| nothing-to-hide | `gitmastery download nothing-to-hide` |
+| [amateur-detective](https://git-mastery.github.io/exercises/amateur_detective) | `gitmastery download amateur-detective` |
+| [nothing-to-hide](https://git-mastery.github.io/exercises/nothing_to_hide) | `gitmastery download nothing-to-hide` |
 
 # gitignore
 
 | Exercise | Download Command |
 |----------|------------------|
-| ignoring-somethings | `gitmastery download ignoring-somethings` |
+| [ignoring-somethings](https://git-mastery.github.io/exercises/ignoring_somethings) | `gitmastery download ignoring-somethings` |
