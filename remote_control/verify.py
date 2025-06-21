@@ -1,9 +1,11 @@
 import subprocess
-from datetime import datetime
 from typing import List, Optional
 
-import pytz
-from git_autograder import GitAutograderOutput, GitAutograderStatus
+from git_autograder import (
+    GitAutograderExercise,
+    GitAutograderOutput,
+    GitAutograderStatus,
+)
 
 
 def run_command(command: List[str]) -> Optional[str]:
@@ -19,18 +21,10 @@ def run_command(command: List[str]) -> Optional[str]:
         return None
 
 
-def verify() -> GitAutograderOutput:
-    started_at = datetime.now(tz=pytz.UTC)
-
+def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     username = run_command(["gh", "api", "user", "-q", ".login"])
     if username is None:
-        return GitAutograderOutput(
-            status=GitAutograderStatus.UNSUCCESSFUL,
-            started_at=started_at,
-            completed_at=datetime.now(tz=pytz.UTC),
-            comments=["Your Github CLI is not setup correctly"],
-            exercise_name="remote-control",
-        )
+        raise exercise.wrong_answer(["Your Github CLI is not setup correctly"])
 
     username = username.strip()
 
@@ -39,30 +33,19 @@ def verify() -> GitAutograderOutput:
     if not url.startswith(
         f"https://github.com/{username}/gitmastery-{username}-remote-control"
     ):
-        return GitAutograderOutput(
-            status=GitAutograderStatus.UNSUCCESSFUL,
-            started_at=started_at,
-            completed_at=datetime.now(tz=pytz.UTC),
-            comments=["That is not the right Github URL!"],
-            exercise_name="remote-control",
-        )
+        raise exercise.wrong_answer(["That is not the right Github url!"])
 
     code = subprocess.call(["git", "ls-remote", url, "--quiet"])
     if code == 0:
-        return GitAutograderOutput(
-            status=GitAutograderStatus.SUCCESSFUL,
-            started_at=started_at,
-            completed_at=datetime.now(tz=pytz.UTC),
-            comments=["Great work setting up a public remote repository!"],
-            exercise_name="remote-control",
+        return exercise.to_output(
+            [
+                "Great work setting up a public remote repository!",
+            ],
+            GitAutograderStatus.SUCCESSFUL,
         )
     else:
-        return GitAutograderOutput(
-            status=GitAutograderStatus.UNSUCCESSFUL,
-            started_at=started_at,
-            completed_at=datetime.now(tz=pytz.UTC),
-            comments=[
+        raise exercise.wrong_answer(
+            [
                 "The remote repository url you provided either does not exist or is private. Try again!"
-            ],
-            exercise_name="remote-control",
+            ]
         )

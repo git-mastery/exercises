@@ -1,8 +1,14 @@
 {
   "exercise_name": "remote-control",
   "tags": [],
-  "is_downloadable": true,
-  "requires_repo": false,
+  "requires_git": true,
   "requires_github": true,
-  "resources": {}
+  "base_files": {},
+  "exercise_repo": {
+    "repo_type": "local",
+    "repo_name": "deleted",
+    "init": false,
+    "create_fork": null,
+    "repo_title": null
+  }
 }
