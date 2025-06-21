@@ -159,17 +159,13 @@ def create_download_py_file() -> None:
 def create_verify_py_file() -> None:
     with open("verify.py", "w") as verify_script_file:
         verify_script = """
-        from typing import List
-
-        from git_autograder import GitAutograderOutput, GitAutograderRepo
+        from git_autograder import GitAutograderOutput, GitAutograderExercise
 
 
-        def verify(repo: GitAutograderRepo) -> GitAutograderOutput:
-            comments: List[str] = []
-
+        def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
             # INSERT YOUR GRADING CODE HERE
 
-            return repo.to_output(comments)
+            return exercise.to_output([])
         """
         verify_script_file.write(textwrap.dedent(verify_script).lstrip())
 
