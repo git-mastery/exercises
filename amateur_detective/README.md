@@ -9,20 +9,12 @@ files.
 To catch the hacker, you first need to know which files were tampered with.
 Luckily for you, the hacker was not too careful and left some evidence behind.
 
-## Learning outcomes
-
-- [ ] Apply `git status` to identify changes to a repository
-
 ## Task
 
 Use `git status` to uncover the hacker's destruction. Find the file that they
 added and edited.
 
 Update your answers in `answers.txt`.
-
-## Verification
-
-Update `answers.txt` and run `gitmastery verify` in this exercise folder.
 
 ## Hints
 
