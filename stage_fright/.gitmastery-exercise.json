@@ -3,7 +3,14 @@
   "tags": [
     "git-add"
   ],
-  "is_downloadable": true,
-  "requires_repo": true,
-  "resources": {}
+  "requires_git": true,
+  "requires_github": false,
+  "base_files": {},
+  "exercise_repo": {
+    "repo_type": "local",
+    "repo_name": "attendance",
+    "init": true,
+    "create_fork": null,
+    "repo_title": null
+  }
 }
