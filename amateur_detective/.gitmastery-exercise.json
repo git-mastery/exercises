@@ -6,12 +6,11 @@
   "requires_git": true,
   "requires_github": false,
   "base_files": {
-    "answers2.txt": "answers.txt"
+    "answers.txt": "answers.txt"
   },
   "exercise_repo": {
-    "repo_type": "remote",
+    "repo_type": "custom",
     "repo_name": "crime-scene",
-    "repo_title": "test",
     "init": true
   }
 }
