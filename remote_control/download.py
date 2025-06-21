@@ -1,5 +1,8 @@
+import os
 import shutil
 
 
 def setup(verbose: bool = False):
-    shutil.rmtree("../deleted")
+    os.chdir("..")
+    print(os.listdir())
+    shutil.rmtree("deleted/")
