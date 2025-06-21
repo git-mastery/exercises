@@ -1,47 +1,100 @@
 import json
 import os
 import pathlib
+import sys
 import textwrap
+from dataclasses import dataclass
+from typing import Dict, List, Literal, Optional
 
-import yaml
+
+@dataclass
+class ExerciseConfig:
+    @dataclass
+    class ExerciseRepoConfig:
+        repo_type: Literal["custom", "link"]
+        repo_name: str
+        link: Optional[str]
+        create_fork: Optional[bool]
+        init: Optional[bool]
+
+    exercise_name: str
+    tags: List[str]
+    requires_git: bool
+    requires_github: bool
+    base_files: Dict[str, str]
+    exercise_repo: ExerciseRepoConfig
+
+    def to_json(self) -> str:
+        return json.dumps(self, default=lambda o: o.__dict__, sort_keys=False, indent=2)
+
+    @property
+    def exercise_dir(self) -> pathlib.Path:
+        cur_path = pathlib.Path(os.getcwd())
+        exercise_dir_name = self.exercise_name.replace("-", "_")
+        exercise_dir = cur_path / exercise_dir_name
+        return exercise_dir
 
 
-def main():
+def confirm(prompt: str, default: bool) -> bool:
+    str_result = input(f"{prompt} (defaults to {'y' if default else 'N'})  [y/N]:")
+    bool_value = default if str_result.strip() == "" else str_result.lower() == "y"
+    return bool_value
+
+
+def prompt(prompt: str, default: str) -> str:
+    str_result = input(f"{prompt} (defaults to '{default}'):")
+    if str_result.strip() == "":
+        return default
+    return str_result.strip()
+
+
+def get_exercise_config() -> ExerciseConfig:
     exercise_name = input("Exercise name: ")
     tags_str = input("Tags (space separated): ")
     tags = [] if tags_str.strip() == "" else tags_str.split(" ")
-    requires_repo_str = input("Requires repo? (defaults to y) y/N: ")
-    requires_repo = (
-        requires_repo_str.strip() == ""
-        or requires_repo_str == "y"
-        or requires_repo_str == "Y"
-    )
-    requires_github_str = input("Requires Github? (defaults to y) y/N: ")
-    requires_github = (
-        requires_github_str.strip() == ""
-        or requires_github_str == "y"
-        or requires_github_str == "Y"
+    requires_git = confirm("Requires Git?", True)
+    requires_github = confirm("Requires Github?", True)
+    exercise_repo_type = prompt("Exercise repo type (custom or link)", "custom").lower()
+
+    if exercise_repo_type != "custom" or exercise_repo_type != "link":
+        print("Invalid exercise_repo_type, only custom and link allowed")
+        sys.exit(1)
+
+    exercise_repo_name = prompt("Exercise repo name", exercise_name.replace("-", "_"))
+
+    init: Optional[bool] = None
+    create_fork: Optional[bool] = None
+    link: Optional[str] = None
+    if exercise_repo_type == "custom":
+        init = confirm("Initialize exercise repo as Git repository?", True)
+    elif exercise_repo_type == "link":
+        link = prompt("Github repository link", "")
+        create_fork = confirm("Create fork of repository?", True)
+    return ExerciseConfig(
+        exercise_name=exercise_name,
+        tags=tags,
+        requires_git=requires_git,
+        requires_github=requires_github,
+        base_files={},
+        exercise_repo=ExerciseConfig.ExerciseRepoConfig(
+            repo_type=exercise_repo_type,
+            repo_name=exercise_repo_name,
+            link=link,
+            create_fork=create_fork,
+            init=init,
+        ),
     )
 
-    cur_path = pathlib.Path(os.getcwd())
-    exercise_dir_name = exercise_name.replace("-", "_")
-    exercise_dir = cur_path / exercise_dir_name
-    os.makedirs(exercise_dir)
-    with open(exercise_dir / ".gitmastery-exercise.json", "w") as exercise_config_file:
-        exercise_config = {
-            "exercise_name": exercise_name,
-            "tags": tags,
-            "is_downloadable": True,
-            "requires_repo": requires_repo,
-            "requires_github": requires_github,
-            "resources": {},
-        }
-        exercise_config_str = json.dumps(exercise_config, indent=2)
-        exercise_config_file.write(exercise_config_str)
 
-    with open(exercise_dir / "README.md", "w") as readme_file:
+def create_exercise_config_file(config: ExerciseConfig) -> None:
+    with open(".gitmastery-exercise.json", "w") as exercise_config_file:
+        exercise_config_file.write(config.to_json())
+
+
+def create_readme_file(config: ExerciseConfig) -> None:
+    with open("README.md", "w") as readme_file:
         readme = f"""
-        # {exercise_name}
+        # {config.exercise_name}
 
         <!--- Insert exercise description -->
 
@@ -62,8 +115,10 @@ def main():
         """
         readme_file.write(textwrap.dedent(readme).lstrip())
 
+
+def create_download_py_file() -> None:
     # TODO: conditionally add the git tagging only when requires_repo is True
-    with open(exercise_dir / "download.py", "w") as download_script_file:
+    with open("download.py", "w") as download_script_file:
         download_script = """
         import subprocess
         from sys import exit
@@ -100,9 +155,9 @@ def main():
         """
         download_script_file.write(textwrap.dedent(download_script).lstrip())
 
-    os.makedirs(exercise_dir / "res", exist_ok=True)
 
-    with open(exercise_dir / "verify.py", "w") as verify_script_file:
+def create_verify_py_file() -> None:
+    with open("verify.py", "w") as verify_script_file:
         verify_script = """
         from typing import List
 
@@ -118,19 +173,25 @@ def main():
         """
         verify_script_file.write(textwrap.dedent(verify_script).lstrip())
 
-    open(exercise_dir / "__init__.py", "a").close()
 
-    tests_dir = exercise_dir / "tests"
+def create_init_py_file() -> None:
+    open("__init__.py", "a").close()
+
+
+def create_test_dir(config: ExerciseConfig) -> None:
+    tests_dir = "tests"
     os.makedirs(tests_dir, exist_ok=True)
-    open(tests_dir / "__init__.py", "a").close()
+    os.chdir(tests_dir)
 
-    with open(tests_dir / "test_verify.py", "w") as test_grade_file:
+    create_init_py_file()
+
+    with open("test_verify.py", "w") as test_grade_file:
         test_grade = f"""
         from git_autograder import GitAutograderTestLoader
 
         from ..verify import verify
 
-        REPOSITORY_NAME = "{exercise_name}"
+        REPOSITORY_NAME = "{config.exercise_name}"
 
         loader = GitAutograderTestLoader(__file__, REPOSITORY_NAME, verify)
 
@@ -141,8 +202,8 @@ def main():
         """
         test_grade_file.write(textwrap.dedent(test_grade).lstrip())
 
-    os.makedirs(tests_dir / "specs", exist_ok=True)
-    with open(tests_dir / "specs" / "base.yml", "w") as base_spec_file:
+    os.makedirs("specs", exist_ok=True)
+    with open("specs/base.yml", "w") as base_spec_file:
         base_spec = """
         initialization:
           steps:
@@ -152,6 +213,19 @@ def main():
               id: start
         """
         base_spec_file.write(textwrap.dedent(base_spec).lstrip())
+
+
+def main():
+    config = get_exercise_config()
+    os.makedirs(config.exercise_dir)
+    os.chdir(config.exercise_dir)
+
+    os.makedirs("res", exist_ok=True)
+    create_exercise_config_file(config)
+    create_readme_file(config)
+    create_download_py_file()
+    create_verify_py_file()
+    create_test_dir(config)
 
 
 if __name__ == "__main__":
