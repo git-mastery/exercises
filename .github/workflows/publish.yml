@@ -22,6 +22,11 @@ jobs:
           python create-exercise-directory.py
           mv exercise-directory.md index.md
 
+      - name: Install Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: "3.3"
+
       - name: Add Jekyll config
         run: |
           gem install jekyll bundle --user-install
