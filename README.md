@@ -21,3 +21,7 @@ Configuration fields for each exercise:
     4. `create_fork`: (only read if `link` is present) flag to determine if we need to fork the repository to the student's machine, otherwise it just clones the repository
     5. `init`: (only read if `custom` is present) flag to determine if we will call `git init` on the exercise repository (useful if we don't want to start out with a Git repository)
 
+
+## TODOs
+
+- [ ] Add validation for exercise configuration (e.g. cannot fork + not require Github) - to run as CI
