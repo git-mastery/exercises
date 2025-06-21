@@ -30,6 +30,7 @@ jobs:
 
       - name: Add Jekyll config
         run: |
+          echo 'source "https://rubygems.org"' > Gemfile
           echo 'gem "jekyll"' >> Gemfile
           echo 'gem "no-style-please"' >> Gemfile
           echo 'title: Exercises' >> _config.yml
