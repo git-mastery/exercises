@@ -3,7 +3,14 @@
   "tags": [
     "git-init"
   ],
-  "is_downloadable": true,
-  "requires_repo": false,
-  "resources": {}
+  "requires_git": false,
+  "requires_github": false,
+  "base_files": {},
+  "exercise_repo": {
+    "repo_type": "local",
+    "repo_name": "control-me",
+    "init": true,
+    "create_fork": null,
+    "repo_title": null
+  }
 }
