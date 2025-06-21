@@ -5,8 +5,14 @@
     "git-commit",
     "git-push"
   ],
-  "is_downloadable": true,
-  "requires_repo": false,
+  "requires_git": true,
   "requires_github": true,
-  "resources": {}
+  "base_files": {},
+  "exercise_repo": {
+    "repo_name": "push-this",
+    "repo_title": "push-over",
+    "repo_type": "remote",
+    "init": null,
+    "create_fork": true
+  }
 }
