@@ -11,9 +11,9 @@ from typing import Dict, List, Literal, Optional
 class ExerciseConfig:
     @dataclass
     class ExerciseRepoConfig:
-        repo_type: Literal["custom", "link"]
+        repo_type: Literal["local", "remote"]
         repo_name: str
-        link: Optional[str]
+        repo_title: Optional[str]
         create_fork: Optional[bool]
         init: Optional[bool]
 
@@ -54,21 +54,21 @@ def get_exercise_config() -> ExerciseConfig:
     tags = [] if tags_str.strip() == "" else tags_str.split(" ")
     requires_git = confirm("Requires Git?", True)
     requires_github = confirm("Requires Github?", True)
-    exercise_repo_type = prompt("Exercise repo type (custom or link)", "custom").lower()
+    exercise_repo_type = prompt("Exercise repo type (local or remote)", "local").lower()
 
-    if exercise_repo_type != "custom" and exercise_repo_type != "link":
-        print("Invalid exercise_repo_type, only custom and link allowed")
+    if exercise_repo_type != "local" and exercise_repo_type != "remote":
+        print("Invalid exercise_repo_type, only local and remote allowed")
         sys.exit(1)
 
     exercise_repo_name = prompt("Exercise repo name", exercise_name.replace("-", "_"))
 
     init: Optional[bool] = None
     create_fork: Optional[bool] = None
-    link: Optional[str] = None
-    if exercise_repo_type == "custom":
+    repo_title: Optional[str] = None
+    if exercise_repo_type == "local":
         init = confirm("Initialize exercise repo as Git repository?", True)
-    elif exercise_repo_type == "link":
-        link = prompt("Github repository link", "")
+    elif exercise_repo_type == "remote":
+        repo_title = prompt("Git-Mastery Github repository title", "")
         create_fork = confirm("Create fork of repository?", True)
     return ExerciseConfig(
         exercise_name=exercise_name,
@@ -79,7 +79,7 @@ def get_exercise_config() -> ExerciseConfig:
         exercise_repo=ExerciseConfig.ExerciseRepoConfig(
             repo_type=exercise_repo_type,  # type: ignore
             repo_name=exercise_repo_name,
-            link=link,
+            repo_title=repo_title,
             create_fork=create_fork,
             init=init,
         ),
