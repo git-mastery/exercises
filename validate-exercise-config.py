@@ -34,9 +34,7 @@ def main() -> None:
         ):
             continue
         config = {}
-        with open(
-            pathlib.Path(dir) / ".gitmastery-exercise.config", "r"
-        ) as config_file:
+        with open(pathlib.Path(dir) / ".gitmastery-exercise.json", "r") as config_file:
             config = json.loads(config_file.read())
 
             if config["exercise_name"].strip() == "":
