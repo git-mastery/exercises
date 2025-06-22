@@ -36,8 +36,8 @@ jobs:
           pip install -r requirements.txt
       - name: Set up Git
         run: |
-          git config user.name "github-actions"
-          git config user.email "github-actions@github.com"
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
       - name: Run unit tests
         run: |
           python -m pytest -s -vv
