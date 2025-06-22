@@ -2,7 +2,7 @@ import subprocess
 from sys import exit
 from typing import List, Optional
 
-__resources__ = {}
+__resources__ = {"calculator.py": "calculator.py", "greet.py": "greet.py"}
 
 
 def run_command(command: List[str], verbose: bool) -> Optional[str]:
