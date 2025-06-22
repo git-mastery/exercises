@@ -159,13 +159,17 @@ def create_download_py_file() -> None:
 def create_verify_py_file() -> None:
     with open("verify.py", "w") as verify_script_file:
         verify_script = """
-        from git_autograder import GitAutograderOutput, GitAutograderExercise
+        from git_autograder import (
+            GitAutograderOutput,
+            GitAutograderExercise,
+            GitAutograderStatus,
+        )
 
 
         def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
             # INSERT YOUR GRADING CODE HERE
 
-            return exercise.to_output([])
+            return exercise.to_output([], GitAutograderStatus.SUCCESSFUL)
         """
         verify_script_file.write(textwrap.dedent(verify_script).lstrip())
 
@@ -221,6 +225,7 @@ def main():
     create_readme_file(config)
     create_download_py_file()
     create_verify_py_file()
+    create_init_py_file()
     create_test_dir(config)
 
 
