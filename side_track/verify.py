@@ -54,6 +54,7 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         bug_fix_branch = exercise.repo.branches.branch("bug-fix")
         bug_fix_branch.checkout()
         if len(bug_fix_branch.user_commits) < 2:
+            print(bug_fix_branch.commits)
             print(bug_fix_branch.user_commits)
             raise exercise.wrong_answer([MISSING_COMMITS])
 
