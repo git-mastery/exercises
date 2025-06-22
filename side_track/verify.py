@@ -38,19 +38,19 @@ def execute_function(
 
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     main_branch = exercise.repo.branches.branch("main")
+    if exercise.repo.repo.is_dirty():
+        raise exercise.wrong_answer([UNCOMMITTED_CHANGES])
+
     try:
-        if exercise.repo.repo.is_dirty():
-            raise exercise.wrong_answer([UNCOMMITTED_CHANGES])
+        if exercise.repo.repo.active_branch.name != "main":
+            raise exercise.wrong_answer([NOT_ON_MAIN])
+    except TypeError:
+        raise exercise.wrong_answer([DETACHED_HEAD])
 
-        try:
-            if exercise.repo.repo.active_branch.name != "main":
-                raise exercise.wrong_answer([NOT_ON_MAIN])
-        except TypeError:
-            raise exercise.wrong_answer([DETACHED_HEAD])
+    if not exercise.repo.branches.has_branch("bug-fix"):
+        raise exercise.wrong_answer([MISSING_BUG_FIX_BRANCH])
 
-        if not exercise.repo.branches.has_branch("bug-fix"):
-            raise exercise.wrong_answer([MISSING_BUG_FIX_BRANCH])
-
+    try:
         bug_fix_branch = exercise.repo.branches.branch("bug-fix")
         bug_fix_branch.checkout()
         if len(bug_fix_branch.user_commits) < 2:
