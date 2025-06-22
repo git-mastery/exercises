@@ -64,6 +64,7 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
                 execute_function(
                     Path(exercise.repo.repo_path) / "greet.py", "greet", {"name": name}
                 )
+            print(buf.getvalue().strip())
             if buf.getvalue().strip() != f"Hi {name}":
                 fixed_greet = False
                 break
