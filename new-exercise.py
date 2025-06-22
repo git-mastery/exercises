@@ -225,6 +225,7 @@ def main():
     create_readme_file(config)
     create_download_py_file()
     create_verify_py_file()
+    create_init_py_file()
     create_test_dir(config)
 
 
