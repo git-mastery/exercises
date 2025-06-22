@@ -1,0 +1,17 @@
+{
+  "exercise_name": "side-track",
+  "tags": [
+    "git-branch",
+    "git-checkout"
+  ],
+  "requires_git": true,
+  "requires_github": false,
+  "base_files": {},
+  "exercise_repo": {
+    "repo_type": "local",
+    "repo_name": "branch-me",
+    "repo_title": null,
+    "create_fork": null,
+    "init": true
+  }
+}
