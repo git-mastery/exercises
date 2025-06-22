@@ -1,13 +1,15 @@
 import io
 import sys
-from contextlib import redirect_stderr
+from contextlib import redirect_stderr, redirect_stdout
 from pathlib import Path
 from typing import Any, Dict, Optional
 
 from git_autograder import (
     GitAutograderExercise,
+    GitAutograderInvalidStateException,
     GitAutograderOutput,
     GitAutograderStatus,
+    GitAutograderWrongAnswerException,
 )
 
 MISSING_BUG_FIX_BRANCH = "You are missing the bug-fix branch"
@@ -23,7 +25,7 @@ CALCULATOR_NOT_FIXED = "You have not fixed the add function in calculator.py"
 
 def execute_function(
     filepath: str | Path, func_name: str, args: Dict[str, Any]
-) -> Optional[str]:
+) -> Optional[Any]:
     with open(filepath, "r") as f:
         sys.dont_write_bytecode = True
         code = f.read()
@@ -35,58 +37,66 @@ def execute_function(
 
 
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
-    if exercise.repo.repo.is_dirty():
-        raise exercise.wrong_answer([UNCOMMITTED_CHANGES])
-
+    main_branch = exercise.repo.branches.branch("main")
     try:
-        if exercise.repo.repo.active_branch.name != "main":
-            raise exercise.wrong_answer([NOT_ON_MAIN])
-    except TypeError:
-        raise exercise.wrong_answer([DETACHED_HEAD])
+        if exercise.repo.repo.is_dirty():
+            raise exercise.wrong_answer([UNCOMMITTED_CHANGES])
 
-    if not exercise.repo.branches.has_branch("bug-fix"):
-        raise exercise.wrong_answer([MISSING_BUG_FIX_BRANCH])
+        try:
+            if exercise.repo.repo.active_branch.name != "main":
+                raise exercise.wrong_answer([NOT_ON_MAIN])
+        except TypeError:
+            raise exercise.wrong_answer([DETACHED_HEAD])
 
-    bug_fix_branch = exercise.repo.branches.branch("bug-fix")
-    if len(bug_fix_branch.user_commits) < 3:
-        raise exercise.wrong_answer([MISSING_COMMITS])
+        if not exercise.repo.branches.has_branch("bug-fix"):
+            raise exercise.wrong_answer([MISSING_BUG_FIX_BRANCH])
 
-    exercise_folder = (
-        Path(exercise.repo.repo_path) / exercise.config.exercise_repo.repo_name
-    )
-    # Ensure that they applied the right fix by testing the greet function
-    fixed_greet = True
-    for name in ["James", "Hi", "Alice", "Bob"]:
-        buf = io.StringIO()
-        with redirect_stderr(buf):
-            execute_function(exercise_folder / "greet.py", "greet", {"name": name})
-        if buf.getvalue().strip() != f"Hi {name}":
-            fixed_greet = False
-            break
+        bug_fix_branch = exercise.repo.branches.branch("bug-fix")
+        bug_fix_branch.checkout()
+        if len(bug_fix_branch.user_commits) < 2:
+            raise exercise.wrong_answer([MISSING_COMMITS])
 
-    fixed_calculator = True
-    for a, b in zip([1, 2, 3, 4, 5], [11, 123, 9, 10, 1]):
-        result = execute_function(
-            exercise_folder / "calculator.py", "add", {"a": a, "b": b}
+        # Ensure that they applied the right fix by testing the greet function
+        fixed_greet = True
+        for name in ["James", "Hi", "Alice", "Bob"]:
+            buf = io.StringIO()
+            with redirect_stdout(buf):
+                execute_function(
+                    Path(exercise.repo.repo_path) / "greet.py", "greet", {"name": name}
+                )
+            if buf.getvalue().strip() != f"Hi {name}":
+                fixed_greet = False
+                break
+
+        fixed_calculator = True
+        for a, b in zip([1, 2, 3, 4, 5], [11, 123, 9, 10, 1]):
+            result = execute_function(
+                Path(exercise.repo.repo_path) / "calculator.py", "add", {"a": a, "b": b}
+            )
+            if result is None:
+                fixed_calculator = False
+                break
+            if result != a + b:
+                fixed_calculator = False
+                break
+
+        comments = []
+        if not fixed_greet:
+            comments.append(GREET_NOT_FIXED)
+        if not fixed_calculator:
+            comments.append(CALCULATOR_NOT_FIXED)
+
+        if comments:
+            raise exercise.wrong_answer(comments)
+
+        return exercise.to_output(
+            ["Great work with using git branch and git checkout to fix the bugs!"],
+            GitAutograderStatus.SUCCESSFUL,
         )
-        if result is None:
-            fixed_calculator = False
-            break
-        int_result = int(result.strip())
-        if int_result != a + b:
-            fixed_calculator = False
-            break
-
-    comments = []
-    if not fixed_greet:
-        comments.append(GREET_NOT_FIXED)
-    if not fixed_calculator:
-        comments.append(CALCULATOR_NOT_FIXED)
-
-    if comments:
-        raise exercise.wrong_answer(comments)
-
-    return exercise.to_output(
-        ["Great work with using git branch and git checkout to fix the bugs!"],
-        GitAutograderStatus.SUCCESSFUL,
-    )
+    except (GitAutograderWrongAnswerException, GitAutograderInvalidStateException):
+        raise
+    except Exception as e:
+        print(e)
+        raise exercise.wrong_answer(["Something bad happened"])
+    finally:
+        main_branch.checkout()
