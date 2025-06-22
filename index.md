@@ -5,6 +5,18 @@
 | [grocery-shopping](https://git-mastery.github.io/exercises/grocery_shopping) | `gitmastery download grocery-shopping` |
 | [stage-fright](https://git-mastery.github.io/exercises/stage_fright) | `gitmastery download stage-fright` |
 
+# git-branch
+
+| Exercise | Download Command |
+|----------|------------------|
+| [bonsai-tree](https://git-mastery.github.io/exercises/bonsai_tree) | `gitmastery download bonsai-tree` |
+
+# git-checkout
+
+| Exercise | Download Command |
+|----------|------------------|
+| [bonsai-tree](https://git-mastery.github.io/exercises/bonsai_tree) | `gitmastery download bonsai-tree` |
+
 # git-commit
 
 | Exercise | Download Command |
