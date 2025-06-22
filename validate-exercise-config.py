@@ -5,19 +5,10 @@ import pathlib
 import subprocess
 import sys
 from dataclasses import dataclass
-from typing import List
+from typing import List, Set
 
 # List of exercises to exempt, maybe because these have not been updated or are deprecated exercises
-EXEMPTION_LIST = {
-    "grocery_shopping",
-    "ignoring_somethings",
-    "link_me",
-    "nothing_to_hide",
-    "push_over",
-    "remote_control",
-    "stage_fright",
-    "under_control",
-}
+EXEMPTION_LIST: Set[str] = set()
 
 
 @dataclass
