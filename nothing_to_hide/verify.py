@@ -1,7 +1,6 @@
 from git_autograder import (
     GitAutograderExercise,
     GitAutograderOutput,
-    GitAutograderRepo,
     GitAutograderStatus,
 )
 from git_autograder.answers.rules import (
