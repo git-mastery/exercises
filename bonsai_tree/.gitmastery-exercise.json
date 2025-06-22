@@ -1,0 +1,17 @@
+{
+  "exercise_name": "bonsai-tree",
+  "tags": [
+    "git-branch",
+    "git-checkout"
+  ],
+  "requires_git": true,
+  "requires_github": false,
+  "base_files": {},
+  "exercise_repo": {
+    "repo_type": "local",
+    "repo_name": "care-notes",
+    "repo_title": null,
+    "create_fork": null,
+    "init": true
+  }
+}
