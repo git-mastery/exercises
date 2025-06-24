@@ -24,5 +24,4 @@ Proper bonsai care involves balancing water, light, and nutrients to maintain a 
 
 Ultimately, your Git tree should look like this:
 
-![Expected tree](./res/expected-tree.png)
-
+[![](https://mermaid.ink/img/pako:eNplkM1qxDAMhF8l6GyCY-en8bWFnnraW_FFjbWJYW0Hrw2bhrx73W0XCr2J0afRMDtMwRAomG16jbgu2k_BOZu0_4jop6Va7DWFuP3TJ4z0EIGBo-jQmuK0a19VGtJCjjSoMho6Y74kDdofBcWcwmnzE6gUMzHIq8FELxbniA7UGS_Xoq7o30NwDyiGPC9_l6B2uIFqe17zdujlMMqx7WTDYAMlelEPgg9S9q3ohqfmYPB5d-N1LwomhGh4uWh4x2CO38F__5A3FJ9D9glU040MyNhSwNtPTfe2ji9vFWPy?type=png)](https://mermaid.live/edit#pako:eNplkM1qxDAMhF8l6GyCY-en8bWFnnraW_FFjbWJYW0Hrw2bhrx73W0XCr2J0afRMDtMwRAomG16jbgu2k_BOZu0_4jop6Va7DWFuP3TJ4z0EIGBo-jQmuK0a19VGtJCjjSoMho6Y74kDdofBcWcwmnzE6gUMzHIq8FELxbniA7UGS_Xoq7o30NwDyiGPC9_l6B2uIFqe17zdujlMMqx7WTDYAMlelEPgg9S9q3ohqfmYPB5d-N1LwomhGh4uWh4x2CO38F__5A3FJ9D9glU040MyNhSwNtPTfe2ji9vFWPy)
