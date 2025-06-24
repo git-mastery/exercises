@@ -32,6 +32,12 @@
 |----------|------------------|
 | [under-control](https://git-mastery.github.io/exercises/under_control) | `gitmastery download under-control` |
 
+# git-merge
+
+| Exercise | Download Command |
+|----------|------------------|
+| [branch-bender](https://git-mastery.github.io/exercises/branch_bender) | `gitmastery download branch-bender` |
+
 # git-push
 
 | Exercise | Download Command |
