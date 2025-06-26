@@ -28,7 +28,8 @@ def run_command(command: List[str], verbose: bool) -> Optional[str]:
 def create_or_update_file(
     filepath: str | pathlib.Path, contents: Optional[str] = None
 ) -> None:
-    os.makedirs(os.path.dirname(filepath), exist_ok=True)
+    if os.path.dirname(filepath) != "":
+        os.makedirs(os.path.dirname(filepath), exist_ok=True)
     if contents is None:
         open(filepath, "a").close()
     else:
