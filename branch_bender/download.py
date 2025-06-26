@@ -29,6 +29,7 @@ def create_or_update_file(
     filepath: str | pathlib.Path, contents: Optional[str] = None
 ) -> None:
     if os.path.dirname(filepath) != "":
+        print("Creating filepath")
         os.makedirs(os.path.dirname(filepath), exist_ok=True)
     if contents is None:
         open(filepath, "a").close()
