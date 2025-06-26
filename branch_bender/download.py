@@ -86,7 +86,7 @@ def setup(verbose: bool = False):
         </html>
         """,
     )
-    run_command(["git", "add", "src/login.js"], verbose)
+    run_command(["git", "add", "login.html"], verbose)
     run_command(["git", "commit", "-m", "Add login page"], verbose)
 
     run_command(["git", "checkout", "main"], verbose)
