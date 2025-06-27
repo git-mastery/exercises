@@ -22,4 +22,23 @@ Merge the `feature/payment` branch into `main` last.
 
 The final Git graph (using `git log --oneline --graph`) should look like this:
 
-[![](https://mermaid.ink/img/pako:eNqVkT1vgzAQhv8KuhlRYhMIXlupU6dulZcLPj4UbCPHlkoR_71OmrYRUzvZuve9574WaKwiENAN_tnh1EvTWK0HL83RoWn6pCX0wdHDaLvB_Ko_b0_NyQafaLzImlxH25wNSeG5P1p0aktL_oi9A2zQE86ajP9nm7csSCHGo0HFfSzSJIkE35MmCSJ-FbUYRi9BmjVaMXj7OpsGhHeBUgiTQk9PA3YONYgWx3OMTmjerNXfJmdD19-LIBZ4B1GUeZYXVcmrmtfFnu9SmEGwkmUVyyvOy4Ltq8NuTeHjSsuzkkUbY6wuduxQl3UKnbs0fqtDRpF7tCFOJXgdcaQGb93L17GvN18_AQn5sis?type=png)](https://mermaid.live/edit#pako:eNqVkT1vgzAQhv8KuhlRYhMIXlupU6dulZcLPj4UbCPHlkoR_71OmrYRUzvZuve9574WaKwiENAN_tnh1EvTWK0HL83RoWn6pCX0wdHDaLvB_Ko_b0_NyQafaLzImlxH25wNSeG5P1p0aktL_oi9A2zQE86ajP9nm7csSCHGo0HFfSzSJIkE35MmCSJ-FbUYRi9BmjVaMXj7OpsGhHeBUgiTQk9PA3YONYgWx3OMTmjerNXfJmdD19-LIBZ4B1GUeZYXVcmrmtfFnu9SmEGwkmUVyyvOy4Ltq8NuTeHjSsuzkkUbY6wuduxQl3UKnbs0fqtDRpF7tCFOJXgdcaQGb93L17GvN18_AQn5sis)
+```mermaid
+gitGraph
+commit
+branch feature/login
+commit
+commit
+checkout main
+merge feature/login
+branch feature/dashboard
+commit
+commit 
+commit
+checkout main
+merge feature/dashboard
+branch feature/payment
+commit
+commit
+checkout main
+merge feature/payment
+```
