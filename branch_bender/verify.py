@@ -28,12 +28,6 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
 
     try:
         # Merge commits exhibit the behavior of having 2 parents (from/to)
-        merge_commits = [
-            commit for commit in main_branch.user_commits if len(commit.parents) > 1
-        ]
-        if len(merge_commits) < 3:
-            raise exercise.wrong_answer([MISSING_MERGES])
-
         main_reflog = main_branch.reflog[::-1]
         expected_order = ["feature/payments", "feature/dashboard", "feature/login"][
             ::-1
@@ -49,6 +43,9 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
                 )
             else:
                 i += 1
+
+        if i < len(expected_order):
+            raise exercise.wrong_answer([MISSING_MERGES])
 
         return exercise.to_output(
             ["Great work with using git merge fix the bugs!"],
