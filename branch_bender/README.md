@@ -26,17 +26,22 @@ The final Git graph (using `git log --oneline --graph`) should look like this:
 gitGraph
 commit
 branch feature/login
+checkout main
+branch feature/dashboard
+checkout main
+branch feature/payment
+checkout feature/login
 commit
 commit
 checkout main
 merge feature/login
-branch feature/dashboard
+checkout feature/dashboard
 commit
 commit 
 commit
 checkout main
 merge feature/dashboard
-branch feature/payment
+checkout feature/payment
 commit
 commit
 checkout main
