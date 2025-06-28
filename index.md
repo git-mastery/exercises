@@ -2,22 +2,22 @@
 
 | Exercise | Download Command |
 |----------|------------------|
-| [stage-fright](https://git-mastery.github.io/exercises/stage_fright) | `gitmastery download stage-fright` |
 | [grocery-shopping](https://git-mastery.github.io/exercises/grocery_shopping) | `gitmastery download grocery-shopping` |
+| [stage-fright](https://git-mastery.github.io/exercises/stage_fright) | `gitmastery download stage-fright` |
 
 # git-branch
 
 | Exercise | Download Command |
 |----------|------------------|
-| [side-track](https://git-mastery.github.io/exercises/side_track) | `gitmastery download side-track` |
 | [bonsai-tree](https://git-mastery.github.io/exercises/bonsai_tree) | `gitmastery download bonsai-tree` |
+| [side-track](https://git-mastery.github.io/exercises/side_track) | `gitmastery download side-track` |
 
 # git-checkout
 
 | Exercise | Download Command |
 |----------|------------------|
-| [side-track](https://git-mastery.github.io/exercises/side_track) | `gitmastery download side-track` |
 | [bonsai-tree](https://git-mastery.github.io/exercises/bonsai_tree) | `gitmastery download bonsai-tree` |
+| [side-track](https://git-mastery.github.io/exercises/side_track) | `gitmastery download side-track` |
 
 # git-commit
 
