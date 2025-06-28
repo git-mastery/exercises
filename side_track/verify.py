@@ -96,8 +96,7 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         )
     except (GitAutograderWrongAnswerException, GitAutograderInvalidStateException):
         raise
-    except Exception as e:
-        print(e)
+    except Exception:
         raise exercise.wrong_answer(["Something bad happened"])
     finally:
         main_branch.checkout()
