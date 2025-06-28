@@ -34,6 +34,7 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         ]
         i = 0
         for entry in main_reflog:
+            print(entry)
             if not entry.action.startswith("merge") or i >= len(expected_order):
                 continue
             merged_branch = entry.action[len("merge ") :]
