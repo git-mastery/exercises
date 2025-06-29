@@ -25,6 +25,23 @@ def run_command(command: List[str], verbose: bool) -> Optional[str]:
         exit(1)
 
 
+def run_command_no_exit(command: List[str], verbose: bool) -> Optional[str]:
+    try:
+        result = subprocess.run(
+            command,
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        if verbose:
+            print(result.stdout)
+        return result.stdout
+    except subprocess.CalledProcessError as e:
+        if verbose:
+            print(e.stderr)
+        return None
+
+
 def create_or_update_file(
     filepath: str | pathlib.Path, contents: Optional[str] = None
 ) -> None:
@@ -59,7 +76,4 @@ def setup(verbose: bool = False):
 
     run_command(["git", "checkout", "main"], verbose)
     run_command(["git", "merge", "A", "--no-edit"], verbose)
-    try:
-        run_command(["git", "merge", "B", "--no-edit"], verbose)
-    except BaseException:
-        print("Fix the merge conflict in script.py!")
+    run_command_no_exit(["git", "merge", "B", "--no-edit"], verbose)
