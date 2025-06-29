@@ -1,9 +1,7 @@
 from git_autograder import (
     GitAutograderExercise,
-    GitAutograderInvalidStateException,
     GitAutograderOutput,
     GitAutograderStatus,
-    GitAutograderWrongAnswerException,
 )
 
 UNCOMMITTED_CHANGES = "You still have uncommitted changes. Commit them first on the appropriate branch first!"
@@ -34,8 +32,12 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     main_reflog = main_branch.reflog
     merge_logs = [entry for entry in main_reflog if entry.action.startswith("merge")]
     merge_order = [entry.action[len("merge ") :] for entry in merge_logs][::-1]
+
     if len(merge_order) == 0:
         raise exercise.wrong_answer([NO_MERGES])
+
+    if len(merge_order) < 3:
+        raise exercise.wrong_answer([MISSING_MERGES])
 
     if merge_order[0] != "feature/login":
         raise exercise.wrong_answer([FEATURE_LOGIN_MERGE_MISSING, RESET_MESSAGE])

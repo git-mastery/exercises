@@ -33,5 +33,3 @@ initialization:
       branch-name: feature/login
     - type: merge
       branch-name: feature/dashboard
-    - type: merge
-      branch-name: feature/payments
