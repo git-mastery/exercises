@@ -36,6 +36,7 @@
 
 | Exercise | Download Command |
 |----------|------------------|
+| [conflict-mediator](https://git-mastery.github.io/exercises/conflict_mediator) | `gitmastery download conflict-mediator` |
 | [branch-bender](https://git-mastery.github.io/exercises/branch_bender) | `gitmastery download branch-bender` |
 
 # git-push
@@ -63,3 +64,9 @@
 | Exercise | Download Command |
 |----------|------------------|
 | [ignoring-somethings](https://git-mastery.github.io/exercises/ignoring_somethings) | `gitmastery download ignoring-somethings` |
+
+# merge-conflicts
+
+| Exercise | Download Command |
+|----------|------------------|
+| [conflict-mediator](https://git-mastery.github.io/exercises/conflict_mediator) | `gitmastery download conflict-mediator` |
