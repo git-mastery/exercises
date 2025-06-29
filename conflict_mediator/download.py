@@ -5,6 +5,8 @@ import textwrap
 from sys import exit
 from typing import List, Optional
 
+__resources__ = {"script.py": "script.py"}
+
 
 def run_command(command: List[str], verbose: bool) -> Optional[str]:
     try:
@@ -36,10 +38,6 @@ def create_or_update_file(
 
 
 def setup(verbose: bool = False):
-    create_or_update_file("script.py", "print('Hello ...')")
-    run_command(["git", "add", "script.py"], verbose)
-    run_command(["git", "commit", "-m", "Add base script.py"], verbose)
-
     commits_str = run_command(
         ["git", "log", "--reverse", "--pretty=format:%h"], verbose
     )
