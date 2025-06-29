@@ -27,6 +27,7 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         raise exercise.wrong_answer([DETACHED_HEAD])
 
     main_reflog = main_branch.reflog
+    print(exercise.repo.repo.git.reflog("show", "main"))
     print(main_reflog)
 
     try:
