@@ -29,9 +29,17 @@ initialization:
     - type: checkout
       branch-name: main
 
+    - type: branch
+      branch-name: other
+    - type: commit
+      empty: true
+      message: Empty commit on other
+    - type: checkout
+      branch-name: main
+
     - type: merge
       branch-name: feature/login
     - type: merge
       branch-name: feature/dashboard
     - type: merge
-      branch-name: feature/payments
+      branch-name: other
