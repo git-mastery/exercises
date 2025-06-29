@@ -36,6 +36,10 @@ def create_or_update_file(
 
 
 def setup(verbose: bool = False):
+    create_or_update_file("script.py", "print('Hello ...')")
+    run_command(["git", "add", "script.py"], verbose)
+    run_command(["git", "commit", "-m", "Add base script.py"], verbose)
+
     commits_str = run_command(
         ["git", "log", "--reverse", "--pretty=format:%h"], verbose
     )
@@ -43,10 +47,6 @@ def setup(verbose: bool = False):
     first_commit = commits_str.split("\n")[-1]
     tag_name = f"git-mastery-start-{first_commit}"
     run_command(["git", "tag", tag_name], verbose)
-
-    create_or_update_file("script.py", "print('Hello ...')")
-    run_command(["git", "add", "script.py"], verbose)
-    run_command(["git", "commit", "-m", "Add base script.py"], verbose)
 
     run_command(["git", "checkout", "-b", "A"], verbose)
     create_or_update_file("script.py", "print('Hello World!')")
