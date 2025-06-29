@@ -26,9 +26,11 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     except TypeError:
         raise exercise.wrong_answer([DETACHED_HEAD])
 
+    main_reflog = main_branch.reflog
+    print(main_reflog)
+
     try:
         # Merge commits exhibit the behavior of having 2 parents (from/to)
-        main_reflog = main_branch.reflog[::-1]
         expected_order = ["feature/payments", "feature/dashboard", "feature/login"][
             ::-1
         ]
