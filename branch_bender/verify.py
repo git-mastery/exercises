@@ -12,7 +12,12 @@ NOT_ON_MAIN = (
 )
 DETACHED_HEAD = "You should not be in a detached HEAD state! Use git checkout main to get back to main"
 MISSING_MERGES = "You are missing some merges"
-WRONG_MERGE_ORDER = "You should have merged {branch_name} first. The expected order is feature/login, feature/dashboard, feature/payments"
+NO_MERGES = "You need to start merging the feature branches."
+WRONG_MERGE_ORDER = "You should have merged {branch_name} first. The expected order is feature/login, then feature/dashboard, and last feature/payments"
+FEATURE_LOGIN_MERGE_MISSING = "You should have merged feature/login first."
+FEATURE_DASHBOARD_MERGE_MISSING = "You should have merged feature/dashboard next."
+FEATURE_PAYMENTS_MERGE_MISSING = "You should have merged feature/payments last."
+RESET_MESSAGE = 'Reset the repository using "gitmastery progress reset" and start again'
 
 
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
@@ -27,37 +32,23 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         raise exercise.wrong_answer([DETACHED_HEAD])
 
     main_reflog = main_branch.reflog
-    print(exercise.repo.repo.git.reflog("show", "main").splitlines())
-    print(main_reflog)
+    merge_logs = [entry for entry in main_reflog if entry.action.startswith("merge")]
+    merge_order = [entry.action[len("merge ") :] for entry in merge_logs][::-1]
+    if len(merge_order) == 0:
+        raise exercise.wrong_answer([NO_MERGES])
 
-    try:
-        # Merge commits exhibit the behavior of having 2 parents (from/to)
-        expected_order = ["feature/payments", "feature/dashboard", "feature/login"][
-            ::-1
-        ]
-        i = 0
-        for entry in main_reflog:
-            print(entry)
-            if not entry.action.startswith("merge") or i >= len(expected_order):
-                continue
-            merged_branch = entry.action[len("merge ") :]
-            if merged_branch != expected_order[i]:
-                raise exercise.wrong_answer(
-                    [WRONG_MERGE_ORDER.format(branch_name=expected_order[i])]
-                )
-            else:
-                i += 1
+    if merge_order[0] != "feature/login":
+        raise exercise.wrong_answer([FEATURE_LOGIN_MERGE_MISSING, RESET_MESSAGE])
 
-        if i < len(expected_order):
-            raise exercise.wrong_answer([MISSING_MERGES])
+    if merge_order[1] != "feature/dashboard":
+        raise exercise.wrong_answer([FEATURE_DASHBOARD_MERGE_MISSING, RESET_MESSAGE])
 
-        return exercise.to_output(
-            ["Great work with using git merge fix the bugs!"],
-            GitAutograderStatus.SUCCESSFUL,
-        )
-    except (GitAutograderWrongAnswerException, GitAutograderInvalidStateException):
-        raise
-    except Exception:
-        raise exercise.wrong_answer(["Something bad happened"])
-    finally:
-        main_branch.checkout()
+    if merge_order[2] != "feature/payments":
+        raise exercise.wrong_answer([FEATURE_PAYMENTS_MERGE_MISSING, RESET_MESSAGE])
+
+    return exercise.to_output(
+        [
+            "Great work with merging the branches in order! Try running the HTML files locally!"
+        ],
+        GitAutograderStatus.SUCCESSFUL,
+    )
