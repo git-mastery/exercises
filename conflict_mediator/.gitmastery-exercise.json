@@ -1,0 +1,17 @@
+{
+  "exercise_name": "conflict-mediator",
+  "tags": [
+    "git-merge",
+    "merge-conflicts"
+  ],
+  "requires_git": true,
+  "requires_github": false,
+  "base_files": {},
+  "exercise_repo": {
+    "repo_type": "local",
+    "repo_name": "conflict",
+    "repo_title": null,
+    "create_fork": null,
+    "init": true
+  }
+}
