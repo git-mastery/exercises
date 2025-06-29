@@ -61,5 +61,5 @@ def setup(verbose: bool = False):
     run_command(["git", "merge", "A", "--no-edit"], verbose)
     try:
         run_command(["git", "merge", "B", "--no-edit"], verbose)
-    except Exception:
+    except BaseException:
         print("Fix the merge conflict in script.py!")
