@@ -1,0 +1,16 @@
+initialization:
+  steps:
+    - type: new-file
+      filename: test.txt
+      contents: |
+        hi
+    - type: add
+      files:
+        - test.txt
+    - type: commit
+      message: Start
+      id: start
+    - type: edit-file
+      filename: test.txt
+      contents: |
+        changed
