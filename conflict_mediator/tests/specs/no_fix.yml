@@ -7,9 +7,9 @@ initialization:
     - type: new-file
       filename: script.py
       contents: |
-        print("Hello Everyone and World!")
+        print("Hello World!")
     - type: add
       files:
         - script.py
     - type: commit
-      message: Fix print
+      message: No fix print
