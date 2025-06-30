@@ -1,18 +1,10 @@
 # conflict-mediator
 
-<!--- Insert exercise description -->
+You have been called in mediate a conflict between two developers.
+
+John wants to change the script to print "Hello World!", while Josh wants to change the script to print "Hello Everyone!" and they cannot come to a compromise.
 
 ## Task
 
-<!--- Insert exercise task, simplify what needs to be done -->
+Fix the merge conflict created by merging both John's and Josh's changes, setting the text to "Hello Everyone and World!" instead.
 
-## Hints
-
-<!--- Insert hints here -->
-<!---
-    Use Github Markdown's collapsible content:
-    <details>
-    <summary>...</summary>
-    ...
-    </details>
--->
