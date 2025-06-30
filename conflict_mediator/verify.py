@@ -27,4 +27,6 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         if script_file.read().strip() != 'print("Hello Everyone and World!")':
             raise exercise.wrong_answer([MERGE_NOT_RESOLVED, RESET_MESSAGE])
 
-    return exercise.to_output([], GitAutograderStatus.SUCCESSFUL)
+    return exercise.to_output(
+        ["Great work resolving the merge conflict!"], GitAutograderStatus.SUCCESSFUL
+    )
