@@ -7,7 +7,7 @@
   "exercise_repo": {
     "repo_type": "local",
     "repo_name": "ignore-me",
-    "init": false,
+    "init": true,
     "create_fork": null,
     "repo_title": null
   }
