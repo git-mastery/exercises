@@ -1,26 +1,9 @@
 # link-me
 
-<!--- Insert exercise description -->
-
-## Learning outcomes
-
-<!--- Insert exercise learning outcomes -->
+You have started working on a team project `link-me` but realized that you need
+to share your changes with your other team members.
 
 ## Task
 
-<!--- Insert exercise task, simplify what needs to be done -->
-
-## Verification
-
-Run `gitmastery verify` in this exercise folder.
-
-## Hints
-
-<!--- Insert hints here -->
-<!--- 
-    Use Github Markdown's collapsible content:
-    <details>
-    <summary>...</summary>
-    ...
-    </details>
--->
+Add the `git-mastery/link-me` repository as the `upstream` remote for the
+`link-this` repository.
