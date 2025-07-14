@@ -6,6 +6,7 @@ initialization:
       id: start
     - type: bash
       runs: |
+        #!/bin/bash
         declare -a names=("josh" "adam" "mary" "jane" "charlie" "kristen" "alice" "john")
         for name in "${names[@]}"; do
           touch "$name.txt"
