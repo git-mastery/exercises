@@ -1,26 +1,17 @@
 # ignoring-somethings
 
-<!--- Insert exercise description -->
+You have stumbled upon a repository with an existing `.gitignore`. However, you
+have discovered that the `.gitignore` is not as accurate as you would like it to
+be.
 
-## Learning outcomes
-
-<!--- Insert exercise learning outcomes -->
+Some files are showing up when they should be hidden, and some files are hidden
+when they should be present.
 
 ## Task
 
-<!--- Insert exercise task, simplify what needs to be done -->
-
-## Verification
-
-Run `gitmastery verify` in this exercise folder.
-
-## Hints
-
-<!--- Insert hints here -->
-<!--- 
-    Use Github Markdown's collapsible content:
-    <details>
-    <summary>...</summary>
-    ...
-    </details>
--->
+1. While you wish to continue ignoring every file in the `many/` folder, you 
+    want to un-ignore just `many/file22.txt`
+2. `why_am_i_hidden.txt` should not be hidden
+3. `ignore_me.txt` should be hidden
+4. Hide the `runaway.txt` file in `this/`, however, you don't know how many 
+    layers of nesting it is under, so use the pattern matching syntax
