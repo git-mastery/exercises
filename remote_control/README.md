@@ -1,18 +1,11 @@
 # remote-control
 
-<!--- Insert exercise description -->
+You want to start a remote Git repository on Github.
 
 ## Task
 
-<!--- Insert exercise task, simplify what needs to be done -->
+Run `gitmastery verify` and follow the prompted name to create a new public 
+Github repository.
 
-## Hints
+Then, provide the URL into the prompt.
 
-<!--- Insert hints here -->
-<!--- 
-    Use Github Markdown's collapsible content:
-    <details>
-    <summary>...</summary>
-    ...
-    </details>
--->
