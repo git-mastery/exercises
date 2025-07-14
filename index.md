@@ -2,8 +2,8 @@
 
 | Exercise | Download Command |
 |----------|------------------|
-| [grocery-shopping](https://git-mastery.github.io/exercises/grocery_shopping) | `gitmastery download grocery-shopping` |
 | [stage-fright](https://git-mastery.github.io/exercises/stage_fright) | `gitmastery download stage-fright` |
+| [grocery-shopping](https://git-mastery.github.io/exercises/grocery_shopping) | `gitmastery download grocery-shopping` |
 
 # git-branch
 
@@ -23,8 +23,8 @@
 
 | Exercise | Download Command |
 |----------|------------------|
-| [grocery-shopping](https://git-mastery.github.io/exercises/grocery_shopping) | `gitmastery download grocery-shopping` |
 | [push-over](https://git-mastery.github.io/exercises/push_over) | `gitmastery download push-over` |
+| [grocery-shopping](https://git-mastery.github.io/exercises/grocery_shopping) | `gitmastery download grocery-shopping` |
 
 # git-init
 
@@ -36,8 +36,8 @@
 
 | Exercise | Download Command |
 |----------|------------------|
-| [conflict-mediator](https://git-mastery.github.io/exercises/conflict_mediator) | `gitmastery download conflict-mediator` |
 | [branch-bender](https://git-mastery.github.io/exercises/branch_bender) | `gitmastery download branch-bender` |
+| [conflict-mediator](https://git-mastery.github.io/exercises/conflict_mediator) | `gitmastery download conflict-mediator` |
 
 # git-push
 
@@ -51,6 +51,12 @@
 |----------|------------------|
 | [link-me](https://git-mastery.github.io/exercises/link_me) | `gitmastery download link-me` |
 | [push-over](https://git-mastery.github.io/exercises/push_over) | `gitmastery download push-over` |
+
+# git-restore
+
+| Exercise | Download Command |
+|----------|------------------|
+| [staging-intervention](https://git-mastery.github.io/exercises/staging_intervention) | `gitmastery download staging-intervention` |
 
 # git-status
 
