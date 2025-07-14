@@ -6,9 +6,7 @@ initialization:
       id: start
     - type: bash
       runs: |
-        #!/bin/bash
-        names=("josh" "adam" "mary" "jane" "charlie" "kristen" "alice" "john")
-        for name in "${names[@]}"; do
+        for name in "josh" "adam" "mary" "jane" "charlie" "kristen" "alice" "john"; do
           touch "$name.txt"
           git add "$name.txt"
         done
