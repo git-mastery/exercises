@@ -11,4 +11,4 @@ initialization:
           touch "$name.txt"
           git add "$name.txt"
         done
-        git restore --staged josh.txt adam.txt mary.txt
+        git restore --staged josh.txt adam.txt mary.txt kristen.txt john.txt
