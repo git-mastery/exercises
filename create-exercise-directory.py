@@ -64,6 +64,8 @@ def main():
 
     with open(OUTPUT_FILE, "w") as f:
         f.write(markdown)
+    with open("exercises.json", "w") as of:
+        of.write(json.dumps(tag_map, indent=2))
     print(f"Generated {OUTPUT_FILE} with {len(tag_map)} tags.")
 
 
