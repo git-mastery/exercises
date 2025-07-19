@@ -1,14 +1,11 @@
-import os
 import json
+import os
 from collections import defaultdict
 
 OUTPUT_FILE = "exercise-directory.md"
 
 
 def find_config_files(base_dir="."):
-    """
-    Finds .gitmastery-exercise.json files in 1-level subdirectories.
-    """
     config_files = []
     for entry in os.listdir(base_dir):
         full_path = os.path.join(base_dir, entry)
@@ -20,30 +17,29 @@ def find_config_files(base_dir="."):
 
 
 def parse_configs(config_files):
-    """
-    Parses the config files and returns a dict: tag -> list of (exercise_name, command)
-    """
-    tag_map = defaultdict(list)
-
+    configs = []
     for path in config_files:
         try:
             with open(path, "r") as f:
                 data = json.load(f)
-            exercise_name = data.get("exercise_name")
-            tags = data.get("tags", [])
-            for tag in set(tags):
-                tag_map[tag].append(
-                    (exercise_name, f"gitmastery download {exercise_name}")
-                )
+            configs.append(data)
         except Exception as e:
             print(f"Error reading {path}: {e}")
+    return configs
+
+
+def generate_tag_map(configs):
+    tag_map = defaultdict(list)
+
+    for config in configs:
+        exercise_name = config.get("exercise_name")
+        tags = config.get("tags", [])
+        for tag in set(tags):
+            tag_map[tag].append((exercise_name, f"gitmastery download {exercise_name}"))
     return tag_map
 
 
 def generate_markdown(tag_map):
-    """
-    Generates markdown content grouped by tag.
-    """
     lines = []
     for tag in sorted(tag_map):
         lines.append(f"# {tag}\n")
@@ -59,13 +55,14 @@ def generate_markdown(tag_map):
 
 def main():
     config_files = find_config_files()
-    tag_map = parse_configs(config_files)
+    configs = parse_configs(config_files)
+    tag_map = generate_tag_map(configs)
     markdown = generate_markdown(tag_map)
 
     with open(OUTPUT_FILE, "w") as f:
         f.write(markdown)
     with open("exercises.json", "w") as of:
-        of.write(json.dumps(tag_map, indent=2))
+        of.write(json.dumps(configs, indent=2))
     print(f"Generated {OUTPUT_FILE} with {len(tag_map)} tags.")
 
 
