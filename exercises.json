@@ -1,102 +1,234 @@
-{
-  "git-restore": [
-    [
-      "staging-intervention",
-      "gitmastery download staging-intervention"
-    ]
-  ],
-  "git-remote": [
-    [
-      "link-me",
-      "gitmastery download link-me"
+[
+  {
+    "exercise_name": "remote-control",
+    "tags": [],
+    "requires_git": true,
+    "requires_github": true,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "local",
+      "repo_name": "ignore-me",
+      "init": true,
+      "create_fork": null,
+      "repo_title": null
+    }
+  },
+  {
+    "exercise_name": "staging-intervention",
+    "tags": [
+      "git-restore"
     ],
-    [
-      "push-over",
-      "gitmastery download push-over"
-    ]
-  ],
-  "gitignore": [
-    [
-      "ignoring-somethings",
-      "gitmastery download ignoring-somethings"
-    ]
-  ],
-  "git-checkout": [
-    [
-      "bonsai-tree",
-      "gitmastery download bonsai-tree"
+    "requires_git": true,
+    "requires_github": false,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "local",
+      "repo_name": "intervention",
+      "repo_title": null,
+      "create_fork": null,
+      "init": true
+    }
+  },
+  {
+    "exercise_name": "link-me",
+    "tags": [
+      "git-remote"
     ],
-    [
-      "side-track",
-      "gitmastery download side-track"
-    ]
-  ],
-  "git-branch": [
-    [
-      "bonsai-tree",
-      "gitmastery download bonsai-tree"
+    "requires_git": true,
+    "requires_github": true,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "local",
+      "repo_name": "link-this",
+      "init": true,
+      "create_fork": null,
+      "repo_title": null
+    }
+  },
+  {
+    "exercise_name": "ignoring-somethings",
+    "tags": [
+      "gitignore"
     ],
-    [
-      "side-track",
-      "gitmastery download side-track"
-    ]
-  ],
-  "git-merge": [
-    [
-      "branch-bender",
-      "gitmastery download branch-bender"
+    "requires_git": true,
+    "requires_github": false,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "local",
+      "repo_name": "files",
+      "init": true,
+      "create_fork": null,
+      "repo_title": null
+    }
+  },
+  {
+    "exercise_name": "bonsai-tree",
+    "tags": [
+      "git-branch",
+      "git-checkout"
     ],
-    [
-      "conflict-mediator",
-      "gitmastery download conflict-mediator"
-    ]
-  ],
-  "git-push": [
-    [
-      "push-over",
-      "gitmastery download push-over"
-    ]
-  ],
-  "git-commit": [
-    [
-      "push-over",
-      "gitmastery download push-over"
+    "requires_git": true,
+    "requires_github": false,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "local",
+      "repo_name": "care-notes",
+      "repo_title": null,
+      "create_fork": null,
+      "init": true
+    }
+  },
+  {
+    "exercise_name": "branch-bender",
+    "tags": [
+      "git-merge"
     ],
-    [
-      "grocery-shopping",
-      "gitmastery download grocery-shopping"
-    ]
-  ],
-  "git-add": [
-    [
-      "stage-fright",
-      "gitmastery download stage-fright"
+    "requires_git": true,
+    "requires_github": false,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "local",
+      "repo_name": "webapp",
+      "repo_title": null,
+      "create_fork": null,
+      "init": true
+    }
+  },
+  {
+    "exercise_name": "push-over",
+    "tags": [
+      "git-remote",
+      "git-commit",
+      "git-push"
     ],
-    [
-      "grocery-shopping",
-      "gitmastery download grocery-shopping"
-    ]
-  ],
-  "git-init": [
-    [
-      "under-control",
-      "gitmastery download under-control"
-    ]
-  ],
-  "merge-conflicts": [
-    [
-      "conflict-mediator",
-      "gitmastery download conflict-mediator"
-    ]
-  ],
-  "git-status": [
-    [
-      "amateur-detective",
-      "gitmastery download amateur-detective"
+    "requires_git": true,
+    "requires_github": true,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_name": "push-this",
+      "repo_title": "push-over",
+      "repo_type": "remote",
+      "init": null,
+      "create_fork": true
+    }
+  },
+  {
+    "exercise_name": "stage-fright",
+    "tags": [
+      "git-add"
     ],
-    [
-      "nothing-to-hide",
-      "gitmastery download nothing-to-hide"
-    ]
-  ]
-}
+    "requires_git": true,
+    "requires_github": false,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "local",
+      "repo_name": "attendance",
+      "init": true,
+      "create_fork": null,
+      "repo_title": null
+    }
+  },
+  {
+    "exercise_name": "side-track",
+    "tags": [
+      "git-branch",
+      "git-checkout"
+    ],
+    "requires_git": true,
+    "requires_github": false,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "local",
+      "repo_name": "branch-me",
+      "repo_title": null,
+      "create_fork": null,
+      "init": true
+    }
+  },
+  {
+    "exercise_name": "under-control",
+    "tags": [
+      "git-init"
+    ],
+    "requires_git": false,
+    "requires_github": false,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "local",
+      "repo_name": "control-me",
+      "init": false,
+      "create_fork": null,
+      "repo_title": null
+    }
+  },
+  {
+    "exercise_name": "grocery-shopping",
+    "tags": [
+      "git-add",
+      "git-commit"
+    ],
+    "requires_git": true,
+    "requires_github": false,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "local",
+      "repo_name": "shopping-list",
+      "init": true,
+      "create_fork": null,
+      "repo_title": null
+    }
+  },
+  {
+    "exercise_name": "conflict-mediator",
+    "tags": [
+      "git-merge",
+      "merge-conflicts"
+    ],
+    "requires_git": true,
+    "requires_github": false,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "local",
+      "repo_name": "conflict",
+      "repo_title": null,
+      "create_fork": null,
+      "init": true
+    }
+  },
+  {
+    "exercise_name": "amateur-detective",
+    "tags": [
+      "git-status"
+    ],
+    "requires_git": true,
+    "requires_github": false,
+    "base_files": {
+      "answers.txt": "answers.txt"
+    },
+    "exercise_repo": {
+      "repo_type": "local",
+      "repo_name": "crime-scene",
+      "repo_title": null,
+      "create_fork": null,
+      "init": true
+    }
+  },
+  {
+    "exercise_name": "nothing-to-hide",
+    "tags": [
+      "git-status"
+    ],
+    "requires_git": true,
+    "requires_github": false,
+    "base_files": {
+      "answers.txt": "answers.txt"
+    },
+    "exercise_repo": {
+      "repo_type": "local",
+      "repo_name": "repo",
+      "init": true,
+      "create_fork": null,
+      "repo_title": null
+    }
+  }
+]
