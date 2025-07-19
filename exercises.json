@@ -1,0 +1,102 @@
+{
+  "git-restore": [
+    [
+      "staging-intervention",
+      "gitmastery download staging-intervention"
+    ]
+  ],
+  "git-remote": [
+    [
+      "link-me",
+      "gitmastery download link-me"
+    ],
+    [
+      "push-over",
+      "gitmastery download push-over"
+    ]
+  ],
+  "gitignore": [
+    [
+      "ignoring-somethings",
+      "gitmastery download ignoring-somethings"
+    ]
+  ],
+  "git-checkout": [
+    [
+      "bonsai-tree",
+      "gitmastery download bonsai-tree"
+    ],
+    [
+      "side-track",
+      "gitmastery download side-track"
+    ]
+  ],
+  "git-branch": [
+    [
+      "bonsai-tree",
+      "gitmastery download bonsai-tree"
+    ],
+    [
+      "side-track",
+      "gitmastery download side-track"
+    ]
+  ],
+  "git-merge": [
+    [
+      "branch-bender",
+      "gitmastery download branch-bender"
+    ],
+    [
+      "conflict-mediator",
+      "gitmastery download conflict-mediator"
+    ]
+  ],
+  "git-push": [
+    [
+      "push-over",
+      "gitmastery download push-over"
+    ]
+  ],
+  "git-commit": [
+    [
+      "push-over",
+      "gitmastery download push-over"
+    ],
+    [
+      "grocery-shopping",
+      "gitmastery download grocery-shopping"
+    ]
+  ],
+  "git-add": [
+    [
+      "stage-fright",
+      "gitmastery download stage-fright"
+    ],
+    [
+      "grocery-shopping",
+      "gitmastery download grocery-shopping"
+    ]
+  ],
+  "git-init": [
+    [
+      "under-control",
+      "gitmastery download under-control"
+    ]
+  ],
+  "merge-conflicts": [
+    [
+      "conflict-mediator",
+      "gitmastery download conflict-mediator"
+    ]
+  ],
+  "git-status": [
+    [
+      "amateur-detective",
+      "gitmastery download amateur-detective"
+    ],
+    [
+      "nothing-to-hide",
+      "gitmastery download nothing-to-hide"
+    ]
+  ]
+}
