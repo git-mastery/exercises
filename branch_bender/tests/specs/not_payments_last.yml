@@ -39,7 +39,10 @@ initialization:
 
     - type: merge
       branch-name: feature/login
+      no-ff: true
     - type: merge
       branch-name: feature/dashboard
+      no-ff: true
     - type: merge
       branch-name: other
+      no-ff: true

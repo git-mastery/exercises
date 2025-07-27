@@ -8,7 +8,7 @@ You have been working on all of these changes on separate branches and you now w
 
 ### Task 1
 
-Merge the `feature/login` branch into `main` first.
+Merge the `feature/login` branch into `main` first. Make sure you do not use fast forwarding when merging!
 
 ### Task 2
 
