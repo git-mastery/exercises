@@ -76,4 +76,3 @@ def setup(verbose: bool = False):
 
     run_command(["git", "checkout", "main"], verbose)
     run_command(["git", "merge", "A", "--no-edit"], verbose)
-    run_command_no_exit(["git", "merge", "B", "--no-edit"], verbose)
