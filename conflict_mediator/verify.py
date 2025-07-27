@@ -24,7 +24,10 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         raise exercise.wrong_answer([DETACHED_HEAD])
 
     with exercise.repo.files.file("script.py") as script_file:
-        if script_file.read().strip() != 'print("Hello Everyone and World!")':
+        if (
+            script_file.read().strip() != 'print("Hello Everyone and World!")'
+            and script_file.read().strip() != "print('Hello Everyone and World!')"
+        ):
             raise exercise.wrong_answer([MERGE_NOT_RESOLVED, RESET_MESSAGE])
 
     return exercise.to_output(
