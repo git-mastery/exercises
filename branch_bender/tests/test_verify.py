@@ -5,6 +5,7 @@ from ..verify import (
     FEATURE_LOGIN_MERGE_MISSING,
     FEATURE_PAYMENTS_MERGE_MISSING,
     MISSING_MERGES,
+    NO_FAST_FORWARDING,
     NO_MERGES,
     NOT_ON_MAIN,
     RESET_MESSAGE,
@@ -20,6 +21,15 @@ loader = GitAutograderTestLoader(__file__, REPOSITORY_NAME, verify)
 def test_base():
     with loader.load("specs/base.yml", "start") as output:
         assert_output(output, GitAutograderStatus.SUCCESSFUL)
+
+
+def test_ff_fails():
+    with loader.load("specs/ff_fails.yml", "start") as output:
+        assert_output(
+            output,
+            GitAutograderStatus.UNSUCCESSFUL,
+            [NO_FAST_FORWARDING.format(branch_name="feature/login"), RESET_MESSAGE],
+        )
 
 
 def test_no_merges():

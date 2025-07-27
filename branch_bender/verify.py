@@ -11,6 +11,7 @@ NOT_ON_MAIN = (
 DETACHED_HEAD = "You should not be in a detached HEAD state! Use git checkout main to get back to main"
 MISSING_MERGES = "You are missing some merges"
 NO_MERGES = "You need to start merging the feature branches."
+NO_FAST_FORWARDING = "You cannot use fast forwarding on {branch_name} when merging."
 WRONG_MERGE_ORDER = "You should have merged {branch_name} first. The expected order is feature/login, then feature/dashboard, and last feature/payments"
 FEATURE_LOGIN_MERGE_MISSING = "You should have merged feature/login first."
 FEATURE_DASHBOARD_MERGE_MISSING = "You should have merged feature/dashboard next."
@@ -31,6 +32,7 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
 
     main_reflog = main_branch.reflog
     merge_logs = [entry for entry in main_reflog if entry.action.startswith("merge")]
+    messages = [entry.message for entry in merge_logs][::-1]
     merge_order = [entry.action[len("merge ") :] for entry in merge_logs][::-1]
 
     if len(merge_order) == 0:
@@ -42,11 +44,26 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     if merge_order[0] != "feature/login":
         raise exercise.wrong_answer([FEATURE_LOGIN_MERGE_MISSING, RESET_MESSAGE])
 
+    if messages[0] == "Fast-forward":
+        raise exercise.wrong_answer(
+            [NO_FAST_FORWARDING.format(branch_name="feature/login"), RESET_MESSAGE]
+        )
+
     if merge_order[1] != "feature/dashboard":
         raise exercise.wrong_answer([FEATURE_DASHBOARD_MERGE_MISSING, RESET_MESSAGE])
 
+    if messages[1] == "Fast-forward":
+        raise exercise.wrong_answer(
+            [NO_FAST_FORWARDING.format(branch_name="feature/dashboard"), RESET_MESSAGE]
+        )
+
     if merge_order[2] != "feature/payments":
         raise exercise.wrong_answer([FEATURE_PAYMENTS_MERGE_MISSING, RESET_MESSAGE])
+
+    if messages[2] == "Fast-forward":
+        raise exercise.wrong_answer(
+            [NO_FAST_FORWARDING.format(branch_name="feature/payments"), RESET_MESSAGE]
+        )
 
     return exercise.to_output(
         [
