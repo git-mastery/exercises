@@ -4,6 +4,7 @@
 
 - Bash environment
 - Python 3.13
+<!-- - `gh` Github CLI [installed and authenticated](https://github.com/cli/cli#installation) for testing downloads -->
 
 ## Getting started
 
@@ -165,6 +166,9 @@ The initial download script also includes a command to attach a tag as the "star
 Refer to existing `download.py` for reference on how to setup the download script.
 
 ### Testing downloads
+
+> [!DANGER]
+> This is still a work in progress and the script does not exist yet! Feel free to create the exercise first and the Git-Mastery team will iterate over it with you! 
 
 To test that your download script works, we have provided a script to simulate the download process in this repository for you to verify.
 
