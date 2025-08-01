@@ -158,7 +158,7 @@ As a result, the `download` function is the last step after you have already set
 
 The default download script comes with a helper function to `run_command` to run local commands.
 
-> [!INFO]
+> [!NOTE]
 > You should be using OS-agnostic commands in the download script
 
 The initial download script also includes a command to attach a tag as the "start tag". This is only useful if you want to iterate through the user's commits in your verification script. Otherwise, this can be removed.
@@ -167,7 +167,7 @@ Refer to existing `download.py` for reference on how to setup the download scrip
 
 ### Testing downloads
 
-> [!DANGER]
+> [!IMPORTANT]
 > This is still a work in progress and the script does not exist yet! Feel free to create the exercise first and the Git-Mastery team will iterate over it with you! 
 
 To test that your download script works, we have provided a script to simulate the download process in this repository for you to verify.
