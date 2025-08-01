@@ -4,7 +4,7 @@
 
 - Bash environment
 - Python 3.13
-<!-- - `gh` Github CLI [installed and authenticated](https://github.com/cli/cli#installation) for testing downloads -->
+- `gh` Github CLI [installed and authenticated](https://github.com/cli/cli#installation) for testing downloads
 
 ## Getting started
 
