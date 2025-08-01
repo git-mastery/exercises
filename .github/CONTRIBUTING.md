@@ -167,14 +167,16 @@ Refer to existing `download.py` for reference on how to setup the download scrip
 
 ### Testing downloads
 
-> [!IMPORTANT]
-> This is still a work in progress and the script does not exist yet! Feel free to create the exercise first and the Git-Mastery team will iterate over it with you! 
-
 To test that your download script works, we have provided a script to simulate the download process in this repository for you to verify.
 
 ```bash
 ./test-download.sh <your exercise folder>
 ```
+
+You can find the downloaded repository under the `test-downloads/` folder.
+
+> [!NOTE]
+> If you wish to support a remote repository and require the Git-Mastery team to create a new repository, create an issue and we will assess the request accordingly
 
 ## Verification script 
 
