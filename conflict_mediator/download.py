@@ -63,16 +63,16 @@ def setup(verbose: bool = False):
     tag_name = f"git-mastery-start-{first_commit}"
     run_command(["git", "tag", tag_name], verbose)
 
-    run_command(["git", "checkout", "-b", "A"], verbose)
+    run_command(["git", "checkout", "-b", "john"], verbose)
     create_or_update_file("script.py", "print('Hello World!')")
     run_command(["git", "add", "script.py"], verbose)
     run_command(["git", "commit", "-m", "Hello world"], verbose)
 
     run_command(["git", "checkout", "main"], verbose)
-    run_command(["git", "checkout", "-b", "B"], verbose)
+    run_command(["git", "checkout", "-b", "josh"], verbose)
     create_or_update_file("script.py", "print('Hello Everyone!')")
     run_command(["git", "add", "script.py"], verbose)
     run_command(["git", "commit", "-m", "Hello everyone"], verbose)
 
     run_command(["git", "checkout", "main"], verbose)
-    run_command(["git", "merge", "A", "--no-edit"], verbose)
+    run_command(["git", "merge", "john", "--no-edit"], verbose)
