@@ -18,6 +18,11 @@ def test_base():
         assert_output(output, GitAutograderStatus.SUCCESSFUL)
 
 
+def test_base_single_quotes():
+    with loader.load("specs/base_single_quotes.yml", "start") as output:
+        assert_output(output, GitAutograderStatus.SUCCESSFUL)
+
+
 def test_no_fix():
     with loader.load("specs/no_fix.yml", "start") as output:
         assert_output(
