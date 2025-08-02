@@ -13,7 +13,7 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         raise exercise.wrong_answer([MISSING_UPSTREAM_REMOTE])
 
     upstream = exercise.repo.remotes.remote("upstream")
-    if not upstream.remote.url.startswith("https://github.com/git-mastery/link-me"):
+    if not upstream.is_for_repo("git-mastery", "link-me"):
         raise exercise.wrong_answer([WRONG_UPSTREAM_URL])
 
     return exercise.to_output(

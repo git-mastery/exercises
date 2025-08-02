@@ -12,6 +12,16 @@ def test_valid():
         assert_output(output, GitAutograderStatus.SUCCESSFUL)
 
 
+def test_valid_ssh():
+    with loader.load("specs/valid_ssh.yml", "start") as output:
+        assert_output(output, GitAutograderStatus.SUCCESSFUL)
+
+
+def test_invalid_ssh():
+    with loader.load("specs/invalid_ssh.yml", "start") as output:
+        assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [WRONG_UPSTREAM_URL])
+
+
 def test_wrong_url():
     with loader.load("specs/wrong_url.yml", "start") as output:
         assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [WRONG_UPSTREAM_URL])

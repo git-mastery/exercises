@@ -5,5 +5,5 @@ initialization:
       message: Empty commit
       id: start
     - type: remote
-      remote-url: https://github.com/git-mastery/link-me.git
+      remote-url: git@github.com/git-mastery/link-me.git
       remote-name: upstream
