@@ -32,7 +32,6 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     shopping_list_blob = (
         main_branch.latest_user_commit.commit.tree / "shopping-list.txt"
     )
-    print(shopping_list_blob)
     current_shopping_list = {
         line[2:]
         for line in shopping_list_blob.data_stream.read().decode().split("\n")
