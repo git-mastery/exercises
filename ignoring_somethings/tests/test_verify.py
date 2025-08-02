@@ -37,6 +37,17 @@ def test_no_change():
         )
 
 
+def test_overriding():
+    with loader.load("specs/overriding.yml") as output:
+        assert_output(
+            output,
+            GitAutograderStatus.UNSUCCESSFUL,
+            [
+                STILL_HIDING,
+            ],
+        )
+
+
 def test_not_pattern_matching():
     with loader.load("specs/not_pattern_matching.yml") as output:
         assert_output(
