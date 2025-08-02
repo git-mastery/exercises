@@ -1,6 +1,8 @@
-import os
+import tempfile
+from pathlib import Path
 from typing import List
 
+from git import Repo
 from git_autograder import (
     GitAutograderExercise,
     GitAutograderOutput,
@@ -19,6 +21,7 @@ NOT_IGNORING_RUNAWAY = (
 NOT_PATTERN_MATCHING_RUNAWAY = (
     "You should be using ** to match all subfolders to ignore runaway.txt."
 )
+MISSING_GITIGNORE = "You are missing the .gitignore file! Try to reset the exercise using gitmastery progress reset"
 
 
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
@@ -27,36 +30,48 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     if len(main_branch.user_commits) == 0:
         raise exercise.wrong_answer([MISSING_COMMITS])
 
-    main_branch.latest_commit.checkout()
+    with main_branch.latest_commit.file(".gitignore") as gitignore_file:
+        if gitignore_file is None:
+            raise exercise.wrong_answer([MISSING_GITIGNORE])
+        gitignore_file_contents = gitignore_file
 
-    # Read the file and parse it
-    with open(
-        os.path.join(exercise.repo.repo_path, ".gitignore"), "r"
-    ) as gitignore_file:
-        lines = [
-            line.strip() for line in gitignore_file.readlines() if line.strip() != ""
+    # Verify the state of the ignore by recreating the necessary files and checking if
+    # Git ignores them directly in a separate temporary Git repository
+    with tempfile.TemporaryDirectory() as tmpdir:
+        tmp_path = Path(tmpdir)
+        (tmp_path / ".gitignore").write_text(gitignore_file_contents)
+
+        simulated_files = [
+            "many/file22.txt",
+            "why_am_i_hidden.txt",
+            "ignore_me.txt",
+            "this/is/very/nested/runaway.txt",
         ]
+        for file in simulated_files:
+            (tmp_path / file).parent.mkdir(parents=True, exist_ok=True)
+            (tmp_path / file).touch()
 
-    comments: List[str] = []
-    if "!many/file22.txt" not in lines:
-        comments.append(STILL_IGNORING_FILE_22)
+        test_repo: Repo = Repo.init(tmp_path)
+        ignored = {f for f in simulated_files if test_repo.ignored(f)}
 
-    if "why_am_i_hidden.txt" in lines:
-        comments.append(STILL_HIDING)
+        comments: List[str] = []
+        if "many/file22.txt" in ignored:
+            comments.append(STILL_IGNORING_FILE_22)
 
-    if "ignore_me.txt" not in lines:
-        comments.append(NOT_IGNORING_IGNORE_ME)
+        if "why_am_i_hidden.txt" in ignored:
+            comments.append(STILL_HIDING)
 
-    if "this/is/very/nested/runaway.txt" in lines:
-        comments.append(NOT_PATTERN_MATCHING_RUNAWAY)
-    elif "this/**/runaway.txt" not in lines:
-        comments.append(NOT_IGNORING_RUNAWAY)
+        if "ignore_me.txt" not in ignored:
+            comments.append(NOT_IGNORING_IGNORE_ME)
 
-    main_branch.checkout()
+        if "this/is/very/nested/runaway.txt" not in ignored:
+            comments.append(NOT_IGNORING_RUNAWAY)
+        elif "this/**/runaway.txt" not in gitignore_file_contents.splitlines():
+            comments.append(NOT_PATTERN_MATCHING_RUNAWAY)
 
-    if comments:
-        raise exercise.wrong_answer(comments)
+        if comments:
+            raise exercise.wrong_answer(comments)
 
-    return exercise.to_output(
-        ["Great work using .gitignore!"], status=GitAutograderStatus.SUCCESSFUL
-    )
+        return exercise.to_output(
+            ["Great work using .gitignore!"], status=GitAutograderStatus.SUCCESSFUL
+        )
