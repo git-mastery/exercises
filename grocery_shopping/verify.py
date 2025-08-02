@@ -13,6 +13,8 @@ NO_ADD = "There are no new grocery list items added to the shopping list."
 NO_REMOVE = "There are no grocery list items removed from the shopping list."
 WRONG_FILE = "You haven't edited shopping-list.txt."
 
+ORIGINAL_SHOPPING_LIST = {"Milk", "Eggs", "Bread", "Apples", "Ham"}
+
 
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     comments: List[str] = []
@@ -27,17 +29,23 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     if not main_branch.has_edited_file("shopping-list.txt"):
         raise exercise.wrong_answer([WRONG_FILE])
 
-    # Verify if the final state of the file has additions and removals
-    file_diff = GitAutograderDiffHelper.get_file_diff(
-        main_branch.start_commit, main_branch.latest_commit, "shopping-list.txt"
+    shopping_list_blob = (
+        main_branch.latest_user_commit.commit.tree / "shopping-list.txt"
     )
-    if file_diff is None:
-        raise exercise.wrong_answer([NO_DIFF])
+    print(shopping_list_blob)
+    current_shopping_list = {
+        line[2:]
+        for line in shopping_list_blob.data_stream.read().decode().split("\n")
+        if line.startswith("- ")
+    }
 
-    if not file_diff[0].has_added_line():
+    added_items = current_shopping_list.difference(ORIGINAL_SHOPPING_LIST)
+    deleted_items = ORIGINAL_SHOPPING_LIST.difference(current_shopping_list)
+
+    if not added_items:
         comments.append(NO_ADD)
 
-    if not file_diff[0].has_deleted_line():
+    if not deleted_items:
         comments.append(NO_REMOVE)
 
     if comments:

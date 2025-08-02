@@ -23,7 +23,9 @@ def test_wrong_file():
 
 def test_only_edit():
     with loader.load("specs/only_edit.yml", "start") as output:
-        assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [NO_ADD, NO_REMOVE])
+        # We treat edits as adding and removing at the same time
+        # TODO: Might want to change how we think about this but for now, this works
+        assert_output(output, GitAutograderStatus.SUCCESSFUL)
 
 
 def test_no_add():
