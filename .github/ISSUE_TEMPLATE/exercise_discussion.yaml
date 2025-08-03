@@ -27,19 +27,19 @@ body:
       required: true
   - type: textarea
     attributes:
+      label: Exercise learning outcomes
+      description: What is the exercise's learning outcomes?
+      placeholder: Git concepts tested, lessons covered, etc.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
       label: Instructions for students
       description: Instructions to be added to the exercise's `README.md`
       placeholder: |
         1. Create a fork
         2. Clone the fork
         3. ...
-    validations:
-      required: true
-  - type: textarea
-    attributes:
-      label: Exercise learning outcomes
-      description: What is the exercise's learning outcomes?
-      placeholder: Git concepts tested, lessons covered, etc.
     validations:
       required: true
   - type: textarea
