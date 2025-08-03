@@ -1,0 +1,26 @@
+name: Request for Exercise Repository
+description: Creating a new exercise for Git-Mastery and require a remote repository on the Git-Mastery organization? Request one here.
+title: "[Exercise Repository Request]"
+labels: ["exercise repository request"]
+assignees:
+  - woojiahao
+body:
+  - type: markdown
+    attributes:
+      value: |
+        You are currently filing an exercise repository request. This means that you are currently working on a new exercise
+        and would require a remote repository on the Git-Mastery organization for students to use.
+  - type: input
+    attributes:
+      label: Exercise discussion issue
+      description: Provide the link to the exercise discussion for this remote repository
+      placeholder: https://github.com/git-mastery/exercises/issues?q=is%3Aissue%20state%3Aopen%20label%3A%22exercise%20discussion%22
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Repository name
+      description: What is the name of the exercise repository. Use kebab case
+      placeholder: test-repository
+    validations:
+      required: true
