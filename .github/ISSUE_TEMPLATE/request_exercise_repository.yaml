@@ -1,6 +1,6 @@
 name: Request for Exercise Repository
 description: Creating a new exercise for Git-Mastery and require a remote repository on the Git-Mastery organization? Request one here.
-title: "[Exercise Repository Request]"
+title: "[Exercise Repository Request] "
 labels: ["exercise repository request"]
 assignees:
   - woojiahao
@@ -8,6 +8,8 @@ body:
   - type: markdown
     attributes:
       value: |
+        # Exercise repository request
+
         You are currently filing an exercise repository request. This means that you are currently working on a new exercise
         and would require a remote repository on the Git-Mastery organization for students to use.
   - type: input
@@ -24,3 +26,9 @@ body:
       placeholder: test-repository
     validations:
       required: true
+  - type: markdown
+    attributes:
+      value: |
+        # Next steps
+
+        We will notify you when we have created the repository so you can PR the necessary files in.
