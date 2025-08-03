@@ -34,6 +34,13 @@ body:
       required: true
   - type: textarea
     attributes:
+      label: Exercise setup
+      description: How will the exercise be setup on the student's machine?
+      placeholder: What will the starting exercise look like? What files are necessary for this exercise?
+    validations:
+      required: true
+  - type: textarea
+    attributes:
       label: Instructions for students
       description: Instructions to be added to the exercise's `README.md`
       placeholder: |
@@ -44,24 +51,17 @@ body:
       required: true
   - type: textarea
     attributes:
-      label: Exercise setup
-      description: How will the exercise be setup on the student's machine?
-      placeholder: What will the starting exercise look like? What files are necessary for this exercise?
-    validations:
-      required: true
-  - type: textarea
-    attributes:
       label: Exercise grading
       description: How will the exercise be graded?
     validations:
       required: true
-  - type: checkboxes
+  - type: input
     attributes:
       label: Requires remote repository?
-      description: If this exercise requires a remote repository, create this exercise discussion first and then file a request for remote repository
-      options:
-        - label: This exercise will likely require a remote repository
-          required: false
+      description: If this exercise requires a remote repository, create this exercise discussion first and then [file a request for remote repository](https://github.com/git-mastery/exercises/issues/new?template=request_exercise_repository.yaml)
+      placeholder: If the remote already exists, provide the URL here, otherwise, indicate yes or no
+    validations:
+      required: false
   - type: textarea
     attributes:
       label: Additional remarks
