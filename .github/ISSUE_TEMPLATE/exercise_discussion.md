@@ -2,7 +2,7 @@
 name: Exercise Discussions
 about: Want to create a new exercise for Git-Mastery? Discuss the details of the exercise with the Git-Mastery team first.
 title: "[Exercise Discussion]"
-labels: ["exercise-discussion"]
+labels: ["exercise discussion"]
 assignees: 
   - woojiahao
   - damithc
