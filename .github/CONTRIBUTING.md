@@ -1,15 +1,25 @@
+[![CI](https://github.com/git-mastery/exercises/actions/workflows/ci.yml/badge.svg)](https://github.com/git-mastery/exercises/actions/workflows/ci.yml)
+
 # Contributing an exercise
+
+## Before contributing
+
+Make sure that you have done the following:
+
+- [ ] Create an [exercise discussion](https://github.com/git-mastery/exercises/issues/new?template=exercise_discussion.yaml)
+- [ ] Obtained approval on the exercise
+- [ ] File a [remote repository request](https://github.com/git-mastery/exercises/issues/new?template=request_exercise_repository.yaml)
 
 ## Prerequisites
 
 - Bash environment
 - Python 3.13
-- `gh` Github CLI [installed and authenticated](https://github.com/cli/cli#installation) for testing downloads
+- Github CLI [installed and authenticated](https://github.com/cli/cli#installation) for testing the download script
 
-## Getting started
+## Setup
 
-1. Fork the repository
-2. Clone the repository
+1. Fork this repository
+2. Clone the fork
 
     ```bash
     git clone https://github.com/<username>/exercises
@@ -33,36 +43,41 @@
     pip install -r requirements.txt
     ```
 
-6. Create a new exercise template, following the prompts to setup the `.gitmastery-exercise.json` configuration file. For more details about the configuration, refer [here]()
+## Create a new exercise
 
-    ```bash
-    ./new.sh
-    ```
+Use the provided `new.sh` script to scaffold a new exercise:
 
+```bash
+./new.sh
+```
 
-You should now see a new exercise with the name you have chosen.
+This script will prompt you for:
 
-## Exercise structure
+1. The name of the exercise
+2. The exercise tags (split by space)
+3. The exercise configuration
 
-### Your template
+> [!TIP]
+> You should use kebab case for the exercise name.
 
-An exercise comprises of the following structure:
+It then generates the following directory structure:
 
 ```text
 <exercise name>
+├── .gitmastery-exercise.json
 ├── README.md
 ├── __init__.py
 ├── download.py
 ├── res
 │   └── ...
 ├── tests
-│   ├── __init__.py
 │   ├── specs
-│   │   ├── base.yml
+│   │   └── base.yml
 │   └── test_verify.py
 └── verify.py
 ```
 
+- `.gitmastery-exercise.json`: contains the exercise configuration
 - `README.md`: contains the instructions for the exercise for the students to attempt
 - `download.py`: contains the download instructions to setup the student's exercise
 - `verify.py`: contains the verification script for the exercise attempt
@@ -70,52 +85,7 @@ An exercise comprises of the following structure:
 - `tests/specs/`: contains specification files written using [`repo-smith`](https://github.com/git-mastery/git-autograder)
 - `tests/test_verify.py`: contains unit tests for verification script
 
-### What students see
-
-When a student downloads an exercise, they will see the following folder structure:
-
-```text
-<exercise name>
-├── .gitmastery-exercise.json
-├── README.md
-└── <sub folder name>
-    ├── .git
-    └── ...
-```
-
-The root of the exercise will contain the `README.md` and `.gitmastery-exercise.json` configured from your template.
-
-It also contains the sub-folder configured in `.gitmastery-exercise.json`, which is where students will attempt the exercise.
-
-## Types of resources
-
-There are two distinct types of resources:
-
-1. Base files: configured through the `base_files` property in `.gitmastery-exercise.json` in your template; files located in `res/` are downloaded to the root of the exercise folder
-
-    ```text
-    <exercise name>
-    ├── .gitmastery-exercise.json
-    ├── README.md
-    ├── <base files>
-    └── <sub folder name>
-        ├── .git
-        └── ...
-    ```
-
-2. Resources: configured through the `__resources__` field in `download.py`; supporting files for the exercise with files located in `res/` downloaded into the sub folder
-
-    ```text
-    <exercise name>
-    ├── .gitmastery-exercise.json
-    ├── README.md
-    ├── <base files>
-    └── <sub folder name>
-        ├── .git
-        └── <resources>
-    ```
-
-## `.gitmastery-exercise.json` configuration
+### `.gitmastery-exercise.json` configuration
 
 The `.gitmastery-exercise.json` is used to tell the [Git-Mastery app](https://git-mastery.github.io/app) how to setup the student's exercise.
 
@@ -127,13 +97,13 @@ The `new.sh` script should have already generated one for you, but you may chang
 - `requires_github`: performs a check to ensure that Github CLI is installed and the user has already authenticated themselves
 - `base_files`: specifies the files from `res/` to be downloaded into the exercise root; typically used for the `answers.txt` (more about grading types [here]())
 - `exercise_repo`: controls the sub-folder that is generated; this is where students work on the exercise
-    - `repo_type`: `local` or `remote`; if `remote`, then the sub-folder is generated from a remote repository
-    - `repo_name`: name of the sub-folder; required for both `repo_type`
-    - `init`: determines if `git init` is run for the sub-folder; required only for `local`
-    - `create_fork`: determines if a fork is created on the user's Github account; required only for `remote`
-    - `repo_title`: name of the remote repository to fork + clone; required only for `remote`
+  - `repo_type`: `local` or `remote`; if `remote`, then the sub-folder is generated from a remote repository
+  - `repo_name`: name of the sub-folder; required for both `repo_type`
+  - `init`: determines if `git init` is run for the sub-folder; required only for `local`
+  - `create_fork`: determines if a fork is created on the user's Github account; required only for `remote`
+  - `repo_title`: name of the remote repository to fork + clone; required only for `remote`
 
-## Download script
+## Designing download process
 
 The `download.py` contains the instructions to setup the local repository.
 
@@ -165,6 +135,51 @@ The initial download script also includes a command to attach a tag as the "star
 
 Refer to existing `download.py` for reference on how to setup the download script.
 
+### What students see
+
+When a student downloads an exercise, they will see the following folder structure:
+
+```text
+<exercise name>
+├── .gitmastery-exercise.json
+├── README.md
+└── <sub folder name>
+    ├── .git
+    └── ...
+```
+
+The root of the exercise will contain the `README.md` and `.gitmastery-exercise.json` configured from your template.
+
+It also contains the sub-folder configured in `.gitmastery-exercise.json`, which is where students will attempt the exercise.
+
+### Types of resources
+
+There are two distinct types of resources:
+
+1. Base files: configured through the `base_files` property in `.gitmastery-exercise.json` in your template; files located in `res/` are downloaded to the root of the exercise folder
+
+    ```text
+    <exercise name>
+    ├── .gitmastery-exercise.json
+    ├── README.md
+    ├── <base files> <-- here
+    └── <sub folder name>
+        ├── .git
+        └── ...
+    ```
+
+2. Resources: configured through the `__resources__` field in `download.py`; supporting files for the exercise with files located in `res/` downloaded into the sub folder
+
+    ```text
+    <exercise name>
+    ├── .gitmastery-exercise.json
+    ├── README.md
+    ├── <base files>
+    └── <sub folder name>
+        ├── .git
+        └── <resources> <-- here
+    ```
+
 ### Testing downloads
 
 To test that your download script works, we have provided a script to simulate the download process in this repository for you to verify.
@@ -178,9 +193,10 @@ You can find the downloaded repository under the `test-downloads/` folder.
 > [!NOTE]
 > If you wish to support a remote repository and require the Git-Mastery team to create a new repository, create an issue and we will assess the request accordingly
 
-## Verification script 
 
-The verification process is a simpler on the Git-Mastery app:
+## Designing verification process 
+
+The verification process is controlled by the `verify.py`:
 
 ```mermaid
 flowchart
@@ -203,7 +219,7 @@ Refer to existing `verify.py` scripts to understand what are the available helpe
 
 ### Testing verification
 
-To test the verification, we rely on `repo-smith` to simulate exercise states and write unit tests to verify the verification script's behavior. You don't need to simulate the entire flow, just the end states that you require for your verification script.
+To test the verification, we rely on [`repo-smith`](https://github.com/git-mastery/repo-smith) to simulate exercise states and write unit tests to verify the verification script's behavior. You don't need to simulate the entire flow, just the end states that you require for your verification script.
 
 Refer to existing `test_verify.py` to see examples of unit testing the verification script.
 
@@ -212,3 +228,9 @@ You can run the unit tests of your exercise via:
 ```bash
 ./test.sh <your exercise folder>
 ```
+
+## Submitting the exercise for review
+
+Create a pull request from your fork using the provided pull request template.
+
+Fill in all of the details necessary.
