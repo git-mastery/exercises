@@ -1,6 +1,6 @@
 name: Exercise Discussions
 description: Want to create a new exercise for Git-Mastery? Discuss the details of the exercise with the Git-Mastery team first.
-title: "[Exercise Discussion]"
+title: "[Exercise Discussion] "
 labels: ["exercise discussion"]
 type: "Discussion"
 assignees:
@@ -21,20 +21,28 @@ body:
           required: true
   - type: input
     attributes:
-      label: Tour number
+      label: Tour
       description: Which tour does this exercise belong to?
     validations:
       required: true
   - type: textarea
     attributes:
+      label: Summary
+      description: Summarize the exercise
+    validations:
+      required: true
+  - type: textarea
+    attributes:
       label: Exercise learning outcomes
-      description: What is the proposed exercise's learning outcomes?
+      description: What is the exercise's learning outcomes?
+      placeholder: Git concepts tested, lessons covered, etc.
     validations:
       required: true
   - type: textarea
     attributes:
       label: Exercise setup
       description: How will the exercise be setup on the student's machine?
+      placeholder: What will the starting exercise look like? What files are necessary for this exercise?
     validations:
       required: true
   - type: textarea
@@ -56,3 +64,9 @@ body:
       description: Any other remarks about this exercise discussion?
     validations:
       required: false
+  - type: markdown
+    attributes:
+      value: |
+        # Next steps
+
+        The Git-Mastery team will review your exercise discussion and continue from there.
