@@ -1,11 +1,3 @@
----
-name: Submit Exercise for Review
-about: Creating a new exercise for Git-Mastery? Submit it through exercise review.
-title: [Exercise Review]
-labels: exercise-review
-assignees: woojiahao
----
-
 # Exercise Review
 
 ## Exercise Objectives
