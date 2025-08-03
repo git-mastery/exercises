@@ -21,14 +21,18 @@ body:
           required: true
   - type: input
     attributes:
-      label: Tour
-      description: Which tour does this exercise belong to?
+      label: Lesson
+      description: Which lesson does this exercise belong to? Links are fine
     validations:
       required: true
   - type: textarea
     attributes:
-      label: Summary
-      description: Summarize the exercise
+      label: Instructions for students
+      description: Instructions to be added to the exercise's `README.md`
+      placeholder: |
+        1. Create a fork
+        2. Clone the fork
+        3. ...
     validations:
       required: true
   - type: textarea
@@ -57,7 +61,7 @@ body:
       description: If this exercise requires a remote repository, create this exercise discussion first and then file a request for remote repository
       options:
         - label: This exercise will likely require a remote repository
-          required: true
+          required: false
   - type: textarea
     attributes:
       label: Additional remarks
