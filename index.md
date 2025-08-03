@@ -65,6 +65,12 @@
 | [amateur-detective](https://git-mastery.github.io/exercises/amateur_detective) | `gitmastery download amateur-detective` |
 | [nothing-to-hide](https://git-mastery.github.io/exercises/nothing_to_hide) | `gitmastery download nothing-to-hide` |
 
+# github-fork
+
+| Exercise | Download Command |
+|----------|------------------|
+| [fork-repo](https://git-mastery.github.io/exercises/fork_repo) | `gitmastery download fork-repo` |
+
 # gitignore
 
 | Exercise | Download Command |
