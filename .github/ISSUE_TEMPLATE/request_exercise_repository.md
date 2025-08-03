@@ -1,7 +1,7 @@
 ---
 name: Request for Exercise Repository
 about: Creating a new exercise for Git-Mastery and require a remote repository on the Git-Mastery organization? Request one here.
-title: [Exercise Repository Request]
+title: "[Exercise Repository Request]"
 labels: exercise-repository-request
 assignees: woojiahao
 ---
