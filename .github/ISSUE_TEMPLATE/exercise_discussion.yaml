@@ -1,0 +1,58 @@
+name: Exercise Discussions
+description: Want to create a new exercise for Git-Mastery? Discuss the details of the exercise with the Git-Mastery team first.
+title: "[Exercise Discussion]"
+labels: ["exercise discussion"]
+type: "Discussion"
+assignees:
+  - woojiahao
+  - damithc
+body:
+  - type: markdown
+    attributes:
+      value: |
+        # Exercise discussion
+
+        You are currently filing an exercise discussion. This means that you want to contribute a new exercise to Git-Mastery and need approval for the exercise design.
+  - type: checkboxes
+    attributes:
+      label: Existing exercise check
+      options:
+        - label: I have verified that this exercise is not yet already in discussion, in progress, or exists
+          required: true
+  - type: input
+    attributes:
+      label: Tour number
+      description: Which tour does this exercise belong to?
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Exercise learning outcomes
+      description: What is the proposed exercise's learning outcomes?
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Exercise setup
+      description: How will the exercise be setup on the student's machine?
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Exercise grading
+      description: How will the exercise be graded?
+    validations:
+      required: true
+  - type: checkboxes
+    attributes:
+      label: Requires remote repository?
+      description: If this exercise requires a remote repository, create this exercise discussion first and then file a request for remote repository
+      options:
+        - label: This exercise will likely require a remote repository
+          required: true
+  - type: textarea
+    attributes:
+      label: Additional remarks
+      description: Any other remarks about this exercise discussion?
+    validations:
+      required: false
