@@ -4,8 +4,7 @@
 
 ## Before contributing
 
-Make sure that you have done the following:
-
+If you are proposing a new exercise (i.e., not implementing an [already approved exercise proposal](https://github.com/git-mastery/exercises/issues?q=is%3Aissue%20state%3Aopen%20label%3A%22exercise%20discussion%22%20label%3A%22help%20wanted%22)) make sure that you have done the following:
 - [ ] Create an [exercise discussion](https://github.com/git-mastery/exercises/issues/new?template=exercise_discussion.yaml)
 - [ ] Obtained approval on the exercise
 - [ ] File a [remote repository request](https://github.com/git-mastery/exercises/issues/new?template=request_exercise_repository.yaml)
@@ -45,7 +44,7 @@ Make sure that you have done the following:
 
 ## Create a new exercise
 
-Use the provided `new.sh` script to scaffold a new exercise:
+Use the provided `new.sh` script to generate the scaffolding for a new exercise:
 
 ```bash
 ./new.sh
@@ -53,9 +52,9 @@ Use the provided `new.sh` script to scaffold a new exercise:
 
 This script will prompt you for:
 
-1. The name of the exercise
-2. The exercise tags (split by space)
-3. The exercise configuration
+1. The name of the exercise -- likely to be specified in the corresponding exercise discussion
+2. The exercise tags (split by space) -- likely to be specified in the corresponding exercise discussion
+3. The exercise configuration (read the [`.gitmastery-exercise.json` configuration](#gitmastery-exercisejson-configuration) section for more info on this)
 
 > [!TIP]
 > You should use kebab case for the exercise name.
