@@ -6,7 +6,7 @@
     "requires_github": true,
     "base_files": {},
     "exercise_repo": {
-      "repo_type": "local",
+      "repo_type": "ignore",
       "repo_name": "ignore-me",
       "init": true,
       "create_fork": null,
@@ -137,7 +137,7 @@
     "requires_github": true,
     "base_files": {},
     "exercise_repo": {
-      "repo_type": "local",
+      "repo_type": "ignore",
       "repo_name": "ignore-me",
       "repo_title": null,
       "create_fork": null,
