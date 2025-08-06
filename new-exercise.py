@@ -54,10 +54,16 @@ def get_exercise_config() -> ExerciseConfig:
     tags = [] if tags_str.strip() == "" else tags_str.split(" ")
     requires_git = confirm("Requires Git?", True)
     requires_github = confirm("Requires Github?", True)
-    exercise_repo_type = prompt("Exercise repo type (local or remote)", "local").lower()
+    exercise_repo_type = prompt(
+        "Exercise repo type (local, remote, or ignore)", "local"
+    ).lower()
 
-    if exercise_repo_type != "local" and exercise_repo_type != "remote":
-        print("Invalid exercise_repo_type, only local and remote allowed")
+    if (
+        exercise_repo_type != "local"
+        and exercise_repo_type != "remote"
+        and exercise_repo_type != "ignore"
+    ):
+        print("Invalid exercise_repo_type, only local, remote, and ignore allowed")
         sys.exit(1)
 
     exercise_repo_name = prompt("Exercise repo name", exercise_name.replace("-", "_"))
