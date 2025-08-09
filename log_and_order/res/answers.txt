@@ -1,4 +1,4 @@
-Q: Where is the criminal currently hiding at? (What is the SHA hash where HEAD is pointing to?)
+Q: Where is the criminal currently hiding at? (What is the location in commit where HEAD is pointing to?)
 A:
 
 Q: When did the criminal rob Alice Bakersfield? (Find the date of the commit whose description details the robbery)
