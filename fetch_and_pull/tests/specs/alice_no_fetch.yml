@@ -12,8 +12,4 @@ initialization:
       remote-name: bob-upstream
       remote-url: https://github.com/git-mastery/gm-shapes-bob.git
     - type: fetch
-      remote-name: alice-upstream
-    - type: merge
-      branch-name: alice-upstream/main
-    - type: fetch
       remote-name: bob-upstream
