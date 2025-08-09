@@ -21,6 +21,10 @@ NOT_IGNORING_RUNAWAY = (
 NOT_PATTERN_MATCHING_RUNAWAY = (
     "You should be using ** to match all subfolders to ignore runaway.txt."
 )
+NOT_IGNORING_REST_OF_MANY = (
+    "You should be ignoring the rest of many/* except many/file22.txt!"
+)
+IGNORING_FIND_ME = "You should not be ignoring this/is/very/nested/find_me.txt!"
 MISSING_GITIGNORE = "You are missing the .gitignore file! Try to reset the exercise using gitmastery progress reset"
 
 
@@ -42,11 +46,11 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         (tmp_path / ".gitignore").write_text(gitignore_file_contents)
 
         simulated_files = [
-            "many/file22.txt",
             "why_am_i_hidden.txt",
             "ignore_me.txt",
+            "this/is/very/nested/find_me.txt",
             "this/is/very/nested/runaway.txt",
-        ]
+        ] + [f"many/file{i}.txt" for i in range(1, 101)]
         for file in simulated_files:
             (tmp_path / file).parent.mkdir(parents=True, exist_ok=True)
             (tmp_path / file).touch()
@@ -58,11 +62,19 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         if "many/file22.txt" in ignored:
             comments.append(STILL_IGNORING_FILE_22)
 
+        for i in range(1, 101):
+            if f"many/file{i}.txt" and i != 22 and f"many/file{i}.txt" not in ignored:
+                comments.append(NOT_IGNORING_REST_OF_MANY)
+                break
+
         if "why_am_i_hidden.txt" in ignored:
             comments.append(STILL_HIDING)
 
         if "ignore_me.txt" not in ignored:
             comments.append(NOT_IGNORING_IGNORE_ME)
+
+        if "this/is/very/nested/find_me.txt" in ignored:
+            comments.append(IGNORING_FIND_ME)
 
         if "this/is/very/nested/runaway.txt" not in ignored:
             comments.append(NOT_IGNORING_RUNAWAY)

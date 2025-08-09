@@ -2,6 +2,7 @@ from git_autograder import GitAutograderStatus, GitAutograderTestLoader, assert_
 
 from ..verify import (
     NOT_IGNORING_IGNORE_ME,
+    NOT_IGNORING_REST_OF_MANY,
     NOT_IGNORING_RUNAWAY,
     NOT_PATTERN_MATCHING_RUNAWAY,
     STILL_HIDING,
@@ -45,6 +46,15 @@ def test_overriding():
             [
                 STILL_HIDING,
             ],
+        )
+
+
+def test_overriding_many():
+    with loader.load("specs/overriding_many.yml") as output:
+        assert_output(
+            output,
+            GitAutograderStatus.UNSUCCESSFUL,
+            [NOT_IGNORING_REST_OF_MANY],
         )
 
 
