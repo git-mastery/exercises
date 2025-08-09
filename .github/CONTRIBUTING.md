@@ -36,8 +36,11 @@ If you are proposing a new exercise (i.e., not implementing an [already approved
     source venv/bin/activate
     ```
 
-    > [!TIP]
-    > If you are using Windows, you should run the following instead: `source venv/Scripts/activate`
+    If you are using Windows, you should run the following instead: 
+
+    ```bash
+    source venv/Scripts/activate
+    ```
 
 5. Install all dependencies
 
