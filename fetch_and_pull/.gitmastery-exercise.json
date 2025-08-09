@@ -1,0 +1,17 @@
+{
+  "exercise_name": "fetch-and-pull",
+  "tags": [
+    "git-fetch",
+    "git-pull"
+  ],
+  "requires_git": true,
+  "requires_github": true,
+  "base_files": {},
+  "exercise_repo": {
+    "repo_type": "remote",
+    "repo_name": "gm-shapes",
+    "repo_title": "gm-shapes",
+    "create_fork": false,
+    "init": null
+  }
+}
