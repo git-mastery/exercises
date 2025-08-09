@@ -116,7 +116,10 @@ def main(exercise_folder_name: str) -> None:
             clone_with_custom_name(f"{username}/{fork_name}", repo_name)
             os.chdir(cur_dir)
         else:
+            cur_dir = os.getcwd()
+            os.chdir(os.path.join(test_folder_name))
             clone_with_custom_name(exercise_repo, repo_name)
+            os.chdir(cur_dir)
 
     if repo_type != "ignore":
         namespace: Dict[str, Any] = {}
