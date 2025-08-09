@@ -5,7 +5,7 @@
     "git-remote"
   ],
   "requires_git": true,
-  "requires_github": false,
+  "requires_github": true,
   "base_files": {},
   "exercise_repo": {
     "repo_type": "ignore",
