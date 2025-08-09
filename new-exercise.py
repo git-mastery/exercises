@@ -202,7 +202,7 @@ def create_test_dir(config: ExerciseConfig) -> None:
         loader = GitAutograderTestLoader(__file__, REPOSITORY_NAME, verify)
 
 
-        def test():
+        def test_base():
             with loader.load("specs/base.yml", "start"):
                 pass
         """
