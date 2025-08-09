@@ -7,7 +7,7 @@ A:
 Q: What is the criminal's real name? (Find the one commit where the author is not "Anonymous")
 A:
 
-Q: What did the criminal do on 13 September 2024? (What is the description fo the commit on 13 September 2024?)
+Q: What did the criminal do on 13 September 2024? (What is the description of the commit on 13 September 2024?)
 A:
 
 Q: What was the very first crime the criminal committed? (What is the message of the very first commit?)
