@@ -1,7 +1,8 @@
 {
   "exercise_name": "clone-repo",
   "tags": [
-    "git-clone"
+    "git-clone",
+    "git-remote"
   ],
   "requires_git": true,
   "requires_github": false,
