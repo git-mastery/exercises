@@ -1,15 +1,8 @@
 # Exercise Review
 
-## Exercise Objectives
+## Exercise Discussion
 
-- What are the objectives of this exercise?
-- Which tour and lesson does this exercise belong to?
-- What are the core concepts tested in this exercise?
-
-## Exercise Grading Setup
-
-- How is the exercise setup for the exercise?
-- What is the grading scheme for the exercise?
+Link the exercise discussion issue
 
 ## Checklist
 
