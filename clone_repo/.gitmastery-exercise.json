@@ -1,0 +1,17 @@
+{
+  "exercise_name": "clone-repo",
+  "tags": [
+    "git-clone",
+    "git-remote"
+  ],
+  "requires_git": true,
+  "requires_github": true,
+  "base_files": {},
+  "exercise_repo": {
+    "repo_type": "ignore",
+    "repo_name": "clone_repo",
+    "repo_title": null,
+    "create_fork": null,
+    "init": null
+  }
+}
