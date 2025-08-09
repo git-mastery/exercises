@@ -1,0 +1,14 @@
+Q: Where is the criminal currently hiding at? (What is the SHA hash where HEAD is pointing to?)
+A:
+
+Q: When did the criminal rob Alice Bakersfield? (Find the date of the commit whose description details the robbery)
+A:
+
+Q: What is the criminal's real name? (Find the one commit where the author is not "Anonymous")
+A:
+
+Q: What did the criminal do on 13 September 2024? (What is the description fo the commit on 13 September 2024?)
+A:
+
+Q: What was the very first crime the criminal committed? (What is the message of the very first commit?)
+A:

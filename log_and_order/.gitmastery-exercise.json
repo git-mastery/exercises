@@ -5,7 +5,9 @@
   ],
   "requires_git": true,
   "requires_github": false,
-  "base_files": {},
+  "base_files": {
+    "answers.txt": "answers.txt"
+  },
   "exercise_repo": {
     "repo_type": "local",
     "repo_name": "crime-spree",
