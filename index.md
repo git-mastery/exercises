@@ -32,6 +32,12 @@
 | [push-over](https://git-mastery.github.io/exercises/push_over) | `gitmastery download push-over` |
 | [grocery-shopping](https://git-mastery.github.io/exercises/grocery_shopping) | `gitmastery download grocery-shopping` |
 
+# git-fetch
+
+| Exercise | Download Command |
+|----------|------------------|
+| [fetch-and-pull](https://git-mastery.github.io/exercises/fetch_and_pull) | `gitmastery download fetch-and-pull` |
+
 # git-init
 
 | Exercise | Download Command |
@@ -44,6 +50,12 @@
 |----------|------------------|
 | [branch-bender](https://git-mastery.github.io/exercises/branch_bender) | `gitmastery download branch-bender` |
 | [conflict-mediator](https://git-mastery.github.io/exercises/conflict_mediator) | `gitmastery download conflict-mediator` |
+
+# git-pull
+
+| Exercise | Download Command |
+|----------|------------------|
+| [fetch-and-pull](https://git-mastery.github.io/exercises/fetch_and_pull) | `gitmastery download fetch-and-pull` |
 
 # git-push
 
