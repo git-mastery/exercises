@@ -1,0 +1,16 @@
+{
+  "exercise_name": "log-and-order",
+  "tags": [
+    "git-log"
+  ],
+  "requires_git": true,
+  "requires_github": false,
+  "base_files": {},
+  "exercise_repo": {
+    "repo_type": "local",
+    "repo_name": "crime-spree",
+    "repo_title": null,
+    "create_fork": null,
+    "init": true
+  }
+}
