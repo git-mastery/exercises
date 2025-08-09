@@ -101,9 +101,10 @@ def main(exercise_folder_name: str) -> None:
 
     repo_name = config["exercise_repo"]["repo_name"]
     repo_title = config["exercise_repo"]["repo_title"]
-    if config["exercise_repo"]["repo_type"] == "local":
+    repo_type = config["exercise_repo"]["repo_type"]
+    if repo_type == "local":
         os.makedirs(os.path.join(test_folder_name, repo_name), exist_ok=True)
-    else:
+    elif repo_type == "remote":
         username = get_username()
         exercise_repo = f"git-mastery/{repo_title}"
         if config["exercise_repo"]["create_fork"]:
@@ -117,33 +118,34 @@ def main(exercise_folder_name: str) -> None:
         else:
             clone_with_custom_name(exercise_repo, repo_name)
 
-    namespace: Dict[str, Any] = {}
-    with open(
-        os.path.join(exercise_folder_name, "download.py"), "r"
-    ) as download_script_file:
-        contents = download_script_file.read()
-        exec(contents, namespace)
+    if repo_type != "ignore":
+        namespace: Dict[str, Any] = {}
+        with open(
+            os.path.join(exercise_folder_name, "download.py"), "r"
+        ) as download_script_file:
+            contents = download_script_file.read()
+            exec(contents, namespace)
 
-    download_resources = namespace.get("__resources__", {})
-    if download_resources:
-        for resource, path in download_resources.items():
-            os.makedirs(Path(path).parent, exist_ok=True)
-            shutil.copyfile(
-                os.path.join(exercise_folder_name, "res", resource),
-                os.path.join(test_folder_name, repo_name, path),
-            )
-
-    os.chdir(os.path.join(test_folder_name, repo_name))
-    if config["exercise_repo"]["init"]:
-        init()
+        download_resources = namespace.get("__resources__", {})
         if download_resources:
-            add_all()
-            commit("Initial commit")
-        else:
-            empty_commit("Initial commit")
+            for resource, path in download_resources.items():
+                os.makedirs(Path(path).parent, exist_ok=True)
+                shutil.copyfile(
+                    os.path.join(exercise_folder_name, "res", resource),
+                    os.path.join(test_folder_name, repo_name, path),
+                )
 
-    if "setup" in namespace:
-        namespace["setup"]()
+        os.chdir(os.path.join(test_folder_name, repo_name))
+        if config["exercise_repo"]["init"]:
+            init()
+            if download_resources:
+                add_all()
+                commit("Initial commit")
+            else:
+                empty_commit("Initial commit")
+
+        if "setup" in namespace:
+            namespace["setup"]()
 
 
 if __name__ == "__main__":

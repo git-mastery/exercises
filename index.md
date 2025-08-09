@@ -9,15 +9,21 @@
 
 | Exercise | Download Command |
 |----------|------------------|
-| [bonsai-tree](https://git-mastery.github.io/exercises/bonsai_tree) | `gitmastery download bonsai-tree` |
 | [side-track](https://git-mastery.github.io/exercises/side_track) | `gitmastery download side-track` |
+| [bonsai-tree](https://git-mastery.github.io/exercises/bonsai_tree) | `gitmastery download bonsai-tree` |
 
 # git-checkout
 
 | Exercise | Download Command |
 |----------|------------------|
-| [bonsai-tree](https://git-mastery.github.io/exercises/bonsai_tree) | `gitmastery download bonsai-tree` |
 | [side-track](https://git-mastery.github.io/exercises/side_track) | `gitmastery download side-track` |
+| [bonsai-tree](https://git-mastery.github.io/exercises/bonsai_tree) | `gitmastery download bonsai-tree` |
+
+# git-clone
+
+| Exercise | Download Command |
+|----------|------------------|
+| [clone-repo](https://git-mastery.github.io/exercises/clone_repo) | `gitmastery download clone-repo` |
 
 # git-commit
 
@@ -49,8 +55,9 @@
 
 | Exercise | Download Command |
 |----------|------------------|
-| [link-me](https://git-mastery.github.io/exercises/link_me) | `gitmastery download link-me` |
 | [push-over](https://git-mastery.github.io/exercises/push_over) | `gitmastery download push-over` |
+| [link-me](https://git-mastery.github.io/exercises/link_me) | `gitmastery download link-me` |
+| [clone-repo](https://git-mastery.github.io/exercises/clone_repo) | `gitmastery download clone-repo` |
 
 # git-restore
 
