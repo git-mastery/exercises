@@ -13,7 +13,7 @@ from ..verify import (
     verify,
 )
 
-REPOSITORY_NAME = "branch-rename"
+REPOSITORY_NAME = "remote-branch-rename"
 
 loader = GitAutograderTestLoader(__file__, REPOSITORY_NAME, verify)
 

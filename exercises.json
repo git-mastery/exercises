@@ -16,22 +16,6 @@
     }
   },
   {
-    "exercise_name": "branch-rename",
-    "tags": [
-      "git-branch"
-    ],
-    "requires_git": true,
-    "requires_github": true,
-    "base_files": {},
-    "exercise_repo": {
-      "repo_type": "remote",
-      "repo_name": "rename-me",
-      "repo_title": "tidy-branches",
-      "create_fork": true,
-      "init": null
-    }
-  },
-  {
     "exercise_name": "branch-bender",
     "tags": [
       "git-merge"
@@ -45,6 +29,22 @@
       "repo_title": null,
       "create_fork": null,
       "init": true
+    }
+  },
+  {
+    "exercise_name": "remote-branch-rename",
+    "tags": [
+      "git-branch"
+    ],
+    "requires_git": true,
+    "requires_github": true,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "remote",
+      "repo_name": "rename-me",
+      "repo_title": "tidy-branches",
+      "create_fork": true,
+      "init": null
     }
   },
   {
