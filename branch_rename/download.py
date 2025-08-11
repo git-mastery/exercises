@@ -2,8 +2,6 @@ import subprocess
 from sys import exit
 from typing import List, Optional
 
-__resources__ = {}
-
 
 def run_command(command: List[str], verbose: bool) -> Optional[str]:
     try:
@@ -23,10 +21,9 @@ def run_command(command: List[str], verbose: bool) -> Optional[str]:
 
 
 def setup(verbose: bool = False):
-    commits_str = run_command(
-        ["git", "log", "--reverse", "--pretty=format:%h"], verbose
+    run_command(["git", "checkout", "-b", "login"], verbose)
+    run_command(
+        ["git", "commit", "--allow-empty", "-m", "Implement login feature"], verbose
     )
-    assert commits_str is not None
-    first_commit = commits_str.split("\n")[0]
-    tag_name = f"git-mastery-start-{first_commit}"
-    run_command(["git", "tag", tag_name], verbose)
+
+    run_command(["git", "checkout", "main"], verbose)
