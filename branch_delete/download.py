@@ -21,17 +21,24 @@ def run_command(command: List[str], verbose: bool) -> Optional[str]:
 
 
 def setup(verbose: bool = False):
-    run_command(["git", "checkout", "-b", "fix-scrolling-bug"], verbose)
+    run_command(["git", "checkout", "-b", "optimization-approach-1"], verbose)
     run_command(
         ["git", "commit", "--allow-empty", "-m", "Fixed scrolling issue"], verbose
     )
 
     run_command(["git", "checkout", "main"], verbose)
-    run_command(["git", "merge", "fix-scrolling-bug"], verbose)
+    run_command(["git", "merge", "optimization-approach-1"], verbose)
 
-    run_command(["git", "checkout", "-b", "improve-loading"], verbose)
+    run_command(["git", "checkout", "-b", "optimization-approach-2"], verbose)
     run_command(
-        ["git", "commit", "--allow-empty", "-m", "Improved loading of page"], verbose
+        [
+            "git",
+            "commit",
+            "--allow-empty",
+            "-m",
+            "Trying out alternative optimization approach",
+        ],
+        verbose,
     )
 
     run_command(["git", "checkout", "main"], verbose)

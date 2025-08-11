@@ -2,9 +2,9 @@ from git_autograder import GitAutograderTestLoader, assert_output
 from git_autograder.status import GitAutograderStatus
 
 from ..verify import (
-    FIX_SCROLLING_BUG_EXISTS,
-    IMPROVE_LOADING_EXISTS,
-    IMPROVE_LOADING_MERGED,
+    OPTIMIZATION_APPROACH_1_EXISTS,
+    OPTIMIZATION_APPROACH_2_EXISTS,
+    OPTIMIZATION_APPROACH_2_MERGED,
     verify,
 )
 
@@ -18,22 +18,22 @@ def test_base():
         assert_output(output, GitAutograderStatus.SUCCESSFUL)
 
 
-def test_fix_scrolling_bug_not_deleted():
-    with loader.load("specs/fix_scrolling_bug_not_deleted.yml") as output:
+def test_optimization_approach_1_not_deleted():
+    with loader.load("specs/optimization_approach_1_not_deleted.yml") as output:
         assert_output(
-            output, GitAutograderStatus.UNSUCCESSFUL, [FIX_SCROLLING_BUG_EXISTS]
+            output, GitAutograderStatus.UNSUCCESSFUL, [OPTIMIZATION_APPROACH_1_EXISTS]
         )
 
 
-def test_improve_loading_not_deleted():
-    with loader.load("specs/improve_loading_not_deleted.yml") as output:
+def test_optimization_approach_2_not_deleted():
+    with loader.load("specs/optimization_approach_2_not_deleted.yml") as output:
         assert_output(
-            output, GitAutograderStatus.UNSUCCESSFUL, [IMPROVE_LOADING_EXISTS]
+            output, GitAutograderStatus.UNSUCCESSFUL, [OPTIMIZATION_APPROACH_2_EXISTS]
         )
 
 
-def test_improve_loading_merged():
-    with loader.load("specs/improve_loading_merged.yml") as output:
+def test_optimization_approach_2_merged():
+    with loader.load("specs/optimization_approach_2_merged.yml") as output:
         assert_output(
-            output, GitAutograderStatus.UNSUCCESSFUL, [IMPROVE_LOADING_MERGED]
+            output, GitAutograderStatus.UNSUCCESSFUL, [OPTIMIZATION_APPROACH_2_MERGED]
         )

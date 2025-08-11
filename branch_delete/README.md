@@ -1,11 +1,12 @@
 # branch-delete
 
-
 ## Task
 
-You have two branches: `fix-scrolling-bug` and `improve-loading` and you need to delete them!
+You have two branches: `optimization-approach-1` and `optimization-approach-2` and you need to delete them!
 
-`fix-scrolling-bug` has already been merged while `improve-loading` hasn't yet been merged. But you realize that you don't need the changes anymore, so you should not be merging it.
+You decided to go ahead with `optimization-approach-1` so you merged it and you can delete the branch already.
 
-1. Delete the `fix-scrolling-bug` branch
-2. Delete the `improve-loading` branch safely
+Since you don't need `optimization-approach-2`, you should delete it WITHOUT merging.
+
+1. Delete the `optimization-approach-1` branch
+2. Delete the `optimization-approach-2` branch safely

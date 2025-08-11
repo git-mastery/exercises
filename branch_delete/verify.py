@@ -4,29 +4,31 @@ from git_autograder import (
     GitAutograderStatus,
 )
 
-FIX_SCROLLING_BUG_EXISTS = (
-    "Branch 'fix-scrolling-bug' still exists! Remember to delete it"
+OPTIMIZATION_APPROACH_1_EXISTS = (
+    "Branch 'optimization-approach-1' still exists! Remember to delete it"
 )
-IMPROVE_LOADING_EXISTS = "Branch 'improve-loading' still exists! Remember to delete it"
-IMPROVE_LOADING_MERGED = (
-    "Branch 'improve-loading' was merged into 'main', but it shouldn't be"
+OPTIMIZATION_APPROACH_2_EXISTS = (
+    "Branch 'optimization-approach-2' still exists! Remember to delete it"
+)
+OPTIMIZATION_APPROACH_2_MERGED = (
+    "Branch 'optimization-approach-2' was merged into 'main', but it shouldn't be"
 )
 PROGRESS_RESET = "Reset your progress using 'gitmastery progress reset' to try again!"
 
 
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
-    if exercise.repo.branches.has_branch("fix-scrolling-bug"):
-        raise exercise.wrong_answer([FIX_SCROLLING_BUG_EXISTS])
+    if exercise.repo.branches.has_branch("optimization-approach-1"):
+        raise exercise.wrong_answer([OPTIMIZATION_APPROACH_1_EXISTS])
 
-    if exercise.repo.branches.has_branch("improve-loading"):
-        raise exercise.wrong_answer([IMPROVE_LOADING_EXISTS])
+    if exercise.repo.branches.has_branch("optimization-approach-2"):
+        raise exercise.wrong_answer([OPTIMIZATION_APPROACH_2_EXISTS])
 
     main_reflog = exercise.repo.branches.branch("main").reflog
     merge_logs = [entry for entry in main_reflog if entry.action.startswith("merge")]
     merge_order = [entry.action[len("merge ") :] for entry in merge_logs][::-1]
     for merge in merge_order:
-        if merge == "improve-loading":
-            raise exercise.wrong_answer([IMPROVE_LOADING_MERGED])
+        if merge == "optimization-approach-2":
+            raise exercise.wrong_answer([OPTIMIZATION_APPROACH_2_MERGED])
 
     return exercise.to_output(
         ["Great job using git branch to delete both merged and unmerged branches!"],

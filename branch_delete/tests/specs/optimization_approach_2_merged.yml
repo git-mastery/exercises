@@ -5,19 +5,19 @@ initialization:
       message: Empty commit
       id: start
     - type: branch
-      branch-name: fix-scrolling-bug
+      branch-name: optimization-approach-1
     - type: checkout
       branch-name: main
     - type: branch
-      branch-name: improve-loading
+      branch-name: optimization-approach-2
     - type: commit
       empty: true
       message: Empty
     - type: checkout
       branch-name: main
     - type: branch-delete
-      branch-name: fix-scrolling-bug
+      branch-name: optimization-approach-1
     - type: merge
-      branch-name: improve-loading
+      branch-name: optimization-approach-2
     - type: branch-delete
-      branch-name: improve-loading
+      branch-name: optimization-approach-2
