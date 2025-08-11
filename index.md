@@ -12,6 +12,7 @@
 | [branch-rename](https://git-mastery.github.io/exercises/branch_rename) | `gitmastery download branch-rename` |
 | [side-track](https://git-mastery.github.io/exercises/side_track) | `gitmastery download side-track` |
 | [bonsai-tree](https://git-mastery.github.io/exercises/bonsai_tree) | `gitmastery download bonsai-tree` |
+| [branch-delete](https://git-mastery.github.io/exercises/branch_delete) | `gitmastery download branch-delete` |
 
 # git-checkout
 
