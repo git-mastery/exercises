@@ -14,5 +14,3 @@ initialization:
       branch-name: main
     - type: branch-delete
       branch-name: fix-scrolling-bug
-    - type: branch-delete
-      branch-name: improve-loading
