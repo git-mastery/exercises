@@ -10,4 +10,6 @@ initialization:
       branch-name: main
     - type: branch-rename
       branch-name: login
-      new-name: feature/login
+      new-name: not-this
+    - type: branch
+      branch-name: feature/login
