@@ -150,11 +150,12 @@ def main(exercise_folder_name: str) -> None:
         os.chdir(os.path.join(test_folder_name, repo_name))
         if config["exercise_repo"]["init"]:
             init()
+            initial_commit_message = "Set initial state"
             if download_resources:
                 add_all()
-                commit("Initialize exercise")
+                commit(initial_commit_message)
             else:
-                empty_commit("Initialize exercise")
+                empty_commit(initial_commit_message)
 
         if "setup" in namespace:
             namespace["setup"]()
