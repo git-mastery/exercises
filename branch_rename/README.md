@@ -1,18 +1,7 @@
 # branch-rename
 
-<!--- Insert exercise description -->
+You have been working on the login feature for your application on the branch `login`. However, to keep things consistent across other branches, you need to rename it to `feature/login`.
 
 ## Task
 
-<!--- Insert exercise task, simplify what needs to be done -->
-
-## Hints
-
-<!--- Insert hints here -->
-<!---
-    Use Github Markdown's collapsible content:
-    <details>
-    <summary>...</summary>
-    ...
-    </details>
--->
+Rename the `login` branch to `feature/login`.
