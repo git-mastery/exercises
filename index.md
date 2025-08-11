@@ -9,6 +9,7 @@
 
 | Exercise | Download Command |
 |----------|------------------|
+| [branch-rename](https://git-mastery.github.io/exercises/branch_rename) | `gitmastery download branch-rename` |
 | [remote-branch-rename](https://git-mastery.github.io/exercises/remote_branch_rename) | `gitmastery download remote-branch-rename` |
 | [side-track](https://git-mastery.github.io/exercises/side_track) | `gitmastery download side-track` |
 | [bonsai-tree](https://git-mastery.github.io/exercises/bonsai_tree) | `gitmastery download bonsai-tree` |
