@@ -152,9 +152,9 @@ def main(exercise_folder_name: str) -> None:
             init()
             if download_resources:
                 add_all()
-                commit("Initial commit")
+                commit("Initialize exercise")
             else:
-                empty_commit("Initial commit")
+                empty_commit("Initialize exercise")
 
         if "setup" in namespace:
             namespace["setup"]()
