@@ -20,8 +20,10 @@ loader = GitAutograderTestLoader(__file__, REPOSITORY_NAME, verify)
 
 def test_base():
     with (
-        patch("branch_rename.verify.fetch_remotes", side_effect=None),
-        patch("branch_rename.verify.get_remotes", return_value=["improve-loading"]),
+        patch("remote_brance_rename.verify.fetch_remotes", side_effect=None),
+        patch(
+            "remote_brance_rename.verify.get_remotes", return_value=["improve-loading"]
+        ),
         loader.load("specs/base.yml") as output,
     ):
         assert_output(output, GitAutograderStatus.SUCCESSFUL)
@@ -78,8 +80,10 @@ def test_rename_improve_loading_wrong():
 
 def test_improve_loadding_remote_exists():
     with (
-        patch("branch_rename.verify.fetch_remotes", side_effect=None),
-        patch("branch_rename.verify.get_remotes", return_value=["improve-loadding"]),
+        patch("remote_brance_rename.verify.fetch_remotes", side_effect=None),
+        patch(
+            "remote_brance_rename.verify.get_remotes", return_value=["improve-loadding"]
+        ),
         loader.load("specs/base.yml") as output,
     ):
         assert_output(
@@ -91,8 +95,10 @@ def test_improve_loadding_remote_exists():
 
 def test_improve_loading_remote_missing():
     with (
-        patch("branch_rename.verify.fetch_remotes", side_effect=None),
-        patch("branch_rename.verify.get_remotes", return_value=["improve-loaing"]),
+        patch("remote_brance_rename.verify.fetch_remotes", side_effect=None),
+        patch(
+            "remote_brance_rename.verify.get_remotes", return_value=["improve-loaing"]
+        ),
         loader.load("specs/base.yml") as output,
     ):
         assert_output(
