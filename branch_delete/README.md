@@ -1,18 +1,11 @@
 # branch-delete
 
-<!--- Insert exercise description -->
 
 ## Task
 
-<!--- Insert exercise task, simplify what needs to be done -->
+You have two branches: `fix-scrolling-bug` and `improve-loading` and you need to delete them!
 
-## Hints
+`fix-scrolling-bug` has already been merged while `improve-loading` hasn't yet been merged. But you realize that you don't need the changes anymore, so you should not be merging it.
 
-<!--- Insert hints here -->
-<!---
-    Use Github Markdown's collapsible content:
-    <details>
-    <summary>...</summary>
-    ...
-    </details>
--->
+1. Delete the `fix-scrolling-bug` branch
+2. Delete the `improve-loading` branch safely
