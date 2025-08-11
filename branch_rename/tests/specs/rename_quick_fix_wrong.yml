@@ -14,7 +14,7 @@ initialization:
       branch-name: main
     - type: branch-rename
       branch-name: try-quick-fix
-      new-name: fix-scrolling-bug
+      new-name: fix-scroling-bug
     - type: branch-rename
       branch-name: improve-loadding
       new-name: improve-loading

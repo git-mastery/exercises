@@ -1,3 +1,5 @@
+from typing import List
+
 from git import Repo
 from git_autograder import (
     GitAutograderExercise,
@@ -13,6 +15,7 @@ NO_RENAME_EVIDENCE_TRY_QUICK_FIX = (
     "Branch 'try-quick-fix' was not renamed to 'fix-scrolling-bug'!"
 )
 
+IMPROVE_LOADING_LOCAL_STILL_EXISTS = "Local branch 'improve-loadding' still exists! Remember to rename it to 'improve-loading'"
 IMPROVE_LOADING_LOCAL_MISSING = "Local branch 'improve-loading' is missing, did you correctly rename the branch 'improve-loadding' to 'improve-loading'?"
 NO_RENAME_EVIDENCE_IMPROVE_LOADING = (
     "Local branch 'improve-loadding' was not renamed to 'improve-loading'!"
@@ -28,11 +31,28 @@ def branch_has_rename_evidence(
     if branch is None:
         return False
 
-    expected = f"Branch: renamed refs/heads/{old_branch} to refs/heads/{new_branch}"
+    expected = f"renamed refs/heads/{old_branch} to refs/heads/{new_branch}"
     for entry in branch.reflog:
         if entry.message == expected:
             return True
     return False
+
+
+def fetch_remotes(repo: Repo) -> None:
+    # Fetch latest remote state
+    for remote in repo.remotes:
+        remote.fetch(prune=True)
+
+
+def get_remotes(repo: Repo) -> List[str]:
+    remote_branches = []
+    for remote in repo.remotes:
+        remote_branches.extend([ref.name for ref in remote.refs])
+    return remote_branches
+
+
+def has_remote(remotes: List[str], target: str) -> bool:
+    return any(ref.endswith(target) for ref in remotes)
 
 
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
@@ -50,26 +70,25 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         raise exercise.wrong_answer([NO_RENAME_EVIDENCE_TRY_QUICK_FIX])
 
     # improve-loadding -> improve-loading
+    if "improve-loadding" in local_branches:
+        raise exercise.wrong_answer([IMPROVE_LOADING_LOCAL_STILL_EXISTS])
+
     if "improve-loading" not in local_branches:
         raise exercise.wrong_answer([IMPROVE_LOADING_LOCAL_MISSING])
 
     if not branch_has_rename_evidence(exercise, "improve-loading", "improve-loadding"):
         raise exercise.wrong_answer([NO_RENAME_EVIDENCE_IMPROVE_LOADING])
 
-    # Fetch latest remote state
-    for remote in repo.remotes:
-        remote.fetch(prune=True)
+    fetch_remotes(repo)
 
     # Remote branch checks
-    remote_branches = []
-    for remote in repo.remotes:
-        remote_branches.extend([ref.name for ref in remote.refs])
+    remote_branches = get_remotes(repo)
 
-    if not any(ref.endswith("improve-loading") for ref in remote_branches):
-        raise exercise.wrong_answer([IMPROVE_LOADING_REMOTE_MISSING])
-
-    if any(ref.endswith("improve-loadding") for ref in remote_branches):
+    if has_remote(remote_branches, "improve-loadding"):
         raise exercise.wrong_answer([IMPROVE_LOADING_REMOTE_OLD_PRESENT])
+
+    if not has_remote(remote_branches, "improve-loading"):
+        raise exercise.wrong_answer([IMPROVE_LOADING_REMOTE_MISSING])
 
     return exercise.to_output(
         [

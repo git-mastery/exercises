@@ -17,4 +17,4 @@ initialization:
       new-name: fix-scrolling-bug
     - type: branch-rename
       branch-name: improve-loadding
-      new-name: improve-loading
+      new-name: improve-loaing
