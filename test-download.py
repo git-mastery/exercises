@@ -1,10 +1,10 @@
-import subprocess
 import json
 import os
-from pathlib import Path
-import sys
 import shutil
-from typing import Dict, Any
+import subprocess
+import sys
+from pathlib import Path
+from typing import Any, Dict
 
 
 def get_username() -> str:
@@ -72,6 +72,14 @@ def empty_commit(message: str) -> None:
     )
 
 
+def delete_repo(repository_name: str) -> None:
+    subprocess.run(
+        ["gh", "repo", "delete", repository_name, "--yes"],
+        capture_output=True,
+        text=True,
+    )
+
+
 def main(exercise_folder_name: str) -> None:
     os.makedirs("test-downloads", exist_ok=True)
     test_folder_name = os.path.join("test-downloads", exercise_folder_name)
@@ -109,8 +117,9 @@ def main(exercise_folder_name: str) -> None:
         exercise_repo = f"git-mastery/{repo_title}"
         if config["exercise_repo"]["create_fork"]:
             fork_name = f"{username}-gitmastery-{repo_title}"
-            if not has_fork(fork_name):
-                fork(exercise_repo, fork_name)
+            if has_fork(fork_name):
+                delete_repo(fork_name)
+            fork(exercise_repo, fork_name)
             cur_dir = os.getcwd()
             os.chdir(os.path.join(test_folder_name))
             clone_with_custom_name(f"{username}/{fork_name}", repo_name)
