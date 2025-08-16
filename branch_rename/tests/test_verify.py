@@ -33,3 +33,13 @@ def test_not_rename():
         assert_output(
             output, GitAutograderStatus.UNSUCCESSFUL, [NO_RENAME_EVIDENCE_FEATURE_LOGIN]
         )
+
+
+def test_indirect_rename():
+    with loader.load("specs/indirect_rename.yml") as output:
+        assert_output(output, GitAutograderStatus.SUCCESSFUL)
+
+
+def test_rename_after():
+    with loader.load("specs/rename_after.yml") as output:
+        assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [FEATURE_LOGIN_MISSING])
