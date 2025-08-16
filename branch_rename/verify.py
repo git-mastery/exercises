@@ -28,7 +28,7 @@ def branch_has_rename_evidence(
         # If new_branch not present at all
         return False
 
-    rename_regex = re.compile("^renamed refs/heads/([\\w/]+) to refs/heads/([\\w/]+)$")
+    rename_regex = re.compile("^renamed refs/heads/(.+) to refs/heads/(.+)$")
     for entry in branch.reflog[::-1]:
         match_group = rename_regex.match(entry.message)
         if match_group is None:
