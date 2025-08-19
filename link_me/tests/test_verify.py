@@ -27,6 +27,11 @@ def test_wrong_url():
         assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [WRONG_UPSTREAM_URL])
 
 
+def test_long_url():
+    with loader.load("specs/long_url.yml", "start") as output:
+        assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [WRONG_UPSTREAM_URL])
+
+
 def test_wrong_name():
     with loader.load("specs/wrong_name.yml", "start") as output:
         assert_output(
