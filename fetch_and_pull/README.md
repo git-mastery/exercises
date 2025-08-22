@@ -10,5 +10,5 @@ Add that repo as a remote titled `alice-upstream`, and bring over Alice's additi
 
 Alice's friend Bob has copied Alice's repo to <https://github.com/git-mastery/gm-shapes-bob>, and added one more commit.
 
-Add that repo as another remote titled `bob-remote`, and fetch (not pull or merge) his new commit to your repo.
+Add that repo as another remote titled `bob-upstream`, and fetch (not pull or merge) his new commit to your repo.
 
