@@ -154,7 +154,7 @@ def setup(verbose: bool = False):
                 <p>Your account is in good standing.</p>
             </main>
             <footer>
-                <small>© 2025 Acme Corp</small>
+                <small>Copyright (c) 2025 Acme Corp</small>
             </footer>
         </body>
         </html>
