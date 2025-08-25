@@ -67,7 +67,7 @@ def create_download_py_file(config: HandsOnConfig) -> None:
                 exit(1)
 
 
-        def setup(verbose: bool = False):
+        def download(verbose: bool):
             pass
         """
         download_script_file.write(textwrap.dedent(download_script).lstrip())
