@@ -4,5 +4,5 @@ __requires_git__ = True
 __requires_github__ = False
 
 
-def download():
+def download(verbose: bool):
     os.makedirs("things")
