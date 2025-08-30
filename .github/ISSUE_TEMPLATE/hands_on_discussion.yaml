@@ -1,0 +1,70 @@
+name: Hands-on Discussions
+description: Want to create a new hands-on for Git-Mastery? Discuss the details of the hands-on with the Git-Mastery team first.
+title: "[Hands-on Discussion] "
+labels: ["hands-on discussion"]
+type: "Discussion"
+assignees:
+  - woojiahao
+  - damithc
+body:
+  - type: markdown
+    attributes:
+      value: |
+        # Hands-on discussion
+
+        You are currently filing an hands-on discussion. This means that you want to contribute a new hands-on to Git-Mastery and need approval for the hands-on design.
+  - type: checkboxes
+    attributes:
+      label: Existing hands-on check
+      options:
+        - label: I have verified that this hands-on is not yet already [in discussion](https://github.com/git-mastery/exercises/issues?q=is%3Aissue%20state%3Aopen%20label%3A%22hands-on%20discussion%22), [in progress](https://github.com/git-mastery/exercises/pulls?q=is%3Aopen+is%3Apr+label%3A%22hands-on+review%22), or [exists](https://github.com/git-mastery/exercises/tree/main/hands_on)
+          required: true
+  - type: input
+    attributes:
+      label: Lesson
+      description: Which lesson does this hands-on belong to? Links are fine
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Hands-on learning outcomes
+      description: What is the hands-on's learning outcomes?
+      placeholder: Git concepts tested, lessons covered, etc.
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Hands-on setup
+      description: How will the hands-on be setup on the student's machine?
+      placeholder: What will the starting hands-on look like? What files are necessary for this hands-on?
+    validations:
+      required: true
+  - type: textarea
+    attributes:
+      label: Instructions for students
+      description: Instructions to be added for the hands-on
+      placeholder: |
+        1. Create a fork
+        2. Clone the fork
+        3. ...
+    validations:
+      required: true
+  - type: input
+    attributes:
+      label: Requires remote repository?
+      description: If this hands-on requires a remote repository, create this hands-on discussion first and then [file a request for remote repository](https://github.com/git-mastery/exercises/issues/new?template=request_exercise_repository.yaml)
+      placeholder: If the remote already exists, provide the URL here, otherwise, indicate yes or no
+    validations:
+      required: false
+  - type: textarea
+    attributes:
+      label: Additional remarks
+      description: Any other remarks about this hands-on discussion?
+    validations:
+      required: false
+  - type: markdown
+    attributes:
+      value: |
+        # Next steps
+
+        The Git-Mastery team will review your hands-on discussion and continue from there.
