@@ -9,11 +9,11 @@
 
 | Exercise | Download Command |
 |----------|------------------|
-| [branch-rename](https://git-mastery.github.io/exercises/branch_rename) | `gitmastery download branch-rename` |
-| [remote-branch-rename](https://git-mastery.github.io/exercises/remote_branch_rename) | `gitmastery download remote-branch-rename` |
 | [side-track](https://git-mastery.github.io/exercises/side_track) | `gitmastery download side-track` |
+| [branch-rename](https://git-mastery.github.io/exercises/branch_rename) | `gitmastery download branch-rename` |
 | [bonsai-tree](https://git-mastery.github.io/exercises/bonsai_tree) | `gitmastery download bonsai-tree` |
 | [branch-delete](https://git-mastery.github.io/exercises/branch_delete) | `gitmastery download branch-delete` |
+| [remote-branch-rename](https://git-mastery.github.io/exercises/remote_branch_rename) | `gitmastery download remote-branch-rename` |
 
 # git-checkout
 
@@ -32,8 +32,8 @@
 
 | Exercise | Download Command |
 |----------|------------------|
-| [push-over](https://git-mastery.github.io/exercises/push_over) | `gitmastery download push-over` |
 | [grocery-shopping](https://git-mastery.github.io/exercises/grocery_shopping) | `gitmastery download grocery-shopping` |
+| [push-over](https://git-mastery.github.io/exercises/push_over) | `gitmastery download push-over` |
 
 # git-fetch
 
@@ -70,9 +70,9 @@
 
 | Exercise | Download Command |
 |----------|------------------|
-| [push-over](https://git-mastery.github.io/exercises/push_over) | `gitmastery download push-over` |
 | [link-me](https://git-mastery.github.io/exercises/link_me) | `gitmastery download link-me` |
 | [clone-repo](https://git-mastery.github.io/exercises/clone_repo) | `gitmastery download clone-repo` |
+| [push-over](https://git-mastery.github.io/exercises/push_over) | `gitmastery download push-over` |
 
 # git-restore
 
