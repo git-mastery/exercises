@@ -1,3 +1,4 @@
+import os
 import subprocess
 from sys import exit
 from typing import List, Optional
@@ -24,4 +25,6 @@ def run_command(command: List[str], verbose: bool) -> Optional[str]:
 
 
 def download(verbose: bool):
-    pass
+    os.makedirs("things")
+    os.chdir("things")
+    run_command(["git", "init", "--initial-branch=main"], verbose)
