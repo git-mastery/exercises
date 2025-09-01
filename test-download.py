@@ -80,7 +80,7 @@ def delete_repo(repository_name: str) -> None:
     )
 
 
-def main(exercise_folder_name: str) -> None:
+def download_exercise(exercise_folder_name: str) -> None:
     os.makedirs("test-downloads", exist_ok=True)
     test_folder_name = os.path.join("test-downloads", exercise_folder_name)
     shutil.rmtree(test_folder_name, ignore_errors=True)
@@ -161,13 +161,42 @@ def main(exercise_folder_name: str) -> None:
             namespace["setup"]()
 
 
+def download_hands_on(hands_on_folder_name: str) -> None:
+    os.makedirs("test-downloads", exist_ok=True)
+    hands_on_folder = f"hp-{hands_on_folder_name.replace('_', '-')}"
+    test_folder_name = os.path.join("test-downloads", hands_on_folder)
+    shutil.rmtree(test_folder_name, ignore_errors=True)
+    os.makedirs(test_folder_name, exist_ok=True)
+
+    namespace: Dict[str, Any] = {}
+    with open(
+        os.path.join("hands_on", f"{hands_on_folder_name}.py"), "r"
+    ) as download_script_file:
+        contents = download_script_file.read()
+        exec(contents, namespace)
+
+    if "download" in namespace:
+        os.chdir(test_folder_name)
+        namespace["download"](False)
+
+
 if __name__ == "__main__":
     if len(sys.argv) != 2:
-        print("Missing exercise folder name: ./test-download.py <exercise folder name>")
+        print(
+            "Missing exercise/hands-on folder name: ./test-download.py <exercise/hands-on folder name>"
+        )
         sys.exit(1)
 
-    if not os.path.isdir(sys.argv[1]):
-        print("Invalid exercise folder name")
-        sys.exit(1)
+    arg = sys.argv[1]
+    arg = arg.replace("-", "_")
 
-    main(sys.argv[1])
+    if arg.startswith("hp_"):
+        if not os.path.isfile(os.path.join("hands_on", f"{arg[3:]}.py")):
+            print("Invalid hands-on folder name")
+            sys.exit(1)
+        download_hands_on(arg[3:])
+    else:
+        if not os.path.isdir(arg):
+            print("Invalid exercise folder name")
+            sys.exit(1)
+        download_exercise(arg)
