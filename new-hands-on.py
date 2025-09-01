@@ -40,7 +40,9 @@ def get_exercise_config() -> HandsOnConfig:
 
 
 def create_download_py_file(config: HandsOnConfig) -> None:
-    with open(f"{config.hands_on_name}.py", "w") as download_script_file:
+    with open(
+        f"{config.hands_on_name.replace('-', '_')}.py", "w"
+    ) as download_script_file:
         download_script = f"""
         import subprocess
         from sys import exit
