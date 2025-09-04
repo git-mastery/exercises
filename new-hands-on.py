@@ -28,7 +28,7 @@ def prompt(prompt: str, default: str) -> str:
 
 
 def get_exercise_config() -> HandsOnConfig:
-    hands_on_name = input("Hands-on name: ")
+    hands_on_name = input("Hands-on name: hp-")
     requires_git = confirm("Requires Git?", True)
     requires_github = confirm("Requires Github?", True)
 
