@@ -191,12 +191,18 @@ if __name__ == "__main__":
     arg = arg.replace("-", "_")
 
     if arg.startswith("hp_"):
-        if not os.path.isfile(os.path.join("hands_on", f"{arg[3:]}.py")):
+        # Handle hp_ prefix explicitly
+        hands_on_name = arg[3:]
+        if not os.path.isfile(os.path.join("hands_on", f"{hands_on_name}.py")):
             print("Invalid hands-on folder name")
             sys.exit(1)
-        download_hands_on(arg[3:])
-    else:
-        if not os.path.isdir(arg):
-            print("Invalid exercise folder name")
-            sys.exit(1)
+        download_hands_on(hands_on_name)
+    elif os.path.isfile(os.path.join("hands_on", f"{arg}.py")):
+        # Check if it's a hands-on exercise without hp_ prefix
+        download_hands_on(arg)
+    elif os.path.isdir(arg):
+        # It's a regular exercise
         download_exercise(arg)
+    else:
+        print("Invalid exercise/hands-on folder name")
+        sys.exit(1)
