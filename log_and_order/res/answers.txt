@@ -1,0 +1,9 @@
+Q: What is the SHA of the commit HEAD points to?
+A:
+
+Q: What is the commit message of the commit {SHA}?
+A:
+
+Q: What is the SHA of the commit with the commit message "Rewrite the comments"?
+A:
+
