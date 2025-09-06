@@ -31,3 +31,5 @@ def download(verbose: bool):
     with open("fruits.txt", "w") as f:
         f.write("apples\nbananas\ncherries\n")
     run_command(["git", "add", "fruits.txt"], verbose)
+    with open("fruits.txt", "a") as f:
+        f.write("dragon fruits\n")
