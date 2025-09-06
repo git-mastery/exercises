@@ -25,100 +25,74 @@ def commit(
     email: str,
     date: str,
     message: str,
-    description: Optional[str],
     verbose: bool,
 ) -> None:
-    if description is None:
-        run_command(
-            [
-                "git",
-                "commit",
-                "--allow-empty",
-                "--date",
-                date,
-                "--author",
-                f"{author} <{email}>",
-                "-m",
-                message,
-            ],
-            verbose,
-        )
-    else:
-        run_command(
-            [
-                "git",
-                "commit",
-                "--allow-empty",
-                "--date",
-                date,
-                "--author",
-                f"{author} <{email}>",
-                "-m",
-                message,
-                "-m",
-                description,
-            ],
-            verbose,
-        )
+    run_command(
+        [
+            "git",
+            "commit",
+            "--allow-empty",
+            "--date",
+            date,
+            "--author",
+            f"{author} <{email}>",
+            "-m",
+            message,
+        ],
+        verbose,
+    )
 
 
-ANONYMOUS_AUTHOR = "Anonymous"
-ANONYMOUS_EMAIL = "anon@example.com"
-CRIMINAL_AUTHOR = "Josh Badur"
-CRIMINAL_EMAIL = "josh.badur@example.com"
+ANON = ("Anonymous", "anon@example.com")
+CRIMINAL = ("Josh Badur", "josh.badur@example.com")
 
 
 def setup(verbose: bool = False):
-    commit(
-        ANONYMOUS_AUTHOR,
-        ANONYMOUS_EMAIL,
-        "2024-01-05 08:00",
+    # Early small crimes
+    crimes = [
         "Stole bicycle from Main Street",
-        None,
-        verbose,
-    )
-
-    commit(
-        ANONYMOUS_AUTHOR,
-        ANONYMOUS_EMAIL,
-        "2024-03-12 14:45",
+        "Pickpocketed wallet at train station",
+        "Shoplifted candy from corner store",
+        "Broke into car on Elm Street",
+        "Graffiti on library wall",
         "Vandalized statue in city park",
-        None,
-        verbose,
-    )
-
-    commit(
-        ANONYMOUS_AUTHOR,
-        ANONYMOUS_EMAIL,
-        "2024-06-21 22:30",
+        "Spray painted bus stop shelter",
+        "Trespassed in restricted area",
         "Robbed Alice Bakersfield",
-        None,
-        verbose,
-    )
+        "Stole guitar from pawn shop",
+    ]
 
-    commit(
-        ANONYMOUS_AUTHOR,
-        ANONYMOUS_EMAIL,
-        "2024-09-13 03:15",
+    for i, msg in enumerate(crimes, start=1):
+        commit(*ANON, f"2024-01-{i:02d} 08:00", msg, verbose)
+
+    # Branch: the criminal tries to hide crimes
+    run_command(["git", "checkout", "-b", "rewrite"], verbose)
+    commit(*CRIMINAL, "2024-02-10 10:00", "Rewrite the comments", verbose)
+    commit(*CRIMINAL, "2024-02-11 09:00", "Covering my tracks", verbose)
+    run_command(["git", "checkout", "main"], verbose)
+
+    # Escalation of crimes
+    more_crimes = [
+        "Broke into bakery overnight",
         "Graffiti on police station wall",
-        "Spray painted a giant smiley face over the precinct's main entrance.",
-        verbose,
-    )
-
-    commit(
-        CRIMINAL_AUTHOR,
-        CRIMINAL_EMAIL,
-        "2024-10-28 09:00",
+        "Stole motorcycle from parking lot",
         "Oh no what have I done",
-        None,
-        verbose,
+        "Currently hiding at the abandoned warehouse at docks",
+    ]
+
+    for j, msg in enumerate(more_crimes, start=1):
+        commit(*ANON, f"2024-03-{j:02d} 07:00", msg, verbose)
+
+    # Merge rewrite branch back, creates a real graph
+    run_command(
+        ["git", "merge", "--no-ff", "rewrite", "-m", "Merge branch 'rewrite'"], verbose
     )
 
-    commit(
-        ANONYMOUS_AUTHOR,
-        ANONYMOUS_EMAIL,
-        "2024-11-14 07:00",
-        "Currently hiding at the abandoned warehouse at docks",
-        None,
-        verbose,
-    )
+    # Add a few final commits after merge
+    aftermath = [
+        "Police investigation intensifies",
+        "Wanted posters distributed",
+        "Citywide curfew announced",
+    ]
+    for k, msg in enumerate(aftermath, start=1):
+        commit(*ANON, f"2024-04-{k:02d} 12:00", msg, verbose)
