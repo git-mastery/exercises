@@ -1,33 +1,21 @@
 from git_autograder import (
-    GitAutograderOutput,
     GitAutograderExercise,
+    GitAutograderOutput,
     GitAutograderStatus,
 )
-from git_autograder.answers.rules import NotEmptyRule, HasExactValueRule
-from git_autograder.answers.rules.answer_rule import AnswerRule
 from git_autograder.answers import GitAutograderAnswersRecord
+from git_autograder.answers.rules import HasExactValueRule, NotEmptyRule
+from git_autograder.answers.rules.answer_rule import AnswerRule
 
-QUESTION_ONE = "Where is the criminal currently hiding at? (What is the location in commit where HEAD is pointing to?)"
-QUESTION_TWO = "When did the criminal rob Alice Bakersfield? (Find the date of the commit whose description details the robbery)"
-QUESTION_THREE = 'What is the criminal\'s real name? (Find the one commit where the author is not "Anonymous")'
-QUESTION_FOUR = "What did the criminal do on 13 September 2024? (What is the description of the commit on 13 September 2024?)"
-QUESTION_FIVE = "What was the very first crime the criminal committed? (What is the message of the very first commit?)"
-
-
-class ContainsValueRule(AnswerRule):
-    MISSING_VALUE = "Answer for {question} missing the right values"
-
-    def __init__(self, value: str) -> None:
-        super().__init__()
-        self.value = value
-
-    def apply(self, answer: GitAutograderAnswersRecord) -> None:
-        if self.value not in answer.answer.strip().lower():
-            raise Exception(self.MISSING_VALUE.format(question=answer.question))
+QUESTION_ONE = "What is the SHA of the commit HEAD points to?"
+QUESTION_TWO = "What is the commit message of the commit {SHA}?"
+QUESTION_THREE = (
+    'What is the SHA of the commit with the commit message "Rewrite the comments"?'
+)
 
 
-class ContainsOneOfValueRule(AnswerRule):
-    MISMATCH_VALUE = "Answer for {question} did not contain the right value"
+class OneOfValueRule(AnswerRule):
+    MISMATCH_VALUE = "Answer for {question} did not match any of the accepted answers."
 
     def __init__(self, *values: str) -> None:
         super().__init__()
@@ -35,41 +23,47 @@ class ContainsOneOfValueRule(AnswerRule):
 
     def apply(self, answer: GitAutograderAnswersRecord) -> None:
         for value in self.values:
-            if value in answer.answer.strip().lower():
+            if value == answer.answer.strip().lower():
                 break
         else:
             raise Exception(self.MISMATCH_VALUE.format(question=answer.question))
 
 
+def ensure_str(val) -> str:
+    if isinstance(val, bytes):
+        return val.decode("utf-8", errors="replace").strip()
+    return str(val).strip()
+
+
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
+    repo = exercise.repo.repo
+
+    head_commit = repo.head.commit
+    head_sha = head_commit.hexsha
+    head_sha_short = head_sha[:7]
+
+    head_message = ensure_str(head_commit.message).strip()
+
+    target_msg = "Rewrite the comments"
+    target_commit = next(
+        (c for c in repo.iter_commits(all=True) if c.message.strip() == target_msg),
+        None,
+    )
+    if target_commit is None:
+        raise Exception("Could not find commit with message 'Rewrite the comments'")
+    target_sha = target_commit.hexsha
+    target_sha_short = target_sha[:7]
+
     exercise.answers.add_validation(
         QUESTION_ONE,
         NotEmptyRule(),
-        ContainsOneOfValueRule(
-            "abandoned warehouse at docks",
-            "abandoned warehouse",
-            "warehouse",
-            "warehouse at docks",
-        ),
+        OneOfValueRule(head_sha, head_sha_short),
     ).add_validation(
         QUESTION_TWO,
         NotEmptyRule(),
-        ContainsOneOfValueRule(
-            "2024-06-21",
-            "2024-06-21 22:30",
-            "21 June 2024",
-            "21 Jun 2024",
-            "21/06/2024",
-        ),
+        HasExactValueRule(head_message),
     ).add_validation(
-        QUESTION_THREE, NotEmptyRule(), HasExactValueRule("Josh Badur")
-    ).add_validation(
-        QUESTION_FOUR,
-        HasExactValueRule(
-            "Spray painted a giant smiley face over the precinct's main entrance."
-        ),
-    ).add_validation(
-        QUESTION_FIVE, HasExactValueRule("Stole bicycle from Main Street")
+        QUESTION_THREE, NotEmptyRule(), OneOfValueRule(target_sha, target_sha_short)
     ).validate()
 
     return exercise.to_output([], GitAutograderStatus.SUCCESSFUL)
