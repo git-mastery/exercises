@@ -4,6 +4,6 @@ A:
 Q: What is the commit message of the commit {SHA}?
 A:
 
-Q: What is the SHA of the commit with the commit message Rewrite the comments?
+Q: What is the SHA of the commit with the commit message "Rewrite the comments"?
 A:
 
