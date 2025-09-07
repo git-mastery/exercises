@@ -1,3 +1,5 @@
+from typing import Tuple
+
 from git_autograder import (
     GitAutograderExercise,
     GitAutograderOutput,
@@ -35,23 +37,37 @@ def ensure_str(val) -> str:
     return str(val).strip()
 
 
-def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
-    repo = exercise.repo.repo
+def get_head_sha(exercise: GitAutograderExercise) -> str:
+    head_commit = exercise.repo.repo.head.commit
+    return head_commit.hexsha
 
-    head_commit = repo.head.commit
-    head_sha = head_commit.hexsha
-    head_sha_short = head_sha[:7]
 
-    head_message = ensure_str(head_commit.message).strip()
+def get_head_message(exercise: GitAutograderExercise) -> str:
+    return ensure_str(exercise.repo.repo.head.commit.message).strip()
 
+
+def get_target_commit_sha(exercise: GitAutograderExercise) -> str:
     target_msg = "Rewrite the comments"
     target_commit = next(
-        (c for c in repo.iter_commits(all=True) if c.message.strip() == target_msg),
+        (
+            c
+            for c in exercise.repo.repo.iter_commits(all=True)
+            if c.message.strip() == target_msg
+        ),
         None,
     )
     if target_commit is None:
         raise Exception("Could not find commit with message 'Rewrite the comments'")
-    target_sha = target_commit.hexsha
+    return target_commit.hexsha
+
+
+def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
+    head_sha = get_head_sha(exercise)
+    head_sha_short = head_sha[:7]
+
+    head_message = get_head_message(exercise)
+
+    target_sha = get_target_commit_sha(exercise)
     target_sha_short = target_sha[:7]
 
     exercise.answers.add_validation(
