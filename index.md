@@ -47,6 +47,12 @@
 |----------|------------------|
 | [under-control](https://git-mastery.github.io/exercises/under_control) | `gitmastery download under-control` |
 
+# git-log
+
+| Exercise | Download Command |
+|----------|------------------|
+| [log-and-order](https://git-mastery.github.io/exercises/log_and_order) | `gitmastery download log-and-order` |
+
 # git-merge
 
 | Exercise | Download Command |

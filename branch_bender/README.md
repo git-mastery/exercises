@@ -16,7 +16,7 @@ Merge the `feature/dashboard` branch into `main` next.
 
 ### Task 3
 
-Merge the `feature/payments` branch into `main` last.
+Merge the `feature/payment` branch into `main` last.
 
 ## Final state
 
