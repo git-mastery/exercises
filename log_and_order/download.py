@@ -1,3 +1,4 @@
+import os
 import subprocess
 from sys import exit
 from typing import List, Optional
@@ -41,6 +42,47 @@ def commit(
         ],
         verbose,
     )
+
+
+def replace_sha_in_file(verbose: bool = False):
+    # Get a list of commit SHAs (most recent first)
+    log_output = run_command(
+        ["git", "log", "--pretty=format:%H"],
+        verbose,
+    )
+    assert log_output is not None
+
+    commits = log_output.strip().splitlines()
+    if not commits or len(commits) < 2:
+        print("Not enough commits to choose from.")
+        exit(1)
+
+    # Exclude the very first commit (the root commit)
+    commits_without_root = commits[:-1]
+
+    # Pick one at random
+    import random
+
+    chosen_sha = random.choice(commits_without_root)
+
+    if verbose:
+        print(f"Chosen commit: {chosen_sha}")
+
+    # Replace {SHA} in answers.txt
+    from pathlib import Path
+
+    # We need to go up one level since we're currently in the crime-spree/ folder
+    answers_file = Path("../answers.txt")
+    if not answers_file.exists():
+        print("answers.txt not found.")
+        exit(1)
+
+    text = answers_file.read_text()
+    text = text.replace("{SHA}", chosen_sha)
+    answers_file.write_text(text)
+
+    if verbose:
+        print("answers.txt updated.")
 
 
 ANON = ("Anonymous", "anon@example.com")
@@ -96,3 +138,5 @@ def setup(verbose: bool = False):
     ]
     for k, msg in enumerate(aftermath, start=1):
         commit(*ANON, f"2024-04-{k:02d} 12:00", msg, verbose)
+
+    replace_sha_in_file(verbose)
