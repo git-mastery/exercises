@@ -1,3 +1,4 @@
+import re
 from typing import Tuple
 
 from git_autograder import (
@@ -11,6 +12,9 @@ from git_autograder.answers.rules.answer_rule import AnswerRule
 
 QUESTION_ONE = "What is the SHA of the commit HEAD points to?"
 QUESTION_TWO = "What is the commit message of the commit {SHA}?"
+QUESTION_TWO_REGEX = re.compile(
+    "^What is the commit message of the commit ([\\d\\w]+)\\?$"
+)
 QUESTION_THREE = (
     'What is the SHA of the commit with the commit message "Rewrite the comments"?'
 )
@@ -46,6 +50,20 @@ def get_head_message(exercise: GitAutograderExercise) -> str:
     return ensure_str(exercise.repo.repo.head.commit.message).strip()
 
 
+def get_target_commit_message(exercise: GitAutograderExercise, sha: str) -> str:
+    target_commit = next(
+        (
+            c
+            for c in exercise.repo.repo.iter_commits(all=True)
+            if c.hexsha.strip() == sha
+        ),
+        None,
+    )
+    if target_commit is None:
+        raise Exception(f"Could not find commit with SHA '{sha}'")
+    return ensure_str(target_commit.message).strip()
+
+
 def get_target_commit_sha(exercise: GitAutograderExercise) -> str:
     target_msg = "Rewrite the comments"
     target_commit = next(
@@ -65,7 +83,13 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     head_sha = get_head_sha(exercise)
     head_sha_short = head_sha[:7]
 
-    head_message = get_head_message(exercise)
+    # Get second question and find the SHA hash to pick
+    second_question = exercise.answers.questions[1]
+    sha_match = QUESTION_TWO_REGEX.match(second_question)
+    assert sha_match is not None
+    sha = sha_match.group(1)
+
+    target_message = get_target_commit_message(exercise, sha)
 
     target_sha = get_target_commit_sha(exercise)
     target_sha_short = target_sha[:7]
@@ -75,9 +99,9 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         NotEmptyRule(),
         OneOfValueRule(head_sha, head_sha_short),
     ).add_validation(
-        QUESTION_TWO,
+        QUESTION_TWO.format(SHA=sha),
         NotEmptyRule(),
-        HasExactValueRule(head_message),
+        HasExactValueRule(target_message),
     ).add_validation(
         QUESTION_THREE, NotEmptyRule(), OneOfValueRule(target_sha, target_sha_short)
     ).validate()
