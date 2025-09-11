@@ -58,7 +58,7 @@ def replace_sha_in_file(verbose: bool = False):
         exit(1)
 
     # Exclude the very first commit (the root commit)
-    commits_without_root = commits[:-1]
+    commits_without_root = commits[1:10] + commits[11:]
 
     # Pick one at random
     import random
