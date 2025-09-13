@@ -1,53 +1,16 @@
-import os
-import textwrap
-import pathlib
-import subprocess
-from sys import exit
-from typing import List, Optional
-
 __resources__ = {"README.md": "README.md"}
 
 
-def run_command(command: List[str], verbose: bool) -> Optional[str]:
-    try:
-        result = subprocess.run(
-            command,
-            capture_output=True,
-            text=True,
-            check=True,
-        )
-        if verbose:
-            print(result.stdout)
-        return result.stdout
-    except subprocess.CalledProcessError as e:
-        if verbose:
-            print(e.stderr)
-        exit(1)
-
-
-def create_or_update_file(
-    filepath: str | pathlib.Path, contents: Optional[str] = None
-) -> None:
-    if os.path.dirname(filepath) != "":
-        os.makedirs(os.path.dirname(filepath), exist_ok=True)
-    if contents is None:
-        open(filepath, "a").close()
-    else:
-        with open(filepath, "w") as file:
-            file.write(textwrap.dedent(contents).lstrip())
+from exercise_utils.file import create_or_update_file
+from exercise_utils.git import add, checkout, commit
+from exercise_utils.gitmastery import create_start_tag
 
 
 def setup(verbose: bool = False):
-    commits_str = run_command(
-        ["git", "log", "--reverse", "--pretty=format:%h"], verbose
-    )
-    assert commits_str is not None
-    first_commit = commits_str.split("\n")[0]
-    tag_name = f"git-mastery-start-{first_commit}"
-    run_command(["git", "tag", tag_name], verbose)
+    create_start_tag(verbose)
 
     # feature/login branch
-    run_command(["git", "checkout", "-b", "feature/login"], verbose)
+    checkout("feature/login", True, verbose)
     create_or_update_file(
         "src/login.js",
         """
@@ -56,8 +19,8 @@ def setup(verbose: bool = False):
         }
         """,
     )
-    run_command(["git", "add", "src/login.js"], verbose)
-    run_command(["git", "commit", "-m", "Add login script"], verbose)
+    add(["src/login.js"], verbose)
+    commit("Add login script", verbose)
 
     create_or_update_file(
         "login.html",
@@ -87,13 +50,13 @@ def setup(verbose: bool = False):
         </html>
         """,
     )
-    run_command(["git", "add", "login.html"], verbose)
-    run_command(["git", "commit", "-m", "Add login page"], verbose)
+    add(["login.html"], verbose)
+    commit("Add login page", verbose)
 
-    run_command(["git", "checkout", "main"], verbose)
+    checkout("main", False, verbose)
 
     # feature/dashboard branch
-    run_command(["git", "checkout", "-b", "feature/dashboard"], verbose)
+    checkout("feature/dashboard", True, verbose)
 
     create_or_update_file(
         "dashboard.html",
@@ -111,8 +74,8 @@ def setup(verbose: bool = False):
         </html>
         """,
     )
-    run_command(["git", "add", "dashboard.html"], verbose)
-    run_command(["git", "commit", "-m", "Add dashboard header"], verbose)
+    add(["dashboard.html"], verbose)
+    commit("Add dashboard header", verbose)
 
     create_or_update_file(
         "dashboard.html",
@@ -134,8 +97,8 @@ def setup(verbose: bool = False):
         </html>
         """,
     )
-    run_command(["git", "add", "dashboard.html"], verbose)
-    run_command(["git", "commit", "-m", "Add dashboard body"], verbose)
+    add(["dashboard.html"], verbose)
+    commit("Add dashboard body", verbose)
 
     create_or_update_file(
         "dashboard.html",
@@ -160,13 +123,13 @@ def setup(verbose: bool = False):
         </html>
         """,
     )
-    run_command(["git", "add", "dashboard.html"], verbose)
-    run_command(["git", "commit", "-m", "Add dashboard footer"], verbose)
+    add(["dashboard.html"], verbose)
+    commit("Add dashboard footer", verbose)
 
-    run_command(["git", "checkout", "main"], verbose)
+    checkout("main", False, verbose)
 
     # feature/payments branch
-    run_command(["git", "checkout", "-b", "feature/payments"], verbose)
+    checkout("feature/payments", True, verbose)
 
     create_or_update_file(
         "src/payments.js",
@@ -177,8 +140,8 @@ def setup(verbose: bool = False):
         }
         """,
     )
-    run_command(["git", "add", "src/payments.js"], verbose)
-    run_command(["git", "commit", "-m", "Add payments script"], verbose)
+    add(["src/payments.js"], verbose)
+    commit("Add payments script", verbose)
 
     create_or_update_file(
         "payments.html",
@@ -208,7 +171,7 @@ def setup(verbose: bool = False):
         </html>
         """,
     )
-    run_command(["git", "add", "payments.html"], verbose)
-    run_command(["git", "commit", "-m", "Add payments page"], verbose)
+    add(["payments.html"], verbose)
+    commit("Add payments page", verbose)
 
-    run_command(["git", "checkout", "main"], verbose)
+    checkout("main", False, verbose)
