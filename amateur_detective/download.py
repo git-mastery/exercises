@@ -1,8 +1,7 @@
 import os
 import stat
 
-from branch_bender.download import create_or_update_file
-from exercise_utils.file import append_to_file
+from exercise_utils.file import append_to_file, create_or_update_file
 from exercise_utils.git import add, commit
 from exercise_utils.gitmastery import create_start_tag
 
