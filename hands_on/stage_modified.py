@@ -1,8 +1,7 @@
 import os
 
-from branch_bender.download import create_or_update_file
 from exercise_utils.cli import run_command
-from exercise_utils.file import append_to_file
+from exercise_utils.file import append_to_file, create_or_update_file
 from exercise_utils.git import add, init
 
 __requires_git__ = True
