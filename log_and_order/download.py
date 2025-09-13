@@ -1,24 +1,7 @@
-import os
-import subprocess
 from sys import exit
-from typing import List, Optional
 
-
-def run_command(command: List[str], verbose: bool) -> Optional[str]:
-    try:
-        result = subprocess.run(
-            command,
-            capture_output=True,
-            text=True,
-            check=True,
-        )
-        if verbose:
-            print(result.stdout)
-        return result.stdout
-    except subprocess.CalledProcessError as e:
-        if verbose:
-            print(e.stderr)
-        exit(1)
+from exercise_utils.cli import run_command
+from exercise_utils.git import checkout, merge_with_message
 
 
 def commit(
@@ -108,10 +91,10 @@ def setup(verbose: bool = False):
         commit(*ANON, f"2024-01-{i:02d} 08:00", msg, verbose)
 
     # Branch: the criminal tries to hide crimes
-    run_command(["git", "checkout", "-b", "rewrite"], verbose)
+    checkout("rewrite", True, verbose)
     commit(*CRIMINAL, "2024-02-10 10:00", "Rewrite the comments", verbose)
     commit(*CRIMINAL, "2024-02-11 09:00", "Covering my tracks", verbose)
-    run_command(["git", "checkout", "main"], verbose)
+    checkout("main", False, verbose)
 
     # Escalation of crimes
     more_crimes = [
@@ -126,9 +109,7 @@ def setup(verbose: bool = False):
         commit(*ANON, f"2024-03-{j:02d} 07:00", msg, verbose)
 
     # Merge rewrite branch back, creates a real graph
-    run_command(
-        ["git", "merge", "--no-ff", "rewrite", "-m", "Merge branch 'rewrite'"], verbose
-    )
+    merge_with_message("rewrite", False, "Merge branch 'rewrite'", verbose)
 
     # Add a few final commits after merge
     aftermath = [

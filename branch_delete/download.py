@@ -1,47 +1,17 @@
-import subprocess
-from sys import exit
-from typing import List, Optional
-
-
-def run_command(command: List[str], verbose: bool) -> Optional[str]:
-    try:
-        result = subprocess.run(
-            command,
-            capture_output=True,
-            text=True,
-            check=True,
-        )
-        if verbose:
-            print(result.stdout)
-        return result.stdout
-    except subprocess.CalledProcessError as e:
-        if verbose:
-            print(e.stderr)
-        exit(1)
+from exercise_utils.git import checkout, empty_commit, merge
 
 
 def setup(verbose: bool = False):
-    run_command(["git", "commit", "--allow-empty", "-m", "Implement loading"], verbose)
-    run_command(["git", "commit", "--allow-empty", "-m", "Fix loading bug"], verbose)
+    empty_commit("Implement loading", verbose)
+    empty_commit("Fix loading bug", verbose)
 
-    run_command(["git", "checkout", "-b", "optimization-approach-1"], verbose)
-    run_command(["git", "commit", "--allow-empty", "-m", "Apply bubble sort"], verbose)
-    run_command(["git", "commit", "--allow-empty", "-m", "Fix sorting bug"], verbose)
+    checkout("optimization-approach-1", True, verbose)
+    empty_commit("Apply bubble sort", verbose)
+    empty_commit("Fix sorting bug", verbose)
 
-    run_command(["git", "checkout", "main"], verbose)
-    run_command(["git", "checkout", "-b", "optimization-approach-2"], verbose)
-    run_command(
-        [
-            "git",
-            "commit",
-            "--allow-empty",
-            "-m",
-            "Apply merge sort",
-        ],
-        verbose,
-    )
+    checkout("main", False, verbose)
+    checkout("optimization-approach-2", True, verbose)
+    empty_commit("Apply merge sort", verbose)
 
-    run_command(["git", "checkout", "main"], verbose)
-    run_command(
-        ["git", "merge", "optimization-approach-1", "--no-ff", "--no-edit"], verbose
-    )
+    checkout("main", False, verbose)
+    merge("optimization-approach-1", False, verbose)

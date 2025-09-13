@@ -20,4 +20,4 @@ def setup(verbose: bool = False):
     commit("Hello everyone", verbose)
 
     checkout("main", False, verbose)
-    merge("john", verbose)
+    merge("john", True, verbose)
