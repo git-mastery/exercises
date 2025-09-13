@@ -15,6 +15,8 @@ def add(files: List[str], verbose: bool) -> None:
     run_command(["git", "add", *files], verbose)
 
 
+# TODO(woojiahao): Maybe these should be built from a class like builder for each
+# option
 def commit(message: str, verbose: bool) -> None:
     """Creates a commit with the given message."""
     run_command(["git", "commit", "-m", message], verbose)
@@ -33,13 +35,26 @@ def checkout(branch: str, create_branch: bool, verbose: bool) -> None:
         run_command(["git", "checkout", branch], verbose)
 
 
-def merge(target_branch: str, verbose: bool) -> None:
+def merge(target_branch: str, ff: bool, verbose: bool) -> None:
     """Merges the current branch with the target one.
 
     Forcefully sets --no-edit to avoid requiring the student to enter the commit
     message.
     """
-    run_command(["git", "merge", target_branch, "--no-edit"], verbose)
+    if ff:
+        run_command(["git", "merge", target_branch, "--no-edit"], verbose)
+    else:
+        run_command(["git", "merge", target_branch, "--no-edit", "--no-ff"], verbose)
+
+
+def merge_with_message(
+    target_branch: str, ff: bool, message: str, verbose: bool
+) -> None:
+    """Merges the current branch with the target one."""
+    if ff:
+        run_command(["git", "merge", target_branch, "-m", message], verbose)
+    else:
+        run_command(["git", "merge", target_branch, "-m", message, "--no-ff"], verbose)
 
 
 def init(verbose: bool) -> None:
@@ -48,3 +63,8 @@ def init(verbose: bool) -> None:
     Forces the name of the initial branch to be main.
     """
     run_command(["git", "init", "--initial-branch=main"], verbose)
+
+
+def push(remote: str, branch: str, verbose: bool) -> None:
+    """Push the given branch on the remote."""
+    run_command(["git", "push", remote, branch], verbose)
