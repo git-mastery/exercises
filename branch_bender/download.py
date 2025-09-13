@@ -17,6 +17,8 @@ def setup(verbose: bool = False):
         function login(username, password) {
             return username === "admin" && password == "admin"
         }
+
+
         """,
     )
     add(["src/login.js"], verbose)
