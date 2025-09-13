@@ -44,29 +44,11 @@ def create_download_py_file(config: HandsOnConfig) -> None:
         f"{config.hands_on_name.replace('-', '_')}.py", "w"
     ) as download_script_file:
         download_script = f"""
-        import subprocess
-        from sys import exit
-        from typing import List, Optional
+        from exercise_utils.cli import run_command
+        from exercise_utils.gitmastery import create_start_tag
 
         __requires_git__ = {config.requires_git}
         __requires_github__ = {config.requires_github}
-
-
-        def run_command(command: List[str], verbose: bool) -> Optional[str]:
-            try:
-                result = subprocess.run(
-                    command,
-                    capture_output=True,
-                    text=True,
-                    check=True,
-                )
-                if verbose:
-                    print(result.stdout)
-                return result.stdout
-            except subprocess.CalledProcessError as e:
-                if verbose:
-                    print(e.stderr)
-                exit(1)
 
 
         def download(verbose: bool):
