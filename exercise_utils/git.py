@@ -40,3 +40,11 @@ def merge(target_branch: str, verbose: bool) -> None:
     message.
     """
     run_command(["git", "merge", target_branch, "--no-edit"], verbose)
+
+
+def init(verbose: bool) -> None:
+    """Initializes the current folder as a Git repository.
+
+    Forces the name of the initial branch to be main.
+    """
+    run_command(["git", "init", "--initial-branch=main"], verbose)

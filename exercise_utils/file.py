@@ -18,3 +18,9 @@ def create_or_update_file(
     else:
         with open(filepath, "w") as file:
             file.write(textwrap.dedent(contents).lstrip())
+
+
+def append_to_file(filepath: str | pathlib.Path, contents: str) -> None:
+    """Appends contents to file."""
+    with open(filepath, "a") as file:
+        file.write(textwrap.dedent(contents).lstrip())
