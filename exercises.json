@@ -1,6 +1,57 @@
 [
   {
-    "exercise_name": "side-track",
+    "exercise_name": "nothing-to-hide",
+    "tags": [
+      "git-status"
+    ],
+    "requires_git": true,
+    "requires_github": false,
+    "base_files": {
+      "answers.txt": "answers.txt"
+    },
+    "exercise_repo": {
+      "repo_type": "local",
+      "repo_name": "repo",
+      "init": true,
+      "create_fork": null,
+      "repo_title": null
+    }
+  },
+  {
+    "exercise_name": "remote-branch-rename",
+    "tags": [
+      "git-branch"
+    ],
+    "requires_git": true,
+    "requires_github": true,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "remote",
+      "repo_name": "rename-me",
+      "repo_title": "tidy-branches",
+      "create_fork": true,
+      "init": null
+    }
+  },
+  {
+    "exercise_name": "fetch-and-pull",
+    "tags": [
+      "git-fetch",
+      "git-pull"
+    ],
+    "requires_git": true,
+    "requires_github": true,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "remote",
+      "repo_name": "gm-shapes",
+      "repo_title": "gm-shapes",
+      "create_fork": false,
+      "init": null
+    }
+  },
+  {
+    "exercise_name": "bonsai-tree",
     "tags": [
       "git-branch",
       "git-checkout"
@@ -10,26 +61,93 @@
     "base_files": {},
     "exercise_repo": {
       "repo_type": "local",
-      "repo_name": "branch-me",
+      "repo_name": "care-notes",
       "repo_title": null,
       "create_fork": null,
       "init": true
     }
   },
   {
-    "exercise_name": "link-me",
+    "exercise_name": "branch-bender",
     "tags": [
-      "git-remote"
+      "git-merge"
     ],
     "requires_git": true,
-    "requires_github": true,
+    "requires_github": false,
     "base_files": {},
     "exercise_repo": {
       "repo_type": "local",
-      "repo_name": "link-this",
-      "init": true,
+      "repo_name": "webapp",
+      "repo_title": null,
+      "create_fork": null,
+      "init": true
+    }
+  },
+  {
+    "exercise_name": "branch-delete",
+    "tags": [
+      "git-branch"
+    ],
+    "requires_git": true,
+    "requires_github": false,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "local",
+      "repo_name": "delete-my-branches",
+      "repo_title": null,
+      "create_fork": null,
+      "init": true
+    }
+  },
+  {
+    "exercise_name": "conflict-mediator",
+    "tags": [
+      "git-merge",
+      "merge-conflicts"
+    ],
+    "requires_git": true,
+    "requires_github": false,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "local",
+      "repo_name": "conflict",
+      "repo_title": null,
+      "create_fork": null,
+      "init": true
+    }
+  },
+  {
+    "exercise_name": "under-control",
+    "tags": [
+      "git-init"
+    ],
+    "requires_git": false,
+    "requires_github": false,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "local",
+      "repo_name": "control-me",
+      "init": false,
       "create_fork": null,
       "repo_title": null
+    }
+  },
+  {
+    "exercise_name": "log-and-order",
+    "tags": [
+      "git-log"
+    ],
+    "requires_git": true,
+    "requires_github": false,
+    "base_files": {
+      "answers.txt": "answers.txt"
+    },
+    "exercise_repo": {
+      "repo_type": "local",
+      "repo_name": "crime-spree",
+      "repo_title": null,
+      "create_fork": null,
+      "init": true
     }
   },
   {
@@ -66,236 +184,6 @@
     }
   },
   {
-    "exercise_name": "amateur-detective",
-    "tags": [
-      "git-status"
-    ],
-    "requires_git": true,
-    "requires_github": false,
-    "base_files": {
-      "answers.txt": "answers.txt"
-    },
-    "exercise_repo": {
-      "repo_type": "local",
-      "repo_name": "crime-scene",
-      "repo_title": null,
-      "create_fork": null,
-      "init": true
-    }
-  },
-  {
-    "exercise_name": "stage-fright",
-    "tags": [
-      "git-add"
-    ],
-    "requires_git": true,
-    "requires_github": false,
-    "base_files": {},
-    "exercise_repo": {
-      "repo_type": "local",
-      "repo_name": "attendance",
-      "init": true,
-      "create_fork": null,
-      "repo_title": null
-    }
-  },
-  {
-    "exercise_name": "bonsai-tree",
-    "tags": [
-      "git-branch",
-      "git-checkout"
-    ],
-    "requires_git": true,
-    "requires_github": false,
-    "base_files": {},
-    "exercise_repo": {
-      "repo_type": "local",
-      "repo_name": "care-notes",
-      "repo_title": null,
-      "create_fork": null,
-      "init": true
-    }
-  },
-  {
-    "exercise_name": "fetch-and-pull",
-    "tags": [
-      "git-fetch",
-      "git-pull"
-    ],
-    "requires_git": true,
-    "requires_github": true,
-    "base_files": {},
-    "exercise_repo": {
-      "repo_type": "remote",
-      "repo_name": "gm-shapes",
-      "repo_title": "gm-shapes",
-      "create_fork": false,
-      "init": null
-    }
-  },
-  {
-    "exercise_name": "ignoring-somethings",
-    "tags": [
-      "gitignore"
-    ],
-    "requires_git": true,
-    "requires_github": false,
-    "base_files": {},
-    "exercise_repo": {
-      "repo_type": "local",
-      "repo_name": "files",
-      "init": true,
-      "create_fork": null,
-      "repo_title": null
-    }
-  },
-  {
-    "exercise_name": "branch-delete",
-    "tags": [
-      "git-branch"
-    ],
-    "requires_git": true,
-    "requires_github": false,
-    "base_files": {},
-    "exercise_repo": {
-      "repo_type": "local",
-      "repo_name": "delete-my-branches",
-      "repo_title": null,
-      "create_fork": null,
-      "init": true
-    }
-  },
-  {
-    "exercise_name": "under-control",
-    "tags": [
-      "git-init"
-    ],
-    "requires_git": false,
-    "requires_github": false,
-    "base_files": {},
-    "exercise_repo": {
-      "repo_type": "local",
-      "repo_name": "control-me",
-      "init": false,
-      "create_fork": null,
-      "repo_title": null
-    }
-  },
-  {
-    "exercise_name": "fork-repo",
-    "tags": [
-      "github-fork"
-    ],
-    "requires_git": true,
-    "requires_github": true,
-    "base_files": {},
-    "exercise_repo": {
-      "repo_type": "ignore",
-      "repo_name": "ignore-me",
-      "repo_title": null,
-      "create_fork": null,
-      "init": true
-    }
-  },
-  {
-    "exercise_name": "nothing-to-hide",
-    "tags": [
-      "git-status"
-    ],
-    "requires_git": true,
-    "requires_github": false,
-    "base_files": {
-      "answers.txt": "answers.txt"
-    },
-    "exercise_repo": {
-      "repo_type": "local",
-      "repo_name": "repo",
-      "init": true,
-      "create_fork": null,
-      "repo_title": null
-    }
-  },
-  {
-    "exercise_name": "branch-bender",
-    "tags": [
-      "git-merge"
-    ],
-    "requires_git": true,
-    "requires_github": false,
-    "base_files": {},
-    "exercise_repo": {
-      "repo_type": "local",
-      "repo_name": "webapp",
-      "repo_title": null,
-      "create_fork": null,
-      "init": true
-    }
-  },
-  {
-    "exercise_name": "remote-control",
-    "tags": [],
-    "requires_git": true,
-    "requires_github": true,
-    "base_files": {},
-    "exercise_repo": {
-      "repo_type": "ignore",
-      "repo_name": "ignore-me",
-      "init": true,
-      "create_fork": null,
-      "repo_title": null
-    }
-  },
-  {
-    "exercise_name": "log-and-order",
-    "tags": [
-      "git-log"
-    ],
-    "requires_git": true,
-    "requires_github": false,
-    "base_files": {
-      "answers.txt": "answers.txt"
-    },
-    "exercise_repo": {
-      "repo_type": "local",
-      "repo_name": "crime-spree",
-      "repo_title": null,
-      "create_fork": null,
-      "init": true
-    }
-  },
-  {
-    "exercise_name": "remote-branch-rename",
-    "tags": [
-      "git-branch"
-    ],
-    "requires_git": true,
-    "requires_github": true,
-    "base_files": {},
-    "exercise_repo": {
-      "repo_type": "remote",
-      "repo_name": "rename-me",
-      "repo_title": "tidy-branches",
-      "create_fork": true,
-      "init": null
-    }
-  },
-  {
-    "exercise_name": "staging-intervention",
-    "tags": [
-      "git-restore"
-    ],
-    "requires_git": true,
-    "requires_github": false,
-    "base_files": {},
-    "exercise_repo": {
-      "repo_type": "local",
-      "repo_name": "intervention",
-      "repo_title": null,
-      "create_fork": null,
-      "init": true
-    }
-  },
-  {
     "exercise_name": "grocery-shopping",
     "tags": [
       "git-add",
@@ -313,17 +201,17 @@
     }
   },
   {
-    "exercise_name": "conflict-mediator",
+    "exercise_name": "side-track",
     "tags": [
-      "git-merge",
-      "merge-conflicts"
+      "git-branch",
+      "git-checkout"
     ],
     "requires_git": true,
     "requires_github": false,
     "base_files": {},
     "exercise_repo": {
       "repo_type": "local",
-      "repo_name": "conflict",
+      "repo_name": "branch-me",
       "repo_title": null,
       "create_fork": null,
       "init": true
@@ -345,6 +233,118 @@
       "repo_type": "remote",
       "init": null,
       "create_fork": true
+    }
+  },
+  {
+    "exercise_name": "remote-control",
+    "tags": [],
+    "requires_git": true,
+    "requires_github": true,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "ignore",
+      "repo_name": "ignore-me",
+      "init": true,
+      "create_fork": null,
+      "repo_title": null
+    }
+  },
+  {
+    "exercise_name": "amateur-detective",
+    "tags": [
+      "git-status"
+    ],
+    "requires_git": true,
+    "requires_github": false,
+    "base_files": {
+      "answers.txt": "answers.txt"
+    },
+    "exercise_repo": {
+      "repo_type": "local",
+      "repo_name": "crime-scene",
+      "repo_title": null,
+      "create_fork": null,
+      "init": true
+    }
+  },
+  {
+    "exercise_name": "link-me",
+    "tags": [
+      "git-remote"
+    ],
+    "requires_git": true,
+    "requires_github": true,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "local",
+      "repo_name": "link-this",
+      "init": true,
+      "create_fork": null,
+      "repo_title": null
+    }
+  },
+  {
+    "exercise_name": "stage-fright",
+    "tags": [
+      "git-add"
+    ],
+    "requires_git": true,
+    "requires_github": false,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "local",
+      "repo_name": "attendance",
+      "init": true,
+      "create_fork": null,
+      "repo_title": null
+    }
+  },
+  {
+    "exercise_name": "staging-intervention",
+    "tags": [
+      "git-restore"
+    ],
+    "requires_git": true,
+    "requires_github": false,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "local",
+      "repo_name": "intervention",
+      "repo_title": null,
+      "create_fork": null,
+      "init": true
+    }
+  },
+  {
+    "exercise_name": "ignoring-somethings",
+    "tags": [
+      "gitignore"
+    ],
+    "requires_git": true,
+    "requires_github": false,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "local",
+      "repo_name": "files",
+      "init": true,
+      "create_fork": null,
+      "repo_title": null
+    }
+  },
+  {
+    "exercise_name": "fork-repo",
+    "tags": [
+      "github-fork"
+    ],
+    "requires_git": true,
+    "requires_github": true,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "ignore",
+      "repo_name": "ignore-me",
+      "repo_title": null,
+      "create_fork": null,
+      "init": true
     }
   }
 ]
