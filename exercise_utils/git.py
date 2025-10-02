@@ -68,3 +68,8 @@ def init(verbose: bool) -> None:
 def push(remote: str, branch: str, verbose: bool) -> None:
     """Push the given branch on the remote."""
     run_command(["git", "push", remote, branch], verbose)
+
+
+def track_remote_branch(remote: str, branch: str, verbose: bool) -> None:
+    """Tracks a remote branch locally using the same name."""
+    run_command(["git", "branch", branch, f"{remote}/{branch}"], verbose)
