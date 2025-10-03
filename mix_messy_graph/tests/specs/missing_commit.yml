@@ -17,10 +17,6 @@ initialization:
       empty: true
       message: Add the search feature
 
-    - type: commit
-      empty: true
-      message: Add the delete feature
-
     - type: new-file
       filename: features.md
       contents: |

@@ -55,7 +55,8 @@ def ensure_str(val) -> str:
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     main_branch = exercise.repo.branches.branch("main")
     merge_commits = [c for c in main_branch.commits if len(c.parents) > 1]
-    if len(merge_commits) > 0:
+    merge_reflogs = [e for e in main_branch.reflog if "merge" in e.action]
+    if merge_commits or merge_reflogs:
         raise exercise.wrong_answer([SQUASH_NOT_USED])
 
     commit_messages = [ensure_str(c.commit.message) for c in main_branch.commits][::-1]

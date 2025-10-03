@@ -13,9 +13,15 @@ initialization:
       empty: true
       message: Fix phrasing of heading
 
+    - type: branch
+      branch-name: feature-search
     - type: commit
       empty: true
-      message: Add the search feature
+      message: Feature search
+    - type: checkout
+      branch-name: main
+    - type: merge
+      branch-name: feature-search
 
     - type: commit
       empty: true
