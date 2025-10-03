@@ -12,6 +12,7 @@
 | [remote-branch-rename](https://git-mastery.github.io/exercises/remote_branch_rename) | `gitmastery download remote-branch-rename` |
 | [bonsai-tree](https://git-mastery.github.io/exercises/bonsai_tree) | `gitmastery download bonsai-tree` |
 | [branch-delete](https://git-mastery.github.io/exercises/branch_delete) | `gitmastery download branch-delete` |
+| [mix-messy-docs](https://git-mastery.github.io/exercises/mix_messy_docs) | `gitmastery download mix-messy-docs` |
 | [branch-rename](https://git-mastery.github.io/exercises/branch_rename) | `gitmastery download branch-rename` |
 | [side-track](https://git-mastery.github.io/exercises/side_track) | `gitmastery download side-track` |
 

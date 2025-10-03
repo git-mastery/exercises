@@ -1,0 +1,16 @@
+{
+  "exercise_name": "mix-messy-docs",
+  "tags": [
+    "git-branch"
+  ],
+  "requires_git": true,
+  "requires_github": true,
+  "base_files": {},
+  "exercise_repo": {
+    "repo_type": "remote",
+    "repo_name": "user-docs",
+    "repo_title": "gm-user-docs",
+    "create_fork": false,
+    "init": null
+  }
+}
