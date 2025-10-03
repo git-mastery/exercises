@@ -15,6 +15,7 @@
 | [mix-messy-docs](https://git-mastery.github.io/exercises/mix_messy_docs) | `gitmastery download mix-messy-docs` |
 | [branch-rename](https://git-mastery.github.io/exercises/branch_rename) | `gitmastery download branch-rename` |
 | [side-track](https://git-mastery.github.io/exercises/side_track) | `gitmastery download side-track` |
+| [mix-messy-graph](https://git-mastery.github.io/exercises/mix_messy_graph) | `gitmastery download mix-messy-graph` |
 
 # git-checkout
 
@@ -60,6 +61,7 @@
 |----------|------------------|
 | [branch-bender](https://git-mastery.github.io/exercises/branch_bender) | `gitmastery download branch-bender` |
 | [conflict-mediator](https://git-mastery.github.io/exercises/conflict_mediator) | `gitmastery download conflict-mediator` |
+| [mix-messy-graph](https://git-mastery.github.io/exercises/mix_messy_graph) | `gitmastery download mix-messy-graph` |
 
 # git-pull
 
