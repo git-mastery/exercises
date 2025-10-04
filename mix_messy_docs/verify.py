@@ -68,6 +68,14 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     if not has_feature_delete_commit_merge:
         raise exercise.wrong_answer([MERGE_FEATURE_DELETE_SECOND, RESET_MESSAGE])
 
+    feature_search_branch = exercise.repo.branches.branch_or_none("feature-search")
+    feature_delete_branch = exercise.repo.branches.branch_or_none("feature-delete")
+    if feature_search_branch is not None:
+        raise exercise.wrong_answer([FEATURE_SEARCH_BRANCH_STILL_EXISTS])
+
+    if feature_delete_branch is not None:
+        raise exercise.wrong_answer([FEATURE_DELETE_BRANCH_STILL_EXISTS])
+
     feature_list_branch = exercise.repo.branches.branch_or_none("feature-list")
     list_branch = exercise.repo.branches.branch_or_none("list")
     if feature_list_branch is None:
