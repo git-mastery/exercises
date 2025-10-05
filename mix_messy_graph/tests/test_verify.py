@@ -1,8 +1,8 @@
 from git_autograder import GitAutograderStatus, GitAutograderTestLoader, assert_output
 
 from ..verify import (
-    FEATURE_SEARCH_BRANCH_STILL_EXISTS,
     FEATURE_DELETE_BRANCH_STILL_EXISTS,
+    FEATURE_SEARCH_BRANCH_STILL_EXISTS,
     FEATURES_FILE_CONTENT_INVALID,
     LIST_BRANCH_STILL_EXISTS,
     MISMATCH_COMMIT_MESSAGE,
@@ -22,7 +22,25 @@ def test_base():
 
 def test_non_squash_merge_used():
     with loader.load("specs/non_squash_merge_used.yml") as output:
-        assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [SQUASH_NOT_USED])
+        # This would fail because the squash merge changes the commit messages and the contents
+        assert_output(
+            output,
+            GitAutograderStatus.UNSUCCESSFUL,
+            [
+                MISMATCH_COMMIT_MESSAGE.format(
+                    expected="Add the search feature", given="Feature search"
+                )
+            ],
+        )
+
+
+def test_non_squash_merge_used_2():
+    with loader.load("specs/non_squash_merge_used_2.yml") as output:
+        assert_output(
+            output,
+            GitAutograderStatus.UNSUCCESSFUL,
+            [SQUASH_NOT_USED],
+        )
 
 
 def test_wrong_commit_message():
