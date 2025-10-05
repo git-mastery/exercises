@@ -68,6 +68,11 @@ initialization:
         git add conflict.txt
         (git commit --no-edit) > /dev/null
 
+    - type: branch-delete
+      branch-name: feature-search
+    - type: branch-delete
+      branch-name: feature-delete
+
     - type: new-file
       filename: features.md
       contents: |
