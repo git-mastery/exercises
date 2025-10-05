@@ -56,7 +56,9 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     main_branch = exercise.repo.branches.branch("main")
     merge_commits = [c for c in main_branch.commits if len(c.parents) > 1]
     merge_reflogs = [e for e in main_branch.reflog if "merge" in e.action]
-    if merge_commits or merge_reflogs:
+    # We expect 1 merge reflog entry because of the setup step which merges the branch,
+    # but no other merges should be present
+    if merge_commits or len(merge_reflogs) > 1:
         raise exercise.wrong_answer([SQUASH_NOT_USED])
 
     commit_messages = [ensure_str(c.commit.message) for c in main_branch.commits][::-1]
