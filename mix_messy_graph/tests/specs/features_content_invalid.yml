@@ -31,7 +31,7 @@ initialization:
         Allows searching for books by keywords.
         Works only for book titles.
 
-        ## Create Book
+        ## Creating Book
 
         Allows creating one book at a time.
 
