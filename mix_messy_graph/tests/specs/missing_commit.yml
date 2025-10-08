@@ -22,7 +22,7 @@ initialization:
       contents: |
         # Features
 
-        ## Create Book
+        ## Creating Book
 
         Allows creating one book at a time.
 
