@@ -36,7 +36,7 @@ EXPECTED_COMMIT_MESSAGES = [
 
 EXPECTED_LINES = [
     "# Features",
-    "## Creating Book",
+    "## Creating Books",
     "Allows creating one book at a time.",
     "## Searching for Books",
     "Allows searching for books by keywords.",
