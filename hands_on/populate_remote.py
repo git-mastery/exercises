@@ -49,18 +49,21 @@ def _initialize_workspace():
 
 
 def _create_and_commit_fruits_file(verbose: bool):
-    content = """
+    create_or_update_file("fruits.txt", """
         apples
         bananas
         cherries
         dragon fruits
-        """
-    create_or_update_file("fruits.txt", content)
+        """,
+    )
     add(["fruits.txt"], verbose)
 
 
 def _update_fruits_file(verbose: bool):
-    append_to_file("fruits.txt", "figs")
+    append_to_file("fruits.txt", """
+        figs
+        """,
+    )
     add(["fruits.txt"], verbose)
     commit("Insert figs into fruits.txt", verbose)
 
@@ -68,10 +71,12 @@ def _update_fruits_file(verbose: bool):
 def _add_additional_files(verbose: bool):
     create_or_update_file("colours.txt", """
         a file for colours 
-        """)
+        """,
+    )
     create_or_update_file("shapes.txt", """
         a file for shapes 
-        """)
+        """,
+    )
     add(["colours.txt", "shapes.txt"], verbose)
     commit("Add colours.txt, shapes.txt", verbose)
 
