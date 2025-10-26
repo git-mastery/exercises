@@ -1,7 +1,7 @@
 import os
 import subprocess
 
-from exercise_utils.cli import run_command
+from exercise_utils.cli import run_command, run_command_with_code
 from exercise_utils.file import create_or_update_file, append_to_file
 from exercise_utils.git import add, init, commit, add_remote
 
@@ -13,26 +13,21 @@ REPO_NAME = "gitmastery-things"
 
 def download(verbose: bool):
     _setup_local_repository(verbose)
-    _ensure_clean_repository(verbose)
+    _create_things_repository(verbose)
     _link_repositories(verbose)
 
 
 def _setup_local_repository(verbose: bool):
-    _initialize_workspace()
-    init(verbose)
+    _initialize_workspace(verbose)
     _create_and_commit_fruits_file(verbose)
     _update_fruits_file(verbose)
     _add_additional_files(verbose)
 
 
-def _ensure_clean_repository(verbose: bool):
-    repo_check = subprocess.run(
-        ["gh", "repo", "view", _get_full_repo_name(verbose)],
-        capture_output=True,
-        text=True
-    )
-
-    if repo_check.returncode == 0:
+def _create_things_repository(verbose: bool):
+    """Create the gitmastery-things repository, deleting any existing ones."""
+    _, return_code = run_command_with_code(["gh", "repo", "view", _get_full_repo_name(verbose)], verbose)
+    if return_code == 0:
         run_command(["gh", "repo", "delete", REPO_NAME, "--yes"], verbose)
 
     run_command(["gh", "repo", "create", REPO_NAME, "--public"], verbose)
@@ -43,9 +38,10 @@ def _link_repositories(verbose: bool):
     add_remote("origin", f"https://github.com/{full_repo_name}", verbose)
 
 
-def _initialize_workspace():
+def _initialize_workspace(verbose: bool):
     os.makedirs("things")
     os.chdir("things")
+    init(verbose)
 
 
 def _create_and_commit_fruits_file(verbose: bool):
