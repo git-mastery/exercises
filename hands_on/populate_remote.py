@@ -3,7 +3,7 @@ import subprocess
 
 from exercise_utils.cli import run_command
 from exercise_utils.file import create_or_update_file, append_to_file
-from exercise_utils.git import add, init, commit, add_origin
+from exercise_utils.git import add, init, commit, add_remote
 
 __requires_git__ = True
 __requires_github__ = True
@@ -40,7 +40,7 @@ def _ensure_clean_repository(verbose: bool):
 
 def _link_repositories(verbose: bool):
     full_repo_name = _get_full_repo_name(verbose)
-    add_origin(f"https://github.com/{full_repo_name}", verbose)
+    add_remote("origin", f"https://github.com/{full_repo_name}", verbose)
 
 
 def _initialize_workspace():
