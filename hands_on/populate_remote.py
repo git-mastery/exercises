@@ -1,5 +1,4 @@
 import os
-import subprocess
 
 from exercise_utils.cli import run_command, run_command_with_code
 from exercise_utils.file import create_or_update_file, append_to_file
@@ -19,9 +18,33 @@ def download(verbose: bool):
 
 def _setup_local_repository(verbose: bool):
     _initialize_workspace(verbose)
-    _create_and_commit_fruits_file(verbose)
-    _update_fruits_file(verbose)
-    _add_additional_files(verbose)
+    create_or_update_file("fruits.txt", """
+        apples
+        bananas
+        cherries
+        dragon fruits
+        """,
+    )
+    add(["fruits.txt"], verbose)
+
+
+    append_to_file("fruits.txt", """
+        figs
+        """,
+                   )
+    add(["fruits.txt"], verbose)
+    commit("Insert figs into fruits.txt", verbose)
+
+    create_or_update_file("colours.txt", """
+        a file for colours 
+        """,
+                          )
+    create_or_update_file("shapes.txt", """
+        a file for shapes 
+        """,
+                          )
+    add(["colours.txt", "shapes.txt"], verbose)
+    commit("Add colours.txt, shapes.txt", verbose)
 
 
 def _create_things_repository(verbose: bool):
@@ -42,39 +65,6 @@ def _initialize_workspace(verbose: bool):
     os.makedirs("things")
     os.chdir("things")
     init(verbose)
-
-
-def _create_and_commit_fruits_file(verbose: bool):
-    create_or_update_file("fruits.txt", """
-        apples
-        bananas
-        cherries
-        dragon fruits
-        """,
-    )
-    add(["fruits.txt"], verbose)
-
-
-def _update_fruits_file(verbose: bool):
-    append_to_file("fruits.txt", """
-        figs
-        """,
-    )
-    add(["fruits.txt"], verbose)
-    commit("Insert figs into fruits.txt", verbose)
-
-
-def _add_additional_files(verbose: bool):
-    create_or_update_file("colours.txt", """
-        a file for colours 
-        """,
-    )
-    create_or_update_file("shapes.txt", """
-        a file for shapes 
-        """,
-    )
-    add(["colours.txt", "shapes.txt"], verbose)
-    commit("Add colours.txt, shapes.txt", verbose)
 
 
 def _get_full_repo_name(verbose: bool) -> str:
