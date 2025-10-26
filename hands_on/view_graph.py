@@ -1,5 +1,4 @@
 import os
-from typing import Any
 
 from exercise_utils.file import create_or_update_file, append_to_file
 from exercise_utils.git import add, init, commit
@@ -9,11 +8,7 @@ __requires_github__ = False
 
 
 def download(verbose: bool = False) -> None:
-    """Create a sandbox repository for the hp-view-graph hands-on.
-
-    The sandbox layout matches the instructions provided in the exercise.
-    """
-    os.makedirs("things", exist_ok=True)
+    os.makedirs("things")
     os.chdir("things")
 
     # Initialize repository
