@@ -1,6 +1,6 @@
 import os
 
-from exercise_utils.file import append_to_file
+from exercise_utils.file import append_to_file, create_or_update_file
 from exercise_utils.git import add, commit, init
 
 __requires_git__ = True
@@ -13,9 +13,14 @@ def download(verbose: bool):
 
     init(verbose)
 
-    append_to_file(
+    create_or_update_file(
         "fruits.txt",
-        "apples\nbananas\ncherries\ndragon fruits\n"
+        """
+        apples
+        bananas
+        cherries
+        dragon fruits
+        """
     )
 
     add(["fruits.txt"], verbose)
