@@ -8,7 +8,7 @@ from exercise_utils.git import add, init, commit
 __requires_git__ = True
 __requires_github__ = True
 
-REPO_NAME = "gitmastery-update-remote-things"
+REPO_NAME = "gitmastery-things"
 
 def download(verbose: bool):
     username = run_command(["gh", "api", "user", "-q", ".login"], verbose).strip()
