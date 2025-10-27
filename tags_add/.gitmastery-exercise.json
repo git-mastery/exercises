@@ -1,16 +1,14 @@
 {
-  "exercise_name": "tags-add",
-  "tags": [
-    "tags"
-  ],
+  "exercise_name": "tags_add",
+  "tags": ["git-tag"],
   "requires_git": true,
-  "requires_github": false,
+  "requires_github": true,
   "base_files": {},
   "exercise_repo": {
-    "repo_type": "local",
-    "repo_name": "project",
-    "repo_title": null,
+    "repo_type": "remote",
+    "repo_name": "duty-roster",
     "create_fork": false,
-    "init": true
+    "repo_title": "gm-duty-roster",
+    "init": false
   }
 }
