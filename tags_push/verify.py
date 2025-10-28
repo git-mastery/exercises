@@ -35,20 +35,18 @@ def run_command(command: List[str]) -> Optional[str]:
 def get_username() -> Optional[str]:
     return run_command(["gh", "api", "user", "-q", ".login"])
 
-# git ls-remote --tags origin (i.e. production)
-
-def get_remote_tags(username: str) -> Optional[str]:
-    return run_command(["gh", "api", 
+def get_remote_tags(username: str) -> List[str]:
+    raw_tags = run_command(["gh", "api",
                         f"repos/{username}/{username}-gitmastery-gm-duty-roster/tags", 
                         "--paginate", "--jq", ".[].name"])
+    return [line.strip() for line in raw_tags.strip().splitlines()]
 
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     username = get_username()
     if username is None:
         raise exercise.wrong_answer([IMPROPER_GH_CLI_SETUP])
     
-    raw_tags = get_remote_tags(username)
-    tag_names = [line.strip() for line in raw_tags.strip().splitlines()]
+    tag_names = get_remote_tags(username)
 
     comments = []
     
