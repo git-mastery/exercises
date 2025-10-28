@@ -5,15 +5,10 @@ __requires_git__ = True
 __requires_github__ = False
 
 def download(verbose: bool):
-    """
-    Sets up the fetch-and-pull hands-on exercise sandbox.
-    Prepares the gm-shapes repo and README for the student.
-    """
-
     # Create the main exercise folder
     os.makedirs("fetch-and-pull", exist_ok=True)
 
-    # Create README.md with exercise instructions
+    # Create README.md with the exercise instructions
     readme_content = """# fetch-and-pull
 
 ## Task
@@ -29,6 +24,7 @@ Alice's friend Bob has copied Alice's repo to <https://github.com/git-mastery/gm
 Add that repo as another remote titled `bob-remote`, and fetch (not pull or merge) his new commit to your repo.
 """
 
+    # Go to the exercise folder
     os.chdir("fetch-and-pull")
 
     # Clone the base repo gm-shapes into the exercise folder
