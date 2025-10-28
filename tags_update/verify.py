@@ -13,11 +13,11 @@ SUCCESS_MESSAGE = "Great work! You have successfully updated the tags to point t
 MISSING_COMMIT_MESSAGE = "Could not find a commit with '{message}' in the message"
 
 
-def find_commit_by_message(exercise: GitAutograderExercise, message_fragment: str):
-    """Find a commit containing the given message fragment."""
+def find_commit_by_message(exercise: GitAutograderExercise, message: str):
+    """Find a commit with the given message."""
     commits = list(exercise.repo.repo.iter_commits(all=True))
     for commit in commits:
-        if message_fragment in commit.message:
+        if message.strip() == commit.message.strip():
             return commit
     return None
 
@@ -34,11 +34,11 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         raise exercise.wrong_answer([MISSING_APRIL_TAG])
     
     # Get correct commits that the tags should point to
-    january_commit = find_commit_by_message(exercise, "January")
+    january_commit = find_commit_by_message(exercise, "Add January duty roster")
     if january_commit is None:
         raise exercise.wrong_answer([MISSING_COMMIT_MESSAGE.format(message="January")])
     
-    april_commit = find_commit_by_message(exercise, "April")
+    april_commit = find_commit_by_message(exercise, "Update duty roster for April")
     if april_commit is None:
         raise exercise.wrong_answer([MISSING_COMMIT_MESSAGE.format(message="April")])
 

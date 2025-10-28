@@ -3,7 +3,7 @@ initialization:
     - type: commit
       empty: true
       message: Update duty roster for February
-      id: february-commit
+      id: start
     - type: tag
       tag-name: january-update
     - type: commit
