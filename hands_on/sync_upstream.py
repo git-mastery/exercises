@@ -27,3 +27,6 @@ def download(verbose: bool):
         "git", "remote", "add", "upstream",
         "https://github.com/git-mastery/samplerepo-finances"
     ], verbose)
+
+    # Mark this as the starting state
+    create_start_tag("hp-sync-upstream", verbose)
