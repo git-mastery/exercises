@@ -22,4 +22,3 @@ def download(verbose: bool):
         "git", "remote", "add", "upstream",
         "https://github.com/git-mastery/samplerepo-finances"
     ], verbose)
-
