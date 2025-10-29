@@ -1,4 +1,5 @@
 import os
+import shutil
 from exercise_utils.cli import run_command
 from exercise_utils.gitmastery import create_start_tag
 
@@ -6,6 +7,10 @@ __requires_git__ = True
 __requires_github__ = True
 
 def download(verbose: bool):
+    # Clean up if there exist the same name folder
+    if os.path.exists("samplerepo-finances"):
+        shutil.rmtree("samplerepo-finances")
+
     # Fork the samplerepo-finances repository and clone it locally
     run_command([
         "gh", "repo", "fork",
