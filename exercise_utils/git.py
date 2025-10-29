@@ -69,6 +69,15 @@ def push(remote: str, branch: str, verbose: bool) -> None:
     """Push the given branch on the remote."""
     run_command(["git", "push", remote, branch], verbose)
 
+# named it pull_branch to indicate that branch must be specified
+def pull_branch(remote: str, branch: str, verbose: bool) -> None:
+    """Pull from the given branch on the remote"""
+    run_command(["git", "pull", remote, branch], verbose)
+
+def clone(repo: str, verbose: bool) -> None:
+    """Clone an existing repository"""
+    run_command(["git", "clone", repo], verbose)
+
 
 def track_remote_branch(remote: str, branch: str, verbose: bool) -> None:
     """Tracks a remote branch locally using the same name."""
