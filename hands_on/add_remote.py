@@ -22,10 +22,7 @@ def download(verbose: bool):
         """,
     )
     add(["fruits.txt"], verbose)
-    append_to_file("fruits.txt", """
-        figs
-        """,
-    )
+    append_to_file("fruits.txt", "figs")
     add(["fruits.txt"], verbose)
     commit("Insert figs into fruits.txt", verbose)
     create_or_update_file("colours.txt", """
