@@ -27,10 +27,7 @@ def _setup_local_repository(verbose: bool):
     )
     add(["fruits.txt"], verbose)
 
-    append_to_file("fruits.txt", """
-        figs
-        """,
-    )
+    append_to_file("fruits.txt", "figs")
     add(["fruits.txt"], verbose)
     commit("Insert figs into fruits.txt", verbose)
 
