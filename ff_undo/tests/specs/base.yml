@@ -18,5 +18,6 @@ initialization:
       message: "Add Cyborg to birdperson.txt"
     - type: commit
       message: "Add Tammy"
-      
+    - type: checkout
+      branch-name: main
 

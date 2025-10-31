@@ -22,4 +22,5 @@ initialization:
       branch-name: main
     - type: merge
       branch-name: others
+      no-ff: false
       message: "Introduce others"

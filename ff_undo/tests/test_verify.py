@@ -13,30 +13,25 @@ REPOSITORY_NAME = "ff-undo"
 loader = GitAutograderTestLoader(__file__, REPOSITORY_NAME, verify)
 
 def test_correct_solution():
-    """Main has only Rick + Morty, others still exists with Birdperson, Cyborg, Tammy"""
     with loader.load("specs/base.yml") as output:
         assert_output(output, GitAutograderStatus.SUCCESSFUL)
 
 
 def test_merge_not_undone():
-    """Student did not undo merge (main still contains merge commit)"""
     with loader.load("specs/merge_not_undone.yml") as output:
         assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [MERGE_NOT_UNDONE])
 
 
 def test_branch_missing():
-    """Student deleted 'others' branch"""
     with loader.load("specs/branch_missing.yml") as output:
         assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [OTHERS_BRANCH_MISSING])
 
 
 def test_main_commits_incorrect():
-    """Student modified or removed main commits"""
     with loader.load("specs/main_commits_incorrect.yml") as output:
         assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [MAIN_COMMITS_INCORRECT])
 
 
 def test_others_commits_incorrect():
-    """Student changed commits on others branch"""
     with loader.load("specs/others_commits_incorrect.yml") as output:
         assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [OTHERS_COMMITS_INCORRECT])
