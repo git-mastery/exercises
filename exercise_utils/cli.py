@@ -45,3 +45,21 @@ def run_command_no_exit(command: List[str], verbose: bool) -> Optional[str]:
         if verbose:
             print(e.stderr)
         return None
+
+
+def run_command_with_code(command: List[str], verbose: bool) -> tuple[Optional[str], int]:
+    """Runs the given command and returns (output, return code)."""
+    try:
+        result = subprocess.run(
+            command,
+            capture_output=True,
+            text=True,
+            check=True,
+        )
+        if verbose:
+            print(result.stdout)
+        return result.stdout, result.returncode
+    except subprocess.CalledProcessError as e:
+        if verbose:
+            print(e.stderr)
+        return e.stderr, e.returncode
