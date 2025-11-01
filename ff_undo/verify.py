@@ -5,7 +5,6 @@ from git_autograder import (
 )
 
 MERGE_NOT_UNDONE = (
-    "The merge commit 'Introduce others' is still present. "
     "You need to undo the merge."
 )
 MAIN_COMMITS_INCORRECT = (
