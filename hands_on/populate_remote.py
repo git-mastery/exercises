@@ -64,5 +64,6 @@ def _initialize_workspace(verbose: bool):
 
 
 def _get_full_repo_name(verbose: bool) -> str:
-    username = run_command(["gh", "api", "user", "-q", ".login"], verbose).strip()
+    output = run_command(["gh", "api", "user", "-q", ".login"], verbose)
+    username = output.strip() if output else None
     return f"{username}/{REPO_NAME}"
