@@ -2,7 +2,7 @@ import os
 
 from exercise_utils.cli import run_command
 from exercise_utils.gitmastery import create_start_tag
-from exercise_utils.git import add, init, commit
+from exercise_utils.git import add, init, commit, tag
 from exercise_utils.file import create_or_update_file, append_to_file
 
 __requires_git__ = True
@@ -33,4 +33,49 @@ def download(verbose: bool):
     add(["fruits.txt"], verbose)
     commit("Add elderberries and figs to fruits.txt", verbose)
 
-    
+    create_or_update_file(
+        "colours.txt",
+        "a file for colours",
+    )
+    create_or_update_file(
+        "shapes.txt",
+        "a file for shapes",
+    )
+    add(["colours.txt", "shapes.txt"], verbose)
+    commit("Add colours.txt, shapes.txt", verbose)
+
+    tag("v0.9", verbose)
+
+    append_to_file("fruits.txt",
+                   """
+                   apples, apricots
+                   bananas
+                   blueberries
+                   cherries
+                   dragon fruits
+                   figs
+                   """
+    )
+    add(["fruits.txt"], verbose)
+    commit("Update fruits list", verbose)
+
+    append_to_file("colours.txt",
+                   """
+                   blue
+                   red
+                   white
+                   """
+    )
+    add(["colours.txt"], verbose)
+    commit("colours.txt: Add some colours", verbose)
+
+    append_to_file("shapes.txt",
+                   """
+                   circle
+                   oval
+                   rectangle
+                   square
+                   """
+    )
+    add(["shapes.txt"], verbose)
+    commit("shapes.txt: Add some shapes", verbose)
