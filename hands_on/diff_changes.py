@@ -33,18 +33,19 @@ def download(verbose: bool):
 
     create_or_update_file(
         "colours.txt",
-        "a file for colours",
+        "a file for colours\n",
     )
     create_or_update_file(
         "shapes.txt",
-        "a file for shapes",
+        "a file for shapes\n",
     )
     add(["colours.txt", "shapes.txt"], verbose)
     commit("Add colours.txt, shapes.txt", verbose)
 
     tag("v0.9", verbose)
 
-    append_to_file("fruits.txt",
+    # Replace the whole contents of fruits.txt
+    create_or_update_file("fruits.txt",
                    """
                    apples, apricots
                    bananas
@@ -58,11 +59,11 @@ def download(verbose: bool):
     commit("Update fruits list", verbose)
 
     append_to_file("colours.txt",
-                   """
-                   blue
-                   red
-                   white
-                   """
+                    """
+                    blue
+                    red
+                    white
+                    """
     )
     add(["colours.txt"], verbose)
     commit("colours.txt: Add some colours", verbose)
