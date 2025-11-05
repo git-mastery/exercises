@@ -32,7 +32,10 @@ def get_modified_sequence(seq, digits=8, idx=None, seed=None):
 
 def setup(verbose: bool = False):
 
+    create_start_tag(verbose)
+
     orig_data = get_sequence()
+    modified_data = get_modified_sequence(orig_data)
 
     run_command(["touch", "data.txt"], verbose)
     add(["data.txt"], verbose)
@@ -49,7 +52,7 @@ def setup(verbose: bool = False):
     checkout("main", False, verbose)
     checkout("stream-2", True, verbose)
 
-    for i in get_modified_sequence(orig_data):
+    for i in modified_data:
         append_to_file("data.txt", str(i)+"\n")
 
     add(["data.txt"], verbose)
