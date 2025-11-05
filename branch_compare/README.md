@@ -1,18 +1,9 @@
 # branch-compare
 
-<!--- Insert exercise description -->
-
 ## Task
 
-<!--- Insert exercise task, simplify what needs to be done -->
+You are recording a numerical data stream from two sources. The data are stored in `data.txt`, using a different branch for each stream. The two data streams are supposed to be identical but can vary on rare occasions.
 
-## Hints
+Answer the questions given in `answers.txt`.
 
-<!--- Insert hints here -->
-<!---
-    Use Github Markdown's collapsible content:
-    <details>
-    <summary>...</summary>
-    ...
-    </details>
--->
+Run `gitmastery verify` to check if your answers are correct.
