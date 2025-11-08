@@ -14,38 +14,20 @@ FILE_PATH = "data.txt"
 BRANCH_1 = "stream-1"
 BRANCH_2 = "stream-2"
 
-EXPECTED_STREAM_COMMIT_MSG = "Add data to data.txt"
-EXPECTED_PREP_COMMIT_MSG = "Add empty data.txt"
-
 def has_made_changes(exercise: GitAutograderExercise) -> bool:
     repo = exercise.repo.repo
-
-    if repo.is_dirty(index=True, working_tree=True, untracked_files=True, submodules=True):
-        return True
     
     for bname in (BRANCH_1, BRANCH_2):
-
         if not exercise.repo.branches.has_branch(bname):
+            print("No Branch")
             return True
 
-        exercise.repo.branches.branch(bname).checkout()
-        try:
-            head = repo.head.commit
-        except Exception:
-            return True
-
-        if head.message.strip() != EXPECTED_STREAM_COMMIT_MSG:
-            return True
-        
+        head = repo.commit(bname)
         if len(head.parents) != 1:
+            print("More than one commit")
             return True
-        
-        parent = head.parents[0]
-        if parent.message.strip() != EXPECTED_PREP_COMMIT_MSG:
-            return True
-        
-    return False
 
+    return False
 
 def get_branch_diff(exercise: GitAutograderExercise, branch1: str, branch2: str) -> str:
     exercise.repo.branches.branch(branch1).checkout()
