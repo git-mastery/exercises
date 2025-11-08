@@ -7,12 +7,45 @@ from git_autograder import (
 from git_autograder.answers.rules import HasExactValueRule, NotEmptyRule
 
 
-QUESTION_ONE = "Which number is present in stream-1 but not in stream-2?"
-QUESTION_TWO = "Which number is present in stream-2 but not in stream-1?"
+QUESTION_ONE = "Which number is present in branch stream-1 but not in branch stream-2?"
+QUESTION_TWO = "Which number is present in branch stream-2 but not in branch stream-1?"
 
 FILE_PATH = "data.txt"
 BRANCH_1 = "stream-1"
 BRANCH_2 = "stream-2"
+
+EXPECTED_STREAM_COMMIT_MSG = "Add data to data.txt"
+EXPECTED_PREP_COMMIT_MSG = "Add empty data.txt"
+
+def has_made_changes(exercise: GitAutograderExercise) -> bool:
+    repo = exercise.repo.repo
+
+    if repo.is_dirty(index=True, working_tree=True, untracked_files=True, submodules=True):
+        return True
+    
+    for bname in (BRANCH_1, BRANCH_2):
+
+        if not exercise.repo.branches.has_branch(bname):
+            return True
+
+        exercise.repo.branches.branch(bname).checkout()
+        try:
+            head = repo.head.commit
+        except Exception:
+            return True
+
+        if head.message.strip() != EXPECTED_STREAM_COMMIT_MSG:
+            return True
+        
+        if len(head.parents) != 1:
+            return True
+        
+        parent = head.parents[0]
+        if parent.message.strip() != EXPECTED_PREP_COMMIT_MSG:
+            return True
+        
+    return False
+
 
 def get_branch_diff(exercise: GitAutograderExercise, branch1: str, branch2: str) -> str:
     exercise.repo.branches.branch(branch1).checkout()
@@ -37,6 +70,11 @@ def get_stream2_diff(exercise: GitAutograderExercise) -> str:
     return get_branch_diff(exercise, BRANCH_2, BRANCH_1)
 
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
+
+    if has_made_changes(exercise):
+        return exercise.to_output(["No changes are supposed to be made to the two branches in this exercise"], GitAutograderStatus.UNSUCCESSFUL)
+    
+    exercise.repo.branches.branch("main").checkout()
 
     ans_1 = get_stream1_diff(exercise)
     ans_2 = get_stream2_diff(exercise)

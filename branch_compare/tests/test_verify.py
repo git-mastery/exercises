@@ -11,6 +11,7 @@ loader = GitAutograderTestLoader(__file__, REPOSITORY_NAME, verify)
 
 def test_base():
     with (
+        patch("branch_compare.verify.has_made_changes", return_value=False),
         patch("branch_compare.verify.get_stream1_diff", return_value="12345"),
         patch("branch_compare.verify.get_stream2_diff", return_value="98765"),
         loader.load(
@@ -26,6 +27,7 @@ def test_base():
 
 def test_wrong_stream1_diff():
     with (
+        patch("branch_compare.verify.has_made_changes", return_value=False),
         patch("branch_compare.verify.get_stream1_diff", return_value="99999"),
         patch("branch_compare.verify.get_stream2_diff", return_value="98765"),
         loader.load(
@@ -45,6 +47,7 @@ def test_wrong_stream1_diff():
 
 def test_wrong_stream2_diff():
     with (
+        patch("branch_compare.verify.has_made_changes", return_value=False),
         patch("branch_compare.verify.get_stream1_diff", return_value="12345"),
         patch("branch_compare.verify.get_stream2_diff", return_value="99999"),
         loader.load(
