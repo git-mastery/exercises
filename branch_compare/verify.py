@@ -7,8 +7,8 @@ from git_autograder import (
 from git_autograder.answers.rules import HasExactValueRule, NotEmptyRule
 
 
-QUESTION_ONE = "Which numbers are present in stream-1 but not in stream-2?"
-QUESTION_TWO = "Which numbers are present in stream-2 but not in stream-1?"
+QUESTION_ONE = "Which number is present in stream-1 but not in stream-2?"
+QUESTION_TWO = "Which number is present in stream-2 but not in stream-1?"
 
 FILE_PATH = "data.txt"
 BRANCH_1 = "stream-1"
