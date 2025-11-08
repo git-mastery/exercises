@@ -19,12 +19,10 @@ def has_made_changes(exercise: GitAutograderExercise) -> bool:
     
     for bname in (BRANCH_1, BRANCH_2):
         if not exercise.repo.branches.has_branch(bname):
-            print("No Branch")
             return True
 
         head = repo.commit(bname)
         if len(head.parents) != 1:
-            print("More than one commit")
             return True
 
     return False
