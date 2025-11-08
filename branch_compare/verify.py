@@ -25,8 +25,8 @@ def get_branch_diff(exercise: GitAutograderExercise, branch1: str, branch2: str)
 
     exercise.repo.branches.branch("main").checkout()
 
-    set1 = set(contents1.splitlines())
-    set2 = set(contents2.splitlines())
+    set1 = {line.strip() for line in contents1.splitlines() if line.strip()}
+    set2 = {line.strip() for line in contents2.splitlines() if line.strip()}
     diff = set1 - set2
     return str(diff.pop())
 
