@@ -23,10 +23,7 @@ def download(verbose: bool):
         """,
     )
     add(["fruits.txt"], verbose)
-    append_to_file("fruits.txt", """
-        figs
-        """,
-    )
+    append_to_file("fruits.txt", "figs")
     add(["fruits.txt"], verbose)
     commit("Insert figs into fruits.txt", verbose)
     create_or_update_file("colours.txt", """
@@ -51,10 +48,4 @@ def download(verbose: bool):
     run_command(["gh", "repo", "create", REPO_NAME, "--public"], verbose)
     run_command(["git", "remote", "add", "origin", f"https://github.com/{username}/{REPO_NAME}"], verbose)
 
-    default_branch = run_command(["git", "branch", "--list", "main", "master"], verbose).strip()
-    if "main" in default_branch:
-        default_branch = "main"
-    else:
-        default_branch = "master"
-
-    run_command(["git", "push", "-u", "origin", default_branch], verbose)
+    run_command(["git", "push", "-u", "origin", "main"], verbose)
