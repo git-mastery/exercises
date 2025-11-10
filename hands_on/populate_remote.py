@@ -17,8 +17,13 @@ def download(verbose: bool):
 
 
 def _setup_local_repository(verbose: bool):
-    _initialize_workspace(verbose)
-    create_or_update_file("fruits.txt", """
+    os.makedirs("things")
+    os.chdir("things")
+    init(verbose)
+
+    create_or_update_file(
+        "fruits.txt",
+        """
         apples
         bananas
         cherries
@@ -31,11 +36,15 @@ def _setup_local_repository(verbose: bool):
     add(["fruits.txt"], verbose)
     commit("Insert figs into fruits.txt", verbose)
 
-    create_or_update_file("colours.txt", """
+    create_or_update_file(
+        "colours.txt",
+        """
         a file for colours 
         """,
     )
-    create_or_update_file("shapes.txt", """
+    create_or_update_file(
+        "shapes.txt",
+        """
         a file for shapes 
         """,
     )
@@ -45,7 +54,9 @@ def _setup_local_repository(verbose: bool):
 
 def _create_things_repository(verbose: bool):
     """Create the gitmastery-things repository, deleting any existing ones."""
-    _, return_code = run_command_with_code(["gh", "repo", "view", _get_full_repo_name(verbose)], verbose)
+    _, return_code = run_command_with_code(
+        ["gh", "repo", "view", _get_full_repo_name(verbose)], verbose
+    )
     if return_code == 0:
         run_command(["gh", "repo", "delete", REPO_NAME, "--yes"], verbose)
 
@@ -55,12 +66,6 @@ def _create_things_repository(verbose: bool):
 def _link_repositories(verbose: bool):
     full_repo_name = _get_full_repo_name(verbose)
     add_remote("origin", f"https://github.com/{full_repo_name}", verbose)
-
-
-def _initialize_workspace(verbose: bool):
-    os.makedirs("things")
-    os.chdir("things")
-    init(verbose)
 
 
 def _get_full_repo_name(verbose: bool) -> str:
