@@ -1,3 +1,6 @@
+from typing import Optional
+from git.objects.commit import Commit
+
 from git_autograder import (
     GitAutograderExercise,
     GitAutograderOutput,
@@ -13,7 +16,7 @@ SUCCESS_MESSAGE = "Great work! You have successfully updated the tags to point t
 MISSING_COMMIT_MESSAGE = "Could not find a commit with '{message}' in the message"
 
 
-def find_commit_by_message(exercise: GitAutograderExercise, message: str):
+def find_commit_by_message(exercise: GitAutograderExercise, message: str) -> Optional[Commit]:
     """Find a commit with the given message."""
     commits = list(exercise.repo.repo.iter_commits(all=True))
     for commit in commits:
