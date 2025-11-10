@@ -1,4 +1,5 @@
 import os
+import sys
 
 from exercise_utils.cli import run_command, run_command_with_code
 from exercise_utils.file import create_or_update_file, append_to_file
@@ -54,11 +55,17 @@ def _setup_local_repository(verbose: bool):
 
 def _create_things_repository(verbose: bool):
     """Create the gitmastery-things repository, deleting any existing ones."""
+    full_repo_name = _get_full_repo_name(verbose)
     _, return_code = run_command_with_code(
-        ["gh", "repo", "view", _get_full_repo_name(verbose)], verbose
+        ["gh", "repo", "view", full_repo_name], verbose
     )
+
     if return_code == 0:
-        run_command(["gh", "repo", "delete", REPO_NAME, "--yes"], verbose)
+        print(
+            f"\nRepository 'https://github.com/{full_repo_name}' already exists on GitHub.\n"
+            "Please delete the existing repository before proceeding."
+        )
+        sys.exit(1)
 
     run_command(["gh", "repo", "create", REPO_NAME, "--public"], verbose)
 
