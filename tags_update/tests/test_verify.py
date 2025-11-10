@@ -4,6 +4,7 @@ from git_autograder.status import GitAutograderStatus
 from ..verify import (
     verify,
     MISSING_JANUARY_TAG,
+    WRONG_JANUARY_TAG_COMMIT,
     WRONG_APRIL_TAG_COMMIT,
     OLD_FIRST_UPDATE_TAG,
     SUCCESS_MESSAGE,
@@ -23,6 +24,11 @@ def test_base():
 def test_missing_tags():
     with loader.load("specs/missing_tags.yml", "start") as output:
         assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [MISSING_JANUARY_TAG])
+
+
+def test_wrong_january_tag():
+    with loader.load("specs/wrong_january_tag.yml", "start") as output:
+        assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [WRONG_JANUARY_TAG_COMMIT])
 
 
 def test_wrong_april_tag():
