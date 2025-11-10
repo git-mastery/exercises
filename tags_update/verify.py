@@ -28,28 +28,32 @@ def find_commit_by_message(exercise: GitAutograderExercise, message: str) -> Opt
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     tags = exercise.repo.repo.tags
 
-    # Verify that the tags exist and that the old first-update tag is deleted
+    # Ensure first-update tag does not exist
     if "first-update" in tags:
-        raise exercise.wrong_answer([OLD_FIRST_UPDATE_TAG])    
+        raise exercise.wrong_answer([OLD_FIRST_UPDATE_TAG])
+    
+    # Ensure january-update tag exists
     if "january-update" not in tags:
         raise exercise.wrong_answer([MISSING_JANUARY_TAG])
-    if "april-update" not in tags:
-        raise exercise.wrong_answer([MISSING_APRIL_TAG])
     
-    # Get correct commits that the tags should point to
+    # Ensure january-update tag points to the correct commit
     january_commit = find_commit_by_message(exercise, "Add January duty roster")
     if january_commit is None:
         raise exercise.wrong_answer([MISSING_COMMIT_MESSAGE.format(message="January")])
     
-    april_commit = find_commit_by_message(exercise, "Update duty roster for April")
-    if april_commit is None:
-        raise exercise.wrong_answer([MISSING_COMMIT_MESSAGE.format(message="April")])
-
-    # Verify that the tags point to the correct commits
     january_tag_commit = tags["january-update"].commit
     if january_tag_commit.hexsha != january_commit.hexsha:
         raise exercise.wrong_answer([WRONG_JANUARY_TAG_COMMIT])
 
+    # Ensure april-update tag exists
+    if "april-update" not in tags:
+        raise exercise.wrong_answer([MISSING_APRIL_TAG])
+    
+    # Ensure april-update tag points to the correct commit
+    april_commit = find_commit_by_message(exercise, "Update duty roster for April")
+    if april_commit is None:
+        raise exercise.wrong_answer([MISSING_COMMIT_MESSAGE.format(message="April")])
+    
     april_tag_commit = tags["april-update"].commit
     if april_tag_commit.hexsha != april_commit.hexsha:
         raise exercise.wrong_answer([WRONG_APRIL_TAG_COMMIT])
