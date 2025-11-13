@@ -15,24 +15,53 @@ def download(verbose: bool):
 
     create_or_update_file(
         "fruits.txt",
-        "apples\nbananas\ncherries\ndragon fruits\n",
+        """
+        apples
+        bananas
+        cherries
+        dragon fruits
+        """,
     )
 
     add(["fruits.txt"], verbose)
     commit("Add fruits.txt", verbose)
 
-    append_to_file("fruits.txt", "elderberries\nfigs\n")
+    append_to_file(
+        "fruits.txt",
+        """
+        elderberries
+        figs
+        """,
+    )
     add(["fruits.txt"], verbose)
     commit("Add elderberries and figs into fruits.txt", verbose)
 
-    create_or_update_file("colours.txt", "a file for colours\n")
-    create_or_update_file("shapes.txt", "a file for shapes\n")
+    create_or_update_file(
+        "colours.txt",
+        """
+        a file for colours
+        """,
+    )
+    create_or_update_file(
+        "shapes.txt",
+        """
+        a file for shapes
+        """,
+    )
     add(["colours.txt", "shapes.txt"], verbose)
     commit("Add colours.txt, shapes.txt", verbose)
 
     create_or_update_file(
         "fruits.txt",
-        "apples, apricots\nbananas\nblueberries\ncherries\ndragon fruits\nfigs\n",
+        """
+        apples, apricots
+        bananas
+        blueberries
+        cherries
+        dragon fruits
+        figs
+        """,
     )
     add(["fruits.txt"], verbose)
     commit("Update fruits list", verbose)
+    
