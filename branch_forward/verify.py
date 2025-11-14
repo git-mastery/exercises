@@ -9,7 +9,7 @@ FAST_FORWARD_REQUIRED = (
 )
 
 ONLY_WITH_SALLY_MERGED = (
-    "Only the 'with-sally' branch should be merged into 'main'. Do not merge other branches."
+    "Only one of the two starting branches can be fast-forward merged into 'main'. Do not create new branches."
 )
 
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
