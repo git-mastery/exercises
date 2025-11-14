@@ -40,3 +40,4 @@ initialization:
       branch-name: main
     - type: merge
       branch-name: with-sally
+

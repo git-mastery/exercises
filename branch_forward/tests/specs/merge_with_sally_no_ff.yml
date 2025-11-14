@@ -41,3 +41,4 @@ initialization:
     - type: merge
       branch-name: with-sally
       no-ff: true
+

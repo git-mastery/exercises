@@ -50,3 +50,4 @@ def test_merge_with_sally_no_ff():
             GitAutograderStatus.UNSUCCESSFUL,
             [FAST_FORWARD_REQUIRED],
         )
+

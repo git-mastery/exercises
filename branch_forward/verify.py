@@ -40,3 +40,4 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         ["Great job fast-forward merging only 'with-sally' and cleaning up the branch!"],
         GitAutograderStatus.SUCCESSFUL,
     )
+
