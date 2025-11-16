@@ -4,7 +4,6 @@ from git_autograder import (
     GitAutograderStatus,
 )
 
-UNCOMMITTED_CHANGES = "You still have uncommitted changes. Commit them first on the appropriate branch first!"
 NOT_ON_MAIN = (
     "You aren't currently on the main branch. Checkout to that branch and try again!"
 )
@@ -23,14 +22,11 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     """
     repo = exercise.repo.repo
 
-    if repo.is_dirty():
-        raise exercise.wrong_answer([UNCOMMITTED_CHANGES])
-
     try:
         if repo.active_branch.name != "main":
             raise exercise.wrong_answer([NOT_ON_MAIN])
     except TypeError:
-        raise exercise.wrong_answer([DETACHED_HEAD])
+        raise exercise.wrong_answer([DETACHED_HEAD, RESET_MESSAGE])
 
     main_branch = exercise.repo.branches.branch("main")
     main_history = main_branch.commits

@@ -3,7 +3,6 @@ from git_autograder import GitAutograderStatus, GitAutograderTestLoader, assert_
 from ..verify import (
     NOT_ON_MAIN,
     RESET_MESSAGE,
-    UNCOMMITTED_CHANGES,
     DETACHED_HEAD,
     MERGES_NOT_UNDONE,
     MAIN_WRONG_COMMIT,
@@ -45,11 +44,6 @@ def test_main_wrong_commit():
             GitAutograderStatus.UNSUCCESSFUL,
             [MAIN_WRONG_COMMIT, RESET_MESSAGE],
         )
-
-
-def test_uncommitted():
-    with loader.load("specs/uncommitted.yml") as output:
-        assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [UNCOMMITTED_CHANGES])
 
 
 def test_not_main():

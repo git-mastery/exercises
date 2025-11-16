@@ -4,23 +4,17 @@ initialization:
       empty: true
       message: Empty commit
       id: start
-
-    # Add rick.txt and commit
     - type: new-file
       filename: rick.txt
       contents: Scientist
     - type: commit
       message: Add Rick
-
-    # Add morty.txt and commit
     - type: new-file
       filename: morty.txt
       contents: Boy
     - type: commit
       message: Add morty
       id: morty-initial-commit
-
-    # Create 'daughter' branch, add beth.txt and commit
     - type: branch
       branch-name: daughter
       from-commit: morty-initial-commit
@@ -31,8 +25,6 @@ initialization:
       contents: Vet
     - type: commit
       message: Add Beth
-
-    # Create 'son-in-law' branch, add jerry.txt and commit
     - type: checkout
       branch-name: main
     - type: branch
@@ -45,16 +37,6 @@ initialization:
       contents: Salesman
     - type: commit
       message: Add Jerry
-
-    # Checkout back to main, edit morty.txt and commit.
     - type: checkout
       branch-name: main
-    - type: edit-file
-      filename: morty.txt
-      contents: |
-        Boy
-        Grandson
-    - type: commit
-      message: Mention Morty is grandson
-      id: final-main-commit
 
