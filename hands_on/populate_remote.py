@@ -1,9 +1,13 @@
 import os
-import sys
 
-from exercise_utils.cli import run_command, run_command_with_code
-from exercise_utils.file import create_or_update_file, append_to_file
-from exercise_utils.git import add, init, commit, add_remote
+from exercise_utils.file import append_to_file, create_or_update_file
+from exercise_utils.git import add, add_remote, commit, init
+from exercise_utils.github_cli import (
+    create_repo,
+    delete_repo,
+    get_github_username,
+    has_repo,
+)
 
 __requires_git__ = True
 __requires_github__ = True
@@ -37,18 +41,8 @@ def _setup_local_repository(verbose: bool):
     add(["fruits.txt"], verbose)
     commit("Insert figs into fruits.txt", verbose)
 
-    create_or_update_file(
-        "colours.txt",
-        """
-        a file for colours 
-        """,
-    )
-    create_or_update_file(
-        "shapes.txt",
-        """
-        a file for shapes 
-        """,
-    )
+    create_or_update_file("colours.txt", "a file for colours")
+    create_or_update_file("shapes.txt", "a file for shapes")
     add(["colours.txt", "shapes.txt"], verbose)
     commit("Add colours.txt, shapes.txt", verbose)
 
@@ -56,18 +50,11 @@ def _setup_local_repository(verbose: bool):
 def _create_things_repository(verbose: bool):
     """Create the gitmastery-things repository, deleting any existing ones."""
     full_repo_name = _get_full_repo_name(verbose)
-    _, return_code = run_command_with_code(
-        ["gh", "repo", "view", full_repo_name], verbose
-    )
 
-    if return_code == 0:
-        print(
-            f"\nRepository 'https://github.com/{full_repo_name}' already exists on GitHub.\n"
-            "Please delete the existing repository before proceeding."
-        )
-        sys.exit(1)
+    if has_repo(full_repo_name, False, verbose):
+        delete_repo(full_repo_name, verbose)
 
-    run_command(["gh", "repo", "create", REPO_NAME, "--public"], verbose)
+    create_repo(REPO_NAME, verbose)
 
 
 def _link_repositories(verbose: bool):
@@ -76,6 +63,5 @@ def _link_repositories(verbose: bool):
 
 
 def _get_full_repo_name(verbose: bool) -> str:
-    output = run_command(["gh", "api", "user", "-q", ".login"], verbose)
-    username = output.strip() if output else ""
+    username = get_github_username(verbose)
     return f"{username}/{REPO_NAME}"
