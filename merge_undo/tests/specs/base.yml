@@ -1,6 +1,62 @@
 initialization:
   steps:
+    # 1. Initialize with an empty commit
     - type: commit
       empty: true
       message: Empty commit
       id: start
+
+    # 2. Add rick.txt and commit
+    - type: new-file
+      filename: rick.txt
+      contents: Scientist
+    - type: commit
+      message: Add Rick
+
+    # 3. Add morty.txt and commit
+    - type: new-file
+      filename: morty.txt
+      contents: Boy
+    - type: commit
+      message: Add morty
+      id: morty-initial-commit # This commit serves as the base for daughter and son-in-law
+
+    # 4. Create 'daughter' branch, checkout, add beth.txt and commit
+    - type: branch
+      branch-name: daughter
+      from-commit: morty-initial-commit # Branch from 'morty-initial-commit'
+    - type: checkout
+      branch-name: daughter
+    - type: new-file
+      filename: beth.txt
+      contents: Vet
+    - type: commit
+      message: Add Beth
+
+    # 5. Checkout back to main, then create 'son-in-law' branch, checkout, add jerry.txt and commit
+    - type: checkout
+      branch-name: main
+    - type: branch
+      branch-name: son-in-law
+      from-commit: morty-initial-commit # Branch from 'morty-initial-commit'
+    - type: checkout
+      branch-name: son-in-law
+    - type: new-file
+      filename: jerry.txt
+      contents: Salesman
+    - type: commit
+      message: Add Jerry
+
+    # 6. Checkout back to main, modify morty.txt and commit.
+    # This commit will be the final HEAD of the main branch in the "passed" state.
+    - type: checkout
+      branch-name: main
+    - type: modify-file
+      filename: morty.txt
+      contents: |
+        Boy
+        Grandson
+    - type: commit
+      message: Mention Morty is grandson
+      id: final-main-commit # This is the commit main should point to for success
+

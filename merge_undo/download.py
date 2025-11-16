@@ -1,6 +1,5 @@
 __resources__ = {"README.md": "README.md"}
 
-from exercise_utils.cli import run_command
 from exercise_utils.file import create_or_update_file
 from exercise_utils.git import add, checkout, commit, merge_with_message
 from exercise_utils.gitmastery import create_start_tag
