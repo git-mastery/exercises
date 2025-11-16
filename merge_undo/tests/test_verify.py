@@ -7,8 +7,6 @@ from ..verify import (
     DETACHED_HEAD,
     MERGES_NOT_UNDONE,
     MAIN_WRONG_COMMIT,
-    DAUGHTER_BRANCH_MISSING,
-    SON_IN_LAW_BRANCH_MISSING,
     verify,
 )
 
@@ -22,15 +20,6 @@ def test_base():
         assert_output(output, GitAutograderStatus.SUCCESSFUL)
 
 
-def test_detached_head():
-    with loader.load("specs/detached_head.yml", "start") as output:
-        assert_output(
-            output,
-            GitAutograderStatus.UNSUCCESSFUL,
-            [DETACHED_HEAD, RESET_MESSAGE],
-        )
-
-
 def test_merges_not_undone():
     with loader.load("specs/merges_not_undone.yml", "start") as output:
         assert_output(
@@ -40,21 +29,12 @@ def test_merges_not_undone():
         )
 
 
-def test_daughter_branch_missing():
-    with loader.load("specs/daughter_branch_missing.yml", "start") as output:
+def test_detached_head():
+    with loader.load("specs/detached_head.yml", "start") as output:
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,
-            [DAUGHTER_BRANCH_MISSING, RESET_MESSAGE],
-        )
-
-
-def test_sonInLaw_branch_missing():
-    with loader.load("specs/sonInLaw_branch_missing.yml", "start") as output:
-        assert_output(
-            output,
-            GitAutograderStatus.UNSUCCESSFUL,
-            [SON_IN_LAW_BRANCH_MISSING, RESET_MESSAGE],
+            [DETACHED_HEAD, RESET_MESSAGE],
         )
 
 

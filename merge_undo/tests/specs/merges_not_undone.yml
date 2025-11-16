@@ -1,27 +1,20 @@
 initialization:
   steps:
-    # 1. Initialize with an empty commit
     - type: commit
       empty: true
       message: Empty commit
       id: start
-
-    # 2. Add rick.txt and commit
     - type: new-file
       filename: rick.txt
       contents: Scientist
     - type: commit
       message: Add Rick
-
-    # 3. Add morty.txt and commit
     - type: new-file
       filename: morty.txt
       contents: Boy
     - type: commit
       message: Add morty
       id: morty-initial-commit
-
-    # 4. Create 'daughter' branch, add beth.txt and commit
     - type: branch
       branch-name: daughter
       from-commit: morty-initial-commit
@@ -32,8 +25,6 @@ initialization:
       contents: Vet
     - type: commit
       message: Add Beth
-
-    # 5. Create 'son-in-law' branch, add jerry.txt and commit
     - type: checkout
       branch-name: main
     - type: branch
@@ -46,9 +37,6 @@ initialization:
       contents: Salesman
     - type: commit
       message: Add Jerry
-
-    # 6. Checkout back to main, edit morty.txt and commit.
-    # This is the final state of the main branch.
     - type: checkout
       branch-name: main
     - type: edit-file
@@ -58,5 +46,11 @@ initialization:
         Grandson
     - type: commit
       message: Mention Morty is grandson
-      id: final-main-commit
-
+    - type: merge
+      branch-name: daughter
+      message: Introduce Beth
+      no-ff: true
+    - type: merge
+      branch-name: son-in-law
+      message: introduce Jerry
+      no-ff: true
