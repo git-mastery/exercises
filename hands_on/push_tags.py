@@ -24,21 +24,11 @@ def check_existing_fork(username: str, fork_owner_name: str, repo_name: str, ver
             exit(1)
 
 def check_same_repo_name(username: str, repo_name: str, verbose: bool) -> str:
-    check_repo = run(
-        ["gh", "repo", "view", f"{username}/{repo_name}"],
-        verbose
-    )
-    if check_repo.is_success():
+    if has_repo(repo_name, False, verbose):
         print(f"Warning: {username}/{repo_name} already exists, the fork repo will be "
-            f"named as {username}/{repo_name}-1")
+              f"named as {username}/{repo_name}-1")
         return repo_name + "-1"
     return repo_name
-
-    # if has_repo(repo_name, False, verbose):
-    #     print(f"Warning: {username}/{repo_name} already exists, the fork repo will be "
-    #           f"named as {username}/{repo_name}-1")
-    #     return repo_name + "-1"
-    # return repo_name
 
 def download(verbose: bool):
     REPO_NAME = "samplerepo-preferences"
