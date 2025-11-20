@@ -16,4 +16,3 @@ initialization:
       message: "Add Birdperson"
     - type: commit
       message: "Add Tammy"
-

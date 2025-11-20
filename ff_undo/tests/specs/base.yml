@@ -20,4 +20,3 @@ initialization:
       message: "Add Tammy"
     - type: checkout
       branch-name: main
-

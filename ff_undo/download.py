@@ -1,36 +1,39 @@
-from exercise_utils.cli import run_command
-from exercise_utils.gitmastery import create_start_tag
-
-__resources__ = {}
-
+from exercise_utils.git import (
+    add,
+    commit,
+    checkout,
+    merge_with_message,
+)
+from exercise_utils.file import (
+    create_or_update_file,
+    append_to_file,
+)
 
 def setup(verbose: bool = False):
-    # Marks the start of setup (Git-Mastery internal logging)
-    create_start_tag(verbose)
-
     # Create initial files and commits
-    run_command('echo "Scientist" > rick.txt', verbose)
-    run_command('git add .', verbose)
-    run_command('git commit -m "Add Rick"', verbose)
+    create_or_update_file("rick.txt", "Scientist\n")
+    add(["rick.txt"], verbose)
+    commit("Add Rick", verbose)
 
-    run_command('echo "Boy" > morty.txt', verbose)
-    run_command('git add .', verbose)
-    run_command('git commit -m "Add Morty"', verbose)
+    create_or_update_file("morty.txt", "Boy\n")
+    add(["morty.txt"], verbose)
+    commit("Add Morty", verbose)
 
     # Create and switch to branch 'others'
-    run_command('git switch -c others', verbose)
-    run_command('echo "No job" > birdperson.txt', verbose)
-    run_command('git add .', verbose)
-    run_command('git commit -m "Add Birdperson"', verbose)
+    checkout("others", create_branch=True, verbose=verbose)
 
-    run_command('echo "Cyborg" >> birdperson.txt', verbose)
-    run_command('git add .', verbose)
-    run_command('git commit -m "Add Cyborg to birdperson.txt"', verbose)
+    create_or_update_file("birdperson.txt", "No job\n")
+    add(["birdperson.txt"], verbose)
+    commit("Add Birdperson", verbose)
 
-    run_command('echo "Spy" > tammy.txt', verbose)
-    run_command('git add .', verbose)
-    run_command('git commit -m "Add Tammy"', verbose)
+    append_to_file("birdperson.txt", "Cyborg\n")
+    add(["birdperson.txt"], verbose)
+    commit("Add Cyborg to birdperson.txt", verbose)
+
+    create_or_update_file("tammy.txt", "Spy\n")
+    add(["tammy.txt"], verbose)
+    commit("Add Tammy", verbose)
 
     # Merge back into main
-    run_command('git switch main', verbose)
-    run_command('git merge others -m "Introduce others"', verbose)
+    checkout("main", create_branch=False, verbose=verbose)
+    merge_with_message("others", ff=True, message="Introduce others", verbose=verbose)

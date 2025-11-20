@@ -38,3 +38,4 @@ Use `git log --oneline` on `main` to identify the merge commit that needs to be 
 <summary>Hint 3: Undo the merge</summary>
 
 You can undo a merge using: `git reset --hard <commit-before-merge>`
+</details>

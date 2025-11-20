@@ -4,6 +4,12 @@ from git_autograder import (
     GitAutograderStatus,
 )
 
+ADD_RICK = "Add Rick"
+ADD_MORTY = "Add Morty"
+ADD_BIRDPERSON = "Add Birdperson"
+ADD_CYBORG = "Add Cyborg to birdperson.txt"
+ADD_TAMMY = "Add Tammy"
+
 MERGE_NOT_UNDONE = (
     "You need to undo the merge."
 )
@@ -20,35 +26,34 @@ OTHERS_BRANCH_MISSING = (
 )
 
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
+    # Get branches
+    main_branch = exercise.repo.branches.branch("main")
+    others_branch = exercise.repo.branches.branch_or_none("others")
 
     # Check if branch others exists
-    if not exercise.repo.branches.has_branch("others"):
+    if others_branch is None:
         raise exercise.wrong_answer([OTHERS_BRANCH_MISSING])
 
     # Take all commit messages on main
-    commit_messages_in_main = [c.message.strip() for c in exercise.repo.repo.iter_commits("main")]
+    commit_messages_in_main = [c.commit.message.strip() for c in main_branch.commits]
 
     # Take all commit messages on others
-    commit_messages_in_others = [c.message.strip() for c in exercise.repo.repo.iter_commits("others")]
+    commit_messages_in_others = [c.commit.message.strip() for c in others_branch.commits]
 
     # Check that the merge commit is not present on main
-    has_birdperson_in_main = any("Add Birdperson" in msg for msg in commit_messages_in_main)
-    has_cyborg_in_main = any("Add Cyborg to birdperson.txt" in msg for msg in commit_messages_in_main)
-    has_tammy_in_main = any("Add Tammy" in msg for msg in commit_messages_in_main)
-    if has_birdperson_in_main or has_birdperson_in_main or has_tammy_in_main:
+    if any(msg in commit_messages_in_main for msg in [ADD_BIRDPERSON, ADD_CYBORG, ADD_TAMMY]):
         raise exercise.wrong_answer([MERGE_NOT_UNDONE])
 
     # Check that commits in main are only the initial 2 commits
-    has_rick = any("Add Rick" in msg for msg in commit_messages_in_main)
-    has_morty = any("Add Morty" in msg for msg in commit_messages_in_main)
-    if len(commit_messages_in_main) != 3 or not (has_rick and has_morty):
+    if len(commit_messages_in_main) != 3 or not all(
+        msg in commit_messages_in_main for msg in [ADD_RICK, ADD_MORTY]
+    ):
         raise exercise.wrong_answer([MAIN_COMMITS_INCORRECT])
 
     # Check that commits in others are only the initial 3 commits
-    has_birdperson = any("Add Birdperson" in msg for msg in commit_messages_in_others)
-    has_cyborg = any("Add Cyborg to birdperson.txt" in msg for msg in commit_messages_in_others)
-    has_tammy = any("Add Tammy" in msg for msg in commit_messages_in_others)
-    if len(commit_messages_in_others) != 6 or not (has_birdperson and has_cyborg and has_tammy):
+    if len(commit_messages_in_others) != 6 or not all(
+        msg in commit_messages_in_others for msg in [ADD_BIRDPERSON, ADD_CYBORG, ADD_TAMMY]
+    ):
         raise exercise.wrong_answer([OTHERS_COMMITS_INCORRECT])
 
     return exercise.to_output(
