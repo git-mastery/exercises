@@ -25,7 +25,6 @@ def download(verbose: bool = False) -> None:
     add(["fruits.txt"], verbose)
     commit("Add fruits.txt", verbose)
 
-    # Append figs, stage and commit
     append_to_file("fruits.txt", "figs\n")
     add(["fruits.txt"], verbose)
     commit("Insert figs into fruits.txt", verbose)
