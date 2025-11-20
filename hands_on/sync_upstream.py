@@ -16,13 +16,9 @@ __requires_github__ = True
 TARGET_REPO = "git-mastery/samplerepo-finances"
 LOCAL_DIR = "gitmastery-samplerepo-finances"
 
-def _get_full_repo_name(verbose: bool) -> str:
-    username = get_github_username(verbose)
-    return f"{username}/{LOCAL_DIR}"
-
-
 def download(verbose: bool):
-    full_repo_name = _get_full_repo_name(verbose)
+    username = get_github_username(verbose)
+    full_repo_name = f"{username}/{LOCAL_DIR}"
 
     if has_repo(full_repo_name, is_fork=True, verbose=verbose):
         delete_repo(full_repo_name, verbose)
