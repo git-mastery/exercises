@@ -29,7 +29,6 @@ def download(verbose: bool = False) -> None:
     add(["fruits.txt"], verbose)
     commit("Insert figs into fruits.txt", verbose)
 
-    # Add colours and shapes together and commit
     create_or_update_file("colours.txt", "a file for colours\n")
     create_or_update_file("shapes.txt", "a file for shapes\n")
     add(["colours.txt", "shapes.txt"], verbose)
