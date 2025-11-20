@@ -13,7 +13,6 @@ def download(verbose: bool = False) -> None:
 
     init(verbose)
 
-    # Initial fruits file and commit
     create_or_update_file(
         "fruits.txt",
         """
