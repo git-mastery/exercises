@@ -45,13 +45,13 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         raise exercise.wrong_answer([MERGE_NOT_UNDONE])
 
     # Check that commits in main are only the initial 2 commits
-    if len(commit_messages_in_main) != 3 or not all(
+    if len(commit_messages_in_main) != 2 or not all(
         msg in commit_messages_in_main for msg in [ADD_RICK, ADD_MORTY]
     ):
         raise exercise.wrong_answer([MAIN_COMMITS_INCORRECT])
 
     # Check that commits in others are only the initial 3 commits
-    if len(commit_messages_in_others) != 6 or not all(
+    if len(commit_messages_in_others) != 5 or not all(
         msg in commit_messages_in_others for msg in [ADD_BIRDPERSON, ADD_CYBORG, ADD_TAMMY]
     ):
         raise exercise.wrong_answer([OTHERS_COMMITS_INCORRECT])
