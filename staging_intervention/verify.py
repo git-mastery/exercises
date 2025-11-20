@@ -1,4 +1,3 @@
-from dataclasses import MISSING
 from git_autograder import (
     GitAutograderOutput,
     GitAutograderExercise,

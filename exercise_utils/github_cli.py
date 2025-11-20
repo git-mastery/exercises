@@ -62,4 +62,5 @@ def has_repo(repo_name: str, is_fork: bool, verbose: bool) -> bool:
         verbose,
         env={"GH_PAGER": "cat"},
     )
-    return result.is_success() and result.stdout == "true"
+
+    return result.is_success() and (not is_fork or result.stdout == "true")

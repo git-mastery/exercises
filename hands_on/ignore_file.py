@@ -5,6 +5,7 @@ from exercise_utils.git import init
 __requires_git__ = True
 __requires_github__ = False
 
+
 def download(verbose: bool):
     os.makedirs("stuff", exist_ok=True)
     os.chdir("stuff")

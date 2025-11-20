@@ -5,7 +5,6 @@ from git_autograder import (
     GitAutograderOutput,
     GitAutograderStatus,
 )
-from git_autograder.diff import GitAutograderDiffHelper
 
 EMPTY_COMMITS = "All commits are empty."
 NO_DIFF = "There are no changes made to shopping-list.txt."

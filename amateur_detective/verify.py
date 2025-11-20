@@ -1,4 +1,3 @@
-import os
 from git_autograder import (
     GitAutograderExercise,
     GitAutograderOutput,
