@@ -10,7 +10,7 @@ def download(verbose: bool):
     os.chdir("stuff")
     init(verbose)
 
-    create_or_update_file("keep.txt", "good stuff\n")
-    create_or_update_file("temp.txt", "temp stuff\n")
-    create_or_update_file("file1.tmp", "more temp stuff\n")
-    create_or_update_file("file2.tmp", "even more temp stuff\n")
+    create_or_update_file("keep.txt", "good stuff")
+    create_or_update_file("temp.txt", "temp stuff")
+    create_or_update_file("file1.tmp", "more temp stuff")
+    create_or_update_file("file2.tmp", "even more temp stuff")
