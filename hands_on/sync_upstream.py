@@ -20,12 +20,12 @@ def download(verbose: bool):
     username = get_github_username(verbose)
     full_repo_name = f"{username}/{LOCAL_DIR}"
 
-    if has_repo(full_repo_name, is_fork=True, verbose=verbose):
+    if has_repo(full_repo_name, True, verbose):
         delete_repo(full_repo_name, verbose)
 
-    fork_repo(TARGET_REPO, fork_name=LOCAL_DIR, verbose=verbose)
+    fork_repo(TARGET_REPO, LOCAL_DIR, verbose)
 
-    clone_repo(full_repo_name, verbose=verbose)
+    clone_repo(full_repo_name, verbose)
 
     os.chdir(LOCAL_DIR)
     add_remote("origin", f"https://github.com/{full_repo_name}", verbose)
