@@ -11,7 +11,6 @@ def download(verbose: bool = False) -> None:
     os.makedirs("things")
     os.chdir("things")
 
-    # Initialize repository
     init(verbose)
 
     # Initial fruits file and commit
