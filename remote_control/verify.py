@@ -1,3 +1,4 @@
+import os
 import subprocess
 from typing import List, Optional
 
@@ -8,10 +9,11 @@ from git_autograder import (
 )
 
 
-def run_command(command: List[str]) -> Optional[str]:
+# TODO: We should unify how we call gh from within Python
+def get_github_username() -> Optional[str]:
     try:
         result = subprocess.run(
-            command,
+            ["gh", "api", "user", "-q", ".login"],
             capture_output=True,
             text=True,
             check=True,
@@ -21,12 +23,33 @@ def run_command(command: List[str]) -> Optional[str]:
         return None
 
 
+def has_public_repo(username: str) -> bool:
+    try:
+        result = subprocess.run(
+            [
+                "gh",
+                "repo",
+                "view",
+                f"{username}/gitmastery-{username}-remote-control",
+                "--json",
+                "visibility",
+                "--jq",
+                ".visibility",
+            ],
+            capture_output=True,
+            text=True,
+            check=True,
+            env=dict(os.environ, **{"GH_PAGER": "cat"}),
+        )
+        return result.stdout.strip() == "PUBLIC"
+    except subprocess.CalledProcessError:
+        return False
+
+
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
-    username = run_command(["gh", "api", "user", "-q", ".login"])
+    username = get_github_username()
     if username is None:
         raise exercise.wrong_answer(["Your Github CLI is not setup correctly"])
-
-    username = username.strip()
 
     print(f"Create a repo called gitmastery-{username}-remote-control")
     url = input("Enter the url of your remote repository: ")
@@ -35,8 +58,7 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     ):
         raise exercise.wrong_answer(["That is not the right Github url!"])
 
-    code = subprocess.call(["git", "ls-remote", url, "--quiet"])
-    if code == 0:
+    if has_public_repo(username):
         return exercise.to_output(
             [
                 "Great work setting up a public remote repository!",
