@@ -1,8 +1,8 @@
 """Wrapper for Git CLI commands."""
 
-from typing import List
+from typing import List, Optional
 
-from exercise_utils.cli import run_command
+from exercise_utils.cli import run, run_command
 
 
 def tag(tag_name: str, verbose: bool) -> None:
@@ -93,3 +93,18 @@ def track_remote_branch(remote: str, branch: str, verbose: bool) -> None:
 def remove_remote(remote: str, verbose: bool) -> None:
     """Removes a given remote."""
     run_command(["git", "remote", "rm", remote], verbose)
+
+
+def add_remote(remote: str, remote_url: str, verbose: bool) -> None:
+    """Adds a remote with the given name and URL."""
+    run_command(["git", "remote", "add", remote, remote_url], verbose)
+
+
+def clone_repo_with_git(
+    repository_url: str, verbose: bool, name: Optional[str] = None
+) -> None:
+    """Clones a Git repository. Does not require Github CLI."""
+    if name is not None:
+        run(["git", "clone", repository_url, name], verbose)
+    else:
+        run(["git", "clone", repository_url], verbose)
