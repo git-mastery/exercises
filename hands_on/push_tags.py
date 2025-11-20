@@ -36,10 +36,10 @@ def download(verbose: bool):
     username = get_github_username(verbose)
 
     check_existing_fork(username, "git-mastery", REPO_NAME, verbose)
-    FORK_NAME = check_same_repo_name(username, FORK_NAME, verbose)
+    NEW_FORK_NAME = check_same_repo_name(username, FORK_NAME, verbose)
 
-    fork_repo(f"git-mastery/{REPO_NAME}", FORK_NAME, verbose)
-    clone_repo_with_gh(FORK_NAME, verbose)
+    fork_repo(f"git-mastery/{REPO_NAME}", NEW_FORK_NAME, verbose)
+    clone_repo_with_gh(NEW_FORK_NAME, verbose, FORK_NAME)
 
 
     os.chdir(FORK_NAME)
