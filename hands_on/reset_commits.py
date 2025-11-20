@@ -35,15 +35,11 @@ def download(verbose: bool):
 
     create_or_update_file(
         "colours.txt",
-        """
-        a file for colours
-        """
+        "a file for colours\n"
     )
     create_or_update_file(
         "shapes.txt",
-        """
-        a file for shapes
-        """
+        "a file for shapes\n"
     )
     add(["colours.txt", "shapes.txt"], verbose)
     commit("Add colours.txt, shapes.txt", verbose)
@@ -64,51 +60,39 @@ def download(verbose: bool):
 
     append_to_file(
         "colours.txt",
-        """
-        bad colour
-        """
+        "bad colour\n"
     )
     add(["colours.txt"], verbose)
     commit("Incorrectly update colours.txt", verbose)
 
     append_to_file(
         "shapes.txt",
-        """
-        bad shape
-        """
+        "bad shape\n"
     )
     add(["shapes.txt"], verbose)
     commit("Incorrectly update shapes.txt", verbose)
 
     append_to_file(
         "fruits.txt",
-        """
-        bad fruit
-        """
+        "bad fruit\n"
     )
     add(["fruits.txt"], verbose)
     commit("Incorrectly update fruits.txt", verbose)
 
     create_or_update_file(
         "incorrect.txt",
-        """
-        bad line
-        """
+        "bad line\n"
     )
     add(["incorrect.txt"], verbose)
     commit("Add incorrect.txt", verbose)
 
     append_to_file(
         "colours.txt",
-        """
-        another bad colour
-        """
+        "another bad colour\n"
     )
     add(["colours.txt"], verbose)
 
     append_to_file(
         "shapes.txt",
-        """
-        another bad shape
-        """
+        "another bad shape\n"
     )
