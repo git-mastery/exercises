@@ -22,8 +22,10 @@ def fork_repo(repository_name: str, fork_name: str, verbose: bool) -> None:
     )
 
 
-def clone_repo(repository_name: str, verbose: bool, name: Optional[str] = None) -> None:
-    """Creates a clone of a repository."""
+def clone_repo_with_gh(
+    repository_name: str, verbose: bool, name: Optional[str] = None
+) -> None:
+    """Creates a clone of a repository using Github CLI."""
     if name is not None:
         run(["gh", "repo", "clone", repository_name, name], verbose)
     else:
