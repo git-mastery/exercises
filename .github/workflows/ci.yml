@@ -42,3 +42,28 @@ jobs:
       - name: Run unit tests
         run: |
           python -m pytest -s -vv
+
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+      - name: Run formatter using ruff
+        run: |
+          ruff check --fix
+          ruff format
+      - name: Saving changes
+        run: |
+          git config --global user.name "github-actions"
+          git config --global user.email "github-actions@github.com"
+          git config --global init.defaultBranch main
+          git add .
+          git diff-index --quiet HEAD || git commit -m "[github-actions] Apply auto-formatting using ruff"
+          git push
