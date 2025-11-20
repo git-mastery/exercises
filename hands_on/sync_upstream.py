@@ -6,7 +6,7 @@ from exercise_utils.github_cli import (
     fork_repo,
     clone_repo,
     has_repo,
-    delete_repo
+    delete_repo,
 )
 
 __requires_git__ = True
@@ -15,6 +15,7 @@ __requires_github__ = True
 
 TARGET_REPO = "git-mastery/samplerepo-finances"
 LOCAL_DIR = "gitmastery-samplerepo-finances"
+
 
 def download(verbose: bool):
     username = get_github_username(verbose)

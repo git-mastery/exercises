@@ -1,5 +1,4 @@
 import re
-from typing import Tuple
 
 from git_autograder import (
     GitAutograderExercise,

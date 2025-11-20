@@ -1,6 +1,6 @@
 import io
 import sys
-from contextlib import redirect_stderr, redirect_stdout
+from contextlib import redirect_stdout
 from pathlib import Path
 from typing import Any, Dict, Optional
 

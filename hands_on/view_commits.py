@@ -64,4 +64,3 @@ def download(verbose: bool):
     )
     add(["fruits.txt"], verbose)
     commit("Update fruits list", verbose)
-    

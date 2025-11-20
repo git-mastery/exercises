@@ -1,4 +1,3 @@
-from os import EX_TEMPFAIL
 from git_autograder import (
     GitAutograderOutput,
     GitAutograderExercise,
