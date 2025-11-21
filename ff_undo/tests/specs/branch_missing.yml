@@ -1,0 +1,7 @@
+initialization:
+  steps:
+    - type: commit
+      id: start
+      message: "Add Rick"
+    - type: commit
+      message: "Add Morty"

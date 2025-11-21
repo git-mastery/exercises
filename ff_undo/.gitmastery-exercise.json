@@ -1,0 +1,18 @@
+{
+  "exercise_name": "ff-undo",
+  "tags": [
+    "git-branch",
+    "git-merge",
+    "git-reset"
+  ],
+  "requires_git": true,
+  "requires_github": false,
+  "base_files": {},
+  "exercise_repo": {
+    "repo_type": "local",
+    "repo_name": "play-characters",
+    "repo_title": null,
+    "create_fork": null,
+    "init": true
+  }
+}
