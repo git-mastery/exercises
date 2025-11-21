@@ -10,11 +10,8 @@ __requires_git__ = True
 __requires_github__ = False
 
 def download(verbose: bool):
-        
-    target_dir = Path("things")
-
-   
-    os.makedirs(target_dir, exist_ok=True)
+           
+    os.makedirs("things", exist_ok=True)
     os.chdir(target_dir)
 
     init(verbose)
