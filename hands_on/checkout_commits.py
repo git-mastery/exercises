@@ -12,7 +12,7 @@ __requires_github__ = False
 def download(verbose: bool):
            
     os.makedirs("things", exist_ok=True)
-    os.chdir(target_dir)
+    os.chdir("things")
 
     init(verbose)
 
