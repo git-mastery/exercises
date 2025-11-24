@@ -36,10 +36,8 @@ def get_username() -> Optional[str]:
     return run_command(["gh", "api", "user", "-q", ".login"])
 
 def get_remote_tags(username: str) -> List[str]:
-    raw_tags = run_command(["gh", "api",
-                        f"repos/{username}/{username}-gitmastery-gm-duty-roster/tags", 
-                        "--paginate", "--jq", ".[].name"])
-    return [line.strip() for line in raw_tags.strip().splitlines()]
+    raw_tags = run_command(["git", "ls-remote", "--tags"])
+    return [line.split("/")[2] for line in raw_tags.strip().splitlines()]
 
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     username = get_username()

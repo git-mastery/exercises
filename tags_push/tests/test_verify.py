@@ -78,38 +78,40 @@ def test_improper_gh_setup(exercise: GitAutograderExercise):
     with (
         patch("tags_push.verify.get_username", return_value=None),
         patch("tags_push.verify.get_remote_tags", return_value=[TAG_1_NAME, TAG_2_NAME]),
-        pytest.raises(GitAutograderWrongAnswerException) as exception,
+        pytest.raises(GitAutograderWrongAnswerException, match=IMPROPER_GH_CLI_SETUP),
     ):
         verify(exercise)
-
-    assert exception.value.message == [IMPROPER_GH_CLI_SETUP]
 
 def test_beta_present(exercise: GitAutograderExercise):
     with (
         patch("tags_push.verify.get_username", return_value="dummy"),
         patch("tags_push.verify.get_remote_tags", return_value=[TAG_1_NAME, TAG_2_NAME, TAG_DELETE_NAME]),
-        pytest.raises(GitAutograderWrongAnswerException) as exception,
+        pytest.raises(GitAutograderWrongAnswerException, match=TAG_DELETE_NOT_REMOVED),
     ):
         verify(exercise)
-
-    assert exception.value.message == [TAG_DELETE_NOT_REMOVED]
 
 def test_tag_1_absent(exercise: GitAutograderExercise):
     with (
         patch("tags_push.verify.get_username", return_value="dummy"),
         patch("tags_push.verify.get_remote_tags", return_value=[TAG_2_NAME]),
-        pytest.raises(GitAutograderWrongAnswerException) as exception,
+        pytest.raises(GitAutograderWrongAnswerException, match=TAG_1_MISSING),
     ):
         verify(exercise)
-
-    assert exception.value.message == [TAG_1_MISSING]
 
 def test_tag_2_absent(exercise: GitAutograderExercise):
     with (
         patch("tags_push.verify.get_username", return_value="dummy"),
         patch("tags_push.verify.get_remote_tags", return_value=[TAG_1_NAME]),
+        pytest.raises(GitAutograderWrongAnswerException, match=TAG_2_MISSING),
+    ):
+        verify(exercise)
+
+def test_all_wrong(exercise: GitAutograderExercise):
+    with (
+        patch("tags_push.verify.get_username", return_value="dummy"),
+        patch("tags_push.verify.get_remote_tags", return_value=[TAG_DELETE_NAME]),
         pytest.raises(GitAutograderWrongAnswerException) as exception,
     ):
         verify(exercise)
 
-    assert exception.value.message == [TAG_2_MISSING]
+    assert exception.value.message == [TAG_1_MISSING, TAG_2_MISSING, TAG_DELETE_NOT_REMOVED]
