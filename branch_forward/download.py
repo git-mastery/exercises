@@ -1,9 +1,9 @@
-from exercise_utils.file import append_to_file
+from exercise_utils.file import append_to_file, create_or_update_file
 from exercise_utils.git import add, checkout, commit
 
 
 def setup(verbose: bool = False):
-    append_to_file(
+    create_or_update_file(
         "story.txt",
         """
         Harry was single.
@@ -32,7 +32,7 @@ def setup(verbose: bool = False):
     commit("Add about Ginny", verbose)
 
     checkout("main", False, verbose)
-    append_to_file(
+    create_or_update_file(
         "cast.txt",
         """
         Harry

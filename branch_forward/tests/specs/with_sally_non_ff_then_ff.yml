@@ -1,0 +1,46 @@
+initialization:
+  steps:
+    - type: commit
+      empty: true
+      message: Introduce Harry
+      id: start
+    - type: commit
+      empty: true
+      message: Add about family
+
+    - type: branch
+      branch-name: with-ginny
+    - type: checkout
+      branch-name: with-ginny
+    - type: commit
+      empty: true
+      message: Add about Ginny
+
+    - type: checkout
+      branch-name: main
+    - type: commit
+      empty: true
+      message: Add cast.txt
+
+    - type: branch
+      branch-name: with-sally
+    - type: checkout
+      branch-name: with-sally
+    - type: commit
+      empty: true
+      message: Mention Sally
+
+    - type: checkout
+      branch-name: with-ginny
+    - type: commit
+      empty: true
+      message: Mention Ginny is single
+
+    - type: checkout
+      branch-name: main
+    - type: bash
+      runs: |
+        git merge with-sally --no-ff -m "Non fast-forward merge"
+        git reset --hard 'HEAD^'
+        git merge with-sally
+

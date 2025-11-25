@@ -18,20 +18,20 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         entry for entry in main_branch.reflog if entry.action.startswith("merge ")
     ]
 
-    if not merge_logs:
-        raise exercise.wrong_answer([FAST_FORWARD_REQUIRED])
-
-    main_commits = list(main_branch.commits)
-    if any(len(commit.parents) > 1 for commit in main_commits):
-        raise exercise.wrong_answer([FAST_FORWARD_REQUIRED])
-
-    if any(entry.message != "Fast-forward" for entry in merge_logs):
-        raise exercise.wrong_answer([FAST_FORWARD_REQUIRED])
-
     merged_branches = [entry.action[len("merge ") :] for entry in merge_logs]
 
     if "with-sally" not in merged_branches:
         raise exercise.wrong_answer([ONLY_WITH_SALLY_MERGED])
+
+    latest_with_sally_merge = next(
+        (entry for entry in merge_logs if entry.action == "merge with-sally"), None
+    )
+
+    if latest_with_sally_merge is None:
+        raise exercise.wrong_answer([FAST_FORWARD_REQUIRED])
+
+    if latest_with_sally_merge.message != "Fast-forward":
+        raise exercise.wrong_answer([FAST_FORWARD_REQUIRED])
 
     if any(branch != "with-sally" for branch in merged_branches):
         raise exercise.wrong_answer([ONLY_WITH_SALLY_MERGED])

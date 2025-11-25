@@ -21,7 +21,7 @@ def test_no_merges():
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,
-            [FAST_FORWARD_REQUIRED],
+            [ONLY_WITH_SALLY_MERGED],
         )
 
 
@@ -30,7 +30,7 @@ def test_other_branch_non_ff():
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,
-            [FAST_FORWARD_REQUIRED],
+            [ONLY_WITH_SALLY_MERGED],
         )
 
 
@@ -50,4 +50,11 @@ def test_merge_with_sally_no_ff():
             GitAutograderStatus.UNSUCCESSFUL,
             [FAST_FORWARD_REQUIRED],
         )
+
+
+def test_merge_with_sally_fix_after_non_ff():
+    with loader.load(
+        "specs/with_sally_non_ff_then_ff.yml", "start"
+    ) as output:
+        assert_output(output, GitAutograderStatus.SUCCESSFUL)
 
