@@ -36,5 +36,3 @@ initialization:
       files:
         - name: story.txt
           content: "It was a dark and stormy night.\nI was alone in my room.\nI fell asleep on the couch.\n"
-    - type: checkout
-      branch-name: main
