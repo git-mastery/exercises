@@ -3,7 +3,6 @@ from git_autograder.status import GitAutograderStatus
 
 from ..verify import (
     BRANCH_MISSING,
-    NO_COMMIT,
     WRONG_CONTENT,
     WRONG_START,
     verify,
@@ -41,4 +40,4 @@ def test_visitor_wrong_content():
 
 def test_visitor_no_commit():
     with loader.load("specs/visitor_no_commit.yml") as output:
-        assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [WRONG_START.format(branch_name="visitor-line")])
+        assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [WRONG_CONTENT.format(branch_name="visitor-line", expected_content="I heard someone knocking at the door.")])

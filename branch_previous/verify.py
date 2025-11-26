@@ -4,7 +4,6 @@ from git_autograder import (
     GitAutograderOutput,
     GitAutograderExercise,
     GitAutograderStatus,
-    GitAutograderBranch,
     GitAutograderCommit,
 )
 
@@ -12,7 +11,6 @@ MAIN_BRANCH_CHANGED = "The 'main' branch has been changed. Please ensure it rema
 BRANCH_MISSING = "The '{branch_name}' branch is missing."
 WRONG_START = "The '{branch_name}' branch should start from the second commit (with message 'Describe location')."
 WRONG_CONTENT = "The '{branch_name}' branch should have the line '{expected_content}' added to story.txt."
-NO_COMMIT = "You need to commit the changes in the '{branch_name}' branch."
 
 def get_commit_from_message(exercise: GitAutograderExercise, message: str) -> Optional[GitAutograderCommit]:
     """Find a commit with the given message."""
@@ -70,7 +68,7 @@ def check_branch_structure(
     # Check that user made commits in the branch
     branch = branch_helper.branch(branch_name)
     latest_commit = branch.latest_commit
-    print("branch", branch_name, len(list(branch.commits)))
+
     # if latest_commit == expected_start_commit:
     #     raise exercise.wrong_answer([WRONG_START.format(branch_name=branch_name)])
 
