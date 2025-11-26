@@ -1,38 +1,51 @@
 initialization:
   steps:
+    - type: bash
+      runs: echo "It was a dark and stormy night." > story.txt
+    - type: add
+      files:
+        - story.txt
     - type: commit
       message: Describe night
-      files:
-        - name: story.txt
-          content: "It was a dark and stormy night.\n"
+      empty: false
       id: start
+    - type: bash
+      runs: echo "I was alone in my room." >> story.txt
+    - type: add
+      files:
+        - story.txt
     - type: commit
       message: Describe location
-      files:
-        - name: story.txt
-          content: "It was a dark and stormy night.\nI was alone in my room.\n"
+      empty: false
       id: second_commit
+    - type: bash
+      runs: echo "I heard a strange noise." >> story.txt
+    - type: add
+      files:
+        - story.txt
     - type: commit
       message: Mention noise
-      files:
-        - name: story.txt
-          content: "It was a dark and stormy night.\nI was alone in my room.\nI heard a strange noise.\n"
+      empty: false
     # visitor-line starts from wrong commit (first instead of second)
     - type: bash
       runs: |
         FIRST_COMMIT=$(git log --all --grep="Describe night" --format=%H -n 1)
         git checkout -b visitor-line $FIRST_COMMIT
+        echo "I heard someone knocking at the door." >> story.txt
+    - type: add
+      files:
+        - story.txt
     - type: commit
       message: Add visitor line
-      files:
-        - name: story.txt
-          content: "It was a dark and stormy night.\nI heard someone knocking at the door.\n"
+      empty: false
     - type: bash
       runs: |
         SECOND_COMMIT=$(git log --all --grep="Describe location" --format=%H -n 1)
         git checkout -b sleep-line $SECOND_COMMIT
+        echo "I fell asleep on the couch." >> story.txt
+    - type: add
+      files:
+        - story.txt
     - type: commit
       message: Add sleep line
-      files:
-        - name: story.txt
-          content: "It was a dark and stormy night.\nI was alone in my room.\nI fell asleep on the couch.\n"
+      empty: false

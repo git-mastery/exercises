@@ -1,17 +1,31 @@
 initialization:
   steps:
+    - type: bash
+      runs: echo "It was a dark and stormy night." > story.txt
+    - type: add
+      files:
+        - story.txt
     - type: commit
       message: Describe night
       files:
         - name: story.txt
           content: "It was a dark and stormy night.\n"
       id: start
+    - type: bash
+      runs: |
+        echo "It was a dark and stormy night." > story.txt
+        echo "I was alone in my room." >> story.txt
     - type: commit
       message: Describe location
       files:
         - name: story.txt
           content: "It was a dark and stormy night.\nI was alone in my room.\n"
       id: second_commit
+    - type: bash
+      runs: |
+        echo "It was a dark and stormy night." > story.txt
+        echo "I was alone in my room." >> story.txt
+        echo "I heard a strange noise." >> story.txt
     - type: commit
       message: Mention noise
       files:
@@ -22,6 +36,9 @@ initialization:
       runs: |
         SECOND_COMMIT=$(git log --all --grep="Describe location" --format=%H -n 1)
         git checkout -b sleep-line $SECOND_COMMIT
+        echo "It was a dark and stormy night." > story.txt
+        echo "I was alone in my room." >> story.txt
+        echo "I fell asleep on the couch." >> story.txt
     - type: commit
       message: Add sleep line
       files:

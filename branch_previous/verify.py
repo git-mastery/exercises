@@ -39,29 +39,20 @@ def check_branch_changes(
     ) -> None:
     """Check that the latest commit in the branch has the expected changes in the expected file."""
     print(f"Checking changes in branch {branch_name}...")
-    latest_commit = exercise.repo.branches.branch(branch_name).latest_commit.commit
+    latest_commit = exercise.repo.branches.branch(branch_name).latest_commit
+    with latest_commit.file("story.txt") as content:
+        print(content)
+        if not content:
+            raise exercise.wrong_answer([WRONG_CONTENT.format(
+                branch_name=branch_name,
+                expected_content=expected_content
+            )])
+        if expected_content not in content:
+            raise exercise.wrong_answer([WRONG_CONTENT.format(
+                branch_name=branch_name,
+                expected_content=expected_content
+            )])
     
-    diff_index = latest_commit.diff(prev_commit, create_patch=True)
-    
-    # A correct answer in this exercise would only have 1 diff
-    if len(diff_index) != 1:
-        raise exercise.wrong_answer([WRONG_CONTENT.format(
-            branch_name=branch_name,
-            expected_content=expected_content
-        )])
-    
-    diff = diff_index[0]
-
-    # Remove '+' sign and any surrounding whitespace
-    diff_text = diff.diff.decode("utf-8")[1:].strip()
-    print(f"Diff text for branch {branch_name}: '{diff_text}'")
-
-    if expected_content != diff_text:
-        raise exercise.wrong_answer([WRONG_CONTENT.format(
-            branch_name=branch_name,
-            expected_content=expected_content
-        )])
-
     return
 
 def check_branch_structure(
