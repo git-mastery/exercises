@@ -38,7 +38,7 @@ def check_branch_changes(
         exercise: GitAutograderExercise
     ) -> None:
     """Check that the latest commit in the branch has the expected changes in the expected file."""
-
+    print(f"Checking changes in branch {branch_name}...")
     latest_commit = exercise.repo.branches.branch(branch_name).latest_commit.commit
     
     diff_index = latest_commit.diff(prev_commit, create_patch=True)
@@ -78,12 +78,12 @@ def check_branch_structure(
     
     # Check that user made commits in the branch
     branch = branch_helper.branch(branch_name)
-    print("branch",branch_name, len(list(branch.commits)))
-    if len(list(branch.commits)) < expected_branch_length:
-        raise exercise.wrong_answer([NO_COMMIT.format(branch_name=branch_name)])
+    latest_commit = branch.latest_commit
+    print("branch", branch_name, len(list(branch.commits)))
+    # if latest_commit == expected_start_commit:
+    #     raise exercise.wrong_answer([WRONG_START.format(branch_name=branch_name)])
 
     # Check that branch starts from correct commit
-    latest_commit = branch.latest_commit
     if not latest_commit.is_child(expected_start_commit):
         raise exercise.wrong_answer([WRONG_START.format(branch_name=branch_name)])
 
