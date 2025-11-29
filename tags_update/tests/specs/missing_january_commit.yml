@@ -1,0 +1,24 @@
+initialization:
+  steps:
+    - type: commit
+      empty: true
+      message: Update duty roster for February
+      id: start
+    - type: tag
+      tag-name: january-update
+    - type: commit
+      empty: true
+      message: Update roster for March
+      id: march-commit
+    - type: commit
+      empty: true
+      message: Update duty roster for April
+      id: april-commit
+    - type: tag
+      tag-name: april-update
+    - type: commit
+      empty: true
+      message: Update roster for May
+      id: may-commit
+    - type: tag
+      tag-name: may-update
