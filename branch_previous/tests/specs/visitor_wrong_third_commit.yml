@@ -1,0 +1,51 @@
+initialization:
+  steps:
+    - type: bash
+      runs: echo "It was a dark and stormy night." > story.txt
+    - type: add
+      files:
+        - story.txt
+    - type: commit
+      message: Describe night
+      empty: false
+      id: start
+    - type: bash
+      runs: echo "I was alone in my room." >> story.txt
+    - type: add
+      files:
+        - story.txt
+    - type: commit
+      message: Describe location
+      empty: false
+      id: second_commit
+    - type: bash
+      runs: echo "I heard a strange noise." >> story.txt
+    - type: add
+      files:
+        - story.txt
+    - type: commit
+      message: Mention noise
+      empty: false
+    # visitor-line starts from wrong commit (third instead of second)
+    - type: bash
+      runs: |
+        THIRD_COMMIT=$(git log --all --grep="Mention noise" --format=%H -n 1)
+        git checkout -b visitor-line $THIRD_COMMIT
+        echo "I heard someone knocking at the door." >> story.txt
+    - type: add
+      files:
+        - story.txt
+    - type: commit
+      message: Add visitor line
+      empty: false
+    - type: bash
+      runs: |
+        SECOND_COMMIT=$(git log --all --grep="Describe location" --format=%H -n 1)
+        git checkout -b sleep-line $SECOND_COMMIT
+        echo "I fell asleep on the couch." >> story.txt
+    - type: add
+      files:
+        - story.txt
+    - type: commit
+      message: Add sleep line
+      empty: false

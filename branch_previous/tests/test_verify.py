@@ -5,6 +5,7 @@ from ..verify import (
     BRANCH_MISSING,
     WRONG_CONTENT,
     WRONG_START,
+    COMMIT_MISSING,
     verify,
 )
 
@@ -28,8 +29,13 @@ def test_sleep_branch_missing():
         assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [BRANCH_MISSING.format(branch_name="sleep-line")])
 
 
-def test_visitor_wrong_start():
-    with loader.load("specs/visitor_wrong_start.yml") as output:
+def test_visitor_wrong_start_first_commit():
+    with loader.load("specs/visitor_wrong_start_first_commit.yml") as output:
+        assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [WRONG_START.format(branch_name="visitor-line")])
+
+
+def test_visitor_wrong_start_third_commit():
+    with loader.load("specs/visitor_wrong_start_third_commit.yml") as output:
         assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [WRONG_START.format(branch_name="visitor-line")])
 
 
@@ -38,6 +44,6 @@ def test_visitor_wrong_content():
         assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [WRONG_CONTENT.format(branch_name="visitor-line", expected_content="I heard someone knocking at the door.")])
 
 
-def test_visitor_no_commit():
-    with loader.load("specs/visitor_no_commit.yml") as output:
-        assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [WRONG_CONTENT.format(branch_name="visitor-line", expected_content="I heard someone knocking at the door.")])
+def test_visitor_commit_missing():
+    with loader.load("specs/visitor_commit_missing.yml") as output:
+        assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [COMMIT_MISSING.format(branch_name="visitor-line")])
