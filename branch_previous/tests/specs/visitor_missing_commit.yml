@@ -26,22 +26,17 @@ initialization:
     - type: commit
       message: Mention noise
       empty: false
+    # visitor-line branch created but no commit made
     - type: bash
       runs: |
         DESCRIBE_LOCATION_COMMIT=$(git log --all --grep="Describe location" --format=%H -n 1)
         git checkout -b visitor-line $DESCRIBE_LOCATION_COMMIT
-        echo "Wrong content here." >> story.txt
-    - type: add
-      files:
-        - story.txt
-    - type: commit
-      message: Mention knocking
-      empty: false
+    # sleep-line branch created with commit
     - type: bash
       runs: |
         DESCRIBE_LOCATION_COMMIT=$(git log --all --grep="Describe location" --format=%H -n 1)
         git checkout -b sleep-line $DESCRIBE_LOCATION_COMMIT
-        echo "I fell asleep on my couch." >> story.txt
+        echo "I fell asleep on the couch." >> story.txt
     - type: add
       files:
         - story.txt

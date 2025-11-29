@@ -9,41 +9,24 @@ initialization:
       message: Describe night
       id: start
     - type: bash
-      runs: echo "I was alone in my room." >> story.txt
-    - type: add
-      files:
-        - story.txt
+      runs: |
+        echo "I was alone in my room." >> story.txt
     - type: commit
       message: Describe location
       empty: false
-      id: describe_location_commit
+      id: second_commit
     - type: bash
-      runs: echo "I heard a strange noise." >> story.txt
-    - type: add
-      files:
-        - story.txt
+      runs: |
+        echo "I heard a strange noise." >> story.txt
     - type: commit
       message: Mention noise
       empty: false
-    - type: bash
-      runs: |
-        DESCRIBE_LOCATION_COMMIT=$(git log --all --grep="Describe location" --format=%H -n 1)
-        git checkout -b visitor-line $DESCRIBE_LOCATION_COMMIT
-        echo "I heard someone knocking at the door." >> story.txt
-    - type: add
-      files:
-        - story.txt
-    - type: commit
-      message: Mention knocking
-      empty: false
+    # Only create sleep-line branch, not visitor-line
     - type: bash
       runs: |
         DESCRIBE_LOCATION_COMMIT=$(git log --all --grep="Describe location" --format=%H -n 1)
         git checkout -b sleep-line $DESCRIBE_LOCATION_COMMIT
         echo "I fell asleep on the couch." >> story.txt
-    - type: add
-      files:
-        - story.txt
     - type: commit
       message: Mention sleeping
       empty: false

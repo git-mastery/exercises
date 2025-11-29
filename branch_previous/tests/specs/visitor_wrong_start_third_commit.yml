@@ -17,7 +17,7 @@ initialization:
     - type: commit
       message: Describe location
       empty: false
-      id: second_commit
+      id: describe_location_commit
     - type: bash
       runs: echo "I heard a strange noise." >> story.txt
     - type: add
@@ -26,15 +26,26 @@ initialization:
     - type: commit
       message: Mention noise
       empty: false
-    # Only create visitor-line branch, not sleep-line
+    # visitor-line starts from wrong commit (third instead of second)
     - type: bash
       runs: |
-        SECOND_COMMIT=$(git log --all --grep="Describe location" --format=%H -n 1)
-        git checkout -b visitor-line $SECOND_COMMIT
+        THIRD_COMMIT=$(git log --all --grep="Mention noise" --format=%H -n 1)
+        git checkout -b visitor-line $THIRD_COMMIT
         echo "I heard someone knocking at the door." >> story.txt
     - type: add
       files:
         - story.txt
     - type: commit
-      message: Add visitor line
+      message: Mention knocking
+      empty: false
+    - type: bash
+      runs: |
+        DESCRIBE_LOCATION_COMMIT=$(git log --all --grep="Describe location" --format=%H -n 1)
+        git checkout -b sleep-line $DESCRIBE_LOCATION_COMMIT
+        echo "I fell asleep on the couch." >> story.txt
+    - type: add
+      files:
+        - story.txt
+    - type: commit
+      message: Mention sleeping
       empty: false
