@@ -28,8 +28,7 @@ initialization:
       empty: false
     - type: bash
       runs: |
-        DESCRIBE_LOCATION_COMMIT=$(git log --all --grep="Describe location" --format=%H -n 1)
-        git checkout -b visitor-line $DESCRIBE_LOCATION_COMMIT
+        git checkout -b visitor-line HEAD~1
         echo "Wrong content here." >> story.txt
     - type: add
       files:
@@ -39,8 +38,7 @@ initialization:
       empty: false
     - type: bash
       runs: |
-        DESCRIBE_LOCATION_COMMIT=$(git log --all --grep="Describe location" --format=%H -n 1)
-        git checkout -b sleep-line $DESCRIBE_LOCATION_COMMIT
+        git checkout -b sleep-line HEAD~1
         echo "I fell asleep on my couch." >> story.txt
     - type: add
       files:
