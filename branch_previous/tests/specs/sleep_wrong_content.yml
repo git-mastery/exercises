@@ -1,0 +1,48 @@
+initialization:
+  steps:
+    - type: bash
+      runs: echo "It was a dark and stormy night." > story.txt
+    - type: add
+      files:
+        - story.txt
+    - type: commit
+      message: Describe night
+      empty: false
+      id: start
+    - type: bash
+      runs: echo "I was alone in my room." >> story.txt
+    - type: add
+      files:
+        - story.txt
+    - type: commit
+      message: Describe location
+      empty: false
+      id: describe_location_commit
+    - type: bash
+      runs: echo "I heard a strange noise." >> story.txt
+    - type: add
+      files:
+        - story.txt
+    - type: commit
+      message: Mention noise
+      empty: false
+    - type: bash
+      runs: |
+        git checkout -b visitor-line HEAD~1
+        echo "I heard someone knocking at the door." >> story.txt
+    - type: add
+      files:
+        - story.txt
+    - type: commit
+      message: Mention knocking
+      empty: false
+    - type: bash
+      runs: |
+        git checkout -b sleep-line HEAD~1
+        echo "Wrong content here." >> story.txt
+    - type: add
+      files:
+        - story.txt
+    - type: commit
+      message: Mention sleeping
+      empty: false

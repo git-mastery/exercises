@@ -1,0 +1,92 @@
+from typing import Optional
+
+from git_autograder import (
+    GitAutograderOutput,
+    GitAutograderExercise,
+    GitAutograderStatus,
+)
+
+from git.objects.commit import Commit
+
+MISSING_BRANCH = "The '{branch_name}' branch is missing."
+MISSING_COMMIT = "No commits were made in the '{branch_name}' branch."
+WRONG_START = (
+    "The '{branch_name}' branch should start from the second commit "
+    "(with message 'Describe location')."
+)
+WRONG_CONTENT = (
+    "The '{branch_name}' branch should have the line '{expected_content}' "
+    "added to story.txt."
+)
+SUCCESS_MESSAGE = (
+    "Excellent work! You've successfully created branches from a "
+    "previous commit and explored alternative storylines!"
+)
+
+
+def get_commit_from_message(exercise: GitAutograderExercise, message: str) -> Optional[Commit]:
+    """Find a commit with the given message."""
+    commits = list(exercise.repo.repo.iter_commits(all=True))
+    for commit in commits:
+        if message.strip() == commit.message.strip():
+            return commit
+    return None
+
+
+def verify_branch(
+    branch_name: str,
+    expected_start_commit: Commit,
+    expected_content: str,
+    exercise: GitAutograderExercise,
+) -> None:
+    """
+    Check that the given branch exists, starts from the expected commit,
+    and contains the expected content in story.txt.
+    """
+
+    # Check if branch exists
+    branch_helper = exercise.repo.branches
+    if not branch_helper.has_branch(branch_name):
+        raise exercise.wrong_answer([MISSING_BRANCH.format(branch_name=branch_name)])
+    
+    branch = branch_helper.branch(branch_name)
+    latest_commit = branch.latest_commit
+
+    # Check that user made commits in the branch
+    if latest_commit.commit == expected_start_commit:
+        raise exercise.wrong_answer([MISSING_COMMIT.format(branch_name=branch_name)])
+
+    # Check that previous commit of latest commit is the expected start commit
+    if expected_start_commit not in latest_commit.commit.parents:
+        raise exercise.wrong_answer([WRONG_START.format(branch_name=branch_name)])
+    
+    # Check that the expected content is in story.txt
+    with latest_commit.file("story.txt") as content:
+        if expected_content not in content:
+            raise exercise.wrong_answer([WRONG_CONTENT.format(
+                branch_name=branch_name,
+                expected_content=expected_content
+            )])
+
+
+def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
+    describe_location_commit = get_commit_from_message(exercise, "Describe location")
+
+    verify_branch(
+        branch_name="visitor-line",
+        expected_start_commit=describe_location_commit,
+        expected_content="I heard someone knocking at the door.",
+        exercise=exercise
+    )
+
+    verify_branch(
+        branch_name="sleep-line",
+        expected_start_commit=describe_location_commit,
+        expected_content="I fell asleep on the couch.",
+        exercise=exercise
+    )
+
+    return exercise.to_output(
+        [SUCCESS_MESSAGE],
+        GitAutograderStatus.SUCCESSFUL,
+    )

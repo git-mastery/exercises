@@ -1,0 +1,31 @@
+initialization:
+  steps:
+    - type: bash
+      runs: echo "It was a dark and stormy night." > story.txt
+    - type: add
+      files:
+        - story.txt
+    - type: commit
+      message: Describe night
+      id: start
+    - type: bash
+      runs: |
+        echo "I was alone in my room." >> story.txt
+    - type: commit
+      message: Describe location
+      empty: false
+      id: second_commit
+    - type: bash
+      runs: |
+        echo "I heard a strange noise." >> story.txt
+    - type: commit
+      message: Mention noise
+      empty: false
+    # Only create sleep-line branch, not visitor-line
+    - type: bash
+      runs: |
+        git checkout -b sleep-line HEAD~1
+        echo "I fell asleep on the couch." >> story.txt
+    - type: commit
+      message: Mention sleeping
+      empty: false
