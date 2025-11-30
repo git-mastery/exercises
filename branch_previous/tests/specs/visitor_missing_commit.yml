@@ -32,7 +32,7 @@ initialization:
     # sleep-line branch created with commit
     - type: bash
       runs: |
-        git checkout -b sleep-line HEAD~1
+        git checkout -b sleep-line
         echo "I fell asleep on the couch." >> story.txt
     - type: add
       files:

@@ -39,7 +39,7 @@ initialization:
       empty: false
     - type: bash
       runs: |
-        git checkout -b sleep-line HEAD~1
+        git checkout -b sleep-line HEAD~2
         echo "I fell asleep on the couch." >> story.txt
     - type: add
       files:
