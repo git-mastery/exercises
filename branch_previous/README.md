@@ -17,4 +17,17 @@ You are not very happy with the way the story is progressing, and wish to explor
 
 ## Expected Revision Graph
 
-![Expected Revision Graph](horror-story/expected-tree.png)
+```mermaid
+gitGraph BT:
+  commit id: "Describe night"
+  commit id: "Describe location"
+  branch visitor-line
+  checkout main
+  branch sleep-line
+  checkout main
+  commit id: "Mention noise"
+  checkout visitor-line
+  commit id: "Mention knocking"
+  checkout sleep-line
+  commit id: "Mention sleeping"
+```
