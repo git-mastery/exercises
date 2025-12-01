@@ -1,7 +1,8 @@
 initialization:
   steps:
-    - type: bash
-      runs: echo "It was a dark and stormy night." > story.txt
+    - type: new-file
+      filename: story.txt
+      contents: "It was a dark and stormy night.\n"
     - type: add
       files:
         - story.txt
@@ -9,8 +10,9 @@ initialization:
       message: Describe night
       empty: false
       id: start
-    - type: bash
-      runs: echo "I was alone in my room." >> story.txt
+    - type: append-file
+      filename: story.txt
+      contents: "I was alone in my room.\n"
     - type: add
       files:
         - story.txt
@@ -18,8 +20,9 @@ initialization:
       message: Describe location
       empty: false
       id: describe_location_commit
-    - type: bash
-      runs: echo "I heard a strange noise." >> story.txt
+    - type: append-file
+      filename: story.txt
+      contents: "I heard a strange noise.\n"
     - type: add
       files:
         - story.txt
@@ -27,9 +30,10 @@ initialization:
       message: Mention noise
       empty: false
     - type: bash
-      runs: |
-        git checkout -b visitor-line HEAD~1
-        echo "I heard someone knocking at the door." >> story.txt
+      runs: git checkout -b visitor-line HEAD~1
+    - type: append-file
+      filename: story.txt
+      contents: "I heard someone knocking at the door.\n"
     - type: add
       files:
         - story.txt
@@ -37,9 +41,10 @@ initialization:
       message: Mention knocking
       empty: false
     - type: bash
-      runs: |
-        git checkout -b sleep-line HEAD~1
-        echo "Wrong content here." >> story.txt
+      runs: git checkout -b sleep-line HEAD~1
+    - type: append-file
+      filename: story.txt
+      contents: "Wrong content here.\n"
     - type: add
       files:
         - story.txt
