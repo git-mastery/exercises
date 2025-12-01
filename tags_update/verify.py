@@ -1,10 +1,10 @@
 from typing import Optional
-from git.objects.commit import Commit
 
 from git_autograder import (
     GitAutograderExercise,
     GitAutograderOutput,
     GitAutograderStatus,
+    GitAutograderCommit,
 )
 
 MISSING_JANUARY_TAG = "The 'january-update' tag is missing! You need to rename 'first-update' to 'january-update'."
@@ -16,11 +16,11 @@ SUCCESS_MESSAGE = "Great work! You have successfully updated the tags to point t
 MISSING_COMMIT_MESSAGE = "Could not find a commit with '{message}' in the message"
 
 
-def find_commit_by_message(exercise: GitAutograderExercise, message: str) -> Optional[Commit]:
+def get_commit_from_message(exercise: GitAutograderExercise, message: str) -> Optional[GitAutograderCommit]:
     """Find a commit with the given message."""
-    commits = list(exercise.repo.repo.iter_commits(all=True))
+    commits = list(exercise.repo.branches.branch("main").commits)
     for commit in commits:
-        if message.strip() == commit.message.strip():
+        if message.strip() == commit.commit.message.strip():
             return commit
     return None
 
@@ -37,7 +37,7 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         raise exercise.wrong_answer([MISSING_JANUARY_TAG])
     
     # Ensure january-update tag points to the correct commit
-    january_commit = find_commit_by_message(exercise, "Add January duty roster")
+    january_commit = get_commit_from_message(exercise, "Add January duty roster")
     if january_commit is None:
         raise exercise.wrong_answer([MISSING_COMMIT_MESSAGE.format(message="January")])
     
@@ -50,7 +50,7 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         raise exercise.wrong_answer([MISSING_APRIL_TAG])
     
     # Ensure april-update tag points to the correct commit
-    april_commit = find_commit_by_message(exercise, "Update duty roster for April")
+    april_commit = get_commit_from_message(exercise, "Update duty roster for April")
     if april_commit is None:
         raise exercise.wrong_answer([MISSING_COMMIT_MESSAGE.format(message="April")])
     
