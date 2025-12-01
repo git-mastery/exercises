@@ -26,7 +26,6 @@ SUCCESS_MESSAGE = (
 def get_commit_from_message(exercise: GitAutograderExercise, message: str) -> Optional[GitAutograderCommit]:
     """Find a commit with the given message."""
     commits = list(exercise.repo.branches.branch("main").commits)
-    print([commit.commit.message for commit in commits])
     for commit in commits:
         if message.strip() == commit.commit.message.strip():
             return commit
@@ -35,7 +34,7 @@ def get_commit_from_message(exercise: GitAutograderExercise, message: str) -> Op
 
 def verify_branch(
     branch_name: str,
-    expected_start_commit: Commit,
+    expected_start_commit: GitAutograderCommit,
     expected_content: str,
     exercise: GitAutograderExercise,
 ) -> None:
@@ -53,11 +52,11 @@ def verify_branch(
     latest_commit = branch.latest_commit
 
     # Check that user made commits in the branch
-    if latest_commit.commit == expected_start_commit.commit:
+    if latest_commit.hexsha == expected_start_commit.hexsha:
         raise exercise.wrong_answer([MISSING_COMMIT.format(branch_name=branch_name)])
 
     # Check that previous commit of latest commit is the expected start commit
-    if expected_start_commit.commit not in latest_commit.commit.parents:
+    if expected_start_commit.hexsha not in [parent.hexsha for parent in latest_commit.commit.parents]:
         raise exercise.wrong_answer([WRONG_START.format(branch_name=branch_name)])
     
     # Check that the expected content is in story.txt
