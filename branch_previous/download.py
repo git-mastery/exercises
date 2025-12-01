@@ -1,9 +1,6 @@
 from exercise_utils.file import create_or_update_file, append_to_file
 from exercise_utils.git import add, commit
 
-__resources__ = {}
-
-
 def setup(verbose: bool = False):
     create_or_update_file(
         "story.txt",
