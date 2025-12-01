@@ -7,8 +7,6 @@ from git_autograder import (
     GitAutograderCommit,
 )
 
-from git.objects.commit import Commit
-
 MISSING_BRANCH = "The '{branch_name}' branch is missing."
 MISSING_COMMIT = "No commits were made in the '{branch_name}' branch."
 WRONG_START = (
