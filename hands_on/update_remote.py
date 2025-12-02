@@ -1,9 +1,14 @@
 import os
-import subprocess
 
 from exercise_utils.cli import run_command
 from exercise_utils.file import create_or_update_file, append_to_file
-from exercise_utils.git import add, init, commit
+from exercise_utils.git import add, init, commit, add_remote
+from exercise_utils.github_cli import (
+    delete_repo,
+    has_repo,
+    get_github_username,
+    create_repo
+    )
 
 __requires_git__ = True
 __requires_github__ = True
@@ -11,7 +16,7 @@ __requires_github__ = True
 REPO_NAME = "gitmastery-things"
 
 def download(verbose: bool):
-    username = run_command(["gh", "api", "user", "-q", ".login"], verbose).strip()
+    username = get_github_username(verbose)
     os.makedirs("things")
     os.chdir("things")
     init(verbose)
@@ -36,16 +41,12 @@ def download(verbose: bool):
     )
     add(["colours.txt", "shapes.txt"], verbose)
     commit("Add colours.txt, shapes.txt", verbose)
-    repo_check = subprocess.run(
-        ["gh", "repo", "view", f"{username}/{REPO_NAME}"],
-        capture_output=True,
-        text=True
-    )
+    repo_check = has_repo(REPO_NAME, False, verbose)
 
-    if repo_check.returncode == 0:
-        run_command(["gh", "repo", "delete", REPO_NAME, "--yes"], verbose)
+    if repo_check:
+        delete_repo(REPO_NAME, verbose)
 
-    run_command(["gh", "repo", "create", REPO_NAME, "--public"], verbose)
-    run_command(["git", "remote", "add", "origin", f"https://github.com/{username}/{REPO_NAME}"], verbose)
+    create_repo(REPO_NAME, verbose)
+    add_remote("origin", f"https://github.com/{username}/{REPO_NAME}", verbose)
 
     run_command(["git", "push", "-u", "origin", "main"], verbose)
