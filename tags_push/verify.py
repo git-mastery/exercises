@@ -18,6 +18,7 @@ TAG_1_MISSING = f"Tag {TAG_1_NAME} is missing, did you push it to the remote?"
 TAG_2_MISSING = f"Tag {TAG_2_NAME} is missing, did you push it to the remote?"
 TAG_DELETE_NOT_REMOVED = f"Tag {TAG_DELETE_NAME} is still on the remote!"
 
+
 def run_command(command: List[str]) -> Optional[str]:
     try:
         result = subprocess.run(
@@ -35,9 +36,11 @@ def run_command(command: List[str]) -> Optional[str]:
 def get_username() -> Optional[str]:
     return run_command(["gh", "api", "user", "-q", ".login"])
 
+
 def get_remote_tags(username: str) -> List[str]:
     raw_tags = run_command(["git", "ls-remote", "--tags"])
     return [line.split("/")[2] for line in raw_tags.strip().splitlines()]
+
 
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     username = get_username()

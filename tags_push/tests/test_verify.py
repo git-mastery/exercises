@@ -74,6 +74,7 @@ def test_pass(exercise: GitAutograderExercise):
         output = verify(exercise)
         assert_output(output, GitAutograderStatus.SUCCESSFUL)
 
+
 def test_improper_gh_setup(exercise: GitAutograderExercise):
     with (
         patch("tags_push.verify.get_username", return_value=None),
@@ -81,6 +82,7 @@ def test_improper_gh_setup(exercise: GitAutograderExercise):
         pytest.raises(GitAutograderWrongAnswerException, match=IMPROPER_GH_CLI_SETUP),
     ):
         verify(exercise)
+
 
 def test_beta_present(exercise: GitAutograderExercise):
     with (
@@ -98,6 +100,7 @@ def test_tag_1_absent(exercise: GitAutograderExercise):
     ):
         verify(exercise)
 
+
 def test_tag_2_absent(exercise: GitAutograderExercise):
     with (
         patch("tags_push.verify.get_username", return_value="dummy"),
@@ -105,6 +108,7 @@ def test_tag_2_absent(exercise: GitAutograderExercise):
         pytest.raises(GitAutograderWrongAnswerException, match=TAG_2_MISSING),
     ):
         verify(exercise)
+
 
 def test_all_wrong(exercise: GitAutograderExercise):
     with (
