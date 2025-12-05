@@ -1,5 +1,5 @@
 {
-  "exercise_name": "tags_add",
+  "exercise_name": "tags-add",
   "tags": ["git-tag"],
   "requires_git": true,
   "requires_github": true,
