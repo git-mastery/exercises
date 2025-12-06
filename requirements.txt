@@ -1,5 +1,11 @@
-mypy
+# Functional dependencies
 git-autograder==6.*
+PyYAML
+
+# Test dependencies
 pytest
 repo-smith
-PyYAML
+
+# Developer tooling dependencies
+ruff
+mypy
