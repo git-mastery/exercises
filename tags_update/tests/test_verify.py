@@ -1,5 +1,4 @@
-from git_autograder import GitAutograderTestLoader, assert_output
-from git_autograder.status import GitAutograderStatus
+from git_autograder import GitAutograderStatus, GitAutograderTestLoader, assert_output
 
 from ..verify import (
     verify,
