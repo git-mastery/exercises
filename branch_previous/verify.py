@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import List, Optional
 
 from git_autograder import (
     GitAutograderOutput,
@@ -23,9 +23,8 @@ SUCCESS_MESSAGE = (
 )
 
 
-def get_commit_from_message(exercise: GitAutograderExercise, message: str) -> Optional[GitAutograderCommit]:
-    """Find a commit with the given message."""
-    commits = list(exercise.repo.branches.branch("main").commits)
+def get_commit_from_message(commits: List[GitAutograderCommit], message: str) -> Optional[GitAutograderCommit]:
+    """Find a commit with the given message from a list of commits."""
     for commit in commits:
         if message.strip() == commit.commit.message.strip():
             return commit
@@ -69,7 +68,8 @@ def verify_branch(
 
 
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
-    describe_location_commit = get_commit_from_message(exercise, "Describe location")
+    commits = list(exercise.repo.branches.branch("main").commits)
+    describe_location_commit = get_commit_from_message(commits, "Describe location")
 
     verify_branch(
         branch_name="visitor-line",
