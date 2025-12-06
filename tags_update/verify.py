@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import List, Optional
 
 from git_autograder import (
     GitAutograderExercise,
@@ -16,9 +16,8 @@ SUCCESS_MESSAGE = "Great work! You have successfully updated the tags to point t
 MISSING_COMMIT_MESSAGE = "Could not find a commit with '{message}' in the message"
 
 
-def get_commit_from_message(exercise: GitAutograderExercise, message: str) -> Optional[GitAutograderCommit]:
-    """Find a commit with the given message."""
-    commits = list(exercise.repo.branches.branch("main").commits)
+def get_commit_from_message(commits: List[GitAutograderCommit], message: str) -> Optional[GitAutograderCommit]:
+    """Find a commit with the given message from a list of commits."""
     for commit in commits:
         if message.strip() == commit.commit.message.strip():
             return commit
@@ -37,7 +36,8 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         raise exercise.wrong_answer([MISSING_JANUARY_TAG])
     
     # Ensure january-update tag points to the correct commit
-    january_commit = get_commit_from_message(exercise, "Add January duty roster")
+    main_branch_commits = exercise.repo.branches.branch("main").commits
+    january_commit = get_commit_from_message(main_branch_commits, "Add January duty roster")
     if january_commit is None:
         raise exercise.wrong_answer([MISSING_COMMIT_MESSAGE.format(message="January")])
     
@@ -50,7 +50,7 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         raise exercise.wrong_answer([MISSING_APRIL_TAG])
     
     # Ensure april-update tag points to the correct commit
-    april_commit = get_commit_from_message(exercise, "Update duty roster for April")
+    april_commit = get_commit_from_message(main_branch_commits, "Update duty roster for April")
     if april_commit is None:
         raise exercise.wrong_answer([MISSING_COMMIT_MESSAGE.format(message="April")])
     
