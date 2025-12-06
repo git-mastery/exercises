@@ -1,6 +1,14 @@
 from git_autograder import GitAutograderStatus, GitAutograderTestLoader, assert_output
 
-from ..verify import MISSING_FIRST_TAG, MISSING_SECOND_TAG, SUCCESS_MESSAGE, WRONG_SECOND_TAG_MESSAGE, verify
+from ..verify import (
+    verify,
+    FIRST_TAG_WRONG_COMMIT,
+    MISSING_FIRST_TAG,
+    MISSING_SECOND_TAG,
+    SECOND_TAG_WRONG_COMMIT,
+    SUCCESS_MESSAGE,
+    WRONG_SECOND_TAG_MESSAGE,
+)
 
 REPOSITORY_NAME = "tags-add"
 
@@ -25,3 +33,13 @@ def test_missing_v1_tag():
 def test_wrong_message_v1_tag():
     with loader.load("specs/wrong_message_v1_tag.yml", "start") as output:
         assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [WRONG_SECOND_TAG_MESSAGE])
+
+
+def test_wrong_commit_first_pilot_tag():
+    with loader.load("specs/wrong_commit_first_pilot_tag.yml", "start") as output:
+        assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [FIRST_TAG_WRONG_COMMIT])
+
+
+def test_wrong_commit_v1_tag():
+    with loader.load("specs/wrong_commit_v1_tag.yml", "start") as output:
+        assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [SECOND_TAG_WRONG_COMMIT])

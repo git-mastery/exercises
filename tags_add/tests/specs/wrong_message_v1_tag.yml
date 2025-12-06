@@ -3,6 +3,7 @@ initialization:
     - type: commit
       empty: true
       message: Add January duty roster
+      id: start
     - type: tag
       tag-name: first-pilot
     - type: commit

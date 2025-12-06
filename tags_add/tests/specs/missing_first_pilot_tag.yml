@@ -3,6 +3,7 @@ initialization:
     - type: commit
       empty: true
       message: Add January duty roster
+      id: start
     - type: commit
       empty: true
       message: Update duty roster for February
