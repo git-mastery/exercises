@@ -13,7 +13,7 @@ initialization:
       message: Update roster for March
     - type: tag
       tag-name: v1.0
-      tag-message: first full duty roster
+      tag-message: wrong message
     - type: commit
       empty: true
       message: Update duty roster for April

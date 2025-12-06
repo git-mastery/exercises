@@ -3,8 +3,6 @@ initialization:
     - type: commit
       empty: true
       message: Add January duty roster
-    - type: tag
-      tag-name: first-pilot
     - type: commit
       empty: true
       message: Update duty roster for February
