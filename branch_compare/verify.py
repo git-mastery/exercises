@@ -7,8 +7,8 @@ from git_autograder import (
 from git_autograder.answers.rules import HasExactValueRule, NotEmptyRule
 
 
-QUESTION_ONE = "Which number is present in branch stream-1 but not in branch stream-2?"
-QUESTION_TWO = "Which number is present in branch stream-2 but not in branch stream-1?"
+QUESTION_ONE = "Which number (write only one number) is present in branch stream-1 but not in branch stream-2?"
+QUESTION_TWO = "Which number (write only one number) is present in branch stream-2 but not in branch stream-1?"
 NO_CHANGES_ERROR = "No changes are supposed to be made to the two branches in this exercise"
 
 FILE_PATH = "data.txt"
