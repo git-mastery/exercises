@@ -1,5 +1,4 @@
 import os
-from exercise_utils.cli import run_command
 from exercise_utils.file import create_or_update_file
 from exercise_utils.git import add, init
 

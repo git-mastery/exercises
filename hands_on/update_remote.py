@@ -1,13 +1,23 @@
 import os
 
-from exercise_utils.git import add, init, commit
+from exercise_utils.cli import run_command
 from exercise_utils.file import create_or_update_file, append_to_file
+from exercise_utils.git import add, init, commit, add_remote
+from exercise_utils.github_cli import (
+    delete_repo,
+    has_repo,
+    get_github_username,
+    create_repo,
+)
 
 __requires_git__ = True
-__requires_github__ = False
+__requires_github__ = True
+
+REPO_NAME = "gitmastery-things"
 
 
 def download(verbose: bool):
+    username = get_github_username(verbose)
     os.makedirs("things")
     os.chdir("things")
     init(verbose)
@@ -18,7 +28,6 @@ def download(verbose: bool):
         bananas
         cherries
         dragon fruits
-        figs
         """,
     )
     add(["fruits.txt"], verbose)
@@ -39,3 +48,12 @@ def download(verbose: bool):
     )
     add(["colours.txt", "shapes.txt"], verbose)
     commit("Add colours.txt, shapes.txt", verbose)
+    repo_check = has_repo(REPO_NAME, False, verbose)
+
+    if repo_check:
+        delete_repo(REPO_NAME, verbose)
+
+    create_repo(REPO_NAME, verbose)
+    add_remote("origin", f"https://github.com/{username}/{REPO_NAME}", verbose)
+
+    run_command(["git", "push", "-u", "origin", "main"], verbose)
