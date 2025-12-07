@@ -5,7 +5,7 @@ initialization:
       message: Empty commit
       id: start
 
-    # Create stream-1 with data.txt containing a unique number 12345
+    # Base setup identical to base.yml
     - type: branch
       branch-name: stream-1
     - type: new-file
@@ -20,11 +20,9 @@ initialization:
     - type: commit
       message: Add data.txt on stream-1
 
-    # Return to main
     - type: checkout
       branch-name: main
 
-    # Create stream-2 with data.txt containing a unique number 98765
     - type: branch
       branch-name: stream-2
     - type: new-file
@@ -39,6 +37,19 @@ initialization:
     - type: commit
       message: Add data.txt on stream-2
 
-    # Return to main at the end for verify to start cleanly
+    # Make an extra change on stream-1 to simulate user changes
+    - type: checkout
+      branch-name: stream-1
+    - type: new-file
+      filename: extra.txt
+      contents: |
+        extra content
+    - type: add
+      files:
+        - extra.txt
+    - type: commit
+      message: Extra change on stream-1
+
+    # Return to main at the end
     - type: checkout
       branch-name: main

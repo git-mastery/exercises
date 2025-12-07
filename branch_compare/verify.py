@@ -9,6 +9,7 @@ from git_autograder.answers.rules import HasExactValueRule, NotEmptyRule
 
 QUESTION_ONE = "Which number is present in branch stream-1 but not in branch stream-2?"
 QUESTION_TWO = "Which number is present in branch stream-2 but not in branch stream-1?"
+NO_CHANGES_ERROR = "No changes are supposed to be made to the two branches in this exercise"
 
 FILE_PATH = "data.txt"
 BRANCH_1 = "stream-1"
@@ -16,13 +17,23 @@ BRANCH_2 = "stream-2"
 
 def has_made_changes(exercise: GitAutograderExercise) -> bool:
     repo = exercise.repo.repo
-    
+
     for bname in (BRANCH_1, BRANCH_2):
         if not exercise.repo.branches.has_branch(bname):
             return True
 
         head = repo.commit(bname)
+
         if len(head.parents) != 1:
+            return True
+
+        # Count commits unique to branch relative to main
+        merge_bases = repo.merge_base(bname, "main")
+        if not merge_bases:
+            return True
+        base = merge_bases[0]
+        unique_commits = list(repo.iter_commits(f"{base.hexsha}..{bname}"))
+        if len(unique_commits) != 1:
             return True
 
     return False
@@ -52,7 +63,7 @@ def get_stream2_diff(exercise: GitAutograderExercise) -> str:
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
 
     if has_made_changes(exercise):
-        return exercise.to_output(["No changes are supposed to be made to the two branches in this exercise"], GitAutograderStatus.UNSUCCESSFUL)
+        return exercise.to_output([NO_CHANGES_ERROR], GitAutograderStatus.UNSUCCESSFUL)
     
     exercise.repo.branches.branch("main").checkout()
 
