@@ -13,15 +13,23 @@ QUESTION_FOUR = "In January, who were in the Tuesday duty roster? Give the list 
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:    
     (
         exercise.answers.add_validation(QUESTION_ONE, NotEmptyRule())
-        .add_validation(QUESTION_ONE, HasExactValueRule("Eric", is_case_sensitive=True))
-        .add_validation(QUESTION_TWO, NotEmptyRule())
-        .add_validation(QUESTION_TWO, HasExactValueRule("Bruce", is_case_sensitive=True))
-        .add_validation(QUESTION_THREE, NotEmptyRule())
-        .add_validation(QUESTION_THREE, HasExactListRule(["Betsy", "Beth", "Daisy"], is_case_sensitive=True))
-        .add_validation(QUESTION_THREE, ContainsListRule(["Betsy", "Beth", "Daisy"], subset=True, is_case_sensitive=True))
-        .add_validation(QUESTION_FOUR, NotEmptyRule())
-        .add_validation(QUESTION_FOUR, HasExactListRule(["Charlie"], is_case_sensitive=True))
-        .add_validation(QUESTION_FOUR, ContainsListRule(["Charlie"], subset=True, is_case_sensitive=True))
+        .add_validation(
+            QUESTION_ONE,
+            HasExactValueRule("Eric", is_case_sensitive=True))
+        .add_validation(
+            QUESTION_TWO,
+            NotEmptyRule(),
+            HasExactValueRule("Bruce", is_case_sensitive=True))
+        .add_validation(
+            QUESTION_THREE,
+            NotEmptyRule(),
+            HasExactListRule(["Betsy", "Beth", "Daisy"], is_case_sensitive=True),
+            ContainsListRule(["Betsy", "Beth", "Daisy"], subset=True, is_case_sensitive=True))
+        .add_validation(
+            QUESTION_FOUR,
+            NotEmptyRule(),
+            HasExactListRule(["Charlie"], is_case_sensitive=True),
+            ContainsListRule(["Charlie"], subset=True, is_case_sensitive=True))
         .validate()
     )
 
