@@ -10,11 +10,6 @@ def tag(tag_name: str, verbose: bool) -> None:
     run_command(["git", "tag", tag_name], verbose)
 
 
-def annotated_tag(tag_name: str, verbose: bool) -> None:
-    """Adds an annotated tag to the latest commit with the given tag_name."""
-    run_command(["git", "tag", "-a", tag_name], verbose)
-
-
 def tag_with_options(tag_name: str, options: List[str], verbose: bool) -> None:
     """Tags with the given tag_name with specified options."""
     run_command(["git", "tag", tag_name, *options], verbose)

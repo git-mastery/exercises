@@ -1,5 +1,4 @@
 import os
-from exercise_utils.cli import run
 from exercise_utils.git import tag_with_options, annotated_tag_with_options
 from exercise_utils.github_cli import clone_repo_with_gh, fork_repo, get_fork_name, get_github_username, has_fork, has_repo
 
