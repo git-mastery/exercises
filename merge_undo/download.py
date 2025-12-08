@@ -2,14 +2,10 @@ __resources__ = {"README.md": "README.md"}
 
 from exercise_utils.file import create_or_update_file
 from exercise_utils.git import add, checkout, commit, merge_with_message
-from exercise_utils.gitmastery import create_start_tag
 
 
 def setup(verbose: bool = False):
-    create_start_tag(verbose)
-
-    # main branch
-    checkout("main", False, verbose)
+    # in main branch
     create_or_update_file(
         "rick.txt",
         """
