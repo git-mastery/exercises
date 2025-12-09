@@ -52,9 +52,9 @@ def test_merge_with_sally_no_ff():
         )
 
 
-def test_merge_with_sally_fix_after_non_ff():
+def test_reset_ginny_ff_sally():
     with loader.load(
-        "specs/with_sally_non_ff_then_ff.yml", "start"
+        "specs/reset_ginny_ff_sally.yml", "start"
     ) as output:
         assert_output(output, GitAutograderStatus.SUCCESSFUL)
 

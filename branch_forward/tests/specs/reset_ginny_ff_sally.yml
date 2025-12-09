@@ -40,7 +40,6 @@ initialization:
       branch-name: main
     - type: bash
       runs: |
-        git merge with-sally --no-ff -m "Non fast-forward merge"
+        git merge with-ginny
         git reset --hard 'HEAD^'
         git merge with-sally
-
