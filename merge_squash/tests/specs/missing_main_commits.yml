@@ -14,16 +14,6 @@ initialization:
     - type: commit
       message: Add Joey
 
-    - type: new-file
-      filename: phoebe.txt
-      contents: |
-        Lisa Kudrow
-    - type: add
-      files: 
-        - phoebe.txt
-    - type: commit
-      message: Add Phoebe
-
     - type: branch
       branch-name: supporting
     - type: checkout
@@ -63,5 +53,8 @@ initialization:
       message: Add Ross
 
     - type: merge
-      squash: true
       branch-name: supporting
+      squash: true
+
+    - type: commit
+      message: Squash commit

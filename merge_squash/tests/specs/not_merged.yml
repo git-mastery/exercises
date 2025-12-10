@@ -61,7 +61,3 @@ initialization:
         - ross.txt
     - type: commit
       message: Add Ross
-
-    - type: merge
-      squash: true
-      branch-name: supporting

@@ -63,5 +63,4 @@ initialization:
       message: Add Ross
 
     - type: merge
-      squash: true
       branch-name: supporting
