@@ -20,12 +20,6 @@ CHANGES_FROM_SUPPORTING_NOT_PRESENT = (
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     main_branch = exercise.repo.branches.branch("main")
 
-    commit_messages_in_main = [c.commit.message.strip() for c in main_branch.commits]
-
-    merge_commits = [c for c in main_branch.commits if len(c.parents) > 1]
-    if merge_commits:
-        raise exercise.wrong_answer([SQUASH_NOT_USED])
-
     with exercise.repo.files.file_or_none("mike.txt") as mike_file:
         if mike_file is None:
             raise exercise.wrong_answer([CHANGES_FROM_SUPPORTING_NOT_PRESENT])
@@ -34,9 +28,15 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         if janice_file is None:
             raise exercise.wrong_answer([CHANGES_FROM_SUPPORTING_NOT_PRESENT])
 
+    commit_messages_in_main = [c.commit.message.strip() for c in main_branch.commits]
+    merge_commits = [c for c in main_branch.commits if len(c.parents) > 1]
+
+    if merge_commits or ("Squash" not in commit_messages_in_main[0]):
+        raise exercise.wrong_answer([SQUASH_NOT_USED])
+
     if not all(
         msg in commit_messages_in_main for msg in ["Add Joey", "Add Phoebe", "Add Ross"]
     ):
         raise exercise.wrong_answer([MAIN_COMMITS_INCORRECT])
 
-    return exercise.to_output([], GitAutograderStatus.SUCCESSFUL)
+    return exercise.to_output(["Good job performing a merge squash!"], GitAutograderStatus.SUCCESSFUL)
