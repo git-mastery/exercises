@@ -33,9 +33,6 @@ def download(verbose: bool):
     os.chdir(LOCAL_DIR)
     add_remote("upstream", f"https://github.com/{TARGET_REPO}", verbose)
 
-    # Delete last two commits to simulate upstream having more commits than local
     run_command(["git", "reset", "--hard", "HEAD~2"], verbose)
-
-    # Force-push to fork
     run_command(["git", "push", "-f", "origin", "master"], verbose)
     
