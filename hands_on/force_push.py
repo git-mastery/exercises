@@ -1,7 +1,11 @@
 import os
 from exercise_utils.cli import run_command
 from exercise_utils.git import add_remote, remove_remote
-from exercise_utils.github_cli import clone_repo_with_gh, create_repo, get_github_username
+from exercise_utils.github_cli import (
+    clone_repo_with_gh,
+    create_repo,
+    get_github_username,
+)
 
 __requires_git__ = True
 __requires_github__ = True
