@@ -7,20 +7,23 @@ from exercise_utils.github_cli import (
     delete_repo,
     has_repo,
     get_github_username,
-    create_repo
-    )
+    create_repo,
+)
 
 __requires_git__ = True
 __requires_github__ = True
 
 REPO_NAME = "gitmastery-things"
 
+
 def download(verbose: bool):
     username = get_github_username(verbose)
     os.makedirs("things")
     os.chdir("things")
     init(verbose)
-    create_or_update_file("fruits.txt", """
+    create_or_update_file(
+        "fruits.txt",
+        """
         apples
         bananas
         cherries
@@ -31,11 +34,15 @@ def download(verbose: bool):
     append_to_file("fruits.txt", "figs")
     add(["fruits.txt"], verbose)
     commit("Insert figs into fruits.txt", verbose)
-    create_or_update_file("colours.txt", """
+    create_or_update_file(
+        "colours.txt",
+        """
         a file for colours 
         """,
     )
-    create_or_update_file("shapes.txt", """
+    create_or_update_file(
+        "shapes.txt",
+        """
         a file for shapes 
         """,
     )
