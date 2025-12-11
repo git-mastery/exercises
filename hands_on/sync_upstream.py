@@ -1,7 +1,6 @@
 import os
 
 from exercise_utils.cli import run_command
-from exercise_utils.git import add_remote
 from exercise_utils.github_cli import (
     get_github_username,
     fork_repo,
@@ -34,4 +33,3 @@ def download(verbose: bool):
 
     run_command(["git", "reset", "--hard", "HEAD~2"], verbose)
     run_command(["git", "push", "-f", "origin", "master"], verbose)
-    
