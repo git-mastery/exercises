@@ -31,7 +31,6 @@ def download(verbose: bool):
     clone_repo_with_gh(full_repo_name, verbose, LOCAL_DIR)
 
     os.chdir(LOCAL_DIR)
-    add_remote("upstream", f"https://github.com/{TARGET_REPO}", verbose)
 
     run_command(["git", "reset", "--hard", "HEAD~2"], verbose)
     run_command(["git", "push", "-f", "origin", "master"], verbose)
