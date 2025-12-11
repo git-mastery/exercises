@@ -18,7 +18,7 @@ def download(verbose: bool):
         """
         Arnold Palmer
         Tiger Woods
-        """
+        """,
     )
     add(["golf.txt"], verbose)
     commit("Add golf.txt", verbose)
@@ -29,7 +29,7 @@ def download(verbose: bool):
         Pete Sampras
         Roger Federer
         Serena Williams
-        """
+        """,
     )
     add(["tennis.txt"], verbose)
     commit("Add tennis.txt", verbose)
@@ -39,7 +39,7 @@ def download(verbose: bool):
         """
         Pele
         Maradona
-        """
+        """,
     )
     add(["football.txt"], verbose)
     commit("Add football.txt", verbose)
