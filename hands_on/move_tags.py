@@ -1,44 +1,31 @@
-from exercise_utils.cli import run_command
-from exercise_utils.gitmastery import create_start_tag
-
 import os
-from pathlib import Path
+from exercise_utils.git import tag_with_options
+from exercise_utils.github_cli import (
+    get_github_username,
+    has_repo,
+    fork_repo,
+    delete_repo,
+    clone_repo_with_gh,
+)
 
 __requires_git__ = True
 __requires_github__ = True
 
 
+TARGET_REPO = "git-mastery/samplerepo-preferences"
+LOCAL_DIR = "gitmastery-samplerepo-preferences"
+
+
 def download(verbose: bool):
-    """
-    hp-move-tags (T4L2)
-    - Fork https://github.com/git-mastery/samplerepo-preferences to user account
-    - Clone the fork locally as 'samplerepo-preferences'
-    - Create:
-        * lightweight tag `v1.0` on HEAD
-        * annotated tag  `v0.9` on HEAD~2 with message "First beta release"
-    """
+    username = get_github_username(verbose)
+    full_repo_name = f"{username}/{LOCAL_DIR}"
 
-    # Ensure GitHub CLI is authenticated
-    gh_user = run_command(["gh", "api", "user", "--jq", ".login"], verbose).strip()
-    if not gh_user:
-        raise RuntimeError("GitHub CLI not authenticated. Run `gh auth login` and retry.")
+    if has_repo(full_repo_name, True, verbose):
+        delete_repo(full_repo_name, verbose)
 
-    upstream = "git-mastery/samplerepo-preferences"
-    target_dir = Path("samplerepo-preferences")
+    fork_repo(TARGET_REPO, LOCAL_DIR, verbose)
+    clone_repo_with_gh(full_repo_name, verbose)
 
-    # Fresh sandbox, if re-downloading
-    if target_dir.exists():
-        import shutil
-        shutil.rmtree(target_dir)
-
-    # Fork to user's account and clone here; origin -> user's fork, upstream -> original
-    run_command(["gh", "repo", "fork", upstream, "--clone=true", "--remote=true"], verbose)
-
-    if not target_dir.exists():
-        raise RuntimeError("Expected 'samplerepo-preferences' not found after fork/clone.")
-
-    os.chdir(target_dir)
-
-    # Prepare the tags
-    run_command(["git", "tag", "v1.0"], verbose)  # lightweight on HEAD
-    run_command(["git", "tag", "-a", "v0.9", "HEAD~2", "-m", "First beta release"], verbose)
+    os.chdir(LOCAL_DIR)
+    tag_with_options("v1.0", ["HEAD~1"], verbose)
+    tag_with_options("v0.9", ["HEAD~2", "-a", "-m", "First beta release"], verbose)
