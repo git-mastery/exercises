@@ -5,15 +5,9 @@ from typing import List, Optional
 from exercise_utils.cli import run, run_command
 
 
-def tag(tag_name: str, verbose: bool, commit_ref: str | None = None) -> None:
-    """Tags the given commit with the given tag_name.
-    
-    If no commit_ref is provided, the latest commit is tagged.
-    """
-    if commit_ref:
-        run_command(["git", "tag", tag_name, commit_ref], verbose)
-    else:
-        run_command(["git", "tag", tag_name], verbose)
+def tag(tag_name: str, verbose: bool) -> None:
+    """Tags the latest commit with the given tag_name."""
+    run_command(["git", "tag", tag_name], verbose)
 
 
 def tag_with_options(tag_name: str, options: List[str], verbose: bool) -> None:

@@ -1,7 +1,7 @@
-from exercise_utils.git import tag
+from exercise_utils.git import tag, tag_with_options
 
 
-def setup(verbose: bool = False):    
-    tag("first-update", verbose, "HEAD~4")
+def setup(verbose: bool = False):
+    tag_with_options("v1.0", ["HEAD~4"], verbose)
     tag("april-update", verbose)
     tag("may-update", verbose)
