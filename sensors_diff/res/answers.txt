@@ -1,0 +1,11 @@
+Q: Which are the new values in staged files?
+A: 
+
+Q: Which are the new values in modified but unstaged files?
+A: 
+
+Q: Which files have changed from Jan 09th to Jan 15th?
+A: 
+
+Q: Which new values are new in north.csv on Jan 10th, compared to Jan 01st?
+A: 

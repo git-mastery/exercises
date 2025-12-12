@@ -1,0 +1,18 @@
+{
+  "exercise_name": "sensors-diff",
+  "tags": [
+    "git-diff"
+  ],
+  "requires_git": true,
+  "requires_github": true,
+  "base_files": {
+    "answers.txt": "answers.txt"
+  },
+  "exercise_repo": {
+    "repo_type": "remote",
+    "repo_name": "sensors",
+    "repo_title": "gm-sensors",
+    "create_fork": false,
+    "init": null
+  }
+}
