@@ -1,0 +1,8 @@
+Q: What's sum of values in south.csv on Jan 11th?
+A: 
+
+Q: What's sum of values in west.csv on Jan 09th?
+A: 
+
+Q: What's sum of values in north.csv on Jan 05th?
+A: 
