@@ -34,7 +34,6 @@ def download(verbose: bool):
     add(["tennis.txt"], verbose)
     commit("Add tennis.txt", verbose)
 
-    checkout("master", False, verbose)
     checkout("add-swimming", True, verbose)
 
     create_or_update_file(
@@ -50,4 +49,4 @@ def download(verbose: bool):
     add(["swimming.txt"], verbose)
     commit("Add Thorpe to swimming.txt", verbose)
 
-    checkout("master", False, verbose)
+    checkout("main", False, verbose)
