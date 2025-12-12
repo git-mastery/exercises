@@ -1,5 +1,5 @@
 import os
-from exercise_utils.git import tag_with_options, annotated_tag_with_options
+from exercise_utils.git import tag_with_options
 from exercise_utils.github_cli import (
     clone_repo_with_gh,
     fork_repo,
@@ -39,4 +39,4 @@ def download(verbose: bool):
     os.chdir(FORK_NAME)
 
     tag_with_options("v1.0", ["HEAD~1"], verbose)
-    annotated_tag_with_options("v0.9", ["HEAD~2", "-m", "First beta release"], verbose)
+    tag_with_options("v0.9", ["HEAD~2", "-a", "-m", "First beta release"], verbose)
