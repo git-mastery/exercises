@@ -64,3 +64,38 @@ def has_repo(repo_name: str, is_fork: bool, verbose: bool) -> bool:
     )
 
     return result.is_success() and (not is_fork or result.stdout == "true")
+
+def has_fork(repository_name: str, owner_name: str, username: str, verbose: bool) -> bool:
+    """Returns if the current user has a fork of the given repository by owner"""
+    result = run(
+        [
+            "gh",
+            "api",
+            "--paginate",
+            f"repos/{owner_name}/{repository_name}/forks",
+            "-q",
+            f'''.[] | .owner.login | select(. =="{username}")''',
+        ],
+        verbose
+    )
+
+    return result.is_success() and result.stdout.strip() == username
+
+def get_fork_name(repository_name: str, owner_name: str, username: str, verbose: bool) -> str:
+    """Returns the name of the current user's fork repo"""
+    result = run(
+        [
+            "gh",
+            "api",
+            "--paginate",
+            f"repos/{owner_name}/{repository_name}/forks",
+            "-q",
+            f'''.[] | select(.owner.login =="{username}") | .name''',
+        ],
+        verbose
+    )
+
+    if result.is_success():
+        forkname = result.stdout.splitlines()[0]
+        return forkname
+    return ""
