@@ -27,12 +27,16 @@ def test_missing_tags():
 
 def test_wrong_january_tag():
     with loader.load("specs/wrong_january_tag.yml", "start") as output:
-        assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [WRONG_JANUARY_TAG_COMMIT])
+        assert_output(
+            output, GitAutograderStatus.UNSUCCESSFUL, [WRONG_JANUARY_TAG_COMMIT]
+        )
 
 
 def test_wrong_april_tag():
     with loader.load("specs/wrong_april_tag.yml", "start") as output:
-        assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [WRONG_APRIL_TAG_COMMIT])
+        assert_output(
+            output, GitAutograderStatus.UNSUCCESSFUL, [WRONG_APRIL_TAG_COMMIT]
+        )
 
 
 def test_old_tag_still_exists():
@@ -42,4 +46,8 @@ def test_old_tag_still_exists():
 
 def test_missing_january_commit():
     with loader.load("specs/missing_january_commit.yml", "start") as output:
-        assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [MISSING_COMMIT_MESSAGE.format(message="January")])
+        assert_output(
+            output,
+            GitAutograderStatus.UNSUCCESSFUL,
+            [MISSING_COMMIT_MESSAGE.format(message="January")],
+        )
