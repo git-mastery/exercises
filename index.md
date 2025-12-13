@@ -17,6 +17,7 @@
 | [branch-forward](https://git-mastery.github.io/exercises/branch_forward) | `gitmastery download branch-forward` |
 | [side-track](https://git-mastery.github.io/exercises/side_track) | `gitmastery download side-track` |
 | [mix-messy-graph](https://git-mastery.github.io/exercises/mix_messy_graph) | `gitmastery download mix-messy-graph` |
+| [merge-undo](https://git-mastery.github.io/exercises/merge_undo) | `gitmastery download merge-undo` |
 
 # git-checkout
 
@@ -64,6 +65,7 @@
 | [conflict-mediator](https://git-mastery.github.io/exercises/conflict_mediator) | `gitmastery download conflict-mediator` |
 | [branch-forward](https://git-mastery.github.io/exercises/branch_forward) | `gitmastery download branch-forward` |
 | [mix-messy-graph](https://git-mastery.github.io/exercises/mix_messy_graph) | `gitmastery download mix-messy-graph` |
+| [merge-undo](https://git-mastery.github.io/exercises/merge_undo) | `gitmastery download merge-undo` |
 
 # git-pull
 
@@ -84,6 +86,12 @@
 | [clone-repo](https://git-mastery.github.io/exercises/clone_repo) | `gitmastery download clone-repo` |
 | [push-over](https://git-mastery.github.io/exercises/push_over) | `gitmastery download push-over` |
 | [link-me](https://git-mastery.github.io/exercises/link_me) | `gitmastery download link-me` |
+
+# git-reset
+
+| Exercise | Download Command |
+|----------|------------------|
+| [merge-undo](https://git-mastery.github.io/exercises/merge_undo) | `gitmastery download merge-undo` |
 
 # git-restore
 
