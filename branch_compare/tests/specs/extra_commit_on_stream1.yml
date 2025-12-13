@@ -1,0 +1,55 @@
+initialization:
+  steps:
+    - type: commit
+      empty: true
+      message: Empty commit
+      id: start
+
+    # Base setup identical to base.yml
+    - type: branch
+      branch-name: stream-1
+    - type: new-file
+      filename: data.txt
+      contents: |
+        11111
+        22222
+        12345
+    - type: add
+      files:
+        - data.txt
+    - type: commit
+      message: Add data.txt on stream-1
+
+    - type: checkout
+      branch-name: main
+
+    - type: branch
+      branch-name: stream-2
+    - type: new-file
+      filename: data.txt
+      contents: |
+        11111
+        22222
+        98765
+    - type: add
+      files:
+        - data.txt
+    - type: commit
+      message: Add data.txt on stream-2
+
+    # Make an extra change on stream-1 to simulate user changes
+    - type: checkout
+      branch-name: stream-1
+    - type: new-file
+      filename: extra.txt
+      contents: |
+        extra content
+    - type: add
+      files:
+        - extra.txt
+    - type: commit
+      message: Extra change on stream-1
+
+    # Return to main at the end
+    - type: checkout
+      branch-name: main
