@@ -1,12 +1,6 @@
 # branch-forward
 
-You are outlining a story and experimenting with different plotlines. Each version lives on its own branch, and you now need to fold the right storyline back into `main` without cluttering the history.
-
-## Learning objectives
-
-- Identify when a branch can be fast-forward merged
-- Use fast-forward merges to keep the commit graph linear
-- [Fast-forward merges](https://nus-cs2103-ay2526s1.github.io/website/book/gitAndGithub/merge/index.html)
+You are writing the outline for a story. You now have two parallel storylines in two branches.
 
 ## Task
 
@@ -15,7 +9,6 @@ You are outlining a story and experimenting with different plotlines. Each versi
 3. Leave other branches (if any) unmerged.
 
 ## Hints
-
 
 <details>
 

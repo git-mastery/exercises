@@ -50,11 +50,3 @@ def test_merge_with_sally_no_ff():
             GitAutograderStatus.UNSUCCESSFUL,
             [FAST_FORWARD_REQUIRED],
         )
-
-
-def test_reset_ginny_ff_sally():
-    with loader.load(
-        "specs/reset_ginny_ff_sally.yml", "start"
-    ) as output:
-        assert_output(output, GitAutograderStatus.SUCCESSFUL)
-

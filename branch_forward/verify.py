@@ -1,4 +1,6 @@
+from typing import List, Optional
 from git_autograder import (
+    GitAutograderCommit,
     GitAutograderExercise,
     GitAutograderOutput,
     GitAutograderStatus,
@@ -8,9 +10,7 @@ FAST_FORWARD_REQUIRED = (
     "You must use a fast-forward merge to bring a branch into 'main'."
 )
 
-ONLY_WITH_SALLY_MERGED = (
-    "Only one of the two starting branches can be fast-forward merged into 'main'. Do not create new branches."
-)
+ONLY_WITH_SALLY_MERGED = "Only one of the two starting branches can be fast-forward merged into 'main'. Do not create new branches."
 
 EXPECTED_MAIN_COMMIT_MESSAGES = {
     "Introduce Harry",
@@ -19,15 +19,22 @@ EXPECTED_MAIN_COMMIT_MESSAGES = {
     "Mention Sally",
 }
 
-def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
-    repo = exercise.repo.repo
-    head_commit = repo.head.commit
-    main_commits = list(repo.iter_commits("main"))
 
-    sally_commit = next(
-        (commit for commit in main_commits if commit.message.strip() == "Mention Sally"),
-        None,
-    )
+def get_commit_from_message(
+    commits: List[GitAutograderCommit], message: str
+) -> Optional[GitAutograderCommit]:
+    """Find a commit with the given message from a list of commits."""
+    for commit in commits:
+        if message.strip() == commit.commit.message.strip():
+            return commit
+    return None
+
+
+def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
+    main_commits = exercise.repo.branches.branch("main").commits
+    head_commit = exercise.repo.branches.branch("main").latest_commit
+
+    sally_commit = get_commit_from_message(main_commits, "Mention Sally")
     if sally_commit is None:
         raise exercise.wrong_answer([ONLY_WITH_SALLY_MERGED])
 
@@ -36,7 +43,7 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     if len(head_commit.parents) != 1:
         raise exercise.wrong_answer([FAST_FORWARD_REQUIRED])
 
-    if head_commit.message.strip() != "Mention Sally":
+    if head_commit.commit.message.strip() != "Mention Sally":
         raise exercise.wrong_answer([ONLY_WITH_SALLY_MERGED])
 
     if any(len(commit.parents) > 1 for commit in main_commits):
@@ -45,7 +52,7 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     if len(main_commits) != len(EXPECTED_MAIN_COMMIT_MESSAGES):
         raise exercise.wrong_answer([ONLY_WITH_SALLY_MERGED])
 
-    commit_messages = {commit.message.strip() for commit in main_commits}
+    commit_messages = {commit.commit.message.strip() for commit in main_commits}
     if not commit_messages.issubset(EXPECTED_MAIN_COMMIT_MESSAGES):
         raise exercise.wrong_answer([ONLY_WITH_SALLY_MERGED])
 
@@ -56,4 +63,3 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         ["Great job fast-forward merging only 'with-sally'!"],
         GitAutograderStatus.SUCCESSFUL,
     )
-
