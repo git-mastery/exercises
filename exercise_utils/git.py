@@ -15,13 +15,6 @@ def tag_with_options(tag_name: str, options: List[str], verbose: bool) -> None:
     run_command(["git", "tag", tag_name, *options], verbose)
 
 
-def annotated_tag_with_options(
-    tag_name: str, options: List[str], verbose: bool
-) -> None:
-    """Adds an annotated tag with the given tag_name with specified options."""
-    run_command(["git", "tag", "-a", tag_name, *options], verbose)
-
-
 def add(files: List[str], verbose: bool) -> None:
     """Adds a given list of file paths."""
     run_command(["git", "add", *files], verbose)
