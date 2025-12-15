@@ -100,7 +100,7 @@ def create_exercise_config_file(config: ExerciseConfig) -> None:
 def create_readme_file(config: ExerciseConfig) -> None:
     with open("README.md", "w") as readme_file:
         readme = """
-        See <URL>
+        See https://git-mastery.github.io/lessons/{LESSON_ID}/exercise-{EXERCISE_ID}.html
         """
         readme_file.write(textwrap.dedent(readme).lstrip())
 
