@@ -74,14 +74,6 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
 
     # try-quick-fix -> fix-scrolling-bug
     local_branches = [h.name for h in repo.heads]
-    if "try-quick-fix" in local_branches:
-        raise exercise.wrong_answer([TRY_QUICK_FIX_STILL_EXISTS])
-
-    if "fix-scrolling-bug" not in local_branches:
-        raise exercise.wrong_answer([FIX_SCROLLING_BUG_MISSING])
-
-    if not branch_has_rename_evidence(exercise, "fix-scrolling-bug", "try-quick-fix"):
-        raise exercise.wrong_answer([NO_RENAME_EVIDENCE_TRY_QUICK_FIX])
 
     # improve-loadding -> improve-loading
     if "improve-loadding" in local_branches:

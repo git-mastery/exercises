@@ -3,13 +3,10 @@ from unittest.mock import patch
 from git_autograder import GitAutograderStatus, GitAutograderTestLoader, assert_output
 
 from ..verify import (
-    FIX_SCROLLING_BUG_MISSING,
     IMPROVE_LOADING_LOCAL_MISSING,
     IMPROVE_LOADING_LOCAL_STILL_EXISTS,
     IMPROVE_LOADING_REMOTE_MISSING,
     IMPROVE_LOADING_REMOTE_OLD_PRESENT,
-    NO_RENAME_EVIDENCE_TRY_QUICK_FIX,
-    TRY_QUICK_FIX_STILL_EXISTS,
     verify,
 )
 
@@ -27,33 +24,6 @@ def test_base():
         loader.load("specs/base.yml") as output,
     ):
         assert_output(output, GitAutograderStatus.SUCCESSFUL)
-
-
-def test_new_fix_scrolling_bug_branch():
-    with (
-        loader.load("specs/new_fix_scrolling_bug_branch.yml") as output,
-    ):
-        assert_output(
-            output, GitAutograderStatus.UNSUCCESSFUL, [TRY_QUICK_FIX_STILL_EXISTS]
-        )
-
-
-def test_rename_quick_fix_wrong():
-    with (
-        loader.load("specs/rename_quick_fix_wrong.yml") as output,
-    ):
-        assert_output(
-            output, GitAutograderStatus.UNSUCCESSFUL, [FIX_SCROLLING_BUG_MISSING]
-        )
-
-
-def test_not_quick_fix_rename():
-    with (
-        loader.load("specs/not_quick_fix_rename.yml") as output,
-    ):
-        assert_output(
-            output, GitAutograderStatus.UNSUCCESSFUL, [NO_RENAME_EVIDENCE_TRY_QUICK_FIX]
-        )
 
 
 def test_new_improve_loading_branch():
