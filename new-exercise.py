@@ -100,24 +100,7 @@ def create_exercise_config_file(config: ExerciseConfig) -> None:
 def create_readme_file(config: ExerciseConfig) -> None:
     with open("README.md", "w") as readme_file:
         readme = f"""
-        # {config.exercise_name}
-
-        <!--- Insert exercise description -->
-
-        ## Task
-
-        <!--- Insert exercise task, simplify what needs to be done -->
-
-        ## Hints
-
-        <!--- Insert hints here -->
-        <!---
-            Use Github Markdown's collapsible content:
-            <details>
-            <summary>...</summary>
-            ...
-            </details>
-        -->
+        See https://git-mastery.github.io/lessons/{{LESSON_ID}}/exercise-{config.exercise_name}.html
         """
         readme_file.write(textwrap.dedent(readme).lstrip())
 

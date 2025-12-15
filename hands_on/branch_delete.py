@@ -31,4 +31,3 @@ def download(verbose: bool):
 
     checkout("main", False, verbose)
     merge_with_message("textbooks", False, "Merge branch textbooks", verbose)
-
