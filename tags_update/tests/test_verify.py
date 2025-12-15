@@ -65,3 +65,8 @@ def test_wrong_april_tag():
         assert_output(
             output, GitAutograderStatus.UNSUCCESSFUL, [WRONG_APRIL_TAG_COMMIT]
         )
+
+
+def test_first_update_tag_not_renamed():
+    with loader.load("specs/first_update_tag_not_renamed.yml", "start") as output:
+        assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [OLD_FIRST_UPDATE_TAG, MISSING_JANUARY_TAG])
