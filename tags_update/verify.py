@@ -7,13 +7,13 @@ from git_autograder import (
     GitAutograderCommit,
 )
 
-MISSING_JANUARY_TAG = "The 'january-update' tag is missing! You need to rename 'first-update' to 'january-update'."
-WRONG_JANUARY_TAG_COMMIT = "The 'january-update' tag is pointing to the wrong commit! It should point to the January commit."
-MISSING_APRIL_TAG = "The 'april-update' tag is missing!"
-WRONG_APRIL_TAG_COMMIT = "The 'april-update' tag is pointing to the wrong commit! It should point to the April commit, not the May commit."
-OLD_FIRST_UPDATE_TAG = "The old 'first-update' tag still exists! You need to delete it after renaming to 'january-update'."
+MISSING_JANUARY_TAG = "You are missing the 'january-update' tag."
+WRONG_JANUARY_TAG_COMMIT = "The 'january-update' tag is pointing to the wrong commit. It should point to the January commit."
+MISSING_APRIL_TAG = "You are missing the 'april-update' tag."
+WRONG_APRIL_TAG_COMMIT = "The 'april-update' tag is pointing to the wrong commit. It should point to the April commit."
+OLD_FIRST_UPDATE_TAG = "The 'first-update' tag still exists."
 SUCCESS_MESSAGE = "Great work! You have successfully updated the tags to point to the correct commits."
-MISSING_COMMIT_MESSAGE = "Could not find a commit with '{message}' in the message"
+MISSING_COMMIT_MESSAGE = "Could not find a commit with '{message}' in the message."
 
 
 def get_commit_from_message(
@@ -27,35 +27,43 @@ def get_commit_from_message(
 
 
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
+    comments: List[str] = []
     tags = exercise.repo.repo.tags
+    main_branch_commits = exercise.repo.branches.branch("main").commits
 
+    # Verify first-update is renamed to january-update
     if "first-update" in tags:
-        raise exercise.wrong_answer([OLD_FIRST_UPDATE_TAG])
+        comments.append(OLD_FIRST_UPDATE_TAG)
 
     if "january-update" not in tags:
-        raise exercise.wrong_answer([MISSING_JANUARY_TAG])
+        comments.append(MISSING_JANUARY_TAG)
 
-    # Ensure january-update tag points to the correct commit
-    main_branch_commits = exercise.repo.branches.branch("main").commits
+    if comments:
+        raise exercise.wrong_answer(comments)
+
     january_commit = get_commit_from_message(
         main_branch_commits, "Add January duty roster"
     )
     if january_commit is None:
-        raise exercise.wrong_answer([MISSING_COMMIT_MESSAGE.format(message="January")])
+        raise exercise.wrong_answer(
+            [MISSING_COMMIT_MESSAGE.format(message="January")]
+        )
 
     january_tag_commit = tags["january-update"].commit
     if january_tag_commit.hexsha != january_commit.hexsha:
         raise exercise.wrong_answer([WRONG_JANUARY_TAG_COMMIT])
 
+    # Verify april-update is moved to correct commit
     if "april-update" not in tags:
         raise exercise.wrong_answer([MISSING_APRIL_TAG])
 
-    # Ensure april-update tag points to the correct commit
     april_commit = get_commit_from_message(
         main_branch_commits, "Update duty roster for April"
     )
     if april_commit is None:
-        raise exercise.wrong_answer([MISSING_COMMIT_MESSAGE.format(message="April")])
+        raise exercise.wrong_answer(
+            [MISSING_COMMIT_MESSAGE.format(message="April")]
+        )
 
     april_tag_commit = tags["april-update"].commit
     if april_tag_commit.hexsha != april_commit.hexsha:

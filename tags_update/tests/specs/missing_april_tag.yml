@@ -4,6 +4,8 @@ initialization:
       empty: true
       message: Add January duty roster
       id: start
+    - type: tag
+      tag-name: january-update
     - type: commit
       empty: true
       message: Update duty roster for February
@@ -20,3 +22,6 @@ initialization:
       empty: true
       message: Update roster for May
       id: may-commit
+    - type: tag
+      tag-name: may-update
+      

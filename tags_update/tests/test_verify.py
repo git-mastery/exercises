@@ -3,6 +3,7 @@ from git_autograder import GitAutograderStatus, GitAutograderTestLoader, assert_
 from ..verify import (
     verify,
     MISSING_JANUARY_TAG,
+    MISSING_APRIL_TAG,
     WRONG_JANUARY_TAG_COMMIT,
     WRONG_APRIL_TAG_COMMIT,
     OLD_FIRST_UPDATE_TAG,
@@ -20,9 +21,27 @@ def test_base():
         assert_output(output, GitAutograderStatus.SUCCESSFUL, [SUCCESS_MESSAGE])
 
 
-def test_missing_tags():
-    with loader.load("specs/missing_tags.yml", "start") as output:
-        assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [MISSING_JANUARY_TAG])
+def test_missing_january_tag():
+    with loader.load("specs/missing_january_tag.yml", "start") as output:
+        assert_output(
+            output,
+            GitAutograderStatus.UNSUCCESSFUL,
+            [MISSING_JANUARY_TAG],
+        )
+
+
+def test_missing_april_tag():
+    with loader.load("specs/missing_april_tag.yml", "start") as output:
+        assert_output(
+            output,
+            GitAutograderStatus.UNSUCCESSFUL,
+            [MISSING_APRIL_TAG],
+        )
+
+
+def test_old_tag_still_exists():
+    with loader.load("specs/old_tag_still_exists.yml", "start") as output:
+        assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [OLD_FIRST_UPDATE_TAG])
 
 
 def test_wrong_january_tag():
@@ -32,22 +51,17 @@ def test_wrong_january_tag():
         )
 
 
-def test_wrong_april_tag():
-    with loader.load("specs/wrong_april_tag.yml", "start") as output:
-        assert_output(
-            output, GitAutograderStatus.UNSUCCESSFUL, [WRONG_APRIL_TAG_COMMIT]
-        )
-
-
-def test_old_tag_still_exists():
-    with loader.load("specs/old_tag_still_exists.yml", "start") as output:
-        assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [OLD_FIRST_UPDATE_TAG])
-
-
 def test_missing_january_commit():
     with loader.load("specs/missing_january_commit.yml", "start") as output:
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,
             [MISSING_COMMIT_MESSAGE.format(message="January")],
+        )
+
+
+def test_wrong_april_tag():
+    with loader.load("specs/wrong_april_tag.yml", "start") as output:
+        assert_output(
+            output, GitAutograderStatus.UNSUCCESSFUL, [WRONG_APRIL_TAG_COMMIT]
         )
