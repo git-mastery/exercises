@@ -106,6 +106,12 @@
 | [nothing-to-hide](https://git-mastery.github.io/exercises/nothing_to_hide) | `gitmastery download nothing-to-hide` |
 | [amateur-detective](https://git-mastery.github.io/exercises/amateur_detective) | `gitmastery download amateur-detective` |
 
+# git-tag
+
+| Exercise | Download Command |
+|----------|------------------|
+| [tags-update](https://git-mastery.github.io/exercises/tags_update) | `gitmastery download tags-update` |
+
 # github-fork
 
 | Exercise | Download Command |
