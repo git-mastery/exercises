@@ -1,11 +1,7 @@
-from exercise_utils.cli import run_command
 from exercise_utils.git import add, commit, checkout
-from exercise_utils.file import append_to_file
-from exercise_utils.gitmastery import create_start_tag
+from exercise_utils.file import append_to_file, create_or_update_file
 
 import random
-
-__resources__ = {}
 
 def get_sequence(n=1000, digits=8, seed=None):
     rng = random.Random(seed)
@@ -32,31 +28,27 @@ def get_modified_sequence(seq, digits=8, idx=None, seed=None):
 
 def setup(verbose: bool = False):
 
-    create_start_tag(verbose)
-
     orig_data = get_sequence()
     modified_data = get_modified_sequence(orig_data)
 
-    run_command(["touch", "data.txt"], verbose)
+    create_or_update_file("data.txt", "")
     add(["data.txt"], verbose)
     commit("Add empty data.txt", verbose)
     checkout("stream-1", True, verbose)
 
-    for i in orig_data:
-        append_to_file("data.txt", str(i)+"\n")
+    join_orig_data = "\n".join(map(str, orig_data))
+    append_to_file("data.txt", join_orig_data)
 
     add(["data.txt"], verbose)
     commit("Add data to data.txt", verbose)
-
 
     checkout("main", False, verbose)
     checkout("stream-2", True, verbose)
 
-    for i in modified_data:
-        append_to_file("data.txt", str(i)+"\n")
+    join_modified_data = "\n".join(map(str, modified_data))
+    append_to_file("data.txt", join_modified_data)
 
     add(["data.txt"], verbose)
     commit("Add data to data.txt", verbose)
 
     checkout("main", False, verbose)
-
