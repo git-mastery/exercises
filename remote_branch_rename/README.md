@@ -8,4 +8,3 @@ This branch has already been pushed up to a remote repository, so you need a way
 
 1. Rename the `improve-loadding` branch to `improve-loading`
 2. Ensure that the change is reflected on the remote repository as well
-
