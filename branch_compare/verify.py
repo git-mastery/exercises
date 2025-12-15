@@ -1,4 +1,5 @@
 from git_autograder import (
+    GitAutograderBranch,
     GitAutograderOutput,
     GitAutograderExercise,
     GitAutograderStatus,
@@ -18,31 +19,15 @@ BRANCH_1 = "stream-1"
 BRANCH_2 = "stream-2"
 
 
-def has_made_changes(exercise: GitAutograderExercise) -> bool:
-    repo = exercise.repo.repo
+def has_made_changes(branch: GitAutograderBranch, expected_commits: int) -> bool:
+    """Check branch has same number of commits as expected."""
 
-    for bname in (BRANCH_1, BRANCH_2):
-        if not exercise.repo.branches.has_branch(bname):
-            return True
-
-        head = repo.commit(bname)
-
-        if len(head.parents) != 1:
-            return True
-
-        # Count commits unique to branch relative to main
-        merge_bases = repo.merge_base(bname, "main")
-        if not merge_bases:
-            return True
-        base = merge_bases[0]
-        unique_commits = list(repo.iter_commits(f"{base.hexsha}..{bname}"))
-        if len(unique_commits) != 1:
-            return True
-
-    return False
+    commits = branch.commits
+    return len(commits) != expected_commits
 
 
 def get_branch_diff(exercise: GitAutograderExercise, branch1: str, branch2: str) -> str:
+    """Get a value present in branch1 but not in branch2."""
     exercise.repo.branches.branch(branch1).checkout()
     with exercise.repo.files.file(FILE_PATH) as f1:
         contents1 = f1.read()
@@ -59,31 +44,28 @@ def get_branch_diff(exercise: GitAutograderExercise, branch1: str, branch2: str)
     return str(diff.pop())
 
 
-def get_stream1_diff(exercise: GitAutograderExercise) -> str:
-    return get_branch_diff(exercise, BRANCH_1, BRANCH_2)
-
-
-def get_stream2_diff(exercise: GitAutograderExercise) -> str:
-    return get_branch_diff(exercise, BRANCH_2, BRANCH_1)
-
-
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
-    if has_made_changes(exercise):
-        return exercise.to_output([NO_CHANGES_ERROR], GitAutograderStatus.UNSUCCESSFUL)
+    branch_1 = exercise.repo.branches.branch(BRANCH_1)
+    branch_2 = exercise.repo.branches.branch(BRANCH_2)
+    if (
+        not branch_1
+        or not branch_2
+        or has_made_changes(branch_1, 3)
+        or has_made_changes(branch_2, 3)
+    ):
+        raise exercise.wrong_answer([NO_CHANGES_ERROR])
 
-    exercise.repo.branches.branch("main").checkout()
-
-    ans_1 = get_stream1_diff(exercise)
-    ans_2 = get_stream2_diff(exercise)
+    ans_1 = get_branch_diff(exercise, BRANCH_1, BRANCH_2)
+    ans_2 = get_branch_diff(exercise, BRANCH_2, BRANCH_1)
 
     exercise.answers.add_validation(
         QUESTION_ONE,
         NotEmptyRule(),
-        HasExactValueRule(ans_1),
+        HasExactValueRule(ans_1, is_case_sensitive=False),
     ).add_validation(
         QUESTION_TWO,
         NotEmptyRule(),
-        HasExactValueRule(ans_2),
+        HasExactValueRule(ans_2, is_case_sensitive=False),
     ).validate()
 
     return exercise.to_output(

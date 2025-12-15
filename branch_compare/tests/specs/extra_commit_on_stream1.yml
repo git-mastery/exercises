@@ -2,10 +2,12 @@ initialization:
   steps:
     - type: commit
       empty: true
-      message: Empty commit
+      message: Set initial state
       id: start
+    - type: commit
+      empty: true
+      message: Add empty data.txt
 
-    # Base setup identical to base.yml
     - type: branch
       branch-name: stream-1
     - type: new-file
@@ -18,11 +20,11 @@ initialization:
       files:
         - data.txt
     - type: commit
-      message: Add data.txt on stream-1
+      message: Add data to data.txt
 
     - type: checkout
       branch-name: main
-
+      
     - type: branch
       branch-name: stream-2
     - type: new-file
@@ -35,9 +37,8 @@ initialization:
       files:
         - data.txt
     - type: commit
-      message: Add data.txt on stream-2
+      message: Add data to data.txt
 
-    # Make an extra change on stream-1 to simulate user changes
     - type: checkout
       branch-name: stream-1
     - type: new-file
@@ -50,6 +51,5 @@ initialization:
     - type: commit
       message: Extra change on stream-1
 
-    # Return to main at the end
     - type: checkout
       branch-name: main
