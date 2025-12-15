@@ -24,8 +24,8 @@ def download(verbose: bool):
 
     checkout("fix1", True, verbose)
     append_to_file(
-      "colours.txt",
-      """
+        "colours.txt",
+        """
       green
       red
       white
@@ -36,8 +36,8 @@ def download(verbose: bool):
 
     checkout("main", False, verbose)
     append_to_file(
-      "colours.txt",
-      """
+        "colours.txt",
+        """
       black
       red
       white
