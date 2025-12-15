@@ -23,11 +23,25 @@ def download(verbose: bool):
     commit("Add colours.txt", verbose)
 
     checkout("fix1", True, verbose)
-    append_to_file("colours.txt", "green\nred\nwhite")
+    append_to_file(
+      "colours.txt",
+      """
+      green
+      red
+      white
+      """,
+    )
     add(["colours.txt"], verbose)
     commit("Add green, red, white", verbose)
 
     checkout("main", False, verbose)
-    append_to_file("colours.txt", "black\nred\nwhite")
+    append_to_file(
+      "colours.txt",
+      """
+      black
+      red
+      white
+      """,
+    )
     add(["colours.txt"], verbose)
     commit("Add black, red, white", verbose)
