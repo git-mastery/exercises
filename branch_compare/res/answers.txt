@@ -1,0 +1,5 @@
+Q: Which numbers are present in stream-1 but not in stream-2?
+A: 
+
+Q: Which numbers are present in stream-2 but not in stream-1?
+A: 

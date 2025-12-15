@@ -14,6 +14,7 @@
 | [branch-delete](https://git-mastery.github.io/exercises/branch_delete) | `gitmastery download branch-delete` |
 | [mix-messy-docs](https://git-mastery.github.io/exercises/mix_messy_docs) | `gitmastery download mix-messy-docs` |
 | [branch-rename](https://git-mastery.github.io/exercises/branch_rename) | `gitmastery download branch-rename` |
+| [branch-compare](https://git-mastery.github.io/exercises/branch_compare) | `gitmastery download branch-compare` |
 | [branch-forward](https://git-mastery.github.io/exercises/branch_forward) | `gitmastery download branch-forward` |
 | [side-track](https://git-mastery.github.io/exercises/side_track) | `gitmastery download side-track` |
 | [mix-messy-graph](https://git-mastery.github.io/exercises/mix_messy_graph) | `gitmastery download mix-messy-graph` |
@@ -38,6 +39,12 @@
 |----------|------------------|
 | [grocery-shopping](https://git-mastery.github.io/exercises/grocery_shopping) | `gitmastery download grocery-shopping` |
 | [push-over](https://git-mastery.github.io/exercises/push_over) | `gitmastery download push-over` |
+
+# git-diff
+
+| Exercise | Download Command |
+|----------|------------------|
+| [branch-compare](https://git-mastery.github.io/exercises/branch_compare) | `gitmastery download branch-compare` |
 
 # git-fetch
 

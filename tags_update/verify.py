@@ -45,9 +45,7 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         main_branch_commits, "Add January duty roster"
     )
     if january_commit is None:
-        raise exercise.wrong_answer(
-            [MISSING_COMMIT_MESSAGE.format(message="January")]
-        )
+        raise exercise.wrong_answer([MISSING_COMMIT_MESSAGE.format(message="January")])
 
     january_tag_commit = tags["january-update"].commit
     if january_tag_commit.hexsha != january_commit.hexsha:
@@ -61,9 +59,7 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         main_branch_commits, "Update duty roster for April"
     )
     if april_commit is None:
-        raise exercise.wrong_answer(
-            [MISSING_COMMIT_MESSAGE.format(message="April")]
-        )
+        raise exercise.wrong_answer([MISSING_COMMIT_MESSAGE.format(message="April")])
 
     april_tag_commit = tags["april-update"].commit
     if april_tag_commit.hexsha != april_commit.hexsha:
