@@ -8,7 +8,7 @@
   },
   "exercise_repo": {
     "repo_type": "local",
-    "repo_name": "data_streams",
+    "repo_name": "data-streams",
     "repo_title": null,
     "create_fork": null,
     "init": true
