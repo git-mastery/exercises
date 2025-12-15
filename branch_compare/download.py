@@ -3,10 +3,12 @@ from exercise_utils.file import append_to_file, create_or_update_file
 
 import random
 
+
 def get_sequence(n=1000, digits=8, seed=None):
     rng = random.Random(seed)
-    lo, hi = 10**(digits - 1), 10**digits - 1
+    lo, hi = 10 ** (digits - 1), 10**digits - 1
     return rng.sample(range(lo, hi + 1), k=n)
+
 
 def get_modified_sequence(seq, digits=8, idx=None, seed=None):
     rng = random.Random(seed)
@@ -16,7 +18,7 @@ def get_modified_sequence(seq, digits=8, idx=None, seed=None):
 
     modified = seq.copy()
     seen = set(seq)
-    lo, hi = 10**(digits - 1), 10**digits - 1
+    lo, hi = 10 ** (digits - 1), 10**digits - 1
 
     old = modified[idx]
     new = old
@@ -27,7 +29,6 @@ def get_modified_sequence(seq, digits=8, idx=None, seed=None):
 
 
 def setup(verbose: bool = False):
-
     orig_data = get_sequence()
     modified_data = get_modified_sequence(orig_data)
 

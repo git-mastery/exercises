@@ -19,6 +19,7 @@ def test_base():
     ) as output:
         assert_output(output, GitAutograderStatus.SUCCESSFUL)
 
+
 def test_wrong_stream1_diff():
     with loader.load(
         "specs/base.yml",
@@ -33,6 +34,7 @@ def test_wrong_stream1_diff():
             GitAutograderStatus.UNSUCCESSFUL,
             [HasExactValueRule.NOT_EXACT.format(question=QUESTION_ONE)],
         )
+
 
 def test_wrong_stream2_diff():
     with loader.load(
