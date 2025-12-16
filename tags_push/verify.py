@@ -46,11 +46,11 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     username = get_username()
     if username is None:
         raise exercise.wrong_answer([IMPROPER_GH_CLI_SETUP])
-    
+
     tag_names = get_remote_tags(username)
 
     comments = []
-    
+
     if TAG_1_NAME not in tag_names:
         comments.append(TAG_1_MISSING)
 
@@ -64,5 +64,8 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         raise exercise.wrong_answer(comments)
 
     return exercise.to_output(
-        ["Wonderful! You have successfully synced the local tags with the remote tags!"], 
-        GitAutograderStatus.SUCCESSFUL)
+        [
+            "Wonderful! You have successfully synced the local tags with the remote tags!"
+        ],
+        GitAutograderStatus.SUCCESSFUL,
+    )

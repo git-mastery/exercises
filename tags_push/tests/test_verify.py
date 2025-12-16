@@ -10,7 +10,8 @@ from git_autograder import (
     GitAutograderStatus,
     GitAutograderTestLoader,
     GitAutograderWrongAnswerException,
-    assert_output)
+    assert_output,
+)
 
 from ..verify import (
     IMPROPER_GH_CLI_SETUP,
@@ -20,7 +21,8 @@ from ..verify import (
     TAG_1_MISSING,
     TAG_2_MISSING,
     TAG_DELETE_NOT_REMOVED,
-    verify)
+    verify,
+)
 
 REPOSITORY_NAME = "tags-push"
 
@@ -69,7 +71,9 @@ def exercise(tmp_path: Path) -> GitAutograderExercise:
 def test_pass(exercise: GitAutograderExercise):
     with (
         patch("tags_push.verify.get_username", return_value="dummy"),
-        patch("tags_push.verify.get_remote_tags", return_value=[TAG_1_NAME, TAG_2_NAME]),
+        patch(
+            "tags_push.verify.get_remote_tags", return_value=[TAG_1_NAME, TAG_2_NAME]
+        ),
     ):
         output = verify(exercise)
         assert_output(output, GitAutograderStatus.SUCCESSFUL)
@@ -78,7 +82,9 @@ def test_pass(exercise: GitAutograderExercise):
 def test_improper_gh_setup(exercise: GitAutograderExercise):
     with (
         patch("tags_push.verify.get_username", return_value=None),
-        patch("tags_push.verify.get_remote_tags", return_value=[TAG_1_NAME, TAG_2_NAME]),
+        patch(
+            "tags_push.verify.get_remote_tags", return_value=[TAG_1_NAME, TAG_2_NAME]
+        ),
         pytest.raises(GitAutograderWrongAnswerException, match=IMPROPER_GH_CLI_SETUP),
     ):
         verify(exercise)
@@ -87,10 +93,14 @@ def test_improper_gh_setup(exercise: GitAutograderExercise):
 def test_beta_present(exercise: GitAutograderExercise):
     with (
         patch("tags_push.verify.get_username", return_value="dummy"),
-        patch("tags_push.verify.get_remote_tags", return_value=[TAG_1_NAME, TAG_2_NAME, TAG_DELETE_NAME]),
+        patch(
+            "tags_push.verify.get_remote_tags",
+            return_value=[TAG_1_NAME, TAG_2_NAME, TAG_DELETE_NAME],
+        ),
         pytest.raises(GitAutograderWrongAnswerException, match=TAG_DELETE_NOT_REMOVED),
     ):
         verify(exercise)
+
 
 def test_tag_1_absent(exercise: GitAutograderExercise):
     with (
@@ -118,4 +128,8 @@ def test_all_wrong(exercise: GitAutograderExercise):
     ):
         verify(exercise)
 
-    assert exception.value.message == [TAG_1_MISSING, TAG_2_MISSING, TAG_DELETE_NOT_REMOVED]
+    assert exception.value.message == [
+        TAG_1_MISSING,
+        TAG_2_MISSING,
+        TAG_DELETE_NOT_REMOVED,
+    ]

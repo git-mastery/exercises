@@ -1,6 +1,7 @@
 from exercise_utils.cli import run_command
 from exercise_utils.git import tag, tag_with_options
 
+
 def setup(verbose: bool = False):
     run_command(["git", "remote", "rename", "origin", "production"], verbose)
     tag("beta", verbose)
