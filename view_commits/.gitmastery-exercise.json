@@ -1,0 +1,19 @@
+{
+  "exercise_name": "view-commits",
+  "tags": [
+    "git-diff",
+    "git-show"
+  ],
+  "requires_git": true,
+  "requires_github": true,
+  "base_files": {
+    "answers.txt": "answers.txt"
+  },
+  "exercise_repo": {
+    "repo_type": "remote",
+    "repo_name": "duty-roster",
+    "repo_title": "gm-duty-roster",
+    "create_fork": false,
+    "init": true
+  }
+}

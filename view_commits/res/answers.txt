@@ -1,0 +1,16 @@
+Q: In February, who was replaced in the Wednesday duty roster?
+A:
+
+Q: In February, who joined the Tuesday duty roster?
+A:
+
+Q: In April, what were the new names added to the duty rosters? Remove/add extra rows where appropriate.
+A:
+- name1
+- name2
+
+Q: In January, who were in the Tuesday duty roster? Remove/add extra rows where appropriate.
+A:
+- name1
+- name2
+
