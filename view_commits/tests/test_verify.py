@@ -1,43 +1,53 @@
 from git_autograder import GitAutograderStatus, GitAutograderTestLoader, assert_output
-from git_autograder.answers.rules import HasExactValueRule, HasExactListRule, NotEmptyRule, ContainsListRule
+from git_autograder.answers.rules import (
+    HasExactValueRule,
+    HasExactListRule,
+    NotEmptyRule,
+    ContainsListRule,
+)
 from ..verify import QUESTION_ONE, QUESTION_TWO, QUESTION_THREE, QUESTION_FOUR, verify
 
 REPOSITORY_NAME = "view-commits"
 
 loader = GitAutograderTestLoader(__file__, REPOSITORY_NAME, verify)
 
+CORRECT_QUESTION_ONE = "Eric"
+CORRECT_QUESTION_TWO = "Bruce"
 CORRECT_QUESTION_THREE = """
 - Betsy
 - Beth
 - Daisy
 """
+CORRECT_QUESTION_FOUR = "- Charlie"
 
+WRONG_QUESTION_ONE = "Ergodic"
+WRONG_QUESTION_TWO = "Bru"
 INCOMPLETE_QUESTION_THREE = """
 - Betsy
 - Daisy
 """
-
 WRONG_QUESTION_THREE = """
 - Betsy
 - Bruce
 - Daisy
 """
-
 EXTRA_QUESTION_THREE = """
 - Betsy
 - Beth
 - Eric
 - Daisy
 """
+WRONG_QUESTION_FOUR = "- Dave"
+
 
 def test_no_answers():
     with loader.load(
-        "specs/no_answers.yml",
+        "specs/base.yml",
         mock_answers={
             QUESTION_ONE: "",
             QUESTION_TWO: "",
             QUESTION_THREE: "",
-            QUESTION_FOUR: ""
+            QUESTION_FOUR: "",
         },
     ) as output:
         assert_output(
@@ -47,18 +57,19 @@ def test_no_answers():
                 NotEmptyRule.EMPTY.format(question=QUESTION_ONE),
                 NotEmptyRule.EMPTY.format(question=QUESTION_TWO),
                 NotEmptyRule.EMPTY.format(question=QUESTION_THREE),
-                NotEmptyRule.EMPTY.format(question=QUESTION_FOUR)
+                NotEmptyRule.EMPTY.format(question=QUESTION_FOUR),
             ],
         )
 
+
 def test_incomplete_answer():
     with loader.load(
-        "specs/incomplete_answers.yml",
+        "specs/base.yml",
         mock_answers={
-            QUESTION_ONE: "Eric",
-            QUESTION_TWO: "Bruce",
+            QUESTION_ONE: CORRECT_QUESTION_ONE,
+            QUESTION_TWO: CORRECT_QUESTION_TWO,
             QUESTION_THREE: "",
-            QUESTION_FOUR: ""
+            QUESTION_FOUR: "",
         },
     ) as output:
         assert_output(
@@ -66,72 +77,70 @@ def test_incomplete_answer():
             GitAutograderStatus.UNSUCCESSFUL,
             [
                 NotEmptyRule.EMPTY.format(question=QUESTION_THREE),
-                NotEmptyRule.EMPTY.format(question=QUESTION_FOUR)
+                NotEmptyRule.EMPTY.format(question=QUESTION_FOUR),
             ],
         )
+
 
 def test_wrong_question_one():
     with loader.load(
-        "specs/wrong_question_one.yml",
+        "specs/base.yml",
         mock_answers={
-            QUESTION_ONE: "Ergodic",
-            QUESTION_TWO: "Bruce",
+            QUESTION_ONE: WRONG_QUESTION_ONE,
+            QUESTION_TWO: CORRECT_QUESTION_TWO,
             QUESTION_THREE: CORRECT_QUESTION_THREE,
-            QUESTION_FOUR: "- Charlie"
+            QUESTION_FOUR: CORRECT_QUESTION_FOUR,
         },
     ) as output:
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,
-            [
-                HasExactValueRule.NOT_EXACT.format(question=QUESTION_ONE)
-            ],
+            [HasExactValueRule.NOT_EXACT.format(question=QUESTION_ONE)],
         )
+
 
 def test_wrong_question_two():
     with loader.load(
-        "specs/wrong_question_two.yml",
+        "specs/base.yml",
         mock_answers={
-            QUESTION_ONE: "Eric",
-            QUESTION_TWO: "Bru",
+            QUESTION_ONE: CORRECT_QUESTION_ONE,
+            QUESTION_TWO: WRONG_QUESTION_TWO,
             QUESTION_THREE: CORRECT_QUESTION_THREE,
-            QUESTION_FOUR: "- Charlie"
+            QUESTION_FOUR: CORRECT_QUESTION_FOUR,
         },
     ) as output:
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,
-            [
-                HasExactValueRule.NOT_EXACT.format(question=QUESTION_TWO)
-            ],
+            [HasExactValueRule.NOT_EXACT.format(question=QUESTION_TWO)],
         )
+
 
 def test_incomplete_question_three():
     with loader.load(
-        "specs/incomplete_question_three.yml",
+        "specs/base.yml",
         mock_answers={
-            QUESTION_ONE: "Eric",
-            QUESTION_TWO: "Bruce",
+            QUESTION_ONE: CORRECT_QUESTION_ONE,
+            QUESTION_TWO: CORRECT_QUESTION_TWO,
             QUESTION_THREE: INCOMPLETE_QUESTION_THREE,
-            QUESTION_FOUR: "- Charlie"
+            QUESTION_FOUR: CORRECT_QUESTION_FOUR,
         },
     ) as output:
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,
-            [
-                HasExactListRule.INCORRECT_UNORDERED.format(question=QUESTION_THREE)
-            ],
+            [HasExactListRule.INCORRECT_UNORDERED.format(question=QUESTION_THREE)],
         )
+
 
 def test_wrong_question_three():
     with loader.load(
-        "specs/wrong_question_three.yml",
+        "specs/base.yml",
         mock_answers={
-            QUESTION_ONE: "Eric",
-            QUESTION_TWO: "Bruce",
+            QUESTION_ONE: CORRECT_QUESTION_ONE,
+            QUESTION_TWO: CORRECT_QUESTION_TWO,
             QUESTION_THREE: WRONG_QUESTION_THREE,
-            QUESTION_FOUR: "- Charlie"
+            QUESTION_FOUR: CORRECT_QUESTION_FOUR,
         },
     ) as output:
         assert_output(
@@ -142,32 +151,32 @@ def test_wrong_question_three():
             ],
         )
 
+
 def test_wrong_question_three_extra_answer():
     with loader.load(
-        "specs/extra_question_three.yml",
+        "specs/base.yml",
         mock_answers={
-            QUESTION_ONE: "Eric",
-            QUESTION_TWO: "Bruce",
+            QUESTION_ONE: CORRECT_QUESTION_ONE,
+            QUESTION_TWO: CORRECT_QUESTION_TWO,
             QUESTION_THREE: EXTRA_QUESTION_THREE,
-            QUESTION_FOUR: "- Charlie"
+            QUESTION_FOUR: CORRECT_QUESTION_FOUR,
         },
     ) as output:
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,
-            [
-                ContainsListRule.INVALID_ITEM.format(question=QUESTION_THREE)
-            ],
+            [ContainsListRule.INVALID_ITEM.format(question=QUESTION_THREE)],
         )
+
 
 def test_valid_answers():
     with loader.load(
-        "specs/valid_answers.yml",
+        "specs/base.yml",
         mock_answers={
-            QUESTION_ONE: "Eric",
-            QUESTION_TWO: "Bruce",
+            QUESTION_ONE: CORRECT_QUESTION_ONE,
+            QUESTION_TWO: CORRECT_QUESTION_TWO,
             QUESTION_THREE: CORRECT_QUESTION_THREE,
-            QUESTION_FOUR:"- Charlie"
+            QUESTION_FOUR: CORRECT_QUESTION_FOUR,
         },
     ) as output:
         assert_output(output, GitAutograderStatus.SUCCESSFUL)
