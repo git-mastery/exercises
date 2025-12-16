@@ -10,16 +10,10 @@ ADD_BIRDPERSON = "Add Birdperson"
 ADD_CYBORG = "Add Cyborg to birdperson.txt"
 ADD_TAMMY = "Add Tammy"
 
-MERGE_NOT_UNDONE = "You need to undo the merge."
-MAIN_COMMITS_INCORRECT = (
-    "The main branch does not contain the expected commits "
-    "The main branch does not contain both commits 'Add Rick' and 'Add Morty'."
-)
-OTHERS_COMMITS_INCORRECT = (
-    "The others branch does not contain the expected commits "
-    "'Add Birdperson', 'Add Cyborg to birdperson.txt', and 'Add Tammy'."
-)
-OTHERS_BRANCH_MISSING = "The branch 'others' no longer exists. You should not delete it, only undo the merge on main."
+MERGE_NOT_UNDONE = "The merge has not been undone properly."
+MAIN_COMMITS_INCORRECT = "The main branch does not contain the expected commits."
+OTHERS_COMMITS_INCORRECT = "The others branch does not contain the expected commits."
+OTHERS_BRANCH_MISSING = "Missing branch 'others'."
 
 
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
