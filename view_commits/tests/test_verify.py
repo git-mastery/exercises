@@ -14,8 +14,8 @@ loader = GitAutograderTestLoader(__file__, REPOSITORY_NAME, verify)
 CORRECT_QUESTION_ONE = "Eric"
 CORRECT_QUESTION_TWO = "Bruce"
 CORRECT_QUESTION_THREE = """
-- Betsy
 - Beth
+- Betsy
 - Daisy
 """
 CORRECT_QUESTION_FOUR = "- Charlie"
