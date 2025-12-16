@@ -39,6 +39,8 @@ def get_username() -> Optional[str]:
 
 def get_remote_tags(username: str) -> List[str]:
     raw_tags = run_command(["git", "ls-remote", "--tags"])
+    if raw_tags is None:
+        return []
     return [line.split("/")[2] for line in raw_tags.strip().splitlines()]
 
 
