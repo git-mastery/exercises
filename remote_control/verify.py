@@ -53,9 +53,7 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
 
     print(f"Create a repo called gitmastery-{username}-remote-control")
     url = input("Enter the url of your remote repository: ")
-    if not url.startswith(
-        f"https://github.com/{username}/gitmastery-{username}-remote-control"
-    ):
+    if not url.strip() == f"https://github.com/{username}/gitmastery-{username}-remote-control":
         raise exercise.wrong_answer(["That is not the right Github url!"])
 
     if has_public_repo(username):
