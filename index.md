@@ -15,6 +15,7 @@
 | [mix-messy-docs](https://git-mastery.github.io/exercises/mix_messy_docs) | `gitmastery download mix-messy-docs` |
 | [branch-rename](https://git-mastery.github.io/exercises/branch_rename) | `gitmastery download branch-rename` |
 | [branch-compare](https://git-mastery.github.io/exercises/branch_compare) | `gitmastery download branch-compare` |
+| [ff-undo](https://git-mastery.github.io/exercises/ff_undo) | `gitmastery download ff-undo` |
 | [branch-forward](https://git-mastery.github.io/exercises/branch_forward) | `gitmastery download branch-forward` |
 | [side-track](https://git-mastery.github.io/exercises/side_track) | `gitmastery download side-track` |
 | [mix-messy-graph](https://git-mastery.github.io/exercises/mix_messy_graph) | `gitmastery download mix-messy-graph` |
@@ -71,6 +72,7 @@
 |----------|------------------|
 | [branch-bender](https://git-mastery.github.io/exercises/branch_bender) | `gitmastery download branch-bender` |
 | [conflict-mediator](https://git-mastery.github.io/exercises/conflict_mediator) | `gitmastery download conflict-mediator` |
+| [ff-undo](https://git-mastery.github.io/exercises/ff_undo) | `gitmastery download ff-undo` |
 | [branch-forward](https://git-mastery.github.io/exercises/branch_forward) | `gitmastery download branch-forward` |
 | [mix-messy-graph](https://git-mastery.github.io/exercises/mix_messy_graph) | `gitmastery download mix-messy-graph` |
 | [merge-undo](https://git-mastery.github.io/exercises/merge_undo) | `gitmastery download merge-undo` |
@@ -99,6 +101,7 @@
 
 | Exercise | Download Command |
 |----------|------------------|
+| [ff-undo](https://git-mastery.github.io/exercises/ff_undo) | `gitmastery download ff-undo` |
 | [merge-undo](https://git-mastery.github.io/exercises/merge_undo) | `gitmastery download merge-undo` |
 
 # git-restore
