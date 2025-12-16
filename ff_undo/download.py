@@ -9,31 +9,54 @@ from exercise_utils.file import (
     append_to_file,
 )
 
+
 def setup(verbose: bool = False):
-    # Create initial files and commits
-    create_or_update_file("rick.txt", "Scientist\n")
-    add(["rick.txt"], verbose)
+    create_or_update_file(
+        "rick.txt",
+        """
+        Hero
+        """,
+    )
+    add(["."], verbose)
     commit("Add Rick", verbose)
 
-    create_or_update_file("morty.txt", "Boy\n")
-    add(["morty.txt"], verbose)
+    create_or_update_file(
+        "morty.txt",
+        """
+        Boy
+        """,
+    )
+    add(["."], verbose)
     commit("Add Morty", verbose)
 
-    # Create and switch to branch 'others'
-    checkout("others", create_branch=True, verbose=verbose)
+    checkout("others", True, verbose)
 
-    create_or_update_file("birdperson.txt", "No job\n")
-    add(["birdperson.txt"], verbose)
+    create_or_update_file(
+        "birdperson.txt",
+        """
+        No job
+        """,
+    )
+    add(["."], verbose)
     commit("Add Birdperson", verbose)
 
-    append_to_file("birdperson.txt", "Cyborg\n")
-    add(["birdperson.txt"], verbose)
+    append_to_file(
+        "birdperson.txt",
+        """
+        Cyborg
+        """,
+    )
+    add(["."], verbose)
     commit("Add Cyborg to birdperson.txt", verbose)
 
-    create_or_update_file("tammy.txt", "Spy\n")
-    add(["tammy.txt"], verbose)
+    create_or_update_file(
+        "tammy.txt",
+        """
+        Spy
+        """,
+    )
+    add(["."], verbose)
     commit("Add Tammy", verbose)
 
-    # Merge back into main
-    checkout("main", create_branch=False, verbose=verbose)
-    merge_with_message("others", ff=True, message="Introduce others", verbose=verbose)
+    checkout("main", False, verbose)
+    merge_with_message("others", True, "Introduce others", verbose)
