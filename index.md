@@ -124,6 +124,7 @@
 
 | Exercise | Download Command |
 |----------|------------------|
+| [tags-push](https://git-mastery.github.io/exercises/tags_push) | `gitmastery download tags-push` |
 | [tags-update](https://git-mastery.github.io/exercises/tags_update) | `gitmastery download tags-update` |
 
 # github-fork

@@ -1,0 +1,16 @@
+{
+  "exercise_name": "tags-push",
+  "tags": [
+    "git-tag"
+  ],
+  "requires_git": true,
+  "requires_github": true,
+  "base_files": {},
+  "exercise_repo": {
+    "repo_type": "remote",
+    "repo_name": "duty-roster",
+    "repo_title": "gm-duty-roster",
+    "create_fork": true,
+    "init": null
+  }
+}
