@@ -29,12 +29,8 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     if others_branch is None:
         raise exercise.wrong_answer([OTHERS_BRANCH_MISSING])
 
+    # Verify commits in main branch
     commit_messages_in_main = [c.commit.message.strip() for c in main_branch.commits]
-
-    commit_messages_in_others = [
-        c.commit.message.strip() for c in others_branch.commits
-    ]
-
     if any(
         msg in commit_messages_in_main
         for msg in [ADD_BIRDPERSON, ADD_CYBORG, ADD_TAMMY]
@@ -46,6 +42,10 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     ):
         raise exercise.wrong_answer([MAIN_COMMITS_INCORRECT])
 
+    # Verify commits in others branch
+    commit_messages_in_others = [
+        c.commit.message.strip() for c in others_branch.commits
+    ]
     if len(commit_messages_in_others) != 6 or not all(
         msg in commit_messages_in_others
         for msg in [ADD_BIRDPERSON, ADD_CYBORG, ADD_TAMMY, ADD_RICK, ADD_MORTY]
