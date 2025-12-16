@@ -45,6 +45,7 @@
 | Exercise | Download Command |
 |----------|------------------|
 | [branch-compare](https://git-mastery.github.io/exercises/branch_compare) | `gitmastery download branch-compare` |
+| [view-commits](https://git-mastery.github.io/exercises/view_commits) | `gitmastery download view-commits` |
 
 # git-fetch
 
@@ -105,6 +106,12 @@
 | Exercise | Download Command |
 |----------|------------------|
 | [staging-intervention](https://git-mastery.github.io/exercises/staging_intervention) | `gitmastery download staging-intervention` |
+
+# git-show
+
+| Exercise | Download Command |
+|----------|------------------|
+| [view-commits](https://git-mastery.github.io/exercises/view_commits) | `gitmastery download view-commits` |
 
 # git-status
 
