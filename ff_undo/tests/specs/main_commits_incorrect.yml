@@ -1,0 +1,18 @@
+initialization:
+  steps:
+    - type: commit
+      empty: true
+      message: Set initial state
+      id: start
+    - type: commit
+      message: "Add Morty"
+    - type: branch
+      branch-name: others
+    - type: checkout
+      branch-name: others
+    - type: commit
+      message: "Add Birdperson"
+    - type: commit
+      message: "Add Cyborg to birdperson.txt"
+    - type: commit
+      message: "Add Tammy"
