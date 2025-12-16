@@ -1,7 +1,10 @@
 initialization:
   steps:
     - type: commit
+      empty: true
+      message: Set initial state
       id: start
+    - type: commit
       message: "Add Rick"
     - type: commit
       message: "Add Morty"

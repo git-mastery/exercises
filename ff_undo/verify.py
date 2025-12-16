@@ -41,14 +41,14 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     ):
         raise exercise.wrong_answer([MERGE_NOT_UNDONE])
 
-    if len(commit_messages_in_main) != 2 or not all(
+    if len(commit_messages_in_main) != 3 or not all(
         msg in commit_messages_in_main for msg in [ADD_RICK, ADD_MORTY]
     ):
         raise exercise.wrong_answer([MAIN_COMMITS_INCORRECT])
 
-    if len(commit_messages_in_others) != 5 or not all(
+    if len(commit_messages_in_others) != 6 or not all(
         msg in commit_messages_in_others
-        for msg in [ADD_BIRDPERSON, ADD_CYBORG, ADD_TAMMY]
+        for msg in [ADD_BIRDPERSON, ADD_CYBORG, ADD_TAMMY, ADD_RICK, ADD_MORTY]
     ):
         raise exercise.wrong_answer([OTHERS_COMMITS_INCORRECT])
 

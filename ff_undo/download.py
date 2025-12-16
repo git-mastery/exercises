@@ -2,7 +2,7 @@ from exercise_utils.git import (
     add,
     commit,
     checkout,
-    merge_with_message,
+    merge,
 )
 from exercise_utils.file import (
     create_or_update_file,
@@ -59,4 +59,4 @@ def setup(verbose: bool = False):
     commit("Add Tammy", verbose)
 
     checkout("main", False, verbose)
-    merge_with_message("others", True, "Introduce others", verbose)
+    merge("others", True, verbose)
