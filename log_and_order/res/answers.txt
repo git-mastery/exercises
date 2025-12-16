@@ -6,4 +6,3 @@ A:
 
 Q: What is the SHA of the commit with the commit message "Rewrite the comments"? You can use the full length SHA or the short SHA (i.e. first 7 characters of the SHA)
 A:
-
