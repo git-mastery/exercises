@@ -9,14 +9,12 @@ from git_autograder.answers import GitAutograderAnswersRecord
 from git_autograder.answers.rules import HasExactValueRule, NotEmptyRule
 from git_autograder.answers.rules.answer_rule import AnswerRule
 
-QUESTION_ONE = "What is the SHA of the commit HEAD points to?"
+QUESTION_ONE = "What is the SHA of the commit HEAD points to? You can use the full length SHA or the short SHA (i.e. first 7 characters of the SHA)"
 QUESTION_TWO = "What is the commit message of the commit {SHA}?"
 QUESTION_TWO_REGEX = re.compile(
     "^What is the commit message of the commit ([\\d\\w]+)\\?$"
 )
-QUESTION_THREE = (
-    'What is the SHA of the commit with the commit message "Rewrite the comments"?'
-)
+QUESTION_THREE = 'What is the SHA of the commit with the commit message "Rewrite the comments"? You can use the full length SHA or the short SHA (i.e. first 7 characters of the SHA)'
 
 
 class OneOfValueRule(AnswerRule):
