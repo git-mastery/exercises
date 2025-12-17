@@ -16,6 +16,10 @@ CHANGES_FROM_SUPPORTING_NOT_PRESENT = (
     "The main branch does not contain both files 'mike.txt' and 'janice.txt'."
 )
 
+SQUASH_NOT_COMMITTED = (
+    "You have not committed the staged files! Remember, you need to manually commit after a squash merge!"
+)
+
 SQUASH_ON_SUPPORTING = (
     "You are working on the wrong branch! Bring the changes from supporting onto main, not the other way around."
 )
@@ -37,6 +41,9 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
 
     if merge_commits:
         raise exercise.wrong_answer([SQUASH_NOT_USED])
+
+    if exercise.repo.repo.is_dirty():
+        raise exercise.wrong_answer([SQUASH_NOT_COMMITTED])
 
     if not all(
         msg in commit_messages_in_main for msg in ["Add Joey", "Add Phoebe", "Add Ross"]
