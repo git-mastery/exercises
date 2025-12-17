@@ -1,2 +1,1 @@
-def setup(verbose: bool = False):
-    pass
+def setup(verbose: bool = False): ...
