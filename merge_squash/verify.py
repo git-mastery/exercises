@@ -16,6 +16,10 @@ CHANGES_FROM_SUPPORTING_NOT_PRESENT = (
     "The main branch does not contain both files 'mike.txt' and 'janice.txt'."
 )
 
+SQUASH_ON_SUPPORTING = (
+    "You are working on the wrong branch! Bring the changes from supporting onto main, not the other way around."
+)
+
 
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     main_branch = exercise.repo.branches.branch("main")
@@ -31,12 +35,18 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     commit_messages_in_main = [c.commit.message.strip() for c in main_branch.commits]
     merge_commits = [c for c in main_branch.commits if len(c.parents) > 1]
 
-    if merge_commits or ("Squash" not in commit_messages_in_main[0]):
+    if merge_commits:
         raise exercise.wrong_answer([SQUASH_NOT_USED])
 
     if not all(
         msg in commit_messages_in_main for msg in ["Add Joey", "Add Phoebe", "Add Ross"]
     ):
         raise exercise.wrong_answer([MAIN_COMMITS_INCORRECT])
+
+    try:
+        exercise.repo.repo.commit("supporting").tree / "ross.txt"
+        raise exercise.wrong_answer([SQUASH_ON_SUPPORTING])
+    except KeyError:
+        pass
 
     return exercise.to_output(["Good job performing a merge squash!"], GitAutograderStatus.SUCCESSFUL)

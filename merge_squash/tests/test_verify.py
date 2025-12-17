@@ -4,6 +4,7 @@ from ..verify import (
     SQUASH_NOT_USED,
     MAIN_COMMITS_INCORRECT,
     CHANGES_FROM_SUPPORTING_NOT_PRESENT,
+    SQUASH_ON_SUPPORTING,
     verify
 )
 
@@ -30,3 +31,7 @@ def test_not_merged():
 def test_missing_main_commits():
     with loader.load("specs/missing_main_commits.yml") as output:
         assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [MAIN_COMMITS_INCORRECT])
+
+def test_wrong_branch_squashed():
+    with loader.load("specs/wrong_branch_squashed.yml") as output:
+        assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [SQUASH_ON_SUPPORTING])
