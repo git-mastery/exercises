@@ -129,6 +129,7 @@
 |----------|------------------|
 | [tags-push](https://git-mastery.github.io/exercises/tags_push) | `gitmastery download tags-push` |
 | [tags-update](https://git-mastery.github.io/exercises/tags_update) | `gitmastery download tags-update` |
+| [tags-add](https://git-mastery.github.io/exercises/tags_add) | `gitmastery download tags-add` |
 
 # github-fork
 

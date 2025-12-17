@@ -1,0 +1,24 @@
+initialization:
+  steps:
+    - type: commit
+      empty: true
+      message: Add January duty roster
+      id: start
+    - type: tag
+      tag-name: first-pilot
+      tag-message: test message
+    - type: commit
+      empty: true
+      message: Update duty roster for February
+    - type: commit
+      empty: true
+      message: Update roster for March
+    - type: tag
+      tag-name: v1.0
+      tag-message: first full duty roster
+    - type: commit
+      empty: true
+      message: Update duty roster for April
+    - type: commit
+      empty: true
+      message: Update roster for May
