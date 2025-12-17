@@ -32,7 +32,7 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         if janice_file is None:
             raise exercise.wrong_answer([CHANGES_FROM_SUPPORTING_NOT_PRESENT])
 
-    commit_messages_in_main = [c.commit.message.strip() for c in main_branch.commits]
+    commit_messages_in_main = [str(c.commit.message.strip()) for c in main_branch.commits]
     merge_commits = [c for c in main_branch.commits if len(c.parents) > 1]
 
     if merge_commits:
