@@ -5,7 +5,7 @@ from ..verify import (
     MAIN_COMMITS_INCORRECT,
     CHANGES_FROM_SUPPORTING_NOT_PRESENT,
     SQUASH_ON_SUPPORTING,
-    verify
+    verify,
 )
 
 REPOSITORY_NAME = "merge-squash"
@@ -25,12 +25,19 @@ def test_non_squash_merge_used():
 
 def test_not_merged():
     with loader.load("specs/not_merged.yml") as output:
-        assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [CHANGES_FROM_SUPPORTING_NOT_PRESENT])
+        assert_output(
+            output,
+            GitAutograderStatus.UNSUCCESSFUL,
+            [CHANGES_FROM_SUPPORTING_NOT_PRESENT],
+        )
 
 
 def test_missing_main_commits():
     with loader.load("specs/missing_main_commits.yml") as output:
-        assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [MAIN_COMMITS_INCORRECT])
+        assert_output(
+            output, GitAutograderStatus.UNSUCCESSFUL, [MAIN_COMMITS_INCORRECT]
+        )
+
 
 def test_wrong_branch_squashed():
     with loader.load("specs/wrong_branch_squashed.yml") as output:
