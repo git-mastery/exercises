@@ -31,3 +31,12 @@ initialization:
       message: "Record data for Jan 14"
     - type: commit
       message: "Record data for Jan 15"
+    # - type: reset
+    #   ref: HEAD~2
+    #   mode: hard
+    # - type: reset
+    #   ref: HEAD~1
+    #   mode: mixed
+    # - type: reset
+    #   ref: HEAD~1
+    #   mode: soft
