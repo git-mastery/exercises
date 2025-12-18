@@ -11,7 +11,7 @@ CONTACTS_FILE_MISSING = "The contacts.txt has been deleted."
 PRIVATE_FOLDER_MISSING = "The private folder has been deleted."
 SUCCESS_MESSAGE = "You have successfully undone the init operation!"
 
-DOT_GIT = ".git"
+DOT_GIT_DIR = ".git"
 PRIVATE_DIR = "private"
 TODO_FILE = "todo.txt"
 CONTACTS_FILE = "contacts.txt"
@@ -22,8 +22,8 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     repo_folder = exercise.config.exercise_repo.repo_name
     work_dir = os.path.join(repo_root, repo_folder)
 
-    dot_git_path = os.path.join(work_dir, DOT_GIT)
-    if os.path.exists(dot_git_path):
+    dot_git_dir_path = os.path.join(work_dir, DOT_GIT_DIR)
+    if os.path.exists(dot_git_dir_path):
         raise exercise.wrong_answer([INIT_NOT_UNDONE])
     
     todo_file_path = os.path.join(work_dir, TODO_FILE)
