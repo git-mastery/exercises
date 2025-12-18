@@ -4,25 +4,17 @@ from git_autograder import (
     GitAutograderStatus,
 )
 
-SQUASH_NOT_USED = (
-    "You should be using squash merge, not regular merge."
-)
+SQUASH_NOT_USED = "You should be using squash merge, not regular merge."
 
-MAIN_COMMITS_INCORRECT = (
-    "The main branch does not contain at least one of these commits: 'Add Joey', 'Add Phoebe' or 'Add Ross'."
-)
+MAIN_COMMITS_INCORRECT = "The main branch does not contain at least one of these commits: 'Add Joey', 'Add Phoebe' or 'Add Ross'."
 
 CHANGES_FROM_SUPPORTING_NOT_PRESENT = (
     "The main branch does not contain both files 'mike.txt' and 'janice.txt'."
 )
 
-SQUASH_NOT_COMMITTED = (
-    "You have not committed the staged files! Remember, you need to manually commit after a squash merge!"
-)
+SQUASH_NOT_COMMITTED = "You have not committed the staged files! Remember, you need to manually commit after a squash merge!"
 
-SQUASH_ON_SUPPORTING = (
-    "You are working on the wrong branch! Bring the changes from supporting onto main, not the other way around."
-)
+SQUASH_ON_SUPPORTING = "You are working on the wrong branch! Bring the changes from supporting onto main, not the other way around."
 
 
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
@@ -36,7 +28,9 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         if janice_file is None:
             raise exercise.wrong_answer([CHANGES_FROM_SUPPORTING_NOT_PRESENT])
 
-    commit_messages_in_main = [str(c.commit.message.strip()) for c in main_branch.commits]
+    commit_messages_in_main = [
+        str(c.commit.message.strip()) for c in main_branch.commits
+    ]
     merge_commits = [c for c in main_branch.commits if len(c.parents) > 1]
 
     if merge_commits:
@@ -56,4 +50,6 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     except KeyError:
         pass
 
-    return exercise.to_output(["Good job performing a merge squash!"], GitAutograderStatus.SUCCESSFUL)
+    return exercise.to_output(
+        ["Good job performing a merge squash!"], GitAutograderStatus.SUCCESSFUL
+    )
