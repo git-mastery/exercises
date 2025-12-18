@@ -1,0 +1,16 @@
+initialization:
+  steps:
+    - type: commit
+      empty: true
+      message: Set initial state
+      id: start
+
+    - type: new-file
+      filename: todo.txt
+      contents: |
+        My tasks
+
+    - name: Simulate Student Init
+      type: bash
+      runs: rm -rf .git
+      
