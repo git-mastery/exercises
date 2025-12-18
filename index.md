@@ -46,6 +46,7 @@
 
 | Exercise | Download Command |
 |----------|------------------|
+| [sensors-diff](https://git-mastery.github.io/exercises/sensors_diff) | `gitmastery download sensors-diff` |
 | [branch-compare](https://git-mastery.github.io/exercises/branch_compare) | `gitmastery download branch-compare` |
 | [view-commits](https://git-mastery.github.io/exercises/view_commits) | `gitmastery download view-commits` |
 
