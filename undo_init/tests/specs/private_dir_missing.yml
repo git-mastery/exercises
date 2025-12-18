@@ -10,7 +10,7 @@ initialization:
       contents: |
         My tasks
 
-    - name: Simulate Student Init
+    - name: Simulate Student Undo Init
       type: bash
       runs: rm -rf .git
       

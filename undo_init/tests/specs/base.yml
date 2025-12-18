@@ -15,7 +15,7 @@ initialization:
       contents: |
         My contacts
 
-    - name: Simulate Student Undo
+    - name: Simulate Student Undo Init
       type: bash
       runs: rm -rf .git
       
