@@ -1,0 +1,21 @@
+import os
+from exercise_utils.cli import run_command
+from exercise_utils.file import create_or_update_file
+from exercise_utils.git import init
+
+def setup(verbose: bool = False):
+    
+    create_or_update_file(
+        "todo.txt",
+        "My tasks\n"
+    )
+
+    os.makedirs("private")
+    os.chdir("private")
+    create_or_update_file(
+        "contacts.txt",
+        "My contacts\n"
+    )
+
+    os.chdir("..")
+    init(verbose)
