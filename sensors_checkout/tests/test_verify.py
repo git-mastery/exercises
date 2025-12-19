@@ -8,9 +8,9 @@ from ..verify import (
     QUESTION_ONE,
     QUESTION_TWO,
     QUESTION_THREE,
-    CORRECT_ANSWER_Q3,
-    CORRECT_ANSWER_Q2,
     CORRECT_ANSWER_Q1,
+    CORRECT_ANSWER_Q2,
+    CORRECT_ANSWER_Q3,
     SUCCESS_MESSAGE,
     verify,
 )
