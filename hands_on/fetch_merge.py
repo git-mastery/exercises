@@ -12,4 +12,13 @@ def download(verbose: bool):
         "https://github.com/git-mastery/samplerepo-finances.git", verbose
     )
     os.chdir("samplerepo-finances")
-    run_command(["git", "remote", "set-url", "origin", "https://github.com/git-mastery/samplerepo-finances-2.git"], verbose)
+    run_command(
+        [
+            "git",
+            "remote",
+            "set-url",
+            "origin",
+            "https://github.com/git-mastery/samplerepo-finances-2.git",
+        ],
+        verbose,
+    )

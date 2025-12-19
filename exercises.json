@@ -289,6 +289,22 @@
     }
   },
   {
+    "exercise_name": "sensors-checkout",
+    "tags": [
+      "git-checkout"
+    ],
+    "requires_git": true,
+    "requires_github": true,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "remote",
+      "repo_name": "sensors",
+      "repo_title": "gm-sensors",
+      "create_fork": false,
+      "init": null
+    }
+  },
+  {
     "exercise_name": "branch-forward",
     "tags": [
       "git-branch",

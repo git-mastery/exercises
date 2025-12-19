@@ -27,6 +27,7 @@
 | Exercise | Download Command |
 |----------|------------------|
 | [bonsai-tree](https://git-mastery.github.io/exercises/bonsai_tree) | `gitmastery download bonsai-tree` |
+| [sensors-checkout](https://git-mastery.github.io/exercises/sensors_checkout) | `gitmastery download sensors-checkout` |
 | [side-track](https://git-mastery.github.io/exercises/side_track) | `gitmastery download side-track` |
 
 # git-clone
