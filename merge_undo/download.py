@@ -1,3 +1,4 @@
+from exercise_utils.config import Config
 from exercise_utils.file import append_to_file, create_or_update_file
 from exercise_utils.git import add, checkout, commit, merge_with_message
 
@@ -31,7 +32,7 @@ def setup(verbose: bool = False):
     add(["beth.txt"], verbose)
     commit("Add Beth", verbose)
 
-    checkout("main", False, verbose)
+    checkout(Config.DEFAULT_BRANCH, False, verbose)
 
     checkout("son-in-law", True, verbose)
     create_or_update_file(
@@ -43,7 +44,7 @@ def setup(verbose: bool = False):
     add(["jerry.txt"], verbose)
     commit("Add Jerry", verbose)
 
-    checkout("main", False, verbose)
+    checkout(Config.DEFAULT_BRANCH, False, verbose)
     append_to_file(
         "morty.txt",
         """

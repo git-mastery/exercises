@@ -1,3 +1,4 @@
+from exercise_utils.config import Config
 from exercise_utils.git import checkout, empty_commit
 
 
@@ -8,9 +9,9 @@ def setup(verbose: bool = False):
     checkout("login", True, verbose)
     empty_commit("Implement login feature", verbose)
 
-    checkout("main", False, verbose)
+    checkout(Config.DEFAULT_BRANCH, False, verbose)
     empty_commit("Create homepage", verbose)
 
     checkout("login", False, verbose)
     empty_commit("Fix login password bug", verbose)
-    checkout("main", False, verbose)
+    checkout(Config.DEFAULT_BRANCH, False, verbose)

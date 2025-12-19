@@ -1,3 +1,4 @@
+from exercise_utils.config import Config
 from sys import exit
 
 from exercise_utils.cli import run_command
@@ -94,7 +95,7 @@ def setup(verbose: bool = False):
     checkout("rewrite", True, verbose)
     commit(*CRIMINAL, "2024-02-10 10:00", "Rewrite the comments", verbose)
     commit(*CRIMINAL, "2024-02-11 09:00", "Covering my tracks", verbose)
-    checkout("main", False, verbose)
+    checkout(Config.DEFAULT_BRANCH, False, verbose)
 
     # Escalation of crimes
     more_crimes = [

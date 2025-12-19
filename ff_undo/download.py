@@ -1,3 +1,4 @@
+from exercise_utils.config import Config
 from exercise_utils.git import (
     add,
     commit,
@@ -58,5 +59,5 @@ def setup(verbose: bool = False):
     add(["."], verbose)
     commit("Add Tammy", verbose)
 
-    checkout("main", False, verbose)
+    checkout(Config.DEFAULT_BRANCH, False, verbose)
     merge("others", True, verbose)

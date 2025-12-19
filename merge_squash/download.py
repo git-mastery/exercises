@@ -1,3 +1,4 @@
+from exercise_utils.config import Config
 from exercise_utils.file import create_or_update_file
 from exercise_utils.git import add, commit, checkout
 
@@ -40,7 +41,7 @@ def setup(verbose: bool = False):
     add(["."], verbose)
     commit("Add Janice", verbose)
 
-    checkout("main", False, verbose)
+    checkout(Config.DEFAULT_BRANCH, False, verbose)
     create_or_update_file(
         "ross.txt",
         """

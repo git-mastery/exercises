@@ -1,3 +1,4 @@
+from exercise_utils.config import Config
 from exercise_utils.git import add, commit, checkout
 from exercise_utils.file import append_to_file, create_or_update_file
 
@@ -43,7 +44,7 @@ def setup(verbose: bool = False):
     add(["data.txt"], verbose)
     commit("Add data to data.txt", verbose)
 
-    checkout("main", False, verbose)
+    checkout(Config.DEFAULT_BRANCH, False, verbose)
     checkout("stream-2", True, verbose)
 
     join_modified_data = "\n".join(map(str, modified_data))
@@ -52,4 +53,4 @@ def setup(verbose: bool = False):
     add(["data.txt"], verbose)
     commit("Add data to data.txt", verbose)
 
-    checkout("main", False, verbose)
+    checkout(Config.DEFAULT_BRANCH, False, verbose)

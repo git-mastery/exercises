@@ -1,3 +1,5 @@
+from exercise_utils.config import Config
+
 __resources__ = {"README.md": "README.md"}
 
 
@@ -55,7 +57,7 @@ def setup(verbose: bool = False):
     add(["login.html"], verbose)
     commit("Add login page", verbose)
 
-    checkout("main", False, verbose)
+    checkout(Config.DEFAULT_BRANCH, False, verbose)
 
     # feature/dashboard branch
     checkout("feature/dashboard", True, verbose)
@@ -128,7 +130,7 @@ def setup(verbose: bool = False):
     add(["dashboard.html"], verbose)
     commit("Add dashboard footer", verbose)
 
-    checkout("main", False, verbose)
+    checkout(Config.DEFAULT_BRANCH, False, verbose)
 
     # feature/payments branch
     checkout("feature/payments", True, verbose)
@@ -176,4 +178,4 @@ def setup(verbose: bool = False):
     add(["payments.html"], verbose)
     commit("Add payments page", verbose)
 
-    checkout("main", False, verbose)
+    checkout(Config.DEFAULT_BRANCH, False, verbose)

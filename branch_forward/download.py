@@ -1,3 +1,4 @@
+from exercise_utils.config import Config
 from exercise_utils.file import append_to_file, create_or_update_file
 from exercise_utils.git import add, checkout, commit
 
@@ -31,7 +32,7 @@ def setup(verbose: bool = False):
     add(["story.txt"], verbose)
     commit("Add about Ginny", verbose)
 
-    checkout("main", False, verbose)
+    checkout(Config.DEFAULT_BRANCH, False, verbose)
     create_or_update_file(
         "cast.txt",
         """
