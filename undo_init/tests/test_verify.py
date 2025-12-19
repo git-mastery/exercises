@@ -15,7 +15,6 @@ loader = GitAutograderTestLoader(__file__, REPOSITORY_NAME, verify)
 
 
 def test_base():
-
     # We patch the ExerciseRepoConfig to return "ignore" instead of "local"
     with mock.patch("git_autograder.exercise_config.ExerciseConfig.ExerciseRepoConfig") as mock_config:
         # Configure the mock to return "ignore" when the loader accesses it
@@ -29,13 +28,11 @@ def test_base():
 
 
 def test_init_not_undone():
-
     with loader.load("specs/init_not_undone.yml") as output:
         assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [INIT_NOT_UNDONE])
 
 
 def test_todo_file_missing():
-
     with mock.patch("git_autograder.exercise_config.ExerciseConfig.ExerciseRepoConfig") as mock_config:
         instance = mock_config.return_value
         instance.repo_type = "ignore"
@@ -47,7 +44,6 @@ def test_todo_file_missing():
 
 
 def test_private_dir_missing():
-
     with mock.patch("git_autograder.exercise_config.ExerciseConfig.ExerciseRepoConfig") as mock_config:
         instance = mock_config.return_value
         instance.repo_type = "ignore"
@@ -59,7 +55,6 @@ def test_private_dir_missing():
 
 
 def test_contacts_file_missing():
-
     with mock.patch("git_autograder.exercise_config.ExerciseConfig.ExerciseRepoConfig") as mock_config:
         instance = mock_config.return_value
         instance.repo_type = "ignore"

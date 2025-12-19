@@ -4,20 +4,16 @@ initialization:
       empty: true
       message: Set initial state
       id: start
-
     - type: new-file
       filename: todo.txt
       contents: |
         My tasks
-
     - type: new-file
       filename: private/contacts.txt
       contents: |
         My contacts
-
     - type: delete-file
       filename: private/contacts.txt
-
     - name: Simulate Student Undo Init
       type: bash
       runs: rm -rf .git

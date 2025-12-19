@@ -17,7 +17,6 @@ TODO_FILE = "todo.txt"
 CONTACTS_FILE = "contacts.txt"
 
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
-
     repo_root = exercise.exercise_path
     repo_folder = exercise.config.exercise_repo.repo_name
     work_dir = os.path.join(repo_root, repo_folder)
