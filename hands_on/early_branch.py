@@ -1,3 +1,4 @@
+from exercise_utils.config import Config
 import os
 
 from exercise_utils.file import create_or_update_file, append_to_file
@@ -59,7 +60,7 @@ def download(verbose: bool):
     add(["boxing.txt"], verbose)
     commit("Add Tyson to boxing.txt", verbose)
 
-    checkout("main", False, verbose)
+    checkout(Config.DEFAULT_BRANCH, False, verbose)
     append_to_file("tennis.txt", "Martina Navratilova")
     add(["tennis.txt"], verbose)
     commit("Add Martina to tennis.txt", verbose)

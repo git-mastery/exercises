@@ -1,3 +1,4 @@
+from exercise_utils.config import Config
 import os
 
 from exercise_utils.file import create_or_update_file
@@ -22,12 +23,12 @@ def download(verbose: bool):
     add(["."], verbose)
     commit("Add textbooks.txt", verbose)
 
-    checkout("main", False, verbose)
+    checkout(Config.DEFAULT_BRANCH, False, verbose)
 
     checkout("fantasy", True, verbose)
     create_or_update_file("fantasy.txt", "Fantasy Books")
     add(["."], verbose)
     commit("Add fantasy.txt", verbose)
 
-    checkout("main", False, verbose)
+    checkout(Config.DEFAULT_BRANCH, False, verbose)
     merge_with_message("textbooks", False, "Merge branch textbooks", verbose)

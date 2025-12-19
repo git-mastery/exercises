@@ -3,6 +3,7 @@
 from typing import List, Optional
 
 from exercise_utils.cli import run, run_command
+from exercise_utils.config import Config
 
 
 def tag(tag_name: str, verbose: bool) -> None:
@@ -65,9 +66,9 @@ def merge_with_message(
 def init(verbose: bool) -> None:
     """Initializes the current folder as a Git repository.
 
-    Forces the name of the initial branch to be main.
+    Forces the name of the initial branch to be the default branch.
     """
-    run_command(["git", "init", "--initial-branch=main"], verbose)
+    run_command(["git", "init", f"--initial-branch={Config.DEFAULT_BRANCH}"], verbose)
 
 
 def push(remote: str, branch: str, verbose: bool) -> None:

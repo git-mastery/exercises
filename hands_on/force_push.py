@@ -1,3 +1,4 @@
+from exercise_utils.config import Config
 import os
 from exercise_utils.cli import run_command
 from exercise_utils.git import add_remote, remove_remote
@@ -26,4 +27,4 @@ def download(verbose: bool):
         f"https://github.com/{get_github_username(verbose)}/{REPO_NAME}",
         verbose,
     )
-    run_command(["git", "push", "-u", "origin", "master"], verbose)
+    run_command(["git", "push", "-u", "origin", Config.DEFAULT_BRANCH], verbose)

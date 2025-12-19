@@ -1,3 +1,4 @@
+from exercise_utils.config import Config
 import os
 
 from exercise_utils.file import create_or_update_file, append_to_file
@@ -34,7 +35,7 @@ def download(verbose: bool):
     add(["colours.txt"], verbose)
     commit("Add green, red, white", verbose)
 
-    checkout("main", False, verbose)
+    checkout(Config.DEFAULT_BRANCH, False, verbose)
     append_to_file(
         "colours.txt",
         """

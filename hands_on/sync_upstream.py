@@ -1,3 +1,4 @@
+from exercise_utils.config import Config
 import os
 
 from exercise_utils.cli import run_command
@@ -32,4 +33,4 @@ def download(verbose: bool):
     os.chdir(LOCAL_DIR)
 
     run_command(["git", "reset", "--hard", "HEAD~2"], verbose)
-    run_command(["git", "push", "-f", "origin", "master"], verbose)
+    run_command(["git", "push", "-f", "origin", Config.DEFAULT_BRANCH], verbose)
