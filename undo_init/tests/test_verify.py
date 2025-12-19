@@ -27,10 +27,12 @@ def test_base():
         with loader.load("specs/base.yml") as output:
             assert_output(output, GitAutograderStatus.SUCCESSFUL)
 
+
 def test_init_not_undone():
 
     with loader.load("specs/init_not_undone.yml") as output:
         assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [INIT_NOT_UNDONE])
+
 
 def test_todo_file_missing():
 
@@ -43,6 +45,7 @@ def test_todo_file_missing():
         with loader.load("specs/todo_file_missing.yml") as output:
             assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [TODO_FILE_MISSING])
 
+
 def test_private_dir_missing():
 
     with mock.patch("git_autograder.exercise_config.ExerciseConfig.ExerciseRepoConfig") as mock_config:
@@ -53,6 +56,7 @@ def test_private_dir_missing():
 
         with loader.load("specs/private_dir_missing.yml") as output:
             assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [PRIVATE_FOLDER_MISSING])
+
 
 def test_contacts_file_missing():
 
