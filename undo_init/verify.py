@@ -15,21 +15,25 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     repo_root = exercise.exercise_path
     repo_folder = exercise.config.exercise_repo.repo_name
     work_dir = os.path.join(repo_root, repo_folder)
+    comments = []
 
     dot_git_dir_path = os.path.join(work_dir, ".git")
     if os.path.exists(dot_git_dir_path):
-        raise exercise.wrong_answer([INIT_NOT_UNDONE])
+        comments.append(INIT_NOT_UNDONE)
     
     todo_file_path = os.path.join(work_dir, "todo.txt")
     if not os.path.exists(todo_file_path):
-        raise exercise.wrong_answer([TODO_FILE_MISSING])
+        comments.append(TODO_FILE_MISSING)
     
     private_dir_path = os.path.join(work_dir, "private")
     if not os.path.exists(private_dir_path):
-        raise exercise.wrong_answer([PRIVATE_FOLDER_MISSING])
+        comments.append(PRIVATE_FOLDER_MISSING)
 
     contacts_file_path = os.path.join(private_dir_path, "contacts.txt")
     if not os.path.exists(contacts_file_path):
-        raise exercise.wrong_answer([CONTACTS_FILE_MISSING])
+        comments.append(CONTACTS_FILE_MISSING)
+    
+    if comments:
+        raise exercise.wrong_answer(comments)
 
     return exercise.to_output([SUCCESS_MESSAGE], GitAutograderStatus.SUCCESSFUL)

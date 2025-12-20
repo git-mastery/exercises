@@ -51,7 +51,10 @@ def test_private_dir_missing():
         instance.init = False
 
         with loader.load("specs/private_dir_missing.yml") as output:
-            assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [PRIVATE_FOLDER_MISSING])
+            assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [
+                PRIVATE_FOLDER_MISSING,
+                CONTACTS_FILE_MISSING
+                ])
 
 
 def test_contacts_file_missing():
