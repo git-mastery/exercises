@@ -6,9 +6,9 @@ from git_autograder import (
 )
 
 INIT_NOT_UNDONE = "The init operation is not undone."
-TODO_FILE_MISSING = "The todo.txt has been deleted."
-CONTACTS_FILE_MISSING = "The contacts.txt has been deleted."
-PRIVATE_FOLDER_MISSING = "The private folder has been deleted."
+TODO_FILE_MISSING = "The todo.txt should not be deleted."
+CONTACTS_FILE_MISSING = "The contacts.txt should not be deleted."
+PRIVATE_FOLDER_MISSING = "The private folder should not be deleted."
 SUCCESS_MESSAGE = "You have successfully undone the init operation!"
 
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
