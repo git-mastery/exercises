@@ -8,7 +8,6 @@ initialization:
       filename: todo.txt
       contents: |
         My tasks
-    - name: Simulate Student Undo Init
-      type: bash
+    - type: bash
       runs: rm -rf .git
       

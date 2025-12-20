@@ -14,7 +14,6 @@ initialization:
         My contacts
     - type: delete-file
       filename: private/contacts.txt
-    - name: Simulate Student Undo Init
-      type: bash
+    - type: bash
       runs: rm -rf .git
       

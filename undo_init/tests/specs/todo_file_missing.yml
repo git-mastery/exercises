@@ -8,7 +8,6 @@ initialization:
       filename: private/contacts.txt
       contents: |
         My contacts
-    - name: Simulate Student Undo Init
-      type: bash
+    - type: bash
       runs: rm -rf .git
       
