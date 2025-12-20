@@ -62,6 +62,7 @@
 | Exercise | Download Command |
 |----------|------------------|
 | [under-control](https://git-mastery.github.io/exercises/under_control) | `gitmastery download under-control` |
+| [undo-init](https://git-mastery.github.io/exercises/undo_init) | `gitmastery download undo-init` |
 
 # git-log
 
