@@ -1,0 +1,10 @@
+initialization:
+  clone-from: https://github.com/git-mastery/gm-sensors
+  steps:
+    - type: commit
+      empty: true
+      message: Empty commit
+      id: start
+    - type: edit-file
+      filename: east.csv
+      contents: 4821\n9304\n1578\n6042\n7189\n2463\n8931\n5710\n 
