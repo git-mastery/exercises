@@ -26,4 +26,4 @@ def download(verbose: bool):
         f"https://github.com/{get_github_username(verbose)}/{REPO_NAME}",
         verbose,
     )
-    run_command(["git", "push", "-u", "origin", "master"], verbose)
+    run_command(["git", "push", "-u", "origin", "main"], verbose)
