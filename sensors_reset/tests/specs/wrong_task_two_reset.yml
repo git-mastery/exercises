@@ -32,11 +32,11 @@ initialization:
     - type: commit
       message: "Record data for Jan 15"
     # - type: reset
-    #   ref: HEAD~2
+    #   revision: HEAD~2
     #   mode: hard
     # - type: reset
-    #   ref: HEAD~1
+    #   revision: HEAD~1
     #   mode: hard
     # - type: reset
-    #   ref: HEAD~1
+    #   revision: HEAD~1
     #   mode: soft

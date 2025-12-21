@@ -14,7 +14,6 @@ CONTAINS_TASK_THREE_COMMIT = (
 TASK_ONE_WRONG_RESET = "Changes from Jan 14 and Jan 15 should not be present in the working directory or staging area."
 TASK_TWO_WRONG_RESET = "Changes from Jan 13 should be present in the working directory but not in the staging area."
 TASK_THREE_WRONG_RESET = "Changes from Jan 12 should be present in both the working directory and staging area."
-SUCCESS_MESSAGE = "You have reset the repository to the correct state!"
 
 
 def get_staged_files(exercise: GitAutograderExercise) -> set:
@@ -30,7 +29,9 @@ def get_unstaged_files(exercise: GitAutograderExercise) -> set:
 
 
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
-    master_branch = exercise.repo.branches.branch_or_none("master") or exercise.repo.branches.branch_or_none("main")
+    master_branch = exercise.repo.branches.branch_or_none(
+        "master"
+    ) or exercise.repo.branches.branch_or_none("main")
     commit_messages = [str(c.commit.message) for c in master_branch.commits]
 
     staged_files = get_staged_files(exercise)
@@ -60,4 +61,7 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     if not staged_files:
         raise exercise.wrong_answer([TASK_THREE_WRONG_RESET])
 
-    return exercise.to_output([SUCCESS_MESSAGE], GitAutograderStatus.SUCCESSFUL)
+    return exercise.to_output(
+        ["You have reset the repository to the correct state!"],
+        GitAutograderStatus.SUCCESSFUL,
+    )
