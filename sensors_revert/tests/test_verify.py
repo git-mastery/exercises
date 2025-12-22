@@ -5,6 +5,7 @@ from ..verify import (
     COMMITS_UNREVERTED,
     COMMITS_REVERTED_WRONG_ORDER,
     INCORRECT_READINGS,
+    NO_REVERT_COMMIT,
     verify,
 )
 
@@ -54,4 +55,12 @@ def test_incorrect_readings():
             output,
             GitAutograderStatus.UNSUCCESSFUL,
             [INCORRECT_READINGS],
+        )
+
+def test_no_revert_commit():
+    with loader.load("specs/no_revert_commit.yml", "start") as output:
+        assert_output(
+            output,
+            GitAutograderStatus.UNSUCCESSFUL,
+            [NO_REVERT_COMMIT],
         )
