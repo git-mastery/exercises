@@ -22,6 +22,21 @@ def fork_repo(repository_name: str, fork_name: str, verbose: bool) -> None:
     )
 
 
+def fork_repo_all_branches(repository_name: str, fork_name: str, verbose: bool) -> None:
+    """Creates a fork of a repository with all branches."""
+    run(
+        [
+            "gh",
+            "repo",
+            "fork",
+            repository_name,
+            "--fork-name",
+            fork_name,
+        ],
+        verbose,
+    )
+
+
 def clone_repo_with_gh(
     repository_name: str, verbose: bool, name: Optional[str] = None
 ) -> None:
