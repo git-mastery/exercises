@@ -1,33 +1,7 @@
 initialization:
+  clone-from: https://github.com/git-mastery/gm-sensors
   steps:
     - type: commit
-      message: "Record data for Jan 01"
+      empty: true
+      message: Empty commit
       id: start
-    - type: commit
-      message: "Record data for Jan 02"
-    - type: commit
-      message: "Record data for Jan 03"
-    - type: commit
-      message: "Record data for Jan 04"
-    - type: commit
-      message: "Record data for Jan 05"
-    - type: commit
-      message: "Record data for Jan 06"
-    - type: commit
-      message: "Record data for Jan 07"
-    - type: commit
-      message: "Record data for Jan 08"
-    - type: commit
-      message: "Record data for Jan 09"
-    - type: commit
-      message: "Record data for Jan 10"
-    - type: commit
-      message: "Record data for Jan 11"
-    - type: commit
-      message: "Record data for Jan 12"
-    - type: commit
-      message: "Record data for Jan 13"
-    - type: commit
-      message: "Record data for Jan 14"
-    - type: commit
-      message: "Record data for Jan 15"

@@ -11,6 +11,3 @@ initialization:
     - type: reset
       revision: "f900a07"
       mode: mixed
-    - type: reset
-      revision: "c47b187"
-      mode: soft
