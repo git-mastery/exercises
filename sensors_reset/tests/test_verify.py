@@ -4,6 +4,7 @@ from sensors_reset.verify import (
     CONTAINS_TASK_THREE_COMMIT,
     WRONG_FILES_IN_STAGING_AREA,
     WRONG_FILES_IN_WORKING_DIRECTORY,
+    WRONG_HEAD_COMMIT,
 )
 from git_autograder.status import GitAutograderStatus
 from git_autograder.test_utils import assert_output
@@ -57,4 +58,13 @@ def test_wrong_task_three_reset():
             output,
             GitAutograderStatus.UNSUCCESSFUL,
             [WRONG_FILES_IN_WORKING_DIRECTORY, WRONG_FILES_IN_STAGING_AREA],
+        )
+
+
+def test_incorrect_head_commit():
+    with loader.load("specs/incorrect_head_commit.yml", "start") as output:
+        assert_output(
+            output,
+            GitAutograderStatus.UNSUCCESSFUL,
+            [WRONG_HEAD_COMMIT],
         )

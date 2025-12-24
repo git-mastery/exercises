@@ -18,6 +18,7 @@ WRONG_FILES_IN_STAGING_AREA = (
 WRONG_FILES_IN_WORKING_DIRECTORY = (
     "Unexpected files in working directory. Looks like you used the wrong reset mode."
 )
+WRONG_HEAD_COMMIT = "The head commit should be the commit from Jan 11."
 
 
 def get_staged_files(exercise: GitAutograderExercise) -> List[str | None]:
@@ -33,9 +34,7 @@ def get_unstaged_files(exercise: GitAutograderExercise) -> List[str | None]:
 
 
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
-    branch = exercise.repo.branches.branch_or_none(
-        "main"
-    ) or exercise.repo.branches.branch_or_none("master")
+    branch = exercise.repo.branches.branch_or_none("main")
     commit_messages = [str(c.commit.message.strip()) for c in branch.commits]
 
     staged_files = get_staged_files(exercise)
@@ -58,6 +57,9 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     # Task 3: Commit should be removed, changes should be in staging area
     if "Record data for Jan 12" in commit_messages:
         raise exercise.wrong_answer([CONTAINS_TASK_THREE_COMMIT])
+
+    if branch.latest_commit.commit.message.strip() != "Record data for Jan 11":
+        raise exercise.wrong_answer([WRONG_HEAD_COMMIT])
 
     # TODO: need a way to verify task by task
     # currently we verify staging area and working directory of all tasks at once, since we cannot get state of each task
