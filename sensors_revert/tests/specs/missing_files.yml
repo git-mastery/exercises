@@ -1,0 +1,15 @@
+initialization:
+  clone-from: https://github.com/git-mastery/gm-sensors
+  steps:
+    - type: commit
+      empty: true
+      message: Empty commit
+      id: start
+    - type: delete-file
+      filename: east.csv
+    - type: delete-file
+      filename: north.csv
+    - type: delete-file
+      filename: south.csv
+    - type: delete-file
+      filename: west.csv

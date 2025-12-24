@@ -1,0 +1,16 @@
+{
+  "exercise_name": "sensors-revert",
+  "tags": [
+    "git-reset"
+  ],
+  "requires_git": true,
+  "requires_github": true,
+  "base_files": {},
+  "exercise_repo": {
+    "repo_type": "remote",
+    "repo_name": "sensors",
+    "repo_title": "gm-sensors",
+    "create_fork": false,
+    "init": null
+  }
+}
