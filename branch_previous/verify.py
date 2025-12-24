@@ -42,23 +42,19 @@ def verify_branch(
     and contains the expected content in story.txt.
     """
 
-    # Check if branch exists
     branch_helper = exercise.repo.branches
     if not branch_helper.has_branch(branch_name):
         raise exercise.wrong_answer([MISSING_BRANCH.format(branch_name=branch_name)])
     
     branch = branch_helper.branch(branch_name)
     latest_commit = branch.latest_commit
-
-    # Check that user made commits in the branch
+ 
     if latest_commit.hexsha == expected_start_commit.hexsha:
         raise exercise.wrong_answer([MISSING_COMMIT.format(branch_name=branch_name)])
 
-    # Check that previous commit of latest commit is the expected start commit
     if expected_start_commit.hexsha not in [parent.hexsha for parent in latest_commit.commit.parents]:
         raise exercise.wrong_answer([WRONG_START.format(branch_name=branch_name)])
     
-    # Check that the expected content is in story.txt
     with latest_commit.file("story.txt") as content:
         if expected_content not in content:
             raise exercise.wrong_answer([WRONG_CONTENT.format(
@@ -68,7 +64,7 @@ def verify_branch(
 
 
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
-    commits = list(exercise.repo.branches.branch("main").commits)
+    commits = exercise.repo.branches.branch("main").commits
     describe_location_commit = get_commit_from_message(commits, "Describe location")
 
     verify_branch(
