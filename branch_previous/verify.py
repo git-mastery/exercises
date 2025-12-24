@@ -23,7 +23,9 @@ SUCCESS_MESSAGE = (
 )
 
 
-def get_commit_from_message(commits: List[GitAutograderCommit], message: str) -> Optional[GitAutograderCommit]:
+def get_commit_from_message(
+    commits: List[GitAutograderCommit], message: str
+) -> Optional[GitAutograderCommit]:
     """Find a commit with the given message from a list of commits."""
     for commit in commits:
         if message.strip() == commit.commit.message.strip():
@@ -45,22 +47,27 @@ def verify_branch(
     branch_helper = exercise.repo.branches
     if not branch_helper.has_branch(branch_name):
         raise exercise.wrong_answer([MISSING_BRANCH.format(branch_name=branch_name)])
-    
+
     branch = branch_helper.branch(branch_name)
     latest_commit = branch.latest_commit
- 
+
     if latest_commit.hexsha == expected_start_commit.hexsha:
         raise exercise.wrong_answer([MISSING_COMMIT.format(branch_name=branch_name)])
 
-    if expected_start_commit.hexsha not in [parent.hexsha for parent in latest_commit.commit.parents]:
+    if expected_start_commit.hexsha not in [
+        parent.hexsha for parent in latest_commit.commit.parents
+    ]:
         raise exercise.wrong_answer([WRONG_START.format(branch_name=branch_name)])
-    
+
     with latest_commit.file("story.txt") as content:
         if expected_content not in content:
-            raise exercise.wrong_answer([WRONG_CONTENT.format(
-                branch_name=branch_name,
-                expected_content=expected_content
-            )])
+            raise exercise.wrong_answer(
+                [
+                    WRONG_CONTENT.format(
+                        branch_name=branch_name, expected_content=expected_content
+                    )
+                ]
+            )
 
 
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
@@ -71,14 +78,14 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         branch_name="visitor-line",
         expected_start_commit=describe_location_commit,
         expected_content="I heard someone knocking at the door.",
-        exercise=exercise
+        exercise=exercise,
     )
 
     verify_branch(
         branch_name="sleep-line",
         expected_start_commit=describe_location_commit,
         expected_content="I fell asleep on the couch.",
-        exercise=exercise
+        exercise=exercise,
     )
 
     return exercise.to_output(
