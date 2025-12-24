@@ -59,7 +59,7 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
 
     reverted_14th = False
     reverted_13th = False
-    for m in commit_messages[-4:]:
+    for m in commit_messages:
         if not reverted_14th and 'Revert "Record data for Jan 14"' in m:
             reverted_14th = True
         if not reverted_13th and 'Revert "Record data for Jan 13"' in m:
