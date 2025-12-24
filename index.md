@@ -110,6 +110,7 @@
 | [sensors-revert](https://git-mastery.github.io/exercises/sensors_revert) | `gitmastery download sensors-revert` |
 | [merge-squash](https://git-mastery.github.io/exercises/merge_squash) | `gitmastery download merge-squash` |
 | [ff-undo](https://git-mastery.github.io/exercises/ff_undo) | `gitmastery download ff-undo` |
+| [sensors-reset](https://git-mastery.github.io/exercises/sensors_reset) | `gitmastery download sensors-reset` |
 | [merge-undo](https://git-mastery.github.io/exercises/merge_undo) | `gitmastery download merge-undo` |
 
 # git-restore
