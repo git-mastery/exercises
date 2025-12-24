@@ -41,10 +41,12 @@ def test_missing_files():
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,
-            [MISSING_FILE.format(filename="east.csv"),
-             MISSING_FILE.format(filename="north.csv"),
-             MISSING_FILE.format(filename="south.csv"),
-             MISSING_FILE.format(filename="west.csv"),],
+            [
+                MISSING_FILE.format(filename="east.csv"),
+                MISSING_FILE.format(filename="north.csv"),
+                MISSING_FILE.format(filename="south.csv"),
+                MISSING_FILE.format(filename="west.csv"),
+            ],
         )
 
 
