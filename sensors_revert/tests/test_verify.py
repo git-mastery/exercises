@@ -5,7 +5,6 @@ from ..verify import (
     COMMITS_UNREVERTED,
     COMMITS_REVERTED_WRONG_ORDER,
     INCORRECT_READINGS,
-    NO_REVERT_COMMIT,
     verify,
 )
 
@@ -63,7 +62,7 @@ def test_no_revert_commit():
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,
-            [NO_REVERT_COMMIT],
+            [COMMITS_UNREVERTED],
         )
 
 
@@ -72,7 +71,7 @@ def test_only_jan_14_reverted():
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,
-            [NO_REVERT_COMMIT],
+            [COMMITS_UNREVERTED],
         )
 
 
@@ -81,5 +80,5 @@ def test_only_jan_13_reverted():
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,
-            [NO_REVERT_COMMIT],
+            [COMMITS_REVERTED_WRONG_ORDER],
         )

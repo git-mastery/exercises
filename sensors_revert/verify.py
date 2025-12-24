@@ -5,10 +5,9 @@ from git_autograder import (
 )
 
 MISSING_FILE = "You are missing the {filename} file."
-COMMITS_UNREVERTED = "You have not reverted the commits yet!"
+COMMITS_UNREVERTED = "You have not reverted all the commits yet!"
 COMMITS_REVERTED_WRONG_ORDER = "You have reverted the commits in the wrong order!"
 INCORRECT_READINGS = "The files contain the wrong readings!"
-NO_REVERT_COMMIT = "You have not performed the changes through revert commits!"
 
 EXPECTED_EAST = (
     "4821\n9304\n1578\n6042\n7189\n2463\n8931\n5710\n4428\n3097\n8652\n1904\n7485\n6379\n5140\n9836\n2057\n4719\n3568\n8243\n"
@@ -22,14 +21,6 @@ EXPECTED_SOUTH = (
 EXPECTED_WEST = (
     "5193\n8042\n6721\n4389\n2075\n9510\n3648\n7281\n5904\n1837\n4416\n9032\n7765\n6208\n3589\n8471\n2940\n1683\n7352\n5129\n"
 )
-
-UNREVERTED_EAST = EXPECTED_EAST.replace("7485", "7285")
-UNREVERTED_NORTH = EXPECTED_NORTH.replace("8501", "8301")
-# Unreverted South and West are equivalent to expected South and West
-
-# Reverting East and North in the wrong order leads to the same result
-WRONG_ORDER_REVERT_SOUTH = EXPECTED_SOUTH.replace("4530", "4330")
-WRONG_ORDER_REVERT_WEST = EXPECTED_WEST.replace("3648", "3638")
 
 
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
@@ -62,24 +53,28 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     if comments:
         raise exercise.wrong_answer(comments)
 
-    if (east_contents == UNREVERTED_EAST
-        and north_contents == UNREVERTED_NORTH):
-        raise exercise.wrong_answer([COMMITS_UNREVERTED])
+    branch = exercise.repo.branches.branch("main")
+    commit_messages = [str(c.commit.message.strip()) for c in branch.commits]
+    commit_messages.reverse()
 
-    if (south_contents == WRONG_ORDER_REVERT_SOUTH
-        and west_contents == WRONG_ORDER_REVERT_WEST):
-        raise exercise.wrong_answer([COMMITS_REVERTED_WRONG_ORDER])
+    reverted_14th = False
+    reverted_13th = False
+    for m in commit_messages[-4:]:
+        if not reverted_14th and 'Revert "Record data for Jan 14"' in m:
+            reverted_14th = True
+        if not reverted_13th and 'Revert "Record data for Jan 13"' in m:
+            if not reverted_14th:
+                raise exercise.wrong_answer([COMMITS_REVERTED_WRONG_ORDER])
+            reverted_13th = True
+            break
+
+    if not (reverted_14th and reverted_13th):
+        raise exercise.wrong_answer([COMMITS_UNREVERTED])
 
     if not (east_contents == EXPECTED_EAST
         and north_contents == EXPECTED_NORTH
         and south_contents == EXPECTED_SOUTH
         and west_contents == EXPECTED_WEST):
         raise exercise.wrong_answer([INCORRECT_READINGS])
-
-    commits = exercise.repo.branches.branch("main").commits
-
-    if ("Revert" not in commits[0].commit.message
-        or "Revert" not in commits[1].commit.message):
-        raise exercise.wrong_answer([NO_REVERT_COMMIT])
 
     return exercise.to_output(["Good work reverting commits!"], GitAutograderStatus.SUCCESSFUL)
