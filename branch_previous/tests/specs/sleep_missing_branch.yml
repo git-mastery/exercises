@@ -19,7 +19,6 @@ initialization:
     - type: commit
       message: Describe location
       empty: false
-      id: describe_location_commit
     - type: append-file
       filename: story.txt
       contents: "I heard a strange noise.\n"
@@ -30,8 +29,9 @@ initialization:
       message: Mention noise
       empty: false
     # Only create visitor-line branch, not sleep-line
-    - type: bash
-      runs: git checkout -b visitor-line HEAD~1
+    - type: checkout
+      branch-name: visitor-line
+      start-point: HEAD~1
     - type: append-file
       filename: story.txt
       contents: "I heard someone knocking at the door.\n"

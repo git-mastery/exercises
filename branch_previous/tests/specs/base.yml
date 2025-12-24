@@ -18,7 +18,6 @@ initialization:
     - type: commit
       message: Describe location
       empty: false
-      id: describe_location_commit
     - type: append-file
       filename: story.txt
       contents: "I heard a strange noise.\n"
@@ -28,8 +27,9 @@ initialization:
     - type: commit
       message: Mention noise
       empty: false
-    - type: bash
-      runs: git checkout -b visitor-line HEAD~1
+    - type: checkout
+      branch-name: visitor-line
+      start-point: HEAD~1
     - type: append-file
       filename: story.txt
       contents: "I heard someone knocking at the door.\n"
@@ -39,8 +39,9 @@ initialization:
     - type: commit
       message: Mention knocking
       empty: false
-    - type: bash
-      runs: git checkout -b sleep-line HEAD~1
+    - type: checkout
+      branch-name: sleep-line
+      start-point: HEAD~1
     - type: append-file
       filename: story.txt
       contents: "I fell asleep on the couch.\n"

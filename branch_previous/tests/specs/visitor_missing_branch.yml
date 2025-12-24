@@ -18,7 +18,6 @@ initialization:
     - type: commit
       message: Describe location
       empty: false
-      id: second_commit
     - type: append-file
       filename: story.txt
       contents: "I heard a strange noise.\n"
@@ -29,8 +28,9 @@ initialization:
       message: Mention noise
       empty: false
     # Only create sleep-line branch, not visitor-line
-    - type: bash
-      runs: git checkout -b sleep-line HEAD~1
+    - type: checkout
+      branch-name: sleep-line
+      start-point: HEAD~1
     - type: append-file
       filename: story.txt
       contents: "I fell asleep on the couch.\n"

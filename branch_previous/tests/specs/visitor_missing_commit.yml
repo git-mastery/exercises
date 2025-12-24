@@ -19,7 +19,6 @@ initialization:
     - type: commit
       message: Describe location
       empty: false
-      id: describe_location_commit
     - type: append-file
       filename: story.txt
       contents: "I heard a strange noise.\n"
@@ -30,11 +29,13 @@ initialization:
       message: Mention noise
       empty: false
     # visitor-line branch created but no commit made
-    - type: bash
-      runs: git checkout -b visitor-line HEAD~1
+    - type: checkout
+      branch-name: visitor-line
+      start-point: HEAD~1
     # sleep-line branch created with commit
-    - type: bash
-      runs: git checkout -b sleep-line
+    - type: checkout
+      branch-name: sleep-line
+      start-point: HEAD
     - type: append-file
       filename: story.txt
       contents: "I fell asleep on the couch.\n"
