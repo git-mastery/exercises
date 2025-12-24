@@ -5,10 +5,10 @@ from git_autograder import (
 )
 
 MISSING_FILE = "You are missing the {filename} file."
-COMMITS_UNREVERTED = "You have not reverted the commits!"
+COMMITS_UNREVERTED = "You have not reverted the commits yet!"
 COMMITS_REVERTED_WRONG_ORDER = "You have reverted the commits in the wrong order!"
 INCORRECT_READINGS = "The files contain the wrong readings!"
-NO_REVERT_COMMIT = "You have not performed the revert commits!"
+NO_REVERT_COMMIT = "You have not performed the changes through revert commits!"
 
 EXPECTED_EAST = (
     "4821\n9304\n1578\n6042\n7189\n2463\n8931\n5710\n4428\n3097\n8652\n1904\n7485\n6379\n5140\n9836\n2057\n4719\n3568\n8243\n"

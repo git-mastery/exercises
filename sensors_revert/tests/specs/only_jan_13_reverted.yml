@@ -1,0 +1,9 @@
+initialization:
+  clone-from: https://github.com/git-mastery/gm-sensors
+  steps:
+    - type: commit
+      empty: true
+      message: Empty commit
+      id: start
+    - type: revert
+      revision: 59505167b47f35c12d21bc61d731226b394a5341

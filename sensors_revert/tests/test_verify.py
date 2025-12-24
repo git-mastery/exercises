@@ -57,8 +57,27 @@ def test_incorrect_readings():
             [INCORRECT_READINGS],
         )
 
+
 def test_no_revert_commit():
     with loader.load("specs/no_revert_commit.yml", "start") as output:
+        assert_output(
+            output,
+            GitAutograderStatus.UNSUCCESSFUL,
+            [NO_REVERT_COMMIT],
+        )
+
+
+def test_only_jan_14_reverted():
+    with loader.load("specs/only_jan_14_reverted.yml", "start") as output:
+        assert_output(
+            output,
+            GitAutograderStatus.UNSUCCESSFUL,
+            [NO_REVERT_COMMIT],
+        )
+
+
+def test_only_jan_13_reverted():
+    with loader.load("specs/only_jan_13_reverted.yml", "start") as output:
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,
