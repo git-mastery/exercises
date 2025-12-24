@@ -439,6 +439,22 @@
     }
   },
   {
+    "exercise_name": "branch-previous",
+    "tags": [
+      "git-branch"
+    ],
+    "requires_git": true,
+    "requires_github": false,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "local",
+      "repo_name": "horror-story",
+      "repo_title": null,
+      "create_fork": null,
+      "init": true
+    }
+  },
+  {
     "exercise_name": "amateur-detective",
     "tags": [
       "git-status"

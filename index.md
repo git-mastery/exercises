@@ -21,6 +21,7 @@
 | [side-track](https://git-mastery.github.io/exercises/side_track) | `gitmastery download side-track` |
 | [mix-messy-graph](https://git-mastery.github.io/exercises/mix_messy_graph) | `gitmastery download mix-messy-graph` |
 | [merge-undo](https://git-mastery.github.io/exercises/merge_undo) | `gitmastery download merge-undo` |
+| [branch-previous](https://git-mastery.github.io/exercises/branch_previous) | `gitmastery download branch-previous` |
 
 # git-checkout
 
