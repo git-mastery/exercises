@@ -1,8 +1,7 @@
-import os
 from exercise_utils.test import GitAutograderTestLoader, assert_output
 from git_autograder import GitAutograderStatus
 
-from ..verify import (
+from .verify import (
     FIRST_TAG_NOT_LIGHTWEIGHT,
     FIRST_TAG_WRONG_COMMIT,
     MISSING_FIRST_TAG,
