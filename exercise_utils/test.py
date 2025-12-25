@@ -50,7 +50,6 @@ class GitAutograderTest:
             assert self.__temp_dir is not None
             autograder = GitAutograderExercise(exercise_path=self.__temp_dir.name)
             output = self.grade_func(autograder)
-            print(output)
         except (
             GitAutograderInvalidStateException,
             GitAutograderWrongAnswerException,
