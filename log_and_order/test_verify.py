@@ -1,12 +1,14 @@
 from unittest.mock import patch
-from git_autograder import GitAutograderStatus, GitAutograderTestLoader, assert_output
+
+from exercise_utils.test import GitAutograderTestLoader, assert_output
+from git_autograder import GitAutograderStatus
 from git_autograder.answers.rules.has_exact_value_rule import HasExactValueRule
 
-from ..verify import QUESTION_ONE, QUESTION_THREE, QUESTION_TWO, OneOfValueRule, verify
+from .verify import QUESTION_ONE, QUESTION_THREE, QUESTION_TWO, OneOfValueRule, verify
 
 REPOSITORY_NAME = "log-and-order"
 
-loader = GitAutograderTestLoader(__file__, REPOSITORY_NAME, verify)
+loader = GitAutograderTestLoader(REPOSITORY_NAME, verify)
 
 
 def test_base():
@@ -16,16 +18,15 @@ def test_base():
             "log_and_order.verify.get_target_commit_message", return_value="Hello world"
         ),
         patch("log_and_order.verify.get_target_commit_sha", return_value="b" * 15),
-        loader.load(
-            "specs/base.yml",
-            "start",
+        loader.start(
             mock_answers={
                 QUESTION_ONE: "a" * 7,
                 QUESTION_TWO.format(SHA="hi"): "Hello world",
                 QUESTION_THREE: "b" * 7,
             },
-        ) as output,
+        ) as (test, _),
     ):
+        output = test.run()
         assert_output(output, GitAutograderStatus.SUCCESSFUL)
 
 
@@ -36,16 +37,15 @@ def test_wrong_head_sha():
             "log_and_order.verify.get_target_commit_message", return_value="Hello world"
         ),
         patch("log_and_order.verify.get_target_commit_sha", return_value="b" * 15),
-        loader.load(
-            "specs/base.yml",
-            "start",
+        loader.start(
             mock_answers={
                 QUESTION_ONE: "b" * 7,
                 QUESTION_TWO.format(SHA="hi"): "Hello world",
                 QUESTION_THREE: "b" * 7,
             },
-        ) as output,
+        ) as (test, _),
     ):
+        output = test.run()
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,
@@ -60,16 +60,15 @@ def test_wrong_head_message():
             "log_and_order.verify.get_target_commit_message", return_value="Hello world"
         ),
         patch("log_and_order.verify.get_target_commit_sha", return_value="b" * 15),
-        loader.load(
-            "specs/base.yml",
-            "start",
+        loader.start(
             mock_answers={
                 QUESTION_ONE: "a" * 7,
                 QUESTION_TWO.format(SHA="hi"): "Bye world",
                 QUESTION_THREE: "b" * 7,
             },
-        ) as output,
+        ) as (test, _),
     ):
+        output = test.run()
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,
@@ -88,16 +87,15 @@ def test_wrong_target_sha():
             "log_and_order.verify.get_target_commit_message", return_value="Hello world"
         ),
         patch("log_and_order.verify.get_target_commit_sha", return_value="b" * 15),
-        loader.load(
-            "specs/base.yml",
-            "start",
+        loader.start(
             mock_answers={
                 QUESTION_ONE: "a" * 7,
                 QUESTION_TWO.format(SHA="hi"): "Hello world",
                 QUESTION_THREE: "a" * 7,
             },
-        ) as output,
+        ) as (test, _),
     ):
+        output = test.run()
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,
