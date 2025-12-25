@@ -1,15 +1,22 @@
-from git_autograder import GitAutograderStatus, GitAutograderTestLoader, assert_output
+from exercise_utils.test import GitAutograderTestLoader
+from git_autograder import GitAutograderStatus, assert_output
 
 from ..verify import NOT_ADDED, verify
 
 REPOSITORY_NAME = "stage-fright"
 
-loader = GitAutograderTestLoader(__file__, REPOSITORY_NAME, verify)
+loader = GitAutograderTestLoader(REPOSITORY_NAME, verify)
 
 
 def test_missing_add():
-    with loader.load("specs/missing_add.yml", "start") as output:
+    with loader.start() as (test, rs):
+        rs.git.commit(message="Empty", allow_empty=True)
+        for name in ["alice", "bob", "jim", "joe", "carrey"]:
+            rs.files.create_or_update(f"{name}.txt")
+        rs.git.add(["jim.txt", "carrey.txt"])
+
         names = ["alice", "bob", "joe"]
+        output = test.run()
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,
@@ -18,7 +25,13 @@ def test_missing_add():
 
 
 def test_added_all():
-    with loader.load("specs/added_all.yml", "start") as output:
+    with loader.start() as (test, rs):
+        rs.git.commit(message="Empty", allow_empty=True)
+        for name in ["alice", "bob", "jim", "joe", "carrey"]:
+            rs.files.create_or_update(f"{name}.txt")
+            rs.git.add(f"{name}.txt")
+
+        output = test.run()
         assert_output(
             output,
             GitAutograderStatus.SUCCESSFUL,
