@@ -1,15 +1,17 @@
-from git_autograder import GitAutograderStatus, GitAutograderTestLoader, assert_output
+from exercise_utils.test import GitAutograderTestLoader, assert_output
+from git_autograder import GitAutograderStatus
 from git_autograder.answers.rules import (
-    HasExactValueRule,
-    HasExactListRule,
-    NotEmptyRule,
     ContainsListRule,
+    HasExactListRule,
+    HasExactValueRule,
+    NotEmptyRule,
 )
-from ..verify import QUESTION_ONE, QUESTION_TWO, QUESTION_THREE, QUESTION_FOUR, verify
+
+from .verify import QUESTION_FOUR, QUESTION_ONE, QUESTION_THREE, QUESTION_TWO, verify
 
 REPOSITORY_NAME = "view-commits"
 
-loader = GitAutograderTestLoader(__file__, REPOSITORY_NAME, verify)
+loader = GitAutograderTestLoader(REPOSITORY_NAME, verify)
 
 CORRECT_QUESTION_ONE = "Eric"
 CORRECT_QUESTION_TWO = "Bruce"
@@ -41,15 +43,15 @@ WRONG_QUESTION_FOUR = "- Dave"
 
 
 def test_no_answers():
-    with loader.load(
-        "specs/base.yml",
+    with loader.start(
         mock_answers={
             QUESTION_ONE: "",
             QUESTION_TWO: "",
             QUESTION_THREE: "",
             QUESTION_FOUR: "",
         },
-    ) as output:
+    ) as (test, _):
+        output = test.run()
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,
@@ -63,15 +65,15 @@ def test_no_answers():
 
 
 def test_incomplete_answer():
-    with loader.load(
-        "specs/base.yml",
+    with loader.start(
         mock_answers={
             QUESTION_ONE: CORRECT_QUESTION_ONE,
             QUESTION_TWO: CORRECT_QUESTION_TWO,
             QUESTION_THREE: "",
             QUESTION_FOUR: "",
         },
-    ) as output:
+    ) as (test, _):
+        output = test.run()
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,
@@ -83,15 +85,15 @@ def test_incomplete_answer():
 
 
 def test_wrong_question_one():
-    with loader.load(
-        "specs/base.yml",
+    with loader.start(
         mock_answers={
             QUESTION_ONE: WRONG_QUESTION_ONE,
             QUESTION_TWO: CORRECT_QUESTION_TWO,
             QUESTION_THREE: CORRECT_QUESTION_THREE,
             QUESTION_FOUR: CORRECT_QUESTION_FOUR,
         },
-    ) as output:
+    ) as (test, _):
+        output = test.run()
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,
@@ -100,15 +102,15 @@ def test_wrong_question_one():
 
 
 def test_wrong_question_two():
-    with loader.load(
-        "specs/base.yml",
+    with loader.start(
         mock_answers={
             QUESTION_ONE: CORRECT_QUESTION_ONE,
             QUESTION_TWO: WRONG_QUESTION_TWO,
             QUESTION_THREE: CORRECT_QUESTION_THREE,
             QUESTION_FOUR: CORRECT_QUESTION_FOUR,
         },
-    ) as output:
+    ) as (test, _):
+        output = test.run()
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,
@@ -117,15 +119,15 @@ def test_wrong_question_two():
 
 
 def test_incomplete_question_three():
-    with loader.load(
-        "specs/base.yml",
+    with loader.start(
         mock_answers={
             QUESTION_ONE: CORRECT_QUESTION_ONE,
             QUESTION_TWO: CORRECT_QUESTION_TWO,
             QUESTION_THREE: INCOMPLETE_QUESTION_THREE,
             QUESTION_FOUR: CORRECT_QUESTION_FOUR,
         },
-    ) as output:
+    ) as (test, _):
+        output = test.run()
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,
@@ -134,15 +136,15 @@ def test_incomplete_question_three():
 
 
 def test_wrong_question_three():
-    with loader.load(
-        "specs/base.yml",
+    with loader.start(
         mock_answers={
             QUESTION_ONE: CORRECT_QUESTION_ONE,
             QUESTION_TWO: CORRECT_QUESTION_TWO,
             QUESTION_THREE: WRONG_QUESTION_THREE,
             QUESTION_FOUR: CORRECT_QUESTION_FOUR,
         },
-    ) as output:
+    ) as (test, _):
+        output = test.run()
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,
@@ -153,15 +155,15 @@ def test_wrong_question_three():
 
 
 def test_wrong_question_three_extra_answer():
-    with loader.load(
-        "specs/base.yml",
+    with loader.start(
         mock_answers={
             QUESTION_ONE: CORRECT_QUESTION_ONE,
             QUESTION_TWO: CORRECT_QUESTION_TWO,
             QUESTION_THREE: EXTRA_QUESTION_THREE,
             QUESTION_FOUR: CORRECT_QUESTION_FOUR,
         },
-    ) as output:
+    ) as (test, _):
+        output = test.run()
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,
@@ -170,13 +172,13 @@ def test_wrong_question_three_extra_answer():
 
 
 def test_valid_answers():
-    with loader.load(
-        "specs/base.yml",
+    with loader.start(
         mock_answers={
             QUESTION_ONE: CORRECT_QUESTION_ONE,
             QUESTION_TWO: CORRECT_QUESTION_TWO,
             QUESTION_THREE: CORRECT_QUESTION_THREE,
             QUESTION_FOUR: CORRECT_QUESTION_FOUR,
         },
-    ) as output:
+    ) as (test, _):
+        output = test.run()
         assert_output(output, GitAutograderStatus.SUCCESSFUL)
