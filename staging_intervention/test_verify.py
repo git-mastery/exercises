@@ -1,7 +1,7 @@
 from exercise_utils.test import GitAutograderTestLoader, assert_output
 from git_autograder.status import GitAutograderStatus
 
-from ..verify import EXTRA_FILES_UNSTAGED, MISSING_FILES_UNSTAGED, verify
+from .verify import EXTRA_FILES_UNSTAGED, MISSING_FILES_UNSTAGED, verify
 
 REPOSITORY_NAME = "staging-intervention"
 
