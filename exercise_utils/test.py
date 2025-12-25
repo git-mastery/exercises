@@ -42,10 +42,12 @@ class GitAutograderTest:
         self,
         exercise_name: str,
         grade_func: Callable[[GitAutograderExercise], GitAutograderOutput],
+        clone_from: Optional[str] = None,
         mock_answers: Optional[Dict[str, str]] = None,
     ) -> None:
         self.exercise_name = exercise_name
         self.grade_func = grade_func
+        self.clone_from = clone_from
         self.mock_answers = mock_answers
         self.__rs: Optional[RepoSmith] = None
         self.__rs_context: Optional[ContextManager[RepoSmith]] = None
@@ -148,9 +150,17 @@ class GitAutograderTest:
         # run all commands within the repo
         os.chdir(repo_path)
 
-        self.__rs_context = create_repo_smith(
-            False, existing_path=repo_path.absolute().as_posix()
-        )
+        if self.clone_from is not None:
+            self.__rs_context = create_repo_smith(
+                False,
+                existing_path=repo_path.absolute().as_posix(),
+                clone_from=self.clone_from,
+            )
+        else:
+            self.__rs_context = create_repo_smith(
+                False,
+                existing_path=repo_path.absolute().as_posix(),
+            )
         self.__rs = self.__rs_context.__enter__()
         self.__rs.add_helper(GitMasteryHelper)
 
@@ -184,11 +194,13 @@ class GitAutograderTestLoader:
     @contextmanager
     def start(
         self,
+        clone_from: Optional[str] = None,
         mock_answers: Optional[Dict[str, str]] = None,
     ) -> Iterator[Tuple[GitAutograderTest, RepoSmith]]:
         test = GitAutograderTest(
             self.exercise_name,
             self.grade_func,
+            clone_from,
             mock_answers,
         )
         with test as (ctx, rs):
