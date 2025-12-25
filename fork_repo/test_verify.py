@@ -3,20 +3,19 @@ from pathlib import Path
 from unittest.mock import patch
 
 import pytest
+from exercise_utils.test import GitAutograderTestLoader, assert_output
 from git.repo import Repo
 from git_autograder import (
     GitAutograderExercise,
-    GitAutograderTestLoader,
     GitAutograderWrongAnswerException,
-    assert_output,
 )
 from git_autograder.status import GitAutograderStatus
 
-from ..verify import IMPROPER_GH_CLI_SETUP, NO_FORK_FOUND, NOT_GIT_MASTERY_FORK, verify
+from .verify import IMPROPER_GH_CLI_SETUP, NO_FORK_FOUND, NOT_GIT_MASTERY_FORK, verify
 
 REPOSITORY_NAME = "fork-repo"
 
-loader = GitAutograderTestLoader(__file__, REPOSITORY_NAME, verify)
+loader = GitAutograderTestLoader(REPOSITORY_NAME, verify)
 
 # NOTE: This exercise is a special case where we do not require repo-smith. Instead,
 # we directly mock function calls to verify that all branches are covered for us.
