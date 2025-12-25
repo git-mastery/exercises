@@ -1,10 +1,9 @@
 from git_autograder.answers.rules.not_empty_rule import NotEmptyRule
 from git_autograder.answers.rules.has_exact_value_rule import HasExactValueRule
 from git_autograder.status import GitAutograderStatus
-from git_autograder.test_utils import assert_output
-from git_autograder import GitAutograderTestLoader
+from exercise_utils.test import GitAutograderTestLoader, assert_output
 
-from ..verify import (
+from .verify import (
     QUESTION_ONE,
     QUESTION_TWO,
     QUESTION_THREE,
@@ -17,32 +16,32 @@ from ..verify import (
 
 REPOSITORY_NAME = "sensors-checkout"
 
-loader = GitAutograderTestLoader(__file__, REPOSITORY_NAME, verify)
+loader = GitAutograderTestLoader(REPOSITORY_NAME, verify)
 
 INCORRECT_ANSWER = "incorrect answer"
 
 
 def test_correct_answers():
-    with loader.load(
-        "specs/base.yml",
+    with loader.start(
         mock_answers={
             QUESTION_ONE: CORRECT_ANSWER_Q1,
             QUESTION_TWO: CORRECT_ANSWER_Q2,
             QUESTION_THREE: CORRECT_ANSWER_Q3,
         },
-    ) as output:
+    ) as (test, _):
+        output = test.run()
         assert_output(output, GitAutograderStatus.SUCCESSFUL, [SUCCESS_MESSAGE])
 
 
 def test_incomplete_answers():
-    with loader.load(
-        "specs/base.yml",
+    with loader.start(
         mock_answers={
             QUESTION_ONE: CORRECT_ANSWER_Q1,
             QUESTION_TWO: CORRECT_ANSWER_Q2,
             QUESTION_THREE: "",
         },
-    ) as output:
+    ) as (test, _):
+        output = test.run()
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,
@@ -53,14 +52,14 @@ def test_incomplete_answers():
 
 
 def test_no_answers():
-    with loader.load(
-        "specs/base.yml",
+    with loader.start(
         mock_answers={
             QUESTION_ONE: "",
             QUESTION_TWO: "",
             QUESTION_THREE: "",
         },
-    ) as output:
+    ) as (test, _):
+        output = test.run()
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,
@@ -73,14 +72,14 @@ def test_no_answers():
 
 
 def test_incorrect_q1():
-    with loader.load(
-        "specs/base.yml",
+    with loader.start(
         mock_answers={
             QUESTION_ONE: INCORRECT_ANSWER,
             QUESTION_TWO: CORRECT_ANSWER_Q2,
             QUESTION_THREE: CORRECT_ANSWER_Q3,
         },
-    ) as output:
+    ) as (test, _):
+        output = test.run()
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,
@@ -89,14 +88,14 @@ def test_incorrect_q1():
 
 
 def test_incorrect_q2():
-    with loader.load(
-        "specs/base.yml",
+    with loader.start(
         mock_answers={
             QUESTION_ONE: CORRECT_ANSWER_Q1,
             QUESTION_TWO: INCORRECT_ANSWER,
             QUESTION_THREE: CORRECT_ANSWER_Q3,
         },
-    ) as output:
+    ) as (test, _):
+        output = test.run()
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,
@@ -105,14 +104,14 @@ def test_incorrect_q2():
 
 
 def test_incorrect_q3():
-    with loader.load(
-        "specs/base.yml",
+    with loader.start(
         mock_answers={
             QUESTION_ONE: CORRECT_ANSWER_Q1,
             QUESTION_TWO: CORRECT_ANSWER_Q2,
             QUESTION_THREE: INCORRECT_ANSWER,
         },
-    ) as output:
+    ) as (test, _):
+        output = test.run()
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,
