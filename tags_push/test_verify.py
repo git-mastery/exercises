@@ -13,7 +13,7 @@ from git_autograder import (
     assert_output,
 )
 
-from ..verify import (
+from .verify import (
     IMPROPER_GH_CLI_SETUP,
     TAG_1_NAME,
     TAG_2_NAME,
