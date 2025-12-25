@@ -12,7 +12,7 @@ from git_autograder import (
 )
 from git_autograder.status import GitAutograderStatus
 
-from ..verify import (
+from .verify import (
     CLONE_MISSING,
     IMPROPER_GH_CLI_SETUP,
     NO_FORK_FOUND,
