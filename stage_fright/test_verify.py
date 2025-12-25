@@ -1,7 +1,7 @@
 from exercise_utils.test import GitAutograderTestLoader
 from git_autograder import GitAutograderStatus, assert_output
 
-from ..verify import NOT_ADDED, verify
+from .verify import NOT_ADDED, verify
 
 REPOSITORY_NAME = "stage-fright"
 
