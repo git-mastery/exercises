@@ -1,4 +1,12 @@
-from exercise_utils.test import GitAutograderTestLoader, assert_output
+from contextlib import contextmanager
+from typing import Iterator, Tuple
+
+from repo_smith.repo_smith import RepoSmith
+from exercise_utils.test import (
+    GitAutograderTest,
+    GitAutograderTestLoader,
+    assert_output,
+)
 from git_autograder.status import GitAutograderStatus
 
 from .verify import (
@@ -14,7 +22,8 @@ REPOSITORY_NAME = "branch-previous"
 loader = GitAutograderTestLoader(REPOSITORY_NAME, verify)
 
 
-def test_base():
+@contextmanager
+def base_setup() -> Iterator[Tuple[GitAutograderTest, RepoSmith]]:
     with loader.start() as (test, rs):
         rs.files.create_or_update("story.txt", "It was a dark and stormy night.")
         rs.git.add(all=True)
@@ -28,6 +37,11 @@ def test_base():
         rs.git.add(all=True)
         rs.git.commit(message="Mention noise")
 
+        yield test, rs
+
+
+def test_base():
+    with base_setup() as (test, rs):
         rs.git.checkout("visitor-line", start_point="HEAD~1", branch=True)
 
         rs.files.append("story.txt", "I heard someone knocking at the door.")
@@ -45,19 +59,7 @@ def test_base():
 
 
 def test_visitor_missing_branch():
-    with loader.start() as (test, rs):
-        rs.files.create_or_update("story.txt", "It was a dark and stormy night.")
-        rs.git.add(all=True)
-        rs.git.commit(message="Describe night")
-
-        rs.files.append("story.txt", "I was alone in my room.")
-        rs.git.add(all=True)
-        rs.git.commit(message="Describe location")
-
-        rs.files.append("story.txt", "I heard a strange noise.")
-        rs.git.add(all=True)
-        rs.git.commit(message="Mention noise")
-
+    with base_setup() as (test, rs):
         rs.git.checkout("sleep-line", start_point="HEAD~1", branch=True)
 
         rs.files.append("story.txt", "I fell asleep on the couch.")
@@ -73,19 +75,7 @@ def test_visitor_missing_branch():
 
 
 def test_sleep_missing_branch():
-    with loader.start() as (test, rs):
-        rs.files.create_or_update("story.txt", "It was a dark and stormy night.")
-        rs.git.add(all=True)
-        rs.git.commit(message="Describe night")
-
-        rs.files.append("story.txt", "I was alone in my room.")
-        rs.git.add(all=True)
-        rs.git.commit(message="Describe location")
-
-        rs.files.append("story.txt", "I heard a strange noise.")
-        rs.git.add(all=True)
-        rs.git.commit(message="Mention noise")
-
+    with base_setup() as (test, rs):
         rs.git.checkout("visitor-line", start_point="HEAD~1", branch=True)
 
         rs.files.append("story.txt", "I heard someone knocking at the door.")
@@ -101,19 +91,7 @@ def test_sleep_missing_branch():
 
 
 def test_visitor_wrong_start_first_commit():
-    with loader.start() as (test, rs):
-        rs.files.create_or_update("story.txt", "It was a dark and stormy night.")
-        rs.git.add(all=True)
-        rs.git.commit(message="Describe night")
-
-        rs.files.append("story.txt", "I was alone in my room.")
-        rs.git.add(all=True)
-        rs.git.commit(message="Describe location")
-
-        rs.files.append("story.txt", "I heard a strange noise.")
-        rs.git.add(all=True)
-        rs.git.commit(message="Mention noise")
-
+    with base_setup() as (test, rs):
         rs.git.checkout("visitor-line", start_point="HEAD~2", branch=True)
 
         rs.files.append("story.txt", "I heard someone knocking at the door.")
@@ -135,19 +113,7 @@ def test_visitor_wrong_start_first_commit():
 
 
 def test_visitor_wrong_start_third_commit():
-    with loader.start() as (test, rs):
-        rs.files.create_or_update("story.txt", "It was a dark and stormy night.")
-        rs.git.add(all=True)
-        rs.git.commit(message="Describe night")
-
-        rs.files.append("story.txt", "I was alone in my room.")
-        rs.git.add(all=True)
-        rs.git.commit(message="Describe location")
-
-        rs.files.append("story.txt", "I heard a strange noise.")
-        rs.git.add(all=True)
-        rs.git.commit(message="Mention noise")
-
+    with base_setup() as (test, rs):
         rs.git.checkout("visitor-line", start_point="HEAD", branch=True)
 
         rs.files.append("story.txt", "I heard someone knocking at the door.")
@@ -169,19 +135,7 @@ def test_visitor_wrong_start_third_commit():
 
 
 def test_visitor_wrong_content():
-    with loader.start() as (test, rs):
-        rs.files.create_or_update("story.txt", "It was a dark and stormy night.")
-        rs.git.add(all=True)
-        rs.git.commit(message="Describe night")
-
-        rs.files.append("story.txt", "I was alone in my room.")
-        rs.git.add(all=True)
-        rs.git.commit(message="Describe location")
-
-        rs.files.append("story.txt", "I heard a strange noise.")
-        rs.git.add(all=True)
-        rs.git.commit(message="Mention noise")
-
+    with base_setup() as (test, rs):
         rs.git.checkout("visitor-line", start_point="HEAD~1", branch=True)
 
         rs.files.append("story.txt", "Wrong content here.")
@@ -208,19 +162,7 @@ def test_visitor_wrong_content():
 
 
 def test_sleep_wrong_content():
-    with loader.start() as (test, rs):
-        rs.files.create_or_update("story.txt", "It was a dark and stormy night.")
-        rs.git.add(all=True)
-        rs.git.commit(message="Describe night")
-
-        rs.files.append("story.txt", "I was alone in my room.")
-        rs.git.add(all=True)
-        rs.git.commit(message="Describe location")
-
-        rs.files.append("story.txt", "I heard a strange noise.")
-        rs.git.add(all=True)
-        rs.git.commit(message="Mention noise")
-
+    with base_setup() as (test, rs):
         rs.git.checkout("visitor-line", start_point="HEAD~1", branch=True)
 
         rs.files.append("story.txt", "I heard someone knocking at the door.")
@@ -247,19 +189,7 @@ def test_sleep_wrong_content():
 
 
 def test_visitor_missing_commit():
-    with loader.start() as (test, rs):
-        rs.files.create_or_update("story.txt", "It was a dark and stormy night.")
-        rs.git.add(all=True)
-        rs.git.commit(message="Describe night")
-
-        rs.files.append("story.txt", "I was alone in my room.")
-        rs.git.add(all=True)
-        rs.git.commit(message="Describe location")
-
-        rs.files.append("story.txt", "I heard a strange noise.")
-        rs.git.add(all=True)
-        rs.git.commit(message="Mention noise")
-
+    with base_setup() as (test, rs):
         rs.git.checkout("visitor-line", start_point="HEAD~1", branch=True)
 
         rs.git.checkout("sleep-line", start_point="HEAD~1", branch=True)
