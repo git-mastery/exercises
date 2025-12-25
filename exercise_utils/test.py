@@ -1,0 +1,192 @@
+import os
+import tempfile
+from contextlib import contextmanager
+from datetime import datetime
+from functools import wraps
+from pathlib import Path
+from typing import Callable, ContextManager, Dict, Iterator, List, Optional, Self, Tuple
+from unittest import mock
+
+import pytz
+from git import Repo
+from git_autograder import (
+    GitAutograderExercise,
+    GitAutograderInvalidStateException,
+    GitAutograderOutput,
+    GitAutograderStatus,
+    GitAutograderWrongAnswerException,
+)
+from git_autograder.answers import GitAutograderAnswers
+from git_autograder.exercise_config import ExerciseConfig
+from repo_smith.repo_smith import RepoSmith, create_repo_smith
+
+"""Stores the test utils for exercises."""
+
+
+class GitAutograderTest:
+    def __init__(
+        self,
+        exercise_name: str,
+        grade_func: Callable[[GitAutograderExercise], GitAutograderOutput],
+        mock_answers: Optional[Dict[str, str]] = None,
+    ) -> None:
+        self.exercise_name = exercise_name
+        self.grade_func = grade_func
+        self.mock_answers = mock_answers
+        self.__rs: Optional[RepoSmith] = None
+        self.__rs_context: Optional[ContextManager[RepoSmith]] = None
+        self.__temp_dir: Optional[tempfile.TemporaryDirectory] = None
+        self.__patches: List[mock._patch] = []
+
+    @property
+    def rs(self) -> RepoSmith:
+        assert self.__rs is not None
+        return self.__rs
+
+    def run(self) -> GitAutograderOutput:
+        output: Optional[GitAutograderOutput] = None
+        started_at = datetime.now(tz=pytz.UTC)
+        try:
+            assert self.__temp_dir is not None
+            autograder = GitAutograderExercise(exercise_path=self.__temp_dir.name)
+            output = self.grade_func(autograder)
+            print(output)
+        except (
+            GitAutograderInvalidStateException,
+            GitAutograderWrongAnswerException,
+        ) as e:
+            output = GitAutograderOutput(
+                exercise_name=self.exercise_name,
+                started_at=started_at,
+                completed_at=datetime.now(tz=pytz.UTC),
+                comments=[e.message] if isinstance(e.message, str) else e.message,
+                status=(
+                    GitAutograderStatus.ERROR
+                    if isinstance(e, GitAutograderInvalidStateException)
+                    else GitAutograderStatus.UNSUCCESSFUL
+                ),
+            )
+        except Exception as e:
+            # Unexpected exception
+            output = GitAutograderOutput(
+                exercise_name=self.exercise_name,
+                started_at=None,
+                completed_at=None,
+                comments=[str(e)],
+                status=GitAutograderStatus.ERROR,
+            )
+
+        assert output is not None
+        return output
+
+    def __enter__(self) -> Tuple[Self, RepoSmith]:
+        # We will mock all accesses to the config to avoid reading the file itself
+        # Only the exercise name and repo_name matters, everything else isn't used
+        repo_name = "repo"
+        fake_config = ExerciseConfig(
+            exercise_name=self.exercise_name,
+            tags=[],
+            requires_git=True,
+            requires_github=True,
+            base_files={},
+            exercise_repo=ExerciseConfig.ExerciseRepoConfig(
+                repo_type="local",
+                repo_name=repo_name,
+                repo_title=None,
+                create_fork=None,
+                init=True,
+            ),
+            downloaded_at=None,
+        )
+
+        answers = [(q, a) for q, a in (self.mock_answers or {}).items()]
+        fake_answers = GitAutograderAnswers(
+            questions=[v[0] for v in answers],
+            answers=[v[1] for v in answers],
+            validations={},
+        )
+
+        self.__temp_dir = tempfile.TemporaryDirectory()
+        assert self.__temp_dir is not None
+        read_config_patch = mock.patch(
+            "git_autograder.exercise_config.ExerciseConfig.read_config",
+            return_value=fake_config,
+        )
+        has_exercise_config_patch = mock.patch(
+            "git_autograder.exercise.GitAutograderExercise.has_exercise_config",
+            return_value=True,
+        )
+        answers_mock_property = mock.patch.object(
+            GitAutograderExercise, "answers", new_callable=mock.PropertyMock
+        )
+        read_config_patch.start()
+        has_exercise_config_patch.start()
+        answers_mock = answers_mock_property.start()
+        answers_mock.return_value = fake_answers
+        self.__patches.append(read_config_patch)
+        self.__patches.append(has_exercise_config_patch)
+        self.__patches.append(answers_mock_property)
+
+        # Create the solution directory named "repo" (name does not matter)
+        temp_path = Path(self.__temp_dir.name)
+        repo_path = temp_path / repo_name
+        os.makedirs(repo_path, exist_ok=True)
+        # Force change directory within this context to ensure that we're able to
+        # run all commands within the repo
+        os.chdir(repo_path)
+
+        self.__rs_context = create_repo_smith(
+            False, existing_path=repo_path.absolute().as_posix()
+        )
+        self.__rs = self.__rs_context.__enter__()
+
+        return self, self.rs
+
+    def __exit__(
+        self,
+        exc_type: type | None,
+        exc_val: BaseException | None,
+        exc_tb: object | None,
+    ) -> None:
+        for patch in self.__patches:
+            patch.stop()
+
+        if self.__temp_dir is not None:
+            self.__temp_dir.cleanup()
+
+        if self.__rs_context is not None:
+            self.__rs_context.__exit__(exc_type, exc_val, None)
+
+
+class GitAutograderTestLoader:
+    def __init__(
+        self,
+        exercise_name: str,
+        grade_func: Callable[[GitAutograderExercise], GitAutograderOutput],
+    ) -> None:
+        self.exercise_name = exercise_name
+        self.grade_func = grade_func
+
+    @contextmanager
+    def start(
+        self,
+        mock_answers: Optional[Dict[str, str]] = None,
+    ) -> Iterator[Tuple[GitAutograderTest, RepoSmith]]:
+        test = GitAutograderTest(
+            self.exercise_name,
+            self.grade_func,
+            mock_answers,
+        )
+        with test as (ctx, rs):
+            yield (ctx, rs)
+
+
+def assert_output(
+    output: GitAutograderOutput,
+    expected_status: GitAutograderStatus,
+    expected_comments: List[str] = [],
+) -> None:
+    assert output.status == expected_status
+    assert len(set(output.comments or []) & set(expected_comments)) == len(
+        expected_comments
+    )
