@@ -18,9 +18,24 @@ from git_autograder import (
 )
 from git_autograder.answers import GitAutograderAnswers
 from git_autograder.exercise_config import ExerciseConfig
+from repo_smith.helpers.helper import Helper
 from repo_smith.repo_smith import RepoSmith, create_repo_smith
 
 """Stores the test utils for exercises."""
+
+
+class GitMasteryHelper(Helper):
+    def __init__(self, repo: Repo, verbose: bool) -> None:
+        super().__init__(repo, verbose)
+
+    def create_start_tag(self) -> None:
+        # TODO: Reconsider if this should be inlined within repo-smith or separated out
+        """Creates the Git-Mastery start tag."""
+        all_commits = list(self.repo.iter_commits())
+        first_commit = list(reversed(all_commits))[0]
+        first_commit_hash = first_commit.hexsha[:7]
+        start_tag = f"git-mastery-start-{first_commit_hash}"
+        self.repo.create_tag(start_tag)
 
 
 class GitAutograderTest:
@@ -138,6 +153,7 @@ class GitAutograderTest:
             False, existing_path=repo_path.absolute().as_posix()
         )
         self.__rs = self.__rs_context.__enter__()
+        self.__rs.add_helper(GitMasteryHelper)
 
         return self, self.rs
 
