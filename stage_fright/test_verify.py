@@ -1,5 +1,5 @@
-from exercise_utils.test import GitAutograderTestLoader
-from git_autograder import GitAutograderStatus, assert_output
+from exercise_utils.test import GitAutograderTestLoader, assert_output
+from git_autograder import GitAutograderStatus
 
 from .verify import NOT_ADDED, verify
 
