@@ -3,30 +3,28 @@ from pathlib import Path
 from unittest.mock import patch
 
 import pytest
+from exercise_utils.test import GitAutograderTestLoader, assert_output
 from git.repo import Repo
-
 from git_autograder import (
     GitAutograderExercise,
     GitAutograderStatus,
-    GitAutograderTestLoader,
     GitAutograderWrongAnswerException,
-    assert_output,
 )
 
 from .verify import (
     IMPROPER_GH_CLI_SETUP,
+    TAG_1_MISSING,
     TAG_1_NAME,
+    TAG_2_MISSING,
     TAG_2_NAME,
     TAG_DELETE_NAME,
-    TAG_1_MISSING,
-    TAG_2_MISSING,
     TAG_DELETE_NOT_REMOVED,
     verify,
 )
 
 REPOSITORY_NAME = "tags-push"
 
-loader = GitAutograderTestLoader(__file__, REPOSITORY_NAME, verify)
+loader = GitAutograderTestLoader(REPOSITORY_NAME, verify)
 
 
 # NOTE: This exercise is a special case where we do not require repo-smith. Instead,
