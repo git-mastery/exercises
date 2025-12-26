@@ -1,15 +1,15 @@
-from git_autograder.answers.rules.not_empty_rule import NotEmptyRule
-from git_autograder.answers.rules.has_exact_value_rule import HasExactValueRule
-from git_autograder.status import GitAutograderStatus
 from exercise_utils.test import GitAutograderTestLoader, assert_output
+from git_autograder.answers.rules.has_exact_value_rule import HasExactValueRule
+from git_autograder.answers.rules.not_empty_rule import NotEmptyRule
+from git_autograder.status import GitAutograderStatus
 
 from .verify import (
-    QUESTION_ONE,
-    QUESTION_TWO,
-    QUESTION_THREE,
     CORRECT_ANSWER_Q1,
     CORRECT_ANSWER_Q2,
     CORRECT_ANSWER_Q3,
+    QUESTION_ONE,
+    QUESTION_THREE,
+    QUESTION_TWO,
     SUCCESS_MESSAGE,
     verify,
 )
