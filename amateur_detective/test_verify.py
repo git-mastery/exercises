@@ -1,17 +1,17 @@
-from git_autograder import GitAutograderStatus, GitAutograderTestLoader, assert_output
+from exercise_utils.test import GitAutograderTestLoader, assert_output
+from git_autograder import GitAutograderStatus
 from git_autograder.answers.rules import HasExactValueRule, NotEmptyRule
 
-from ..verify import QUESTION_ONE, QUESTION_TWO, verify
+from .verify import QUESTION_ONE, QUESTION_TWO, verify
 
 REPOSITORY_NAME = "amateur-detective"
 
-loader = GitAutograderTestLoader(__file__, REPOSITORY_NAME, verify)
+loader = GitAutograderTestLoader(REPOSITORY_NAME, verify)
 
 
 def test_no_answers():
-    with loader.load(
-        "specs/no_answers.yml", mock_answers={QUESTION_ONE: "", QUESTION_TWO: ""}
-    ) as output:
+    with loader.start(mock_answers={QUESTION_ONE: "", QUESTION_TWO: ""}) as (test, _):
+        output = test.run()
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,
@@ -23,10 +23,10 @@ def test_no_answers():
 
 
 def test_one_answer():
-    with loader.load(
-        "specs/partial_answer.yml",
+    with loader.start(
         mock_answers={QUESTION_ONE: "file77.txt", QUESTION_TWO: ""},
-    ) as output:
+    ) as (test, _):
+        output = test.run()
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,
@@ -37,10 +37,10 @@ def test_one_answer():
 
 
 def test_mixed_answers():
-    with loader.load(
-        "specs/mixed_answer.yml",
+    with loader.start(
         mock_answers={QUESTION_ONE: "file75.txt", QUESTION_TWO: ""},
-    ) as output:
+    ) as (test, _):
+        output = test.run()
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,
@@ -52,8 +52,8 @@ def test_mixed_answers():
 
 
 def test_valid_answers():
-    with loader.load(
-        "specs/valid_answers.yml",
+    with loader.start(
         mock_answers={QUESTION_ONE: "file77.txt", QUESTION_TWO: "file14.txt"},
-    ) as output:
+    ) as (test, _):
+        output = test.run()
         assert_output(output, GitAutograderStatus.SUCCESSFUL)
