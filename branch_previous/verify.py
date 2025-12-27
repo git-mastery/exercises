@@ -1,10 +1,10 @@
 from typing import List, Optional
 
 from git_autograder import (
-    GitAutograderOutput,
-    GitAutograderExercise,
-    GitAutograderStatus,
     GitAutograderCommit,
+    GitAutograderExercise,
+    GitAutograderOutput,
+    GitAutograderStatus,
 )
 
 MISSING_BRANCH = "The '{branch_name}' branch is missing."
@@ -35,7 +35,7 @@ def get_commit_from_message(
 
 def verify_branch(
     branch_name: str,
-    expected_start_commit: GitAutograderCommit,
+    expected_start_commit: Optional[GitAutograderCommit],
     expected_content: str,
     exercise: GitAutograderExercise,
 ) -> None:
@@ -43,6 +43,7 @@ def verify_branch(
     Check that the given branch exists, starts from the expected commit,
     and contains the expected content in story.txt.
     """
+    assert expected_start_commit is not None
 
     branch_helper = exercise.repo.branches
     if not branch_helper.has_branch(branch_name):
@@ -60,6 +61,7 @@ def verify_branch(
         raise exercise.wrong_answer([WRONG_START.format(branch_name=branch_name)])
 
     with latest_commit.file("story.txt") as content:
+        assert content is not None
         if expected_content not in content:
             raise exercise.wrong_answer(
                 [
