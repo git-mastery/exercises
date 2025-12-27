@@ -1,7 +1,8 @@
 from typing import List
+
 from git_autograder import (
-    GitAutograderOutput,
     GitAutograderExercise,
+    GitAutograderOutput,
     GitAutograderStatus,
 )
 
