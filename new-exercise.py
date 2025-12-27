@@ -144,40 +144,22 @@ def create_init_py_file() -> None:
 
 
 def create_test_dir(config: ExerciseConfig) -> None:
-    tests_dir = "tests"
-    os.makedirs(tests_dir, exist_ok=True)
-    os.chdir(tests_dir)
-
-    create_init_py_file()
-
     with open("test_verify.py", "w") as test_grade_file:
         test_grade = f"""
-        from git_autograder import GitAutograderTestLoader
+        from exercise_utils.test import GitAutograderTestLoader
 
-        from ..verify import verify
+        from .verify import verify
 
         REPOSITORY_NAME = "{config.exercise_name}"
 
-        loader = GitAutograderTestLoader(__file__, REPOSITORY_NAME, verify)
+        loader = GitAutograderTestLoader(REPOSITORY_NAME, verify)
 
 
         def test_base():
-            with loader.load("specs/base.yml", "start"):
+            with loader.start() as (test, rs):
                 pass
         """
         test_grade_file.write(textwrap.dedent(test_grade).lstrip())
-
-    os.makedirs("specs", exist_ok=True)
-    with open("specs/base.yml", "w") as base_spec_file:
-        base_spec = """
-        initialization:
-          steps:
-            - type: commit
-              empty: true
-              message: Empty commit
-              id: start
-        """
-        base_spec_file.write(textwrap.dedent(base_spec).lstrip())
 
 
 def main():

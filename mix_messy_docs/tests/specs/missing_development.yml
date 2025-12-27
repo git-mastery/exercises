@@ -1,6 +1,0 @@
-initialization:
-  steps:
-    - type: commit
-      empty: true
-      message: Empty commit
-      id: start

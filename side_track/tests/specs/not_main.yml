@@ -1,8 +1,0 @@
-initialization:
-  steps:
-    - type: commit
-      empty: true
-      message: Empty
-      id: start
-    - type: branch
-      branch-name: bug-fix

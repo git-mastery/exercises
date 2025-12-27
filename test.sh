@@ -13,4 +13,4 @@ else
   exit 1
 fi
 
-python -m pytest $1/tests/test_verify.py -s -vv
+python -m pytest $1/test_verify.py -s -vv

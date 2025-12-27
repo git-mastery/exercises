@@ -1,9 +1,0 @@
-initialization:
-  steps:
-    - type: commit
-      empty: true
-      message: Empty commit
-      id: start
-    - type: remote
-      remote-url: git@github.com:git-mastery/link-me.git
-      remote-name: upstream
