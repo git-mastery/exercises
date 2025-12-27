@@ -1,62 +1,53 @@
-from exercise_utils.git import (
-    add,
-    commit,
-    checkout,
-    merge,
-)
-from exercise_utils.file import (
-    create_or_update_file,
-    append_to_file,
-)
+from repo_smith.repo_smith import RepoSmith
 
 
-def setup(verbose: bool = False):
-    create_or_update_file(
+def setup(rs: RepoSmith):
+    rs.files.create_or_update(
         "rick.txt",
         """
         Hero
         """,
     )
-    add(["."], verbose)
-    commit("Add Rick", verbose)
+    rs.git.add(all=True)
+    rs.git.commit(message="Add Rick")
 
-    create_or_update_file(
+    rs.files.create_or_update(
         "morty.txt",
         """
         Boy
         """,
     )
-    add(["."], verbose)
-    commit("Add Morty", verbose)
+    rs.git.add(all=True)
+    rs.git.commit(message="Add Morty")
 
-    checkout("others", True, verbose)
+    rs.git.checkout("others", branch=True)
 
-    create_or_update_file(
+    rs.files.create_or_update(
         "birdperson.txt",
         """
         No job
         """,
     )
-    add(["."], verbose)
-    commit("Add Birdperson", verbose)
+    rs.git.add(all=True)
+    rs.git.commit(message="Add Birdperson")
 
-    append_to_file(
+    rs.files.append(
         "birdperson.txt",
         """
         Cyborg
         """,
     )
-    add(["."], verbose)
-    commit("Add Cyborg to birdperson.txt", verbose)
+    rs.git.add(all=True)
+    rs.git.commit(message="Add Cybord to birdperson.txt")
 
-    create_or_update_file(
+    rs.files.create_or_update(
         "tammy.txt",
         """
         Spy
         """,
     )
-    add(["."], verbose)
-    commit("Add Tammy", verbose)
+    rs.git.add(all=True)
+    rs.git.commit(message="Add Tammy")
 
-    checkout("main", False, verbose)
-    merge("others", True, verbose)
+    rs.git.checkout("main")
+    rs.git.merge("others", ff=True)
