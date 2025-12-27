@@ -21,4 +21,5 @@ def setup(rs: RepoSmith):
     for i in range(1, 101):
         os.chmod(f"file{i}.txt", stat.S_IREAD)
 
+    rs.add_helper(GitMasteryHelper)
     rs.helper(GitMasteryHelper).create_start_tag()
