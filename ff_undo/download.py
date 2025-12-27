@@ -50,4 +50,4 @@ def setup(rs: RepoSmith):
     rs.git.commit(message="Add Tammy")
 
     rs.git.checkout("main")
-    rs.git.merge("others", ff=True)
+    rs.git.merge("others", ff_only=True)
