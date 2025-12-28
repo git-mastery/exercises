@@ -1,6 +1,5 @@
 import os
 
-from exercise_utils.git import init
 from repo_smith.repo_smith import RepoSmith
 
 __requires_git__ = True
@@ -11,7 +10,7 @@ def download(rs: RepoSmith):
     os.makedirs("samplerepo-books-2")
     os.chdir("samplerepo-books-2")
 
-    init(rs.verbose)
+    rs.git.init()
 
     rs.files.create_or_update("horror.txt", "Horror Stories")
     rs.git.add(all=True)
