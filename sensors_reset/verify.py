@@ -35,7 +35,7 @@ def get_unstaged_files(exercise: GitAutograderExercise) -> List[str | None]:
 
 
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
-    branch = exercise.repo.branches.branch_or_none("main")
+    branch = exercise.repo.branches.branch("main")
     commit_messages = [str(c.commit.message.strip()) for c in branch.commits]
 
     staged_files = get_staged_files(exercise)
@@ -64,7 +64,7 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
 
     # TODO: need a way to verify task by task
     # currently we verify staging area and working directory of all tasks at once, since we cannot get state of each task
-    comments: str = []
+    comments: List[str] = []
     if len(unstaged_files) != 4 or not all(
         file in unstaged_files
         for file in ["east.csv", "north.csv", "south.csv", "west.csv"]

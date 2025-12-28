@@ -1,12 +1,14 @@
 from typing import List, Optional
 
 from git_autograder import (
-    GitAutograderOutput,
-    GitAutograderExercise,
-    GitAutograderStatus,
     GitAutograderCommit,
+    GitAutograderExercise,
+    GitAutograderOutput,
+    GitAutograderStatus,
 )
 
+MISSING_LOCATION_COMMIT = "The commit with message 'Describe location' is not found."
+MISSING_STORY_FILE = "The file 'story.txt' is not found."
 MISSING_BRANCH = "The '{branch_name}' branch is missing."
 MISSING_COMMIT = "No commits were made in the '{branch_name}' branch."
 WRONG_START = (
@@ -43,7 +45,6 @@ def verify_branch(
     Check that the given branch exists, starts from the expected commit,
     and contains the expected content in story.txt.
     """
-
     branch_helper = exercise.repo.branches
     if not branch_helper.has_branch(branch_name):
         raise exercise.wrong_answer([MISSING_BRANCH.format(branch_name=branch_name)])
@@ -60,6 +61,9 @@ def verify_branch(
         raise exercise.wrong_answer([WRONG_START.format(branch_name=branch_name)])
 
     with latest_commit.file("story.txt") as content:
+        if content is None:
+            raise exercise.wrong_answer([MISSING_STORY_FILE])
+
         if expected_content not in content:
             raise exercise.wrong_answer(
                 [
@@ -73,6 +77,9 @@ def verify_branch(
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     commits = exercise.repo.branches.branch("main").commits
     describe_location_commit = get_commit_from_message(commits, "Describe location")
+
+    if describe_location_commit is None:
+        raise exercise.wrong_answer([MISSING_LOCATION_COMMIT])
 
     verify_branch(
         branch_name="visitor-line",
