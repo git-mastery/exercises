@@ -1,13 +1,15 @@
 import io
+import os
 import sys
 from contextlib import redirect_stdout
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any, Dict, Optional, cast
 
 from git_autograder import (
     GitAutograderExercise,
     GitAutograderInvalidStateException,
     GitAutograderOutput,
+    GitAutograderRepo,
     GitAutograderStatus,
     GitAutograderWrongAnswerException,
 )
@@ -56,14 +58,13 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         if len(bug_fix_branch.user_commits) < 2:
             raise exercise.wrong_answer([MISSING_COMMITS])
 
+        repo_path: str | os.PathLike = cast(GitAutograderRepo, exercise.repo).repo_path
         # Ensure that they applied the right fix by testing the greet function
         fixed_greet = True
         for name in ["James", "Hi", "Alice", "Bob"]:
             buf = io.StringIO()
             with redirect_stdout(buf):
-                execute_function(
-                    Path(exercise.repo.repo_path) / "greet.py", "greet", {"name": name}
-                )
+                execute_function(Path(repo_path) / "greet.py", "greet", {"name": name})
             print(buf.getvalue().strip())
             if buf.getvalue().strip() != f"Hi {name}":
                 fixed_greet = False
@@ -72,7 +73,7 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         fixed_calculator = True
         for a, b in zip([1, 2, 3, 4, 5], [11, 123, 9, 10, 1]):
             result = execute_function(
-                Path(exercise.repo.repo_path) / "calculator.py", "add", {"a": a, "b": b}
+                Path(repo_path) / "calculator.py", "add", {"a": a, "b": b}
             )
             if result is None:
                 fixed_calculator = False
