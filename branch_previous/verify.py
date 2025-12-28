@@ -8,6 +8,7 @@ from git_autograder import (
 )
 
 MISSING_LOCATION_COMMIT = "The commit with message 'Describe location' is not found."
+MISSING_STORY_FILE = "The file 'story.txt' is not found."
 MISSING_BRANCH = "The '{branch_name}' branch is missing."
 MISSING_COMMIT = "No commits were made in the '{branch_name}' branch."
 WRONG_START = (
@@ -60,7 +61,9 @@ def verify_branch(
         raise exercise.wrong_answer([WRONG_START.format(branch_name=branch_name)])
 
     with latest_commit.file("story.txt") as content:
-        assert content is not None
+        if content is None:
+            raise exercise.wrong_answer([MISSING_STORY_FILE])
+
         if expected_content not in content:
             raise exercise.wrong_answer(
                 [
