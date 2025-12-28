@@ -1,5 +1,3 @@
-import os
-
 from repo_smith.repo_smith import RepoSmith
 
 __requires_git__ = True
@@ -7,8 +5,8 @@ __requires_github__ = False
 
 
 def download(rs: RepoSmith):
-    os.makedirs("samplerepo-books-2")
-    os.chdir("samplerepo-books-2")
+    rs.files.mkdir("samplerepo-books-2")
+    rs.files.cd("samplerepo-books-2")
 
     rs.git.init()
 
