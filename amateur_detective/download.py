@@ -1,9 +1,7 @@
-import os
 import stat
 
-from repo_smith.repo_smith import RepoSmith
-
 from exercise_utils.test import GitMasteryHelper
+from repo_smith.repo_smith import RepoSmith
 
 
 def setup(rs: RepoSmith):
@@ -19,7 +17,7 @@ def setup(rs: RepoSmith):
 
     rs.files.create_or_update("file77.txt")
     for i in range(1, 101):
-        os.chmod(f"file{i}.txt", stat.S_IREAD)
+        rs.files.chmod(f"file{i}.txt", stat.S_IREAD)
 
     rs.add_helper(GitMasteryHelper)
     rs.helper(GitMasteryHelper).create_start_tag()
