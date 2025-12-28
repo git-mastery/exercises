@@ -1,17 +1,18 @@
 from contextlib import contextmanager
 from typing import Iterator, Tuple
 
-from repo_smith.repo_smith import RepoSmith
 from exercise_utils.test import (
     GitAutograderTest,
     GitAutograderTestLoader,
     assert_output,
 )
 from git_autograder.status import GitAutograderStatus
+from repo_smith.repo_smith import RepoSmith
 
 from .verify import (
     MISSING_BRANCH,
     MISSING_COMMIT,
+    MISSING_LOCATION_COMMIT,
     WRONG_CONTENT,
     WRONG_START,
     verify,
@@ -56,6 +57,22 @@ def test_base():
 
         output = test.run()
         assert_output(output, GitAutograderStatus.SUCCESSFUL)
+
+
+def test_location_commit_missing():
+    with loader.start() as (test, rs):
+        rs.files.create_or_update("story.txt", "It was a dark and stormy night.")
+        rs.git.add(all=True)
+        rs.git.commit(message="Describe night")
+
+        rs.files.append("story.txt", "I heard a strange noise.")
+        rs.git.add(all=True)
+        rs.git.commit(message="Mention noise")
+
+        output = test.run()
+        assert_output(
+            output, GitAutograderStatus.UNSUCCESSFUL, [MISSING_LOCATION_COMMIT]
+        )
 
 
 def test_visitor_missing_branch():

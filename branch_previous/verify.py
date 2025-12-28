@@ -7,6 +7,7 @@ from git_autograder import (
     GitAutograderStatus,
 )
 
+MISSING_LOCATION_COMMIT = "The commit with message 'Describe location' is not found."
 MISSING_BRANCH = "The '{branch_name}' branch is missing."
 MISSING_COMMIT = "No commits were made in the '{branch_name}' branch."
 WRONG_START = (
@@ -35,7 +36,7 @@ def get_commit_from_message(
 
 def verify_branch(
     branch_name: str,
-    expected_start_commit: Optional[GitAutograderCommit],
+    expected_start_commit: GitAutograderCommit,
     expected_content: str,
     exercise: GitAutograderExercise,
 ) -> None:
@@ -43,8 +44,6 @@ def verify_branch(
     Check that the given branch exists, starts from the expected commit,
     and contains the expected content in story.txt.
     """
-    assert expected_start_commit is not None
-
     branch_helper = exercise.repo.branches
     if not branch_helper.has_branch(branch_name):
         raise exercise.wrong_answer([MISSING_BRANCH.format(branch_name=branch_name)])
@@ -75,6 +74,9 @@ def verify_branch(
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     commits = exercise.repo.branches.branch("main").commits
     describe_location_commit = get_commit_from_message(commits, "Describe location")
+
+    if describe_location_commit is None:
+        raise exercise.wrong_answer([MISSING_LOCATION_COMMIT])
 
     verify_branch(
         branch_name="visitor-line",
