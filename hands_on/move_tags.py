@@ -1,5 +1,8 @@
 import os
-from exercise_utils.git import tag_with_options
+from exercise_utils.git import (
+    tag,
+    tag_with_options,
+)
 from exercise_utils.github_cli import (
     get_github_username,
     has_repo,
@@ -27,5 +30,5 @@ def download(verbose: bool):
     clone_repo_with_gh(full_repo_name, verbose)
 
     os.chdir(LOCAL_DIR)
-    tag_with_options("v1.0", ["HEAD~1"], verbose)
+    tag("v1.0", verbose)
     tag_with_options("v0.9", ["HEAD~2", "-a", "-m", "First beta release"], verbose)
