@@ -1,18 +1,14 @@
-import os
-
-from exercise_utils.cli import run_command
-from exercise_utils.file import append_to_file, create_or_update_file
-from exercise_utils.git import add, init
+from repo_smith.repo_smith import RepoSmith
 
 __requires_git__ = True
 __requires_github__ = False
 
 
-def download(verbose: bool):
-    os.makedirs("things")
-    os.chdir("things")
-    init(verbose)
-    create_or_update_file(
+def download(rs: RepoSmith):
+    rs.files.mkdir("things")
+    rs.files.cd("things")
+    rs.git.init()
+    rs.files.create_or_update(
         "fruits.txt",
         """
         apples
@@ -20,6 +16,5 @@ def download(verbose: bool):
         cherries
         """,
     )
-    add(["fruits.txt"], verbose)
-    run_command(["git", "add", "fruits.txt"], verbose)
-    append_to_file("fruits.txt", "dragon fruits")
+    rs.git.add(["fruits.txt"])
+    rs.files.append("fruits.txt", "dragon fruits")
