@@ -40,6 +40,15 @@ def download(verbose: bool):
     append_to_file(
         "list.txt",
         """
+        Kelly Kapoor
+        """,
+    )
+    add(["."], verbose)
+    commit("Add Kelly", verbose)
+
+    append_to_file(
+        "list.txt",
+        """
         Kevin Malone
         """,
     )
