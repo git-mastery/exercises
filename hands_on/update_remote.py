@@ -1,14 +1,6 @@
-import os
+from repo_smith.repo_smith import RepoSmith
 
-from exercise_utils.cli import run_command
-from exercise_utils.file import create_or_update_file, append_to_file
-from exercise_utils.git import add, init, commit, add_remote
-from exercise_utils.github_cli import (
-    delete_repo,
-    has_repo,
-    get_github_username,
-    create_repo,
-)
+from exercise_utils.github_cli import has_repo, get_github_username
 
 __requires_git__ = True
 __requires_github__ = True
@@ -16,14 +8,14 @@ __requires_github__ = True
 REPO_NAME = "gitmastery-things"
 
 
-def download(verbose: bool):
-    username = get_github_username(verbose)
+def download(rs: RepoSmith):
+    username = get_github_username(rs)
 
-    os.makedirs("things")
-    os.chdir("things")
-    init(verbose)
+    rs.files.mkdir("things")
+    rs.files.cd("things")
+    rs.git.init()
 
-    create_or_update_file(
+    rs.files.create_or_update(
         "fruits.txt",
         """
         apples
@@ -32,35 +24,35 @@ def download(verbose: bool):
         dragon fruits
         """,
     )
-    add(["fruits.txt"], verbose)
-    commit("Add fruits.txt", verbose)
+    rs.git.add(["fruits.txt"])
+    rs.git.commit(message="Add fruits.txt")
 
-    append_to_file("fruits.txt", "figs")
-    add(["fruits.txt"], verbose)
-    commit("Insert figs into fruits.txt", verbose)
+    rs.files.append("fruits.txt", "figs")
+    rs.git.add(["fruits.txt"])
+    rs.git.commit(message="Insert figs into fruits.txt")
 
-    create_or_update_file(
+    rs.files.create_or_update(
         "colours.txt",
         """
-        a file for colours 
+        a file for colours
         """,
     )
-    create_or_update_file(
+    rs.files.create_or_update(
         "shapes.txt",
         """
-        a file for shapes 
+        a file for shapes
         """,
     )
 
-    add(["colours.txt", "shapes.txt"], verbose)
-    commit("Add colours.txt, shapes.txt", verbose)
+    rs.git.add(["colours.txt", "shapes.txt"])
+    rs.git.commit(message="Add colours.txt, shapes.txt")
 
-    repo_check = has_repo(REPO_NAME, False, verbose)
+    repo_check = has_repo(rs, username, REPO_NAME, is_fork=False)
 
     if repo_check:
-        delete_repo(REPO_NAME, verbose)
+        rs.gh.repo_delete(username, REPO_NAME)
 
-    create_repo(REPO_NAME, verbose)
-    add_remote("origin", f"https://github.com/{username}/{REPO_NAME}", verbose)
+    rs.gh.repo_create(username, REPO_NAME, public=True)
+    rs.git.remote_add("origin", f"https://github.com/{username}/{REPO_NAME}")
 
-    run_command(["git", "push", "-u", "origin", "main"], verbose)
+    rs.git.run(["git", "push", "-u", "origin", "main"])
