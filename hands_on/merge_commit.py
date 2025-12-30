@@ -18,7 +18,7 @@ def download(rs: RepoSmith):
         """,
     )
     rs.git.add(["golf.txt"])
-    rs.git.commit("Add golf.txt")
+    rs.git.commit(message="Add golf.txt")
 
     rs.files.create_or_update(
         "tennis.txt",
@@ -29,7 +29,7 @@ def download(rs: RepoSmith):
         """,
     )
     rs.git.add(["tennis.txt"])
-    rs.git.commit("Add tennis.txt")
+    rs.git.commit(message="Add tennis.txt")
 
     rs.files.create_or_update(
         "football.txt",
@@ -39,7 +39,7 @@ def download(rs: RepoSmith):
         """,
     )
     rs.git.add(["football.txt"])
-    rs.git.commit("Add football.txt")
+    rs.git.commit(message="Add football.txt")
 
     rs.git.checkout("feature1", branch=True)
 
@@ -50,13 +50,13 @@ def download(rs: RepoSmith):
         """,
     )
     rs.git.add(["boxing.txt"])
-    rs.git.commit("Add boxing.txt")
+    rs.git.commit(message="Add boxing.txt")
 
     rs.files.append("boxing.txt", "Mike Tyson")
     rs.git.add(["boxing.txt"])
-    rs.git.commit("Add Tyson to boxing.txt")
+    rs.git.commit(message="Add Tyson to boxing.txt")
 
     rs.git.checkout("main")
     rs.files.append("tennis.txt", "Martina Navratilova")
     rs.git.add(["tennis.txt"])
-    rs.git.commit("Add Martina to tennis.txt")
+    rs.git.commit(message="Add Martina to tennis.txt")
