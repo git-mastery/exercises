@@ -12,8 +12,8 @@ from git_autograder.answers.rules import (
 
 QUESTION_ONE = "In February, who was replaced in the Wednesday duty roster?"
 QUESTION_TWO = "In February, who joined the Tuesday duty roster?"
-QUESTION_THREE = "In April, what were the new names added to the duty rosters? Give the list of names as one line, separated by spaces."
-QUESTION_FOUR = "In January, who were in the Tuesday duty roster? Give the list of names as one line, separated by spaces."
+QUESTION_THREE = "In April, what were the new names added to the duty rosters? Remove/add extra rows where appropriate."
+QUESTION_FOUR = "In January, who were in the Tuesday duty roster? Remove/add extra rows where appropriate."
 
 
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
