@@ -1,33 +1,30 @@
-import os
-
-from exercise_utils.file import create_or_update_file
-from exercise_utils.git import add, commit, checkout, init, merge_with_message
+from repo_smith.repo_smith import RepoSmith
 
 __requires_git__ = True
 __requires_github__ = False
 
 
-def download(verbose: bool):
-    os.makedirs("samplerepo-books-2")
-    os.chdir("samplerepo-books-2")
+def download(rs: RepoSmith):
+    rs.files.mkdir("samplerepo-books-2")
+    rs.files.cd("samplerepo-books-2")
 
-    init(verbose)
+    rs.git.init()
 
-    create_or_update_file("horror.txt", "Horror Stories")
-    add(["."], verbose)
-    commit("Add horror.txt", verbose)
+    rs.files.create_or_update("horror.txt", "Horror Stories")
+    rs.git.add(all=True)
+    rs.git.commit(message="Add horror.txt")
 
-    checkout("textbooks", True, verbose)
-    create_or_update_file("textbooks.txt", "Textbooks")
-    add(["."], verbose)
-    commit("Add textbooks.txt", verbose)
+    rs.git.checkout("textbooks", branch=True)
+    rs.files.create_or_update("textbooks.txt", "Textbooks")
+    rs.git.add(all=True)
+    rs.git.commit(message="Add textbooks.txt")
 
-    checkout("main", False, verbose)
+    rs.git.checkout("main")
 
-    checkout("fantasy", True, verbose)
-    create_or_update_file("fantasy.txt", "Fantasy Books")
-    add(["."], verbose)
-    commit("Add fantasy.txt", verbose)
+    rs.git.checkout("fantasy", branch=True)
+    rs.files.create_or_update("fantasy.txt", "Fantasy Books")
+    rs.git.add(all=True)
+    rs.git.commit(message="Add fantasy.txt")
 
-    checkout("main", False, verbose)
-    merge_with_message("textbooks", False, "Merge branch textbooks", verbose)
+    rs.git.checkout("main")
+    rs.git.merge("textbooks", no_ff=True, message="Merge branch textbooks")

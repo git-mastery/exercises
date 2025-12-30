@@ -1,24 +1,23 @@
-import os
 import stat
 
-from exercise_utils.file import append_to_file, create_or_update_file
-from exercise_utils.git import add, commit
-from exercise_utils.gitmastery import create_start_tag
+from exercise_utils.test import GitMasteryHelper
+from repo_smith.repo_smith import RepoSmith
 
 
-def setup(verbose: bool = False):
+def setup(rs: RepoSmith):
     for i in range(1, 101):
         if i == 77:
             continue
-        create_or_update_file(f"file{i}.txt")
+        rs.files.create_or_update(f"file{i}.txt")
 
-    add([f"file{i}.txt" for i in range(1, 101) if i != 77], verbose)
-    commit("Change 1", verbose)
+    rs.git.add(all=True)
+    rs.git.commit(message="Change 1")
 
-    append_to_file("file14.txt", "This is a change")
+    rs.files.append("file14.txt", "This is a change")
 
-    create_or_update_file("file77.txt")
+    rs.files.create_or_update("file77.txt")
     for i in range(1, 101):
-        os.chmod(f"file{i}.txt", stat.S_IREAD)
+        rs.files.chmod(f"file{i}.txt", stat.S_IREAD)
 
-    create_start_tag(verbose)
+    rs.add_helper(GitMasteryHelper)
+    rs.helper(GitMasteryHelper).create_start_tag()

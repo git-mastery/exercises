@@ -47,7 +47,7 @@ def create_download_py_file(config: HandsOnConfig) -> None:
         __requires_github__ = {config.requires_github}
 
 
-        def download(verbose: bool):
+        def download(rs: RepoSmith):
             pass
         """
         download_script_file.write(textwrap.dedent(download_script).lstrip())

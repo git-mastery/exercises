@@ -1,17 +1,14 @@
-import os
-
-from exercise_utils.file import create_or_update_file, append_to_file
-from exercise_utils.git import add, init, commit, tag
+from repo_smith.repo_smith import RepoSmith
 
 __requires_git__ = True
 __requires_github__ = False
 
 
-def download(verbose: bool):
-    os.makedirs("things")
-    os.chdir("things")
-    init(verbose)
-    create_or_update_file(
+def download(rs: RepoSmith):
+    rs.files.mkdir("things")
+    rs.files.cd("things")
+    rs.git.init()
+    rs.files.create_or_update(
         "fruits.txt",
         """
         apples
@@ -20,65 +17,65 @@ def download(verbose: bool):
         dragon fruits
         """,
     )
-    add(["fruits.txt"], verbose)
-    commit("Add fruits.txt", verbose)
-    append_to_file(
+    rs.git.add(["fruits.txt"])
+    rs.git.commit(message="Add fruits.txt")
+    rs.files.append(
         "fruits.txt",
         """
-                   elderberries
-                   figs
-                   """,
+        elderberries
+        figs
+        """,
     )
-    add(["fruits.txt"], verbose)
-    commit("Add elderberries and figs to fruits.txt", verbose)
+    rs.git.add(["fruits.txt"])
+    rs.git.commit(message="Add elderberries and figs to fruits.txt")
 
-    create_or_update_file(
+    rs.files.create_or_update(
         "colours.txt",
         "a file for colours\n",
     )
-    create_or_update_file(
+    rs.files.create_or_update(
         "shapes.txt",
         "a file for shapes\n",
     )
-    add(["colours.txt", "shapes.txt"], verbose)
-    commit("Add colours.txt, shapes.txt", verbose)
+    rs.git.add(["colours.txt", "shapes.txt"])
+    rs.git.commit(message="Add colours.txt, shapes.txt")
 
-    tag("v0.9", verbose)
+    rs.git.tag("v0.9")
 
     # Replace the whole contents of fruits.txt
-    create_or_update_file(
+    rs.files.create_or_update(
         "fruits.txt",
         """
-                   apples, apricots
-                   bananas
-                   blueberries
-                   cherries
-                   dragon fruits
-                   figs
-                   """,
+        apples, apricots
+        bananas
+        blueberries
+        cherries
+        dragon fruits
+        figs
+        """,
     )
-    add(["fruits.txt"], verbose)
-    commit("Update fruits list", verbose)
+    rs.git.add(["fruits.txt"])
+    rs.git.commit(message="Update fruits list")
 
-    append_to_file(
+    rs.files.append(
         "colours.txt",
         """
-                    blue
-                    red
-                    white
-                    """,
+        blue
+        red
+        white
+        """,
     )
-    add(["colours.txt"], verbose)
-    commit("colours.txt: Add some colours", verbose)
+    rs.git.add(["colours.txt"])
+    rs.git.commit(message="colours.txt: Add some colours")
 
-    append_to_file(
+    rs.files.append(
         "shapes.txt",
         """
-                   circle
-                   oval
-                   rectangle
-                   square
-                   """,
+        circle
+        oval
+        rectangle
+        square
+        """,
     )
-    add(["shapes.txt"], verbose)
-    commit("shapes.txt: Add some shapes", verbose)
+    rs.git.add(["shapes.txt"])
+    rs.git.commit(message="shapes.txt: Add some shapes")

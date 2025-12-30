@@ -1,29 +1,26 @@
-import os
-
-from exercise_utils.file import create_or_update_file, append_to_file
-from exercise_utils.git import add, commit, init, checkout
+from repo_smith.repo_smith import RepoSmith
 
 __requires_git__ = True
 __requires_github__ = False
 
 
-def download(verbose: bool):
-    os.makedirs("sports")
-    os.chdir("sports")
+def download(rs: RepoSmith):
+    rs.files.mkdir("sports")
+    rs.files.cd("sports")
 
-    init(verbose)
+    rs.git.init()
 
-    create_or_update_file(
+    rs.files.create_or_update(
         "golf.txt",
         """
         Arnold Palmer
         Tiger Woods
         """,
     )
-    add(["golf.txt"], verbose)
-    commit("Add golf.txt", verbose)
+    rs.git.add(["golf.txt"])
+    rs.git.commit(message="Add golf.txt")
 
-    create_or_update_file(
+    rs.files.create_or_update(
         "tennis.txt",
         """
         Pete Sampras
@@ -31,22 +28,22 @@ def download(verbose: bool):
         Serena Williams
         """,
     )
-    add(["tennis.txt"], verbose)
-    commit("Add tennis.txt", verbose)
+    rs.git.add(["tennis.txt"])
+    rs.git.commit(message="Add tennis.txt")
 
-    checkout("add-swimming", True, verbose)
+    rs.git.checkout("add-swimming", branch=True)
 
-    create_or_update_file(
+    rs.files.create_or_update(
         "swimming.txt",
         """
         Michael Phelps
         """,
     )
-    add(["swimming.txt"], verbose)
-    commit("Add swimming.txt", verbose)
+    rs.git.add(["swimming.txt"])
+    rs.git.commit(message="Add swimming.txt")
 
-    append_to_file("swimming.txt", "Ian Thorpe")
-    add(["swimming.txt"], verbose)
-    commit("Add Thorpe to swimming.txt", verbose)
+    rs.files.append("swimming.txt", "Ian Thorpe")
+    rs.git.add(["swimming.txt"])
+    rs.git.commit(message="Add Thorpe to swimming.txt")
 
-    checkout("main", False, verbose)
+    rs.git.checkout("main")

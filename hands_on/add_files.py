@@ -1,13 +1,10 @@
-import os
-
-from exercise_utils.git import init
-
+from repo_smith.repo_smith import RepoSmith
 
 __requires_git__ = True
 __requires_github__ = False
 
 
-def download(verbose: bool):
-    os.makedirs("things")
-    os.chdir("things")
-    init(verbose)
+def download(rs: RepoSmith):
+    rs.files.mkdir("things")
+    rs.files.cd("things")
+    rs.git.init()

@@ -1,18 +1,16 @@
-import os
+from repo_smith.repo_smith import RepoSmith
 
-from exercise_utils.file import append_to_file, create_or_update_file
-from exercise_utils.git import add, commit, init, tag
 
 __requires_git__ = True
 __requires_github__ = False
 
 
-def download(verbose: bool):
-    os.makedirs("things")
-    os.chdir("things")
-    init(verbose)
+def download(rs: RepoSmith):
+    rs.files.mkdir("things")
+    rs.files.cd("things")
+    rs.git.init()
 
-    create_or_update_file(
+    rs.files.create_or_update(
         "fruits.txt",
         """
         apples
@@ -21,26 +19,26 @@ def download(verbose: bool):
         dragon fruits
         """,
     )
-    add(["fruits.txt"], verbose)
-    commit("Add fruits.txt", verbose)
+    rs.git.add(["fruits.txt"])
+    rs.git.commit(message="Add fruits.txt")
 
-    append_to_file(
+    rs.files.append(
         "fruits.txt",
         """
         elderberries
         figs
         """,
     )
-    add(["fruits.txt"], verbose)
-    commit("Add elderberries and figs into fruits.txt", verbose)
+    rs.git.add(["fruits.txt"])
+    rs.git.commit(message="Add elderberries and figs into fruits.txt")
 
-    create_or_update_file("colours.txt", "a file for colours\n")
-    create_or_update_file("shapes.txt", "a file for shapes\n")
-    add(["colours.txt", "shapes.txt"], verbose)
-    commit("Add colours.txt, shapes.txt", verbose)
-    tag("0.9", verbose)
+    rs.files.create_or_update("colours.txt", "a file for colours\n")
+    rs.files.create_or_update("shapes.txt", "a file for shapes\n")
+    rs.git.add(["colours.txt", "shapes.txt"])
+    rs.git.commit(message="Add colours.txt, shapes.txt")
+    rs.git.tag("0.9")
 
-    create_or_update_file(
+    rs.files.create_or_update(
         "fruits.txt",
         """
         apples, apricots
@@ -51,26 +49,26 @@ def download(verbose: bool):
         figs
         """,
     )
-    add(["fruits.txt"], verbose)
-    commit("Update fruits list", verbose)
+    rs.git.add(["fruits.txt"])
+    rs.git.commit(message="Update fruits list")
 
-    append_to_file("colours.txt", "bad colour\n")
-    add(["colours.txt"], verbose)
-    commit("Incorrectly update colours.txt", verbose)
+    rs.files.append("colours.txt", "bad colour\n")
+    rs.git.add(["colours.txt"])
+    rs.git.commit(message="Incorrectly update colours.txt")
 
-    append_to_file("shapes.txt", "bad shape\n")
-    add(["shapes.txt"], verbose)
-    commit("Incorrectly update shapes.txt", verbose)
+    rs.files.append("shapes.txt", "bad shape\n")
+    rs.git.add(["shapes.txt"])
+    rs.git.commit(message="Incorrectly update shapes.txt")
 
-    append_to_file("fruits.txt", "bad fruit\n")
-    add(["fruits.txt"], verbose)
-    commit("Incorrectly update fruits.txt", verbose)
+    rs.files.append("fruits.txt", "bad fruit\n")
+    rs.git.add(["fruits.txt"])
+    rs.git.commit(message="Incorrectly update fruits.txt")
 
-    create_or_update_file("incorrect.txt", "bad line\n")
-    add(["incorrect.txt"], verbose)
-    commit("Add incorrect.txt", verbose)
+    rs.files.create_or_update("incorrect.txt", "bad line\n")
+    rs.git.add(["incorrect.txt"])
+    rs.git.commit(message="Add incorrect.txt")
 
-    append_to_file("colours.txt", "another bad colour\n")
-    add(["colours.txt"], verbose)
+    rs.files.append("colours.txt", "another bad colour\n")
+    rs.git.add(["colours.txt"])
 
-    append_to_file("shapes.txt", "another bad shape\n")
+    rs.files.append("shapes.txt", "another bad shape\n")

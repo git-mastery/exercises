@@ -1,11 +1,7 @@
-import os
-from exercise_utils.git import tag_with_options
+from repo_smith.repo_smith import RepoSmith
 from exercise_utils.github_cli import (
     get_github_username,
     has_repo,
-    fork_repo,
-    delete_repo,
-    clone_repo_with_gh,
 )
 
 __requires_git__ = True
@@ -16,16 +12,14 @@ TARGET_REPO = "git-mastery/samplerepo-preferences"
 LOCAL_DIR = "gitmastery-samplerepo-preferences"
 
 
-def download(verbose: bool):
-    username = get_github_username(verbose)
-    full_repo_name = f"{username}/{LOCAL_DIR}"
+def download(rs: RepoSmith):
+    username = get_github_username(rs)
 
-    if has_repo(full_repo_name, True, verbose):
-        delete_repo(full_repo_name, verbose)
+    if has_repo(rs, username, LOCAL_DIR, is_fork=True):
+        rs.gh.repo_delete(username, LOCAL_DIR)
 
-    fork_repo(TARGET_REPO, LOCAL_DIR, verbose)
-    clone_repo_with_gh(full_repo_name, verbose)
+    rs.gh.repo_fork("git-mastery", "samplerepo-preferences", fork_name=LOCAL_DIR, clone=True)
 
-    os.chdir(LOCAL_DIR)
-    tag_with_options("v1.0", ["HEAD~1"], verbose)
-    tag_with_options("v0.9", ["HEAD~2", "-a", "-m", "First beta release"], verbose)
+    rs.files.cd(LOCAL_DIR)
+    rs.git.tag("v1.0", "HEAD~1")
+    rs.git.tag("v0.9", "HEAD~1", message="First beta release", annotate=True)
