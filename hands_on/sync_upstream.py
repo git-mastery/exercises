@@ -1,13 +1,6 @@
-import os
+from repo_smith.repo_smith import RepoSmith
 
-from exercise_utils.cli import run_command
-from exercise_utils.github_cli import (
-    get_github_username,
-    fork_repo,
-    clone_repo_with_gh,
-    has_repo,
-    delete_repo,
-)
+from exercise_utils.github_cli import get_github_username, has_repo
 
 __requires_git__ = True
 __requires_github__ = True
@@ -18,18 +11,16 @@ FORK_NAME = "gm-samplerepo-finances-2"
 LOCAL_DIR = "samplerepo-finances"
 
 
-def download(verbose: bool):
-    username = get_github_username(verbose)
-    full_repo_name = f"{username}/{FORK_NAME}"
+def download(rs: RepoSmith):
+    username = get_github_username(rs)
 
-    if has_repo(full_repo_name, True, verbose):
-        delete_repo(full_repo_name, verbose)
+    if has_repo(rs, username, FORK_NAME, is_fork=True):
+        rs.gh.repo_delete(username, FORK_NAME)
 
-    fork_repo(TARGET_REPO, FORK_NAME, verbose)
+    rs.gh.repo_fork("git-mastery", "samplerepo-finances-2", fork_name=FORK_NAME)
+    rs.gh.repo_clone(username, FORK_NAME, LOCAL_DIR)
 
-    clone_repo_with_gh(full_repo_name, verbose, LOCAL_DIR)
+    rs.files.cd(LOCAL_DIR)
 
-    os.chdir(LOCAL_DIR)
-
-    run_command(["git", "reset", "--hard", "HEAD~2"], verbose)
-    run_command(["git", "push", "-f", "origin", "main"], verbose)
+    rs.git.reset("HEAD~2", hard=True)
+    rs.git.run(["git", "push", "-f", "origin", "main"])

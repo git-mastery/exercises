@@ -1,30 +1,27 @@
 import time
-import os
-
-from exercise_utils.file import create_or_update_file, append_to_file
-from exercise_utils.git import add, commit, init, checkout
+from repo_smith.repo_smith import RepoSmith
 
 __requires_git__ = True
 __requires_github__ = False
 
 
-def download(verbose: bool):
-    os.makedirs("sports")
-    os.chdir("sports")
+def download(rs: RepoSmith):
+    rs.files.mkdir("sports")
+    rs.files.cd("sports")
 
-    init(verbose)
+    rs.git.init()
 
-    create_or_update_file(
+    rs.files.create_or_update(
         "golf.txt",
         """
         Arnold Palmer
         Tiger Woods
         """,
     )
-    add(["golf.txt"], verbose)
-    commit("Add golf.txt", verbose)
+    rs.git.add(["golf.txt"])
+    rs.git.commit(message="Add golf.txt")
 
-    create_or_update_file(
+    rs.files.create_or_update(
         "tennis.txt",
         """
         Pete Sampras
@@ -32,39 +29,39 @@ def download(verbose: bool):
         Serena Williams
         """,
     )
-    add(["tennis.txt"], verbose)
-    commit("Add tennis.txt", verbose)
+    rs.git.add(["tennis.txt"])
+    rs.git.commit(message="Add tennis.txt")
 
-    create_or_update_file(
+    rs.files.create_or_update(
         "football.txt",
         """
         Pele
         Maradona
         """,
     )
-    add(["football.txt"], verbose)
-    commit("Add football.txt", verbose)
+    rs.git.add(["football.txt"])
+    rs.git.commit(message="Add football.txt")
 
-    checkout("feature1", True, verbose)
+    rs.git.checkout("feature1", branch=True)
 
-    create_or_update_file(
+    rs.files.create_or_update(
         "boxing.txt",
         """
         Muhammad Ali
         """,
     )
-    add(["boxing.txt"], verbose)
-    commit("Add boxing.txt", verbose)
+    rs.git.add(["boxing.txt"])
+    rs.git.commit(message="Add boxing.txt")
 
-    append_to_file("boxing.txt", "Mike Tyson")
-    add(["boxing.txt"], verbose)
-    commit("Add Tyson to boxing.txt", verbose)
+    rs.files.append("boxing.txt", "Mike Tyson")
+    rs.git.add(["boxing.txt"])
+    rs.git.commit(message="Add Tyson to boxing.txt")
 
-    checkout("main", False, verbose)
-    append_to_file("tennis.txt", "Martina Navratilova")
-    add(["tennis.txt"], verbose)
+    rs.git.checkout("main", branch=False)
+    rs.files.append("tennis.txt", "Martina Navratilova")
+    rs.git.add(["tennis.txt"])
 
     # Sleep to ensure that the commit timestamps are different to ensure correct git revision graph in git log
     time.sleep(1)
 
-    commit("Add Martina to tennis.txt", verbose)
+    rs.git.commit(message="Add Martina to tennis.txt")

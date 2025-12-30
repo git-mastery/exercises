@@ -1,25 +1,22 @@
-import os
-
-from exercise_utils.file import create_or_update_file
-from exercise_utils.git import add, commit, init
+from repo_smith.repo_smith import RepoSmith
 
 __requires_git__ = True
 __requires_github__ = False
 
 
-def download(verbose: bool):
-    os.makedirs("pioneers")
-    os.chdir("pioneers")
-    init(verbose)
+def download(rs: RepoSmith):
+    rs.files.mkdir("pioneers")
+    rs.files.cd("pioneers")
+    rs.git.init()
 
-    create_or_update_file("neo.txt", "hacked the matrix\n")
-    add(["neo.txt"], verbose)
-    commit("Add Neo", verbose)
+    rs.files.create_or_update("neo.txt", "hacked the matrix\n")
+    rs.git.add(["neo.txt"])
+    rs.git.commit(message="Add Neo")
 
-    create_or_update_file("alan-turing.txt", "father of theoretical computing\n")
-    add(["alan-turing.txt"], verbose)
-    commit("Add Turing", verbose)
+    rs.files.create_or_update("alan-turing.txt", "father of theoretical computing\n")
+    rs.git.add(["alan-turing.txt"])
+    rs.git.commit(message="Add Turing")
 
-    create_or_update_file("grace-hopper.txt", "created COBOL, compiler pioneer\n")
-    add(["grace-hopper.txt"], verbose)
-    commit("Add Hopper", verbose)
+    rs.files.create_or_update("grace-hopper.txt", "created COBOL, compiler pioneer\n")
+    rs.git.add(["grace-hopper.txt"])
+    rs.git.commit(message="Add Hopper")

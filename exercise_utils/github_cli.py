@@ -4,6 +4,9 @@
 from typing import Optional
 
 from exercise_utils.cli import run
+from repo_smith.repo_smith import RepoSmith
+
+
 
 
 def fork_repo(
@@ -44,9 +47,9 @@ def create_repo(repository_name: str, verbose: bool) -> None:
     run(["gh", "repo", "create", repository_name, "--public"], verbose)
 
 
-def get_github_username(verbose: bool) -> str:
+def get_github_username(rs: RepoSmith) -> str:
     """Returns the currently authenticated Github user's username."""
-    result = run(["gh", "api", "user", "-q", ".login"], verbose)
+    result = rs.gh.api("user", jq=".login")
 
     if result.is_success():
         username = result.stdout.splitlines()[0]
@@ -63,53 +66,38 @@ def get_github_git_protocol(verbose: bool) -> str:
     return ""
 
 
-def has_repo(repo_name: str, is_fork: bool, verbose: bool) -> bool:
+def has_repo(rs: RepoSmith, owner_name: str, repo_name: str, is_fork: bool) -> bool:
     """Returns if the given repository exists under the current user's repositories."""
-    command = ["gh", "repo", "view", repo_name]
-    if is_fork:
-        command.extend(["--json", "isFork", "--jq", ".isFork"])
-    result = run(
-        command,
-        verbose,
-        env={"GH_PAGER": "cat"},
+    result = (
+        rs.gh.repo_view(owner_name, repo_name)
+        if not is_fork
+        else rs.gh.repo_view(owner_name, repo_name, jq=".isFork")
     )
 
     return result.is_success() and (not is_fork or result.stdout == "true")
 
 
 def has_fork(
-    repository_name: str, owner_name: str, username: str, verbose: bool
+    rs: RepoSmith, owner_name: str, repository_name: str, username: str
 ) -> bool:
     """Returns if the current user has a fork of the given repository by owner"""
-    result = run(
-        [
-            "gh",
-            "api",
-            "--paginate",
-            f"repos/{owner_name}/{repository_name}/forks",
-            "-q",
-            f'''.[] | .owner.login | select(. =="{username}")''',
-        ],
-        verbose,
+    result = rs.gh.api(
+        f"repos/{owner_name}/{repository_name}/forks",
+        paginate=True,
+        jq=f'''.[] | .owner.login | select(. =="{username}")''',
     )
 
     return result.is_success() and result.stdout.strip() == username
 
 
 def get_fork_name(
-    repository_name: str, owner_name: str, username: str, verbose: bool
+    rs: RepoSmith, owner_name: str, repository_name: str, username: str
 ) -> str:
     """Returns the name of the current user's fork repo"""
-    result = run(
-        [
-            "gh",
-            "api",
-            "--paginate",
-            f"repos/{owner_name}/{repository_name}/forks",
-            "-q",
-            f'''.[] | select(.owner.login =="{username}") | .name''',
-        ],
-        verbose,
+    result = rs.gh.api(
+        f"repos/{owner_name}/{repository_name}/forks",
+        paginate=True,
+        jq=f'''.[] | select(.owner.login =="{username}") | .name''',
     )
 
     if result.is_success():

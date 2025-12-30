@@ -1,47 +1,45 @@
-import os
+from repo_smith.repo_smith import RepoSmith
 
-from exercise_utils.file import create_or_update_file, append_to_file
-from exercise_utils.git import add, commit, init, checkout
 
 __requires_git__ = True
 __requires_github__ = False
 
 
-def download(verbose: bool):
-    os.makedirs("nouns")
-    os.chdir("nouns")
+def download(rs: RepoSmith):
+    rs.files.mkdir("nouns")
+    rs.files.cd("nouns")
 
-    init(verbose)
+    rs.git.init()
 
-    create_or_update_file(
+    rs.files.create_or_update(
         "colours.txt",
         """
         blue
         """,
     )
-    add(["colours.txt"], verbose)
-    commit("Add colours.txt", verbose)
+    rs.git.add(["colours.txt"])
+    rs.git.commit(message="Add colours.txt")
 
-    checkout("fix1", True, verbose)
-    append_to_file(
+    rs.git.checkout("fix1", branch=True)
+    rs.files.append(
         "colours.txt",
         """
-      green
-      red
-      white
-      """,
+        green
+        red
+        white
+        """,
     )
-    add(["colours.txt"], verbose)
-    commit("Add green, red, white", verbose)
+    rs.git.add(["colours.txt"])
+    rs.git.commit(message="Add green, red, white")
 
-    checkout("main", False, verbose)
-    append_to_file(
+    rs.git.checkout("main")
+    rs.files.append(
         "colours.txt",
         """
-      black
-      red
-      white
-      """,
+        black
+        red
+        white
+        """,
     )
-    add(["colours.txt"], verbose)
-    commit("Add black, red, white", verbose)
+    rs.git.add(["colours.txt"])
+    rs.git.commit(message="Add black, red, white")
