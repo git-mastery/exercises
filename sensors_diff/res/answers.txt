@@ -3,9 +3,14 @@ A:
 
 Q: Which are the new values in modified but unstaged files?
 A: 
+- ans1
+- ans2
 
 Q: Which files have changed from Jan 09th to Jan 15th?
 A: 
+- ans1
+- ans2
+- ans3
 
 Q: Which new values are new in north.csv on Jan 10th, compared to Jan 01st?
 A: 
