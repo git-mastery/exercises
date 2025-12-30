@@ -59,4 +59,4 @@ def download(rs: RepoSmith):
     rs.git.checkout("main", branch=False)
     rs.files.append("tennis.txt", "Martina Navratilova")
     rs.git.add(["tennis.txt"])
-    rs.git.commit("Add Martina to tennis.txt")
+    rs.git.commit(message="Add Martina to tennis.txt")
