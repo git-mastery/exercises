@@ -1,17 +1,14 @@
-import os
-
-from exercise_utils.git import add, init, commit
-from exercise_utils.file import create_or_update_file, append_to_file
+from repo_smith.repo_smith import RepoSmith
 
 __requires_git__ = True
 __requires_github__ = False
 
 
-def download(verbose: bool):
-    os.makedirs("things")
-    os.chdir("things")
-    init(verbose)
-    create_or_update_file(
+def download(rs: RepoSmith):
+    rs.files.mkdir("things")
+    rs.files.cd("things")
+    rs.git.init()
+    rs.files.create_or_update(
         "fruits.txt",
         """
         apples
@@ -21,21 +18,11 @@ def download(verbose: bool):
         figs
         """,
     )
-    add(["fruits.txt"], verbose)
-    append_to_file("fruits.txt", "figs")
-    add(["fruits.txt"], verbose)
-    commit("Insert figs into fruits.txt", verbose)
-    create_or_update_file(
-        "colours.txt",
-        """
-        a file for colours 
-        """,
-    )
-    create_or_update_file(
-        "shapes.txt",
-        """
-        a file for shapes 
-        """,
-    )
-    add(["colours.txt", "shapes.txt"], verbose)
-    commit("Add colours.txt, shapes.txt", verbose)
+    rs.git.add("fruits.txt")
+    rs.files.append("fruits.txt", "figs")
+    rs.git.add("fruits.txt")
+    rs.git.commit(message="Insert figs into fruits.txt")
+    rs.files.create_or_update("colours.txt", "a file for colours")
+    rs.files.create_or_update("shapes.txt", "a file for shapes")
+    rs.git.add(all=True)
+    rs.git.commit(message="Add colours.txt, shapes.txt")
