@@ -29,6 +29,8 @@ class GitMasteryHelper(Helper):
 
     def create_start_tag(self) -> None:
         # TODO: Reconsider if this should be inlined within repo-smith or separated out
+        assert self.repo is not None
+
         """Creates the Git-Mastery start tag."""
         all_commits = list(self.repo.iter_commits())
         first_commit = list(reversed(all_commits))[0]
