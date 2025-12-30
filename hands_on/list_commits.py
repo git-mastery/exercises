@@ -22,4 +22,4 @@ def download(rs: RepoSmith):
     )
 
     rs.git.add(["fruits.txt"])
-    rs.git.commit("Add fruits.txt")
+    rs.git.commit(message="Add fruits.txt")
