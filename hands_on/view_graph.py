@@ -1,19 +1,16 @@
-import os
-
-from exercise_utils.file import create_or_update_file, append_to_file
-from exercise_utils.git import add, init, commit
+from repo_smith.repo_smith import RepoSmith
 
 __requires_git__ = True
 __requires_github__ = False
 
 
-def download(verbose: bool = False) -> None:
-    os.makedirs("things")
-    os.chdir("things")
+def download(rs: RepoSmith) -> None:
+    rs.files.mkdir("things")
+    rs.files.cd("things")
 
-    init(verbose)
+    rs.git.init()
 
-    create_or_update_file(
+    rs.files.create_or_update(
         "fruits.txt",
         """
         apples
@@ -22,14 +19,14 @@ def download(verbose: bool = False) -> None:
         dragon fruits
         """,
     )
-    add(["fruits.txt"], verbose)
-    commit("Add fruits.txt", verbose)
+    rs.git.add(["fruits.txt"])
+    rs.git.commit(message="Add fruits.txt")
 
-    append_to_file("fruits.txt", "figs\n")
-    add(["fruits.txt"], verbose)
-    commit("Insert figs into fruits.txt", verbose)
+    rs.files.append("fruits.txt", "figs\n")
+    rs.git.add(["fruits.txt"])
+    rs.git.commit(message="Insert figs into fruits.txt")
 
-    create_or_update_file("colours.txt", "a file for colours\n")
-    create_or_update_file("shapes.txt", "a file for shapes\n")
-    add(["colours.txt", "shapes.txt"], verbose)
-    commit("Add colours.txt, shapes.txt", verbose)
+    rs.files.create_or_update("colours.txt", "a file for colours\n")
+    rs.files.create_or_update("shapes.txt", "a file for shapes\n")
+    rs.git.add(["colours.txt", "shapes.txt"])
+    rs.git.commit(message="Add colours.txt, shapes.txt")
