@@ -1,29 +1,26 @@
-import os
-
-from exercise_utils.file import create_or_update_file
-from exercise_utils.git import add, commit, init
+from repo_smith.repo_smith import RepoSmith
 
 __requires_git__ = True
 __requires_github__ = False
 
 
-def download(verbose: bool):
-    os.makedirs("sports")
-    os.chdir("sports")
+def download(rs: RepoSmith):
+    rs.files.mkdir("sports")
+    rs.files.cd("sports")
 
-    init(verbose)
+    rs.git.init()
 
-    create_or_update_file(
+    rs.files.create_or_update(
         "golf.txt",
         """
         Arnold Palmer
         Tiger Woods
         """,
     )
-    add(["golf.txt"], verbose)
-    commit("Add golf.txt", verbose)
+    rs.git.add(["golf.txt"])
+    rs.git.commit(message="Add golf.txt")
 
-    create_or_update_file(
+    rs.files.create_or_update(
         "tennis.txt",
         """
         Pete Sampras
@@ -31,15 +28,15 @@ def download(verbose: bool):
         Serena Williams
         """,
     )
-    add(["tennis.txt"], verbose)
-    commit("Add tennis.txt", verbose)
+    rs.git.add(["tennis.txt"])
+    rs.git.commit(message="Add tennis.txt")
 
-    create_or_update_file(
+    rs.files.create_or_update(
         "football.txt",
         """
         Pele
         Maradona
         """,
     )
-    add(["football.txt"], verbose)
-    commit("Add football.txt", verbose)
+    rs.git.add(["football.txt"])
+    rs.git.commit(message="Add football.txt")
