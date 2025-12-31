@@ -37,8 +37,9 @@ def get_username() -> Optional[str]:
     return run_command(["gh", "api", "user", "-q", ".login"])
 
 
-def get_remote_tags(username: str) -> List[str]:
-    raw_tags = run_command(["git", "ls-remote", "--tags"])
+def get_remote_tags(username: str, exercise: GitAutograderExercise) -> List[str]:
+    raw_tags = exercise.repo.repo.git.ls_remote()
+    print(raw_tags)
     if raw_tags is None:
         return []
     return [line.split("/")[2] for line in raw_tags.strip().splitlines()]
@@ -49,7 +50,8 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     if username is None:
         raise exercise.wrong_answer([IMPROPER_GH_CLI_SETUP])
 
-    tag_names = get_remote_tags(username)
+    tag_names = get_remote_tags(username, exercise)
+    print(tag_names)
 
     comments = []
 
