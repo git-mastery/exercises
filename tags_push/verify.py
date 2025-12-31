@@ -38,7 +38,7 @@ def get_username() -> Optional[str]:
 
 
 def get_remote_tags(username: str, exercise: GitAutograderExercise) -> List[str]:
-    raw_tags = exercise.repo.repo.git.ls_remote()
+    raw_tags = exercise.repo.repo.git.ls_remote("--tags")
     print(raw_tags)
     if raw_tags is None:
         return []
