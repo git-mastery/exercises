@@ -15,7 +15,7 @@ REPOSITORY_NAME = "mix-messy-graph"
 
 loader = GitAutograderTestLoader(REPOSITORY_NAME, verify)
 
-FEATURES = """
+FEATURES_FILE_CONTENT_DELETE_COMMIT = """
 # Features
 
 ## Creating Books
@@ -32,20 +32,93 @@ Works only for book titles.
 Allows deleting books.
 """
 
+FEATURES_FILE_CONTENT_SEARCH_COMMIT = """
+# Features
+
+## Creating Books
+
+Allows creating one book at a time.
+
+## Searching for Books
+
+Allows searching for books by keywords.
+Works only for book titles.
+"""
+
+FEATURES_FILE_CONTENT_FIX_HEADINGS_COMMIT = """
+# Features
+
+## Creating Books
+
+Allows creating one book at a time.
+"""
+
+
+FEATURES_FILE_CONTENT_CREATE_COMMIT = """
+# Features
+
+## Create Book
+
+Allows creating one book at a time.
+"""
+
+FEATURES_FILE_CONTENT_FEATURES_COMMIT = """
+# Features
+"""
+
 
 def test_base():
     with loader.start() as (test, rs):
-        rs.git.commit(message="Add features.md", allow_empty=True)
+        rs.files.create_or_update("features.md", FEATURES_FILE_CONTENT_FEATURES_COMMIT)
+        rs.git.add("features.md")
+        rs.git.commit(message="Add features.md")
         rs.helper(GitMasteryHelper).create_start_tag()
-        rs.git.commit(message="Mention feature for creating books", allow_empty=True)
+
+        rs.files.create_or_update("features.md", FEATURES_FILE_CONTENT_CREATE_COMMIT)
+        rs.git.add("features.md")
+        rs.git.commit(message="Mention feature for creating books")
         rs.git.tag("v1.0")
-        rs.git.commit(message="Fix phrasing of heading", allow_empty=True)
-        rs.git.commit(message="Add the search feature", allow_empty=True)
-        rs.git.commit(message="Add the delete feature", allow_empty=True)
-        rs.files.create_or_update("features.md", FEATURES)
+
+        rs.files.create_or_update("features.md", FEATURES_FILE_CONTENT_FIX_HEADINGS_COMMIT)
+        rs.git.add("features.md")
+        rs.git.commit(message="Fix phrasing of heading")
+
+        rs.files.create_or_update("features.md", FEATURES_FILE_CONTENT_SEARCH_COMMIT)
+        rs.git.add("features.md")
+        rs.git.commit(message="Add the search feature")
+
+        rs.files.create_or_update("features.md", FEATURES_FILE_CONTENT_DELETE_COMMIT)
+        rs.git.add("features.md")
+        rs.git.commit(message="Add the delete feature")
 
         output = test.run()
         assert_output(output, GitAutograderStatus.SUCCESSFUL)
+
+
+def test_invalid_features_content():
+    with loader.start() as (test, rs):
+        rs.files.create_or_update("features.md", FEATURES_FILE_CONTENT_FEATURES_COMMIT)
+        rs.git.add("features.md")
+        rs.git.commit(message="Add features.md")
+        rs.helper(GitMasteryHelper).create_start_tag()
+
+        rs.files.create_or_update("features.md", FEATURES_FILE_CONTENT_CREATE_COMMIT)
+        rs.git.add("features.md")
+        rs.git.commit(message="Mention feature for creating books")
+        rs.git.tag("v1.0")
+
+        rs.git.commit(message="Fix phrasing of heading", allow_empty=True)
+
+        rs.files.create_or_update("features.md", FEATURES_FILE_CONTENT_SEARCH_COMMIT)
+        rs.git.add("features.md")
+        rs.git.commit(message="Add the search feature")
+
+        rs.files.create_or_update("features.md", FEATURES_FILE_CONTENT_DELETE_COMMIT)
+        rs.git.add("features.md")
+        rs.git.commit(message="Add the delete feature")
+
+        output = test.run()
+        assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [FEATURES_FILE_CONTENT_INVALID.format(commit="Fix phrasing of heading")])
 
 
 def test_non_squash_merge_used():
@@ -62,7 +135,7 @@ def test_non_squash_merge_used():
         rs.git.merge("feature-search")
 
         rs.git.commit(message="Add the delete feature", allow_empty=True)
-        rs.files.create_or_update("features.md", FEATURES)
+        rs.files.create_or_update("features.md", FEATURES_FILE_CONTENT_DELETE_COMMIT)
 
         output = test.run()
         # This would fail because the squash merge changes the commit messages and the contents
@@ -91,7 +164,7 @@ def test_non_squash_merge_used_2():
         rs.git.merge("feature-search", no_ff=True)
 
         rs.git.commit(message="Add the delete feature", allow_empty=True)
-        rs.files.create_or_update("features.md", FEATURES)
+        rs.files.create_or_update("features.md", FEATURES_FILE_CONTENT_DELETE_COMMIT)
 
         output = test.run()
         assert_output(
@@ -110,7 +183,7 @@ def test_wrong_commit_message():
         rs.git.commit(message="Fix phrasing of heading", allow_empty=True)
         rs.git.commit(message="Add the search feature!", allow_empty=True)
         rs.git.commit(message="Add the delete feature", allow_empty=True)
-        rs.files.create_or_update("features.md", FEATURES)
+        rs.files.create_or_update("features.md", FEATURES_FILE_CONTENT_DELETE_COMMIT)
 
         output = test.run()
         assert_output(
@@ -132,7 +205,7 @@ def test_missing_commit():
         rs.git.tag("v1.0")
         rs.git.commit(message="Fix phrasing of heading", allow_empty=True)
         rs.git.commit(message="Add the search feature", allow_empty=True)
-        rs.files.create_or_update("features.md", FEATURES)
+        rs.files.create_or_update("features.md", FEATURES_FILE_CONTENT_DELETE_COMMIT)
 
         output = test.run()
         assert_output(
@@ -160,7 +233,7 @@ def test_branches_not_deleted():
         rs.git.branch("feature-delete")
         rs.git.branch("list")
 
-        rs.files.create_or_update("features.md", FEATURES)
+        rs.files.create_or_update("features.md", FEATURES_FILE_CONTENT_DELETE_COMMIT)
 
         output = test.run()
         assert_output(
@@ -183,11 +256,11 @@ def test_features_content_invalid():
         rs.git.commit(message="Fix phrasing of heading", allow_empty=True)
         rs.git.commit(message="Add the search feature", allow_empty=True)
         rs.git.commit(message="Add the delete feature", allow_empty=True)
-        rs.files.create_or_update("features.md", FEATURES[0])
+        rs.files.create_or_update("features.md", FEATURES_FILE_CONTENT_DELETE_COMMIT[0])
 
         output = test.run()
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,
-            [FEATURES_FILE_CONTENT_INVALID],
+            [FEATURES_FILE_CONTENT_INVALID.format(commit="Add features.md")],
         )
