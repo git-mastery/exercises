@@ -3,7 +3,7 @@ from git_autograder import (
     GitAutograderOutput,
     GitAutograderExercise,
     GitAutograderStatus,
-    GitAutograderCommit
+    GitAutograderCommit,
 )
 from itertools import zip_longest
 
@@ -89,7 +89,12 @@ def get_commit_from_message(
     return None
 
 
-def verify_commit_file_content(exercise: GitAutograderExercise, commit: GitAutograderCommit | None, file_name: str, expected_content: List[str]):
+def verify_commit_file_content(
+    exercise: GitAutograderExercise,
+    commit: GitAutograderCommit | None,
+    file_name: str,
+    expected_content: List[str],
+):
     """Checkout to specific commit and verify that the file content of the given commit matches the expected content."""
     if not commit:
         return
@@ -100,7 +105,13 @@ def verify_commit_file_content(exercise: GitAutograderExercise, commit: GitAutog
 
         contents = [line.strip() for line in file.readlines() if line.strip() != ""]
         if contents != expected_content:
-            raise exercise.wrong_answer([FEATURES_FILE_CONTENT_INVALID.format(commit=commit.commit.message.strip())])
+            raise exercise.wrong_answer(
+                [
+                    FEATURES_FILE_CONTENT_INVALID.format(
+                        commit=commit.commit.message.strip()
+                    )
+                ]
+            )
     exercise.repo.branches.branch("main").checkout()
 
 
@@ -143,21 +154,33 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     # Verify that the features.md file is correct
     # Checkout to specific commit to verify the contents of features.md
     features_commit = get_commit_from_message(commits, "Add features.md")
-    verify_commit_file_content(exercise, features_commit, "features.md", EXPECTED_LINES_FEATURES_COMMIT)
+    verify_commit_file_content(
+        exercise, features_commit, "features.md", EXPECTED_LINES_FEATURES_COMMIT
+    )
 
-    create_books_commit = get_commit_from_message(commits, "Mention feature for creating books")
-    verify_commit_file_content(exercise, create_books_commit, "features.md", EXPECTED_LINES_CREATE_BOOK_COMMIT)
+    create_books_commit = get_commit_from_message(
+        commits, "Mention feature for creating books"
+    )
+    verify_commit_file_content(
+        exercise, create_books_commit, "features.md", EXPECTED_LINES_CREATE_BOOK_COMMIT
+    )
 
     fix_heading_commit = get_commit_from_message(commits, "Fix phrasing of heading")
-    verify_commit_file_content(exercise, fix_heading_commit, "features.md", EXPECTED_LINES_FIX_HEADING_COMMIT)
+    verify_commit_file_content(
+        exercise, fix_heading_commit, "features.md", EXPECTED_LINES_FIX_HEADING_COMMIT
+    )
 
     add_search_commit = get_commit_from_message(commits, "Add the search feature")
-    verify_commit_file_content(exercise, add_search_commit, "features.md", EXPECTED_LINES_SEARCH_COMMIT)
+    verify_commit_file_content(
+        exercise, add_search_commit, "features.md", EXPECTED_LINES_SEARCH_COMMIT
+    )
 
     delete_feature_commit = get_commit_from_message(commits, "Add the delete feature")
-    verify_commit_file_content(exercise, delete_feature_commit, "features.md", EXPECTED_LINES_DELETE_COMMIT)
+    verify_commit_file_content(
+        exercise, delete_feature_commit, "features.md", EXPECTED_LINES_DELETE_COMMIT
+    )
 
     return exercise.to_output(
-        ["You have successfully completed the exercise!"], 
-        GitAutograderStatus.SUCCESSFUL
+        ["You have successfully completed the exercise!"],
+        GitAutograderStatus.SUCCESSFUL,
     )

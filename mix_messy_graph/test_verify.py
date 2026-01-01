@@ -79,7 +79,9 @@ def test_base():
         rs.git.commit(message="Mention feature for creating books")
         rs.git.tag("v1.0")
 
-        rs.files.create_or_update("features.md", FEATURES_FILE_CONTENT_FIX_HEADINGS_COMMIT)
+        rs.files.create_or_update(
+            "features.md", FEATURES_FILE_CONTENT_FIX_HEADINGS_COMMIT
+        )
         rs.git.add("features.md")
         rs.git.commit(message="Fix phrasing of heading")
 
@@ -118,7 +120,11 @@ def test_invalid_features_content():
         rs.git.commit(message="Add the delete feature")
 
         output = test.run()
-        assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [FEATURES_FILE_CONTENT_INVALID.format(commit="Fix phrasing of heading")])
+        assert_output(
+            output,
+            GitAutograderStatus.UNSUCCESSFUL,
+            [FEATURES_FILE_CONTENT_INVALID.format(commit="Fix phrasing of heading")],
+        )
 
 
 def test_non_squash_merge_used():
