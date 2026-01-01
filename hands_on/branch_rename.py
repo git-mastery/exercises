@@ -16,17 +16,17 @@ def download(verbose: bool):
         "horror.txt",
         """
         Horror Stories
-        """
+        """,
     )
     add(["."], verbose)
     commit("Add horror.txt", verbose)
-    
+
     checkout("textbooks", True, verbose)
     create_or_update_file(
         "textbooks.txt",
         """
         Textbooks
-        """
+        """,
     )
     add(["."], verbose)
     commit("Add textbooks.txt", verbose)
@@ -37,7 +37,7 @@ def download(verbose: bool):
         "fantasy.txt",
         """
         Fantasy Books
-        """
+        """,
     )
     add(["."], verbose)
     commit("Add fantasy.txt", verbose)
