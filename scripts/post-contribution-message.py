@@ -10,14 +10,16 @@ FORK_REPO = os.environ.get("FORK_REPO")
 FORK_BRANCH = os.environ.get("FORK_BRANCH")
 
 print(
-    v is None or v == ""
-    for v in [
-        GITHUB_TOKEN,
-        PR_NUMBER,
-        COMMIT_AUTHOR,
-        FORK_OWNER,
-        FORK_REPO,
-        FORK_BRANCH,
+    [
+        v is None or v == ""
+        for v in [
+            GITHUB_TOKEN,
+            PR_NUMBER,
+            COMMIT_AUTHOR,
+            FORK_OWNER,
+            FORK_REPO,
+            FORK_BRANCH,
+        ]
     ]
 )
 
