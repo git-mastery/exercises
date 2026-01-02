@@ -1,3 +1,3 @@
 #!/bin/bash
 
-python test-download.py $1
+python scripts/test-download.py $1

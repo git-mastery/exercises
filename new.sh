@@ -5,10 +5,10 @@ read choice
 
 case "$choice" in
 "hands-on" | "h" | "H")
-  python new-hands-on.py
+  python scripts/new-hands-on.py
   ;;
 "exercise" | "e" | "E")
-  python new-exercise.py
+  python scripts/new-exercise.py
   ;;
 *)
   echo "Invalid choice. Please enter 'hands-on' (h) or 'exercise' (e)."
