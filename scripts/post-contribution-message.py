@@ -5,26 +5,12 @@ from github import Github
 GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
 PR_NUMBER = os.environ.get("PR_NUMBER")
 COMMIT_AUTHOR = os.environ.get("COMMIT_AUTHOR")
-FORK_OWNER = os.environ.get("FORK_OWNER")
+FORK_AUTHOR = os.environ.get("FORK_AUTHOR")
 FORK_REPO = os.environ.get("FORK_REPO")
 FORK_BRANCH = os.environ.get("FORK_BRANCH")
 
-print(
-    [
-        v is None or v == ""
-        for v in [
-            GITHUB_TOKEN,
-            PR_NUMBER,
-            COMMIT_AUTHOR,
-            FORK_OWNER,
-            FORK_REPO,
-            FORK_BRANCH,
-        ]
-    ]
-)
-
 if not all(
-    [GITHUB_TOKEN, PR_NUMBER, COMMIT_AUTHOR, FORK_OWNER, FORK_REPO, FORK_BRANCH]
+    [GITHUB_TOKEN, PR_NUMBER, COMMIT_AUTHOR, FORK_AUTHOR, FORK_REPO, FORK_BRANCH]
 ):
     raise ValueError("Missing required environment variables")
 
@@ -38,7 +24,7 @@ pr = repo.get_pull(PR_NUMBER_INT)
 comment = f"""
 Hi @{COMMIT_AUTHOR}, thank you for your contribution! 🎉
 
-This PR comes from your fork `{FORK_OWNER}/{FORK_REPO}` on branch `{FORK_BRANCH}`.
+This PR comes from your fork `{FORK_AUTHOR}/{FORK_REPO}` on branch `{FORK_BRANCH}`.
 
 Before you request for a review, please ensure that you have tested your changes locally!
 
@@ -73,7 +59,7 @@ Edit the `.gitmastery.json` configuration file. You need to set the following va
 {
     # other fields...
     "exercises_source": {
-        "username": "{FORK_OWNER}",
+        "username": "{FORK_AUTHOR}",
         "repository": "{FORK_REPO}",
         "branch": "{FORK_BRANCH}",
     }
