@@ -1,0 +1,31 @@
+name: Post contribution message in pull request
+on:
+  pull_request:
+    types: [opened]
+
+jobs:
+  post_contribution_message:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install dependencies
+        run: |
+          pip install requests PyGithub
+
+      - name: Run post contribution message script
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+          COMMIT_AUTHOR: ${{ github.event.pull_request.user.login }}
+          FORK_AUTHOR: ${{ github.event.pull_request.head.repo.owner.login }}
+          FORK_REPO: ${{ github.event.pull_request.head.repo.name }}
+          FORK_BRANCH: ${{ github.event.pull_request.head.ref }}
+        run: |
+          python scripts/post-contribution-message.py
