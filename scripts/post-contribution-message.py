@@ -56,14 +56,14 @@ cd gitmastery-exercises/
 Edit the `.gitmastery.json` configuration file. You need to set the following values under the `exercises_source` key.
 
 ```json
-{
+{{
     # other fields...
-    "exercises_source": {
+    "exercises_source": {{
         "username": "{FORK_AUTHOR}",
         "repository": "{FORK_REPO}",
         "branch": "{FORK_BRANCH}",
-    }
-}
+    }}
+}}
 ```
 
 Then, you can use the `gitmastery` app to download and verify your changes locally.
