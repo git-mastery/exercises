@@ -77,6 +77,9 @@ gitmastery verify
 
 - [ ] (For exercises and hands-ons) I have verified that the downloading behavior works
 - [ ] (For exercises only) I have verified that the verification behavior is accurate
+
+> [!IMPORTANT]
+> To any reviewers of this pull request, please use the same instructions above to test the changes.
 """.lstrip()
 
 pr.create_issue_comment(comment)
