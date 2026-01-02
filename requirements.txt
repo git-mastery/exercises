@@ -9,3 +9,6 @@ repo-smith
 # Developer tooling dependencies
 ruff
 mypy
+PyGithub
+requests
+types-requests
