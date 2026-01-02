@@ -19,7 +19,7 @@ jobs:
 
       - name: Generate exercise-directory.md
         run: |
-          python create-exercise-directory.py
+          python scripts/create-exercise-directory.py
           mv exercise-directory.md index.md
 
       - name: Deploy to gh-pages
