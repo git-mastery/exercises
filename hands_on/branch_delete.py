@@ -35,5 +35,4 @@ def download(verbose: bool):
     # Sleep to ensure that the commit timestamps are different to ensure correct git revision graph in git log
     time.sleep(1)
 
-
     merge_with_message("textbooks", False, "Merge branch textbooks", verbose)
