@@ -1,6 +1,6 @@
 import os
 
-from github import Github
+from github import Github, Auth
 
 GITHUB_TOKEN = os.environ.get("GITHUB_TOKEN")
 PR_NUMBER = os.environ.get("PR_NUMBER")
@@ -17,7 +17,10 @@ if not all(
 assert PR_NUMBER is not None
 PR_NUMBER_INT = int(PR_NUMBER)
 
-gh = Github(GITHUB_TOKEN)
+assert GITHUB_TOKEN is not None
+
+auth = Auth.Token(GITHUB_TOKEN)
+gh = Github(auth=auth)
 repo = gh.get_repo("git-mastery/exercises")
 pr = repo.get_pull(PR_NUMBER_INT)
 
