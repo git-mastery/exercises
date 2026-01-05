@@ -7,7 +7,7 @@
   "requires_github": false,
   "base_files": {},
   "exercise_repo": {
-    "repo_type": "local",
+    "repo_type": "local-ignore",
     "repo_name": "my-notes",
     "repo_title": null,
     "create_fork": null,
