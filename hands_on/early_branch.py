@@ -63,5 +63,8 @@ def download(verbose: bool):
     checkout("main", False, verbose)
     append_to_file("tennis.txt", "Martina Navratilova")
     add(["tennis.txt"], verbose)
+
+    # Sleep to ensure that the commit timestamps are different to ensure correct git revision graph in git log
     time.sleep(1)
+    
     commit("Add Martina to tennis.txt", verbose)
