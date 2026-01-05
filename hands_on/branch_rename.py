@@ -1,3 +1,4 @@
+import time
 import os
 
 from exercise_utils.file import create_or_update_file
@@ -43,4 +44,8 @@ def download(verbose: bool):
     commit("Add fantasy.txt", verbose)
 
     checkout("main", False, verbose)
+
+    # Sleep to ensure that the commit timestamps are different to ensure correct git revision graph in git log
+    time.sleep(1)
+    
     merge_with_message("textbooks", False, "Merge branch textbooks", verbose)
