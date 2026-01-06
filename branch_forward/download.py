@@ -60,4 +60,3 @@ def setup(verbose: bool = False):
     )
     add(["story.txt"], verbose)
     commit("Mention Ginny is single", verbose)
-    checkout("main", False, verbose)
