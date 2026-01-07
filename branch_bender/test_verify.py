@@ -59,6 +59,18 @@ def test_base():
         assert_output(output, GitAutograderStatus.SUCCESSFUL)
 
 
+def test_merge_undo_succeeds():
+    with base_setup() as (test, rs):
+        rs.git.merge("feature/login", no_ff=False)
+        rs.git.reset("HEAD~1", hard=True)
+        rs.git.merge("feature/login", no_ff=True)
+        rs.git.merge("feature/dashboard", no_ff=True)
+        rs.git.merge("feature/payments", no_ff=True)
+
+        output = test.run()
+        assert_output(output, GitAutograderStatus.SUCCESSFUL)
+
+
 def test_ff_fails():
     with base_setup() as (test, rs):
         rs.git.merge("feature/login")

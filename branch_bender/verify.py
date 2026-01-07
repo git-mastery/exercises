@@ -41,26 +41,28 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     if len(merge_order) < 3:
         raise exercise.wrong_answer([MISSING_MERGES])
 
-    if merge_order[0] != "feature/login":
+    # Use negative indexing to check the last 3 merges (most recent)
+    # This allows users to undo mistakes (e.g., reset --hard after accidental ff) and redo properly
+    if merge_order[-3] != "feature/login":
         raise exercise.wrong_answer([FEATURE_LOGIN_MERGE_MISSING, RESET_MESSAGE])
 
-    if messages[0] == "Fast-forward":
+    if messages[-3] == "Fast-forward":
         raise exercise.wrong_answer(
             [NO_FAST_FORWARDING.format(branch_name="feature/login"), RESET_MESSAGE]
         )
 
-    if merge_order[1] != "feature/dashboard":
+    if merge_order[-2] != "feature/dashboard":
         raise exercise.wrong_answer([FEATURE_DASHBOARD_MERGE_MISSING, RESET_MESSAGE])
 
-    if messages[1] == "Fast-forward":
+    if messages[-2] == "Fast-forward":
         raise exercise.wrong_answer(
             [NO_FAST_FORWARDING.format(branch_name="feature/dashboard"), RESET_MESSAGE]
         )
 
-    if merge_order[2] != "feature/payments":
+    if merge_order[-1] != "feature/payments":
         raise exercise.wrong_answer([FEATURE_PAYMENTS_MERGE_MISSING, RESET_MESSAGE])
 
-    if messages[2] == "Fast-forward":
+    if messages[-1] == "Fast-forward":
         raise exercise.wrong_answer(
             [NO_FAST_FORWARDING.format(branch_name="feature/payments"), RESET_MESSAGE]
         )
