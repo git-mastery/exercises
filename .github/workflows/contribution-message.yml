@@ -1,7 +1,11 @@
 name: Post contribution message in pull request
 on:
   pull_request:
-    types: [opened]
+    types: [opened, reopened]
+
+permissions:
+  contents: write
+  pull-requests: write
 
 jobs:
   post_contribution_message:
@@ -21,7 +25,7 @@ jobs:
 
       - name: Run post contribution message script
         env:
-          GITHUB_TOKEN: ${{ secrets.ORG_PAT }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           PR_NUMBER: ${{ github.event.pull_request.number }}
           COMMIT_AUTHOR: ${{ github.event.pull_request.user.login }}
           FORK_AUTHOR: ${{ github.event.pull_request.head.repo.owner.login }}
