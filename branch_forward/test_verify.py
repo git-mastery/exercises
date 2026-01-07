@@ -23,6 +23,7 @@ loader = GitAutograderTestLoader(REPOSITORY_NAME, verify)
 @contextmanager
 def base_setup() -> Iterator[Tuple[GitAutograderTest, RepoSmith]]:
     with loader.start() as (test, rs):
+        rs.git.commit(message="Set initial state", allow_empty=True)
         rs.git.commit(message="Introduce Harry", allow_empty=True)
         rs.git.commit(message="Add about family", allow_empty=True)
 

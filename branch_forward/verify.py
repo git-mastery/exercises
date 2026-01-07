@@ -13,6 +13,7 @@ FAST_FORWARD_REQUIRED = (
 ONLY_WITH_SALLY_MERGED = "Only one of the two starting branches can be fast-forward merged into 'main'. Do not create new branches."
 
 EXPECTED_MAIN_COMMIT_MESSAGES = {
+    "Set initial state",
     "Introduce Harry",
     "Add about family",
     "Add cast.txt",
