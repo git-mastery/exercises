@@ -1,18 +1,18 @@
 name: Post contribution message in pull request
 on:
-  pull_request:
+  pull_request_target:
     types: [opened, reopened]
 
 permissions:
-  contents: write
+  # Only scope GITHUB_TOKEN to write for pull requests, others set to none (by default) for security reasons since we are using pull_request_target trigger
   pull-requests: write
 
 jobs:
   post_contribution_message:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v6
+      - name: Checkout repository # Checks out to base repository by default
+        uses: actions/checkout@v6 # DO NOT CHECKOUT TO HEAD UNSAFE (will checkout to head of the fork)
 
       - name: Setup Python
         uses: actions/setup-python@v5
