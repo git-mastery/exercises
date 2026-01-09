@@ -11,8 +11,9 @@ jobs:
   post_contribution_message:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository # Checks out to base repository default branch (for pull_request_target trigger)
-        uses: actions/checkout@v6 # DO NOT CHECKOUT TO HEAD UNSAFE (will checkout to head of the fork)
+      # DO NOT CHECKOUT TO HEAD UNSAFE (will checkout to head of the fork for pull_request_target trigger)
+      - name: Checkout repository
+        uses: actions/checkout@v6
 
       - name: Setup Python
         uses: actions/setup-python@v5
