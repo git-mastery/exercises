@@ -17,7 +17,7 @@ body:
     attributes:
       label: Existing exercise check
       options:
-        - label: I have verified that this exercise is not yet already [in discussion](https://github.com/git-mastery/exercises/issues?q=is%3Aissue%20state%3Aopen%20label%3A%22exercise%20discussion%22), [in progress](https://github.com/git-mastery/exercises/pulls?q=is%3Aopen+is%3Apr+label%3A%22exercise+review%22), or [exists](https://git-mastery.github.io/exercise)
+        - label: I have verified that this exercise is not yet already [in discussion](https://github.com/git-mastery/exercises/issues?q=is%3Aissue%20state%3Aopen%20label%3A%22exercise%20discussion%22), [in progress](https://github.com/git-mastery/exercises/pulls?q=is%3Aopen+is%3Apr+label%3A%22exercise+review%22), or [exists](https://git-mastery.org/exercises-directory/index.html)
           required: true
   - type: input
     attributes:
