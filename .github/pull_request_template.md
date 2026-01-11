@@ -6,7 +6,7 @@ Link the exercise discussion issue
 
 ## Checklist
 
-- [ ] If you require a new remote repository on the `Git-Mastery` organization, have you [created a request](https://github.com/git-mastery/exercises/issues/new?template=request_exercise_repository.md) for it?
+- [ ] If you require a new remote repository on the `Git-Mastery` organization, have you [created a request](https://github.com/git-mastery/exercises/issues/new?template=request_exercise_repository.yaml) for it?
 - [ ] Have you written unit tests using [`repo-smith`](https://github.com/git-mastery/repo-smith) to validate the exercise grading scheme?
 - [ ] Have you tested your changes using the instructions posted?
 - [ ] Have you verified that this exercise does not already exist or is not currently in review?
