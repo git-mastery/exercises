@@ -24,4 +24,4 @@ def download(verbose: bool):
     fork_repo(
         f"{REPO_OWNER}/{REPO_NAME}", FORK_NAME, verbose, False
     )
-    clone_repo_with_git(f"{username}/{FORK_NAME}", verbose, FORK_NAME)
+    clone_repo_with_git(f"https://github.com/{username}/{FORK_NAME}", verbose, FORK_NAME)
