@@ -9,7 +9,10 @@ from exercise_utils.cli import run
 def fork_repo(
     repository_name: str, fork_name: str, verbose: bool, default_branch_only: bool = True
 ) -> None:
-    """Creates a fork of a repository."""
+    """
+    Creates a fork of a repository.
+    Forks only the default branch, unless specified otherwise.
+    """
     command = ["gh", "repo", "fork", repository_name]
     if default_branch_only:
         command.append("--default-branch-only")
