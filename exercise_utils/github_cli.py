@@ -6,20 +6,16 @@ from typing import Optional
 from exercise_utils.cli import run
 
 
-def fork_repo(repository_name: str, fork_name: str, verbose: bool) -> None:
+def fork_repo(
+    repository_name: str, fork_name: str, verbose: bool, default_branch_only: bool = True
+) -> None:
     """Creates a fork of a repository."""
-    run(
-        [
-            "gh",
-            "repo",
-            "fork",
-            repository_name,
-            "--default-branch-only",
-            "--fork-name",
-            fork_name,
-        ],
-        verbose,
-    )
+    command = ["gh", "repo", "fork", repository_name]
+    if default_branch_only:
+        command.append("--default-branch-only")
+    command.extend(["--fork-name", fork_name])
+    
+    run(command, verbose)
 
 
 def clone_repo_with_gh(
