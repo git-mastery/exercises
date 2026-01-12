@@ -1,9 +1,10 @@
 from exercise_utils.git import clone_repo_with_git
 from exercise_utils.github_cli import (
+    delete_repo,
     fork_repo,
     get_fork_name,
     get_github_username,
-    has_fork,
+    has_repo,
 )
 
 __requires_git__ = True
@@ -16,11 +17,15 @@ FORK_NAME = "gitmastery-samplerepo-company"
 
 def download(verbose: bool):
     username = get_github_username(verbose)
+    full_repo_name = f"{username}/{FORK_NAME}"
 
-    if not has_fork(REPO_NAME, REPO_OWNER, username, verbose):
-        fork_repo(f"{REPO_OWNER}/{REPO_NAME}", FORK_NAME, verbose, False)
+    if has_repo(full_repo_name, True, verbose):
+        delete_repo(full_repo_name, verbose)
+
+    fork_repo(f"{REPO_OWNER}/{REPO_NAME}", FORK_NAME, verbose, False)
 
     existing_name = get_fork_name(REPO_NAME, REPO_OWNER, username, verbose)
     clone_repo_with_git(
-        f"https://github.com/{username}/{existing_name}", verbose, FORK_NAME
+        f"https://github.com/{username}/{existing_name}", verbose, REPO_NAME
     )
+    
