@@ -31,7 +31,7 @@ def download(verbose: bool):
     if has_repo(full_repo_name, True, verbose):
         delete_repo(full_repo_name, verbose)
 
-    fork_repo(TARGET_REPO, FORK_NAME, verbose)
+    fork_repo(TARGET_REPO, FORK_NAME, verbose, False)
     clone_repo_with_gh(full_repo_name, verbose, LOCAL_DIR)
 
     os.chdir(LOCAL_DIR)
