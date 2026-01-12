@@ -70,12 +70,9 @@ def init(verbose: bool) -> None:
     run_command(["git", "init", "--initial-branch=main"], verbose)
 
 
-def push(remote: str, branch: str, verbose: bool, set_upstream: bool = False) -> None:
+def push(remote: str, branch: str, verbose: bool) -> None:
     """Push the given branch on the remote."""
-    if set_upstream:
-        run_command(["git", "push", "--set-upstream", remote, branch], verbose)
-    else:
-        run_command(["git", "push", remote, branch], verbose)
+    run_command(["git", "push", remote, branch], verbose)
 
 
 def track_remote_branch(remote: str, branch: str, verbose: bool) -> None:

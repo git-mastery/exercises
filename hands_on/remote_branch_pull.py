@@ -41,5 +41,5 @@ def download(verbose: bool):
     add(["employees.txt"], verbose)
     commit("Add Pam to employees.txt", verbose)
 
-    push("origin", "hiring", verbose, True)
+    push("origin", "hiring", verbose)
     
