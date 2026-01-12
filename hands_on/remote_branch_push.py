@@ -28,4 +28,3 @@ def download(verbose: bool):
     clone_repo_with_git(
         f"https://github.com/{username}/{existing_name}", verbose, REPO_NAME
     )
-    
