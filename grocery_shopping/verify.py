@@ -20,13 +20,9 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
 
     main_branch = exercise.repo.branches.branch("main")
 
-    # Verify that not all commits are empty
-    if not main_branch.has_non_empty_commits():
-        raise exercise.wrong_answer([EMPTY_COMMITS])
-
     # Check if they edited the shopping-list.md at least once
     if not main_branch.has_edited_file("shopping-list.txt"):
-        raise exercise.wrong_answer([WRONG_FILE])
+        raise exercise.wrong_answer([NO_DIFF])
 
     shopping_list_blob = (
         main_branch.latest_user_commit.commit.tree / "shopping-list.txt"
@@ -48,6 +44,10 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
 
     if comments:
         raise exercise.wrong_answer(comments)
+    
+    # Verify that not all commits are empty
+    if not main_branch.has_non_empty_commits():
+        raise exercise.wrong_answer([EMPTY_COMMITS])
 
     return exercise.to_output(
         [
