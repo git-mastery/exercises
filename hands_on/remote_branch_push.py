@@ -18,7 +18,7 @@ def download(verbose: bool):
 
     if has_fork(REPO_NAME, REPO_OWNER, username, verbose):
         existing_name = get_fork_name(REPO_NAME, REPO_OWNER, username, verbose)
-        clone_repo_with_git(f"{username}/{existing_name}", verbose, FORK_NAME)
+        clone_repo_with_git(f"https://github.com/{username}/{existing_name}", verbose, FORK_NAME)
         return
 
     fork_repo(
