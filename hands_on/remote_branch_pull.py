@@ -32,7 +32,7 @@ def download(verbose: bool):
         delete_repo(full_repo_name, verbose)
 
     fork_repo(TARGET_REPO, FORK_NAME, verbose, False)
-    clone_repo_with_git(full_repo_name, verbose, LOCAL_DIR)
+    clone_repo_with_git(f"https://github.com/{full_repo_name}", verbose, LOCAL_DIR)
 
     os.chdir(LOCAL_DIR)
 
