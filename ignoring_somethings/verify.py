@@ -31,9 +31,6 @@ MISSING_GITIGNORE = "You are missing the .gitignore file! Try to reset the exerc
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     main_branch = exercise.repo.branches.branch("main")
 
-    if len(main_branch.user_commits) == 0:
-        raise exercise.wrong_answer([MISSING_COMMITS])
-
     with main_branch.latest_commit.file(".gitignore") as gitignore_file:
         if gitignore_file is None:
             raise exercise.wrong_answer([MISSING_GITIGNORE])
@@ -80,6 +77,9 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
             comments.append(NOT_IGNORING_RUNAWAY)
         elif "this/**/runaway.txt" not in gitignore_file_contents.splitlines():
             comments.append(NOT_PATTERN_MATCHING_RUNAWAY)
+        
+        if len(main_branch.user_commits) == 0:
+            raise exercise.wrong_answer([MISSING_COMMITS])
 
         if comments:
             raise exercise.wrong_answer(comments)
