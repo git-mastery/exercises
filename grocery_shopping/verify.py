@@ -1,3 +1,4 @@
+import os
 from typing import List
 
 from git_autograder import (
@@ -6,30 +7,34 @@ from git_autograder import (
     GitAutograderStatus,
 )
 
-EMPTY_COMMITS = "All commits are empty."
 NO_DIFF = "There are no changes made to shopping-list.txt."
 NO_ADD = "There are no new grocery list items added to the shopping list."
 NO_REMOVE = "There are no grocery list items removed from the shopping list."
 WRONG_FILE = "You haven't edited shopping-list.txt."
+SHOPPING_LIST_FILE_MISSING = "The shopping-list.txt file should not be deleted."
+CHANGES_NOT_COMMITTED = "Changes to shopping-list.txt are not committed."
+ADD_NOT_COMMITTED = "New grocery list items added to shopping-list.txt are not committed."
+REMOVE_NOT_COMMITTED = "Grocery list items removed from shopping-list.txt are not committed."
 
 ORIGINAL_SHOPPING_LIST = {"Milk", "Eggs", "Bread", "Apples", "Ham"}
 
 
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     comments: List[str] = []
+    repo_root = exercise.exercise_path
+    repo_folder = exercise.config.exercise_repo.repo_name
+    work_dir = os.path.join(repo_root, repo_folder)
 
-    main_branch = exercise.repo.branches.branch("main")
-
-    # Check if they edited the shopping-list.md at least once
-    if not main_branch.has_edited_file("shopping-list.txt"):
-        raise exercise.wrong_answer([NO_DIFF])
-
-    shopping_list_blob = (
-        main_branch.latest_user_commit.commit.tree / "shopping-list.txt"
-    )
+    shopping_list_file_path = os.path.join(work_dir, "shopping-list.txt")
+    if not os.path.exists(shopping_list_file_path):
+        raise exercise.wrong_answer([SHOPPING_LIST_FILE_MISSING])
+    
+    with open(shopping_list_file_path, "r", encoding="utf-8") as f:
+        content = f.read()
+    
     current_shopping_list = {
-        line[2:]
-        for line in shopping_list_blob.data_stream.read().decode().split("\n")
+        line[2:].strip() 
+        for line in content.splitlines() 
         if line.startswith("- ")
     }
 
@@ -45,9 +50,36 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     if comments:
         raise exercise.wrong_answer(comments)
     
+    main_branch = exercise.repo.branches.branch("main")
+
     # Verify that not all commits are empty
     if not main_branch.has_non_empty_commits():
-        raise exercise.wrong_answer([EMPTY_COMMITS])
+        raise exercise.wrong_answer([CHANGES_NOT_COMMITTED])
+
+    # Check if they edited the shopping-list.txt at least once
+    if not main_branch.has_edited_file("shopping-list.txt"):
+        raise exercise.wrong_answer([WRONG_FILE, CHANGES_NOT_COMMITTED])
+
+    shopping_list_blob = (
+        main_branch.latest_user_commit.commit.tree / "shopping-list.txt"
+    )
+    current_shopping_list = {
+        line[2:].strip()
+        for line in shopping_list_blob.data_stream.read().decode().split("\n")
+        if line.startswith("- ")
+    }
+
+    added_items = current_shopping_list.difference(ORIGINAL_SHOPPING_LIST)
+    deleted_items = ORIGINAL_SHOPPING_LIST.difference(current_shopping_list)
+
+    if not added_items:
+        comments.append(ADD_NOT_COMMITTED)
+
+    if not deleted_items:
+        comments.append(REMOVE_NOT_COMMITTED)
+
+    if comments:
+        raise exercise.wrong_answer(comments)
 
     return exercise.to_output(
         [
