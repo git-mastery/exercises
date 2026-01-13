@@ -10,7 +10,7 @@ from git_autograder import (
 NO_DIFF = "There are no changes made to shopping-list.txt."
 NO_ADD = "There are no new grocery list items added to the shopping list."
 NO_REMOVE = "There are no grocery list items removed from the shopping list."
-WRONG_FILE = "You haven't edited shopping-list.txt."
+WRONG_FILE = "You have committed changes to files other than shopping-list.txt."
 SHOPPING_LIST_FILE_MISSING = "The shopping-list.txt file should not be deleted."
 CHANGES_NOT_COMMITTED = "Changes to shopping-list.txt are not committed."
 ADD_NOT_COMMITTED = "New grocery list items added to shopping-list.txt are not committed."
