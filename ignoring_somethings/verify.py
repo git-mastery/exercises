@@ -79,7 +79,7 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
             comments.append(NOT_PATTERN_MATCHING_RUNAWAY)
         
         if len(main_branch.user_commits) == 0:
-            raise exercise.wrong_answer([MISSING_COMMITS])
+            comments.append(MISSING_COMMITS)
 
         if comments:
             raise exercise.wrong_answer(comments)
