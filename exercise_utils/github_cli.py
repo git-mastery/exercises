@@ -7,7 +7,10 @@ from exercise_utils.cli import run
 
 
 def fork_repo(
-    repository_name: str, fork_name: str, verbose: bool, default_branch_only: bool = True
+    repository_name: str,
+    fork_name: str,
+    verbose: bool,
+    default_branch_only: bool = True,
 ) -> None:
     """
     Creates a fork of a repository.

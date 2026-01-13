@@ -1,13 +1,7 @@
 import os
 
 from exercise_utils.file import append_to_file
-from exercise_utils.git import (
-    add, 
-    checkout,
-    clone_repo_with_git, 
-    commit, 
-    push
-)
+from exercise_utils.git import add, checkout, clone_repo_with_git, commit, push
 from exercise_utils.github_cli import (
     get_github_username,
     fork_repo,
@@ -41,5 +35,4 @@ def download(verbose: bool):
     add(["employees.txt"], verbose)
     commit("Add Pam to employees.txt", verbose)
 
-    push("origin", "hiring", verbose, True)
-    
+    push("origin", "hiring", verbose)
