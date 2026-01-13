@@ -29,7 +29,6 @@ NOT_IGNORING_REST_OF_MANY = (
 IGNORING_FIND_ME = "You should not be ignoring this/is/very/nested/find_me.txt!"
 MISSING_GITIGNORE = "You are missing the .gitignore file! Try to reset the exercise using gitmastery progress reset"
 
-
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     main_branch = exercise.repo.branches.branch("main")
     no_user_commit = len(main_branch.user_commits) == 0
@@ -44,6 +43,13 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     
     with open(gitignore_file_path, "r", encoding = "utf-8") as gitignore_file:
         gitignore_file_contents = gitignore_file.read()
+
+    # Verify that user has commited the ignore, 
+    # by comparing the local file and the committed file taken from the repo
+    with main_branch.latest_commit.file(".gitignore") as commited_gitignore_file:
+        if (commited_gitignore_file is None
+            or commited_gitignore_file != gitignore_file_contents):
+            no_user_commit = True
 
     # Verify the state of the ignore by recreating the necessary files and checking if
     # Git ignores them directly in a separate temporary Git repository
