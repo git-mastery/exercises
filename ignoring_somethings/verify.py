@@ -1,3 +1,5 @@
+import os
+
 import tempfile
 from pathlib import Path
 from typing import List
@@ -30,11 +32,18 @@ MISSING_GITIGNORE = "You are missing the .gitignore file! Try to reset the exerc
 
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     main_branch = exercise.repo.branches.branch("main")
+    no_user_commit = len(main_branch.user_commits) == 0
 
-    with main_branch.latest_commit.file(".gitignore") as gitignore_file:
-        if gitignore_file is None:
-            raise exercise.wrong_answer([MISSING_GITIGNORE])
-        gitignore_file_contents = gitignore_file
+    exercise_dir = exercise.exercise_path
+    repo_name = exercise.config.exercise_repo.repo_name
+    repo_folder_path = os.path.join(exercise_dir, repo_name)
+    gitignore_file_path = os.path.join(repo_folder_path, ".gitignore")
+
+    if not os.path.isfile(gitignore_file_path):
+        raise exercise.wrong_answer([MISSING_GITIGNORE])
+    
+    with open(gitignore_file_path, "r", encoding = "utf-8") as gitignore_file:
+        gitignore_file_contents = gitignore_file.read()
 
     # Verify the state of the ignore by recreating the necessary files and checking if
     # Git ignores them directly in a separate temporary Git repository
@@ -78,7 +87,7 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         elif "this/**/runaway.txt" not in gitignore_file_contents.splitlines():
             comments.append(NOT_PATTERN_MATCHING_RUNAWAY)
         
-        if len(main_branch.user_commits) == 0:
+        if no_user_commit:
             comments.append(MISSING_COMMITS)
 
         if comments:
