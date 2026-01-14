@@ -44,7 +44,7 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         active_branch_name = exercise.repo.repo.active_branch.name
     except TypeError:
         raise exercise.wrong_answer([DETACHED_HEAD])
-  
+
     if not exercise.repo.branches.has_branch("bug-fix"):
         raise exercise.wrong_answer([MISSING_BUG_FIX_BRANCH])
 
