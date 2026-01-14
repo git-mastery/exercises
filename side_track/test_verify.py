@@ -129,8 +129,6 @@ def test_missing_commits():
                 print(f"Hi {name}")
             """,
         )
-        rs.git.add("greet.py")
-        rs.git.commit(message="Fix greet function", allow_empty=False)
         rs.files.create_or_update(
             "calculator.py",
             """
@@ -138,6 +136,8 @@ def test_missing_commits():
                 return a + b
             """,
         )
+        rs.git.add(all=True)
+        rs.git.commit(message="Add", allow_empty=False)
         rs.git.checkout("main")
 
         output = test.run()
