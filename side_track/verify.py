@@ -39,22 +39,18 @@ def execute_function(
 
 
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
-    main_branch = exercise.repo.branches.branch("main")
-    if exercise.repo.repo.is_dirty():
-        raise exercise.wrong_answer([UNCOMMITTED_CHANGES])
-
-    try:
-        if exercise.repo.repo.active_branch.name != "main":
-            raise exercise.wrong_answer([NOT_ON_MAIN])
-    except TypeError:
-        raise exercise.wrong_answer([DETACHED_HEAD])
-
+    active_branch = exercise.repo.repo.active_branch.name
+    
     if not exercise.repo.branches.has_branch("bug-fix"):
         raise exercise.wrong_answer([MISSING_BUG_FIX_BRANCH])
 
     try:
         bug_fix_branch = exercise.repo.branches.branch("bug-fix")
         bug_fix_branch.checkout()
+        
+        if exercise.repo.repo.is_dirty():
+            raise exercise.wrong_answer([UNCOMMITTED_CHANGES])
+        
         if len(bug_fix_branch.user_commits) < 2:
             raise exercise.wrong_answer([MISSING_COMMITS])
 
@@ -91,6 +87,12 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         if comments:
             raise exercise.wrong_answer(comments)
 
+        try:
+            if active_branch != "main":
+                raise exercise.wrong_answer([NOT_ON_MAIN])
+        except TypeError:
+            raise exercise.wrong_answer([DETACHED_HEAD])
+
         return exercise.to_output(
             ["Great work with using git branch and git checkout to fix the bugs!"],
             GitAutograderStatus.SUCCESSFUL,
@@ -99,5 +101,3 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         raise
     except Exception:
         raise exercise.wrong_answer(["Something bad happened"])
-    finally:
-        main_branch.checkout()
