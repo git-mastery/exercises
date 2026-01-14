@@ -50,8 +50,6 @@ def test_base():
 
 def test_missing_branch():
     with loader.start() as (test, rs):
-        rs.git.commit(message="Initial commit", allow_empty=True)
-        rs.helper(GitMasteryHelper).create_start_tag()
         output = test.run()
         assert_output(
             output, GitAutograderStatus.UNSUCCESSFUL, [MISSING_BUG_FIX_BRANCH]
@@ -60,8 +58,6 @@ def test_missing_branch():
 
 def test_uncommitted():
     with loader.start() as (test, rs):
-        rs.git.commit(message="Initial commit", allow_empty=True)
-        rs.helper(GitMasteryHelper).create_start_tag()
         rs.git.checkout("bug-fix", branch=True)
         rs.files.create_or_update("test.txt", "hi")
         rs.git.add("test.txt")
@@ -74,7 +70,7 @@ def test_uncommitted():
 
 def test_not_main():
     with loader.start() as (test, rs):
-        rs.git.commit(message="Initial commit", allow_empty=True)
+        rs.git.commit(message="Empty", allow_empty=True)
         rs.helper(GitMasteryHelper).create_start_tag()
         rs.git.checkout("bug-fix", branch=True)
         rs.files.create_or_update(
@@ -102,8 +98,6 @@ def test_not_main():
 
 def test_no_bug_fix():
     with loader.start() as (test, rs):
-        rs.git.commit(message="Initial commit", allow_empty=True)
-        rs.helper(GitMasteryHelper).create_start_tag()
         rs.git.commit(message="Empty", allow_empty=True)
 
         output = test.run()
