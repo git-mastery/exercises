@@ -54,9 +54,6 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         
         if exercise.repo.repo.is_dirty():
             raise exercise.wrong_answer([UNCOMMITTED_CHANGES])
-        
-        if len(bug_fix_branch.user_commits) < 2:
-            raise exercise.wrong_answer([MISSING_COMMITS])
 
         repo_path: str | os.PathLike = cast(GitAutograderRepo, exercise.repo).repo_path
         # Ensure that they applied the right fix by testing the greet function
@@ -90,6 +87,9 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
 
         if comments:
             raise exercise.wrong_answer(comments)
+        
+        if len(bug_fix_branch.user_commits) < 2:
+            raise exercise.wrong_answer([MISSING_COMMITS])
 
         if active_branch_name != "main":
             raise exercise.wrong_answer([NOT_ON_MAIN])
