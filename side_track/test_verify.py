@@ -7,6 +7,7 @@ from .verify import (
     MISSING_BUG_FIX_BRANCH,
     MISSING_COMMITS,
     NOT_ON_MAIN,
+    SUCCESS_MESSAGE,
     UNCOMMITTED_CHANGES,
     verify,
 )
@@ -44,7 +45,7 @@ def test_base():
         assert_output(
             output,
             GitAutograderStatus.SUCCESSFUL,
-            ["Great work with using git branch and git checkout to fix the bugs!"],
+            [SUCCESS_MESSAGE],
         )
 
 

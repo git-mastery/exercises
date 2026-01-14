@@ -23,6 +23,7 @@ NOT_ON_MAIN = (
 DETACHED_HEAD = "You should not be in a detached HEAD state! Run git checkout main to get back to main"
 GREET_NOT_FIXED = "You have not fixed the greet function in greet.py"
 CALCULATOR_NOT_FIXED = "You have not fixed the add function in calculator.py"
+SUCCESS_MESSAGE = "Great work with using git branch and git checkout to fix the bugs!"
 
 
 def execute_function(
@@ -39,7 +40,10 @@ def execute_function(
 
 
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
-    active_branch = exercise.repo.repo.active_branch.name
+    try:
+        active_branch_name = exercise.repo.repo.active_branch.name
+    except TypeError:
+        raise exercise.wrong_answer([DETACHED_HEAD])
     
     if not exercise.repo.branches.has_branch("bug-fix"):
         raise exercise.wrong_answer([MISSING_BUG_FIX_BRANCH])
@@ -87,14 +91,11 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         if comments:
             raise exercise.wrong_answer(comments)
 
-        try:
-            if active_branch != "main":
-                raise exercise.wrong_answer([NOT_ON_MAIN])
-        except TypeError:
-            raise exercise.wrong_answer([DETACHED_HEAD])
+        if active_branch_name != "main":
+            raise exercise.wrong_answer([NOT_ON_MAIN])
 
         return exercise.to_output(
-            ["Great work with using git branch and git checkout to fix the bugs!"],
+            [SUCCESS_MESSAGE],
             GitAutograderStatus.SUCCESSFUL,
         )
     except (GitAutograderWrongAnswerException, GitAutograderInvalidStateException):
