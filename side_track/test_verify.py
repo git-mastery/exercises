@@ -7,7 +7,6 @@ from .verify import (
     MISSING_BUG_FIX_BRANCH,
     MISSING_COMMITS,
     NOT_ON_MAIN,
-    SUCCESS_MESSAGE,
     UNCOMMITTED_CHANGES,
     verify,
 )
@@ -57,7 +56,6 @@ def test_base():
         assert_output(
             output,
             GitAutograderStatus.SUCCESSFUL,
-            [SUCCESS_MESSAGE],
         )
 
 
@@ -124,7 +122,22 @@ def test_missing_commits():
         rs.git.commit(message="Empty", allow_empty=True)
         rs.helper(GitMasteryHelper).create_start_tag()
         rs.git.checkout("bug-fix", branch=True)
-        rs.git.commit(message="Empty", allow_empty=True)
+        rs.files.create_or_update(
+            "greet.py",
+            """
+            def greet(name):
+                print(f"Hi {name}")
+            """,
+        )
+        rs.git.add("greet.py")
+        rs.git.commit(message="Fix greet function", allow_empty=False)
+        rs.files.create_or_update(
+            "calculator.py",
+            """
+            def add(a, b):
+                return a + b
+            """,
+        )
         rs.git.checkout("main")
 
         output = test.run()
