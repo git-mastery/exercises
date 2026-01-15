@@ -11,12 +11,12 @@ from git_autograder import GitAutograderStatus
 from repo_smith.repo_smith import RepoSmith
 
 from .verify import (
-    ADD_NOT_COMMITTED, 
-    NO_ADD, 
-    NO_REMOVE, 
-    REMOVE_NOT_COMMITTED, 
-    SHOPPING_LIST_FILE_MISSING, 
-    verify
+    ADD_NOT_COMMITTED,
+    NO_ADD,
+    NO_REMOVE,
+    REMOVE_NOT_COMMITTED,
+    SHOPPING_LIST_FILE_MISSING,
+    verify,
 )
 
 REPOSITORY_NAME = "grocery-shopping"
@@ -63,12 +63,17 @@ def test_delete_file():
         rs.files.delete("shopping-list.txt")
 
         output = test.run()
-        assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [SHOPPING_LIST_FILE_MISSING])
+        assert_output(
+            output, GitAutograderStatus.UNSUCCESSFUL, [SHOPPING_LIST_FILE_MISSING]
+        )
 
 
 def test_add_only():
     with base_setup() as (test, rs):
-        rs.files.append("shopping-list.txt", "- Chicken\n",)
+        rs.files.append(
+            "shopping-list.txt",
+            "- Chicken\n",
+        )
 
         output = test.run()
         assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [NO_REMOVE])
@@ -104,12 +109,19 @@ def test_changes_not_committed():
         )
 
         output = test.run()
-        assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [ADD_NOT_COMMITTED, REMOVE_NOT_COMMITTED])
+        assert_output(
+            output,
+            GitAutograderStatus.UNSUCCESSFUL,
+            [ADD_NOT_COMMITTED, REMOVE_NOT_COMMITTED],
+        )
 
 
 def test_add_committed_only():
     with base_setup() as (test, rs):
-        rs.files.append("shopping-list.txt", "- Chicken\n",)
+        rs.files.append(
+            "shopping-list.txt",
+            "- Chicken\n",
+        )
         rs.git.add(all=True)
         rs.git.commit(message="Add Chicken to shopping list")
 
@@ -121,7 +133,7 @@ def test_add_committed_only():
             - Bread
             - Apples
             - Chicken
-            """
+            """,
         )
 
         output = test.run()
@@ -137,12 +149,15 @@ def test_remove_committed_only():
             - Eggs
             - Bread
             - Apples
-            """
+            """,
         )
         rs.git.add(all=True)
         rs.git.commit(message="Add Chicken to shopping list")
 
-        rs.files.append("shopping-list.txt", "- Chicken\n",)
+        rs.files.append(
+            "shopping-list.txt",
+            "- Chicken\n",
+        )
 
         output = test.run()
         assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [ADD_NOT_COMMITTED])
