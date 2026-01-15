@@ -51,7 +51,7 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     try:
         bug_fix_branch = exercise.repo.branches.branch("bug-fix")
         bug_fix_branch.checkout()
-        
+
         if exercise.repo.repo.is_dirty():
             raise exercise.wrong_answer([UNCOMMITTED_CHANGES])
 
@@ -87,7 +87,7 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
 
         if comments:
             raise exercise.wrong_answer(comments)
-        
+
         if len(bug_fix_branch.user_commits) < 2:
             raise exercise.wrong_answer([MISSING_COMMITS])
 

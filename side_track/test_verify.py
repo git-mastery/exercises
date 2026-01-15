@@ -15,6 +15,7 @@ REPOSITORY_NAME = "side-track"
 
 loader = GitAutograderTestLoader(REPOSITORY_NAME, verify)
 
+
 def test_base():
     with loader.start() as (test, rs):
         rs.git.commit(message="Initial commit", allow_empty=True)
