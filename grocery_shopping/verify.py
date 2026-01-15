@@ -10,8 +10,12 @@ from git_autograder import (
 NO_ADD = "There are no new grocery list items added to the shopping list."
 NO_REMOVE = "There are no grocery list items removed from the shopping list."
 SHOPPING_LIST_FILE_MISSING = "The shopping-list.txt file should not be deleted."
-ADD_NOT_COMMITTED = "New grocery list items added to shopping-list.txt are not committed."
-REMOVE_NOT_COMMITTED = "Grocery list items removed from shopping-list.txt are not committed."
+ADD_NOT_COMMITTED = (
+    "New grocery list items added to shopping-list.txt are not committed."
+)
+REMOVE_NOT_COMMITTED = (
+    "Grocery list items removed from shopping-list.txt are not committed."
+)
 
 ORIGINAL_SHOPPING_LIST = {"Milk", "Eggs", "Bread", "Apples", "Ham"}
 
@@ -25,14 +29,12 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     shopping_list_file_path = os.path.join(work_dir, "shopping-list.txt")
     if not os.path.exists(shopping_list_file_path):
         raise exercise.wrong_answer([SHOPPING_LIST_FILE_MISSING])
-    
+
     with open(shopping_list_file_path, "r", encoding="utf-8") as f:
         content = f.read()
-    
+
     current_shopping_list = {
-        line[2:].strip() 
-        for line in content.splitlines() 
-        if line.startswith("- ")
+        line[2:].strip() for line in content.splitlines() if line.startswith("- ")
     }
 
     added_items = current_shopping_list.difference(ORIGINAL_SHOPPING_LIST)
@@ -46,7 +48,7 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
 
     if comments:
         raise exercise.wrong_answer(comments)
-    
+
     main_branch = exercise.repo.branches.branch("main")
 
     if not main_branch.user_commits:
