@@ -12,13 +12,13 @@ from exercise_utils.github_cli import (
 __requires_git__ = True
 __requires_github__ = True
 
+REPO_OWNER = "git-mastery"
+REPO_NAME = "samplerepo-funny-glossary"
+
 
 def setup(verbose: bool = False):
-    REPO_OWNER = "git-mastery"
-    REPO_NAME = "samplerepo-funny-glossary"
     username = get_github_username(verbose)
     FORK_NAME = f"{username}-gitmastery-samplerepo-funny-glossary"
-    CLONE_DIR = "funny-glossary"
 
     if has_repo(FORK_NAME, True, verbose):
         delete_repo(FORK_NAME, verbose)
