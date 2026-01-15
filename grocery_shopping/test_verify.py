@@ -12,11 +12,10 @@ from repo_smith.repo_smith import RepoSmith
 
 from .verify import (
     ADD_NOT_COMMITTED, 
-    CHANGES_NOT_COMMITTED, 
-    NO_ADD, NO_REMOVE, 
+    NO_ADD, 
+    NO_REMOVE, 
     REMOVE_NOT_COMMITTED, 
     SHOPPING_LIST_FILE_MISSING, 
-    WRONG_FILE, 
     verify
 )
 
@@ -105,28 +104,7 @@ def test_changes_not_committed():
         )
 
         output = test.run()
-        assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [CHANGES_NOT_COMMITTED])
-
-
-def test_other_file_changes_committed():
-    with base_setup() as (test, rs):
-        rs.files.create_or_update("README.md", "Goodbye")
-        rs.git.add(all=True)
-        rs.git.commit(message="Update README.md")
-
-        rs.files.create_or_update(
-            "shopping-list.txt",
-            """
-            - Milk
-            - Eggs
-            - Bread
-            - Apples
-            - Chicken
-            """,
-        )
-
-        output = test.run()
-        assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [WRONG_FILE, CHANGES_NOT_COMMITTED])
+        assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [ADD_NOT_COMMITTED, REMOVE_NOT_COMMITTED])
 
 
 def test_add_committed_only():

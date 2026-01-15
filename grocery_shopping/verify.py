@@ -7,12 +7,9 @@ from git_autograder import (
     GitAutograderStatus,
 )
 
-NO_DIFF = "There are no changes made to shopping-list.txt."
 NO_ADD = "There are no new grocery list items added to the shopping list."
 NO_REMOVE = "There are no grocery list items removed from the shopping list."
-WRONG_FILE = "You have committed changes to files other than shopping-list.txt."
 SHOPPING_LIST_FILE_MISSING = "The shopping-list.txt file should not be deleted."
-CHANGES_NOT_COMMITTED = "Changes to shopping-list.txt are not committed."
 ADD_NOT_COMMITTED = "New grocery list items added to shopping-list.txt are not committed."
 REMOVE_NOT_COMMITTED = "Grocery list items removed from shopping-list.txt are not committed."
 
@@ -52,13 +49,8 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     
     main_branch = exercise.repo.branches.branch("main")
 
-    # Verify that not all commits are empty
-    if not main_branch.has_non_empty_commits():
-        raise exercise.wrong_answer([CHANGES_NOT_COMMITTED])
-
-    # Check if they edited the shopping-list.txt at least once
-    if not main_branch.has_edited_file("shopping-list.txt"):
-        raise exercise.wrong_answer([WRONG_FILE, CHANGES_NOT_COMMITTED])
+    if not main_branch.user_commits:
+        raise exercise.wrong_answer([ADD_NOT_COMMITTED, REMOVE_NOT_COMMITTED])
 
     shopping_list_blob = (
         main_branch.latest_user_commit.commit.tree / "shopping-list.txt"
