@@ -64,7 +64,7 @@ Edit the `.gitmastery.json` configuration file. You need to set the following va
     "exercises_source": {{
         "username": "{FORK_AUTHOR}",
         "repository": "{FORK_REPO}",
-        "branch": "{FORK_BRANCH}",
+        "branch": "{FORK_BRANCH}"
     }}
 }}
 ```
