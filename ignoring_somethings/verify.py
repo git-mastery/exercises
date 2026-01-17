@@ -29,6 +29,7 @@ NOT_IGNORING_REST_OF_MANY = (
 IGNORING_FIND_ME = "You should not be ignoring this/is/very/nested/find_me.txt!"
 MISSING_GITIGNORE = "You are missing the .gitignore file! Try to reset the exercise using gitmastery progress reset"
 
+
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     main_branch = exercise.repo.branches.branch("main")
     no_user_commit = len(main_branch.user_commits) == 0
