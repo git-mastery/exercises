@@ -1,4 +1,4 @@
-from exercise_utils.cli import run_command
+from exercise_utils.cli import run_command, run_command_no_exit
 from exercise_utils.github_cli import fork_repo, get_github_username
 from exercise_utils.git import add_remote
 from exercise_utils.gitmastery import create_start_tag
@@ -16,12 +16,20 @@ def setup(verbose: bool = False):
     fork_repo(upstream_repo, fork_name, verbose, default_branch_only=False)
 
     fork_url = f"https://github.com/{username}/{fork_name}.git"
-    if run_command(["git", "remote", "get-url", "origin"], verbose) is None:
+    origin_url = run_command_no_exit(["git", "remote", "get-url", "origin"], verbose)
+    if origin_url is None:
         add_remote("origin", fork_url, verbose)
     else:
         run_command(["git", "remote", "set-url", "origin", fork_url], verbose)
 
-    add_remote("upstream", f"https://github.com/{upstream_repo}.git", verbose)
+    upstream_url = f"https://github.com/{upstream_repo}.git"
+    existing_upstream = run_command_no_exit(
+        ["git", "remote", "get-url", "upstream"], verbose
+    )
+    if existing_upstream is None:
+        add_remote("upstream", upstream_url, verbose)
+    else:
+        run_command(["git", "remote", "set-url", "upstream", upstream_url], verbose)
     run_command(["git", "fetch", "upstream", "--prune"], verbose)
 
     branch_list = run_command(
@@ -39,6 +47,10 @@ def setup(verbose: bool = False):
                 continue
             run_command(["git", "branch", "-f", branch, f"upstream/{branch}"], verbose)
 
-    run_command(["git", "push", "origin", "--all"], verbose)
+    if run_command_no_exit(
+        ["git", "show-ref", "--verify", "refs/remotes/upstream/main"],
+        verbose,
+    ):
+        run_command(["git", "checkout", "-B", "main", "upstream/main"], verbose)
 
-    create_start_tag(verbose)
+    run_command(["git", "push", "origin", "--all"], verbose)
