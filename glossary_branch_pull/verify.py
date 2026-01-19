@@ -35,20 +35,26 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     else:
         abc_branch = repo.branches.branch("ABC").branch
         remote_abc = abc_branch.tracking_branch()
-        local_commits = set(commit.hexsha for commit in repo.branches.branch("ABC").commits)
-        remote_commit_hexsha = remote_abc.commit.hexsha
-        if remote_commit_hexsha not in local_commits:
-            comments.append(COMMIT_MISSING.format(branch="ABC"))
+        if remote_abc:
+            local_commits = set(commit.hexsha for commit in repo.branches.branch("ABC").commits)
+            remote_commit_hexsha = remote_abc.commit.hexsha
+            if remote_commit_hexsha not in local_commits:
+                comments.append(COMMIT_MISSING.format(branch="ABC"))
+        else:
+            comments.append(BRANCH_NOT_TRACKING.format(branch="ABC"))
 
     if not repo.branches.has_branch("DEF"):
         comments.append(BRANCH_MISSING.format(branch="DEF"))
     else:
         def_branch = repo.branches.branch("DEF").branch
         remote_def = def_branch.tracking_branch()
-        local_commits = set(commit.hexsha for commit in repo.branches.branch("DEF").commits)
-        remote_commit_hexsha = remote_def.commit.hexsha
-        if remote_commit_hexsha not in local_commits:
-            comments.append(COMMIT_MISSING.format(branch="DEF"))
+        if remote_def:
+            local_commits = set(commit.hexsha for commit in repo.branches.branch("DEF").commits)
+            remote_commit_hexsha = remote_def.commit.hexsha
+            if remote_commit_hexsha not in local_commits:
+                comments.append(COMMIT_MISSING.format(branch="DEF"))
+        else:
+            comments.append(BRANCH_NOT_TRACKING.format(branch="DEF"))
 
     if comments:
         return exercise.to_output(comments, GitAutograderStatus.UNSUCCESSFUL)
