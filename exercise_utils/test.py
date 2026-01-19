@@ -45,11 +45,13 @@ class GitAutograderTest:
         grade_func: Callable[[GitAutograderExercise], GitAutograderOutput],
         clone_from: Optional[str] = None,
         mock_answers: Optional[Dict[str, str]] = None,
+        include_remote_repo: bool = False,
     ) -> None:
         self.exercise_name = exercise_name
         self.grade_func = grade_func
         self.clone_from = clone_from
         self.mock_answers = mock_answers
+        self.include_remote_repo = include_remote_repo
         self.__rs: Optional[RepoSmith] = None
         self.__rs_context: Optional[ContextManager[RepoSmith]] = None
         self.__temp_dir: Optional[tempfile.TemporaryDirectory] = None
@@ -156,11 +158,13 @@ class GitAutograderTest:
                 False,
                 existing_path=repo_path.absolute().as_posix(),
                 clone_from=self.clone_from,
+                include_remote_repo=self.include_remote_repo,
             )
         else:
             self.__rs_context = create_repo_smith(
                 False,
                 existing_path=repo_path.absolute().as_posix(),
+                include_remote_repo=self.include_remote_repo,
             )
         self.__rs = self.__rs_context.__enter__()
         self.__rs.add_helper(GitMasteryHelper)
@@ -197,12 +201,14 @@ class GitAutograderTestLoader:
         self,
         clone_from: Optional[str] = None,
         mock_answers: Optional[Dict[str, str]] = None,
+        include_remote_repo: bool = False,
     ) -> Iterator[Tuple[GitAutograderTest, RepoSmith]]:
         test = GitAutograderTest(
             self.exercise_name,
             self.grade_func,
             clone_from,
             mock_answers,
+            include_remote_repo,
         )
         with test as (ctx, rs):
             yield (ctx, rs)
