@@ -6,12 +6,9 @@ from exercise_utils.github_cli import delete_repo, fork_repo, get_github_usernam
 from exercise_utils.gitmastery import create_start_tag
 from exercise_utils.git import clone_repo_with_git
 
-__resources__ = {}
-
 
 def setup(verbose: bool = False):
-    upstream_repo = "git-mastery/samplerepo-funny-glossary"
-    local_repo_name = "funny-glossary"
+    UPSTREAM_REPO = "git-mastery/samplerepo-funny-glossary"
 
     username = get_github_username(verbose)
     assert username is not None
@@ -20,7 +17,7 @@ def setup(verbose: bool = False):
     if has_repo(fork_name, True, verbose):
         delete_repo(fork_name, verbose)
 
-    fork_repo(upstream_repo, fork_name, verbose, default_branch_only=False)
+    fork_repo(UPSTREAM_REPO, fork_name, verbose, default_branch_only=False)
 
     clone_repo_with_git(
         f"https://github.com/{username}/{fork_name}.git",
