@@ -26,10 +26,9 @@ def setup(verbose: bool = False):
     clone_repo_with_git(
         f"https://github.com/{username}/{full_repo_name}.git",
         verbose,
-        local_repo_name,
+        ".",
     )
 
-    os.chdir(local_repo_name)
     run_command(["git", "fetch", "--all", "--prune"], verbose)
 
     run_command(
