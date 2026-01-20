@@ -23,7 +23,7 @@ def setup(verbose: bool = False):
 
     fork_repo(upstream_repo, full_repo_name, verbose, default_branch_only=False)
 
-    clone_repo_with_git(f"https://github.com/{full_repo_name}.git", verbose)
+    clone_repo_with_git(f"https://github.com/{full_repo_name}.git", verbose, local_repo_name)
 
     run_command(["git", "fetch", "--all", "--prune"], verbose)
 
