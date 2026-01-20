@@ -11,8 +11,6 @@ from exercise_utils.github_cli import (
 TARGET_REPO = "git-mastery/samplerepo-funny-glossary"
 FORK_NAME = "gitmastery-samplerepo-funny-glossary"
 
-__resources__ = {}
-
 
 def setup(verbose: bool = False):
     username = get_github_username(verbose)
