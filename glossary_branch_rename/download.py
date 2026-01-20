@@ -15,16 +15,15 @@ def setup(verbose: bool = False):
 
     username = get_github_username(verbose)
     assert username is not None
-    fork_name = "gitmastery-samplerepo-funny-glossary"
-    full_repo_name = f"{username}-{fork_name}"
+    fork_name = f"{username}-gitmastery-samplerepo-funny-glossary"
 
-    if has_repo(full_repo_name, True, verbose):
-        delete_repo(full_repo_name, verbose)
+    if has_repo(fork_name, True, verbose):
+        delete_repo(fork_name, verbose)
 
-    fork_repo(upstream_repo, full_repo_name, verbose, default_branch_only=False)
+    fork_repo(upstream_repo, fork_name, verbose, default_branch_only=False)
 
     clone_repo_with_git(
-        f"https://github.com/{username}/{full_repo_name}.git",
+        f"https://github.com/{username}/{fork_name}.git",
         verbose,
         ".",
     )
