@@ -1,9 +1,10 @@
 import os
 from pathlib import Path
 
-from exercise_utils.cli import run_command, run_command_no_exit
-from exercise_utils.github_cli import get_github_username
+from exercise_utils.cli import run_command
+from exercise_utils.github_cli import delete_repo, fork_repo, get_github_username, has_repo
 from exercise_utils.gitmastery import create_start_tag
+from exercise_utils.git import clone_repo_with_git
 
 __resources__ = {}
 
@@ -14,30 +15,35 @@ def setup(verbose: bool = False):
 
     username = get_github_username(verbose)
     assert username is not None
-    fork_name = f"{username}-gitmastery-samplerepo-funny-glossary"
+    fork_name = "gitmastery-samplerepo-funny-glossary"
+    full_repo_name = f"{username}-{fork_name}"
 
-    local_repo_path = Path(local_repo_name)
-    if local_repo_path.exists():
-        # If the repo already exists, refresh refs instead of recloning.
-        run_command(["git", "-C", local_repo_name, "fetch", "--all", "--prune"], verbose)
-    else:
-        run_command(
-            [
-                "gh",
-                "repo",
-                "fork",
-                upstream_repo,
-                "--clone",
-                "--fork-name",
-                fork_name,
-                "--",
-                local_repo_name,
-            ],
-            verbose,
-        )
+    if has_repo(full_repo_name, True, verbose):
+        delete_repo(full_repo_name, verbose)
+
+    fork_repo(upstream_repo, fork_name, verbose, default_branch_only=False)
+
+    clone_repo_with_git(f"https://github.com/{full_repo_name}.git", verbose)
+
+    repo_path = Path(local_repo_name)
+    
+    run_command(["git", "-C", str(repo_path), "fetch", "--all", "--prune"], verbose)
 
     run_command(
-        ["git", "-C", local_repo_name, "remote", "remove", "upstream"], verbose
+        ["git", "-C", str(repo_path), "branch", "--track", "ABC", "origin/ABC"],
+        verbose,
+    )
+    run_command(
+        ["git", "-C", str(repo_path), "branch", "--track", "DEF", "origin/DEF"],
+        verbose,
+    )
+    run_command(
+        ["git", "-C", str(repo_path), "branch", "--track", "STU", "origin/STU"],
+        verbose,
+    )
+    run_command(
+        ["git", "-C", str(repo_path), "branch", "--track", "VWX", "origin/VWX"],
+        verbose,
     )
 
-    create_start_tag(verbose)
+    run_command(["git", "-C", str(repo_path), "checkout", "main"], verbose)
