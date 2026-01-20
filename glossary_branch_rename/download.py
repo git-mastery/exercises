@@ -25,25 +25,21 @@ def setup(verbose: bool = False):
 
     clone_repo_with_git(f"https://github.com/{full_repo_name}.git", verbose)
 
-    repo_path = Path(local_repo_name)
-    
-    run_command(["git", "-C", str(repo_path), "fetch", "--all", "--prune"], verbose)
+    run_command(["git", "fetch", "--all", "--prune"], verbose)
 
     run_command(
-        ["git", "-C", str(repo_path), "branch", "--track", "ABC", "origin/ABC"],
+        ["git","branch", "--track", "ABC", "origin/ABC"],
         verbose,
     )
     run_command(
-        ["git", "-C", str(repo_path), "branch", "--track", "DEF", "origin/DEF"],
+        ["git", "branch", "--track", "DEF", "origin/DEF"],
         verbose,
     )
     run_command(
-        ["git", "-C", str(repo_path), "branch", "--track", "STU", "origin/STU"],
+        ["git","branch", "--track", "STU", "origin/STU"],
         verbose,
     )
     run_command(
-        ["git", "-C", str(repo_path), "branch", "--track", "VWX", "origin/VWX"],
+        ["git","branch", "--track", "VWX", "origin/VWX"],
         verbose,
     )
-
-    run_command(["git", "-C", str(repo_path), "checkout", "main"], verbose)
