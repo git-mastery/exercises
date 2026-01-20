@@ -28,10 +28,13 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
 
     if STU_BRANCH in local_branches:
         comments.append(STU_LOCAL_PRESENT)
+
     if RENAMED_BRANCH not in local_branches:
         comments.append(RENAMED_LOCAL_MISSING)
+
     if STU_BRANCH in remote_branches:
         comments.append(STU_REMOTE_PRESENT)
+        
     if RENAMED_BRANCH not in remote_branches:
         comments.append(RENAMED_REMOTE_MISSING)
 
