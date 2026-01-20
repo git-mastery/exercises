@@ -57,7 +57,7 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
             comments.append(BRANCH_NOT_TRACKING.format(branch="DEF"))
 
     if comments:
-        return exercise.wrong_answer(comments)
+        raise exercise.wrong_answer(comments)
     return exercise.to_output([
         "Great work! All required branches are present and correctly set up."
     ], GitAutograderStatus.SUCCESSFUL)
