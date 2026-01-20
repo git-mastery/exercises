@@ -21,10 +21,15 @@ def setup(verbose: bool = False):
     if has_repo(full_repo_name, True, verbose):
         delete_repo(full_repo_name, verbose)
 
-    fork_repo(upstream_repo, full_repo_name, verbose, default_branch_only=False)
+    fork_repo(upstream_repo, fork_name, verbose, default_branch_only=False)
 
-    clone_repo_with_git(f"https://github.com/{full_repo_name}.git", verbose, local_repo_name)
+    clone_repo_with_git(
+        f"https://github.com/{username}/{full_repo_name}.git",
+        verbose,
+        local_repo_name,
+    )
 
+    os.chdir(local_repo_name)
     run_command(["git", "fetch", "--all", "--prune"], verbose)
 
     run_command(
@@ -43,3 +48,6 @@ def setup(verbose: bool = False):
         ["git","branch", "--track", "VWX", "origin/VWX"],
         verbose,
     )
+
+    run_command(["git", "checkout", "main"], verbose)
+    create_start_tag(verbose)
