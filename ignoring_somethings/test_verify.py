@@ -3,6 +3,7 @@ from git_autograder import GitAutograderStatus
 from repo_smith.repo_smith import RepoSmith
 
 from .verify import (
+    MISSING_COMMITS,
     NOT_IGNORING_IGNORE_ME,
     NOT_IGNORING_REST_OF_MANY,
     NOT_IGNORING_RUNAWAY,
@@ -150,4 +151,84 @@ def test_not_pattern_matching():
             output,
             GitAutograderStatus.UNSUCCESSFUL,
             [NOT_PATTERN_MATCHING_RUNAWAY],
+        )
+
+
+def test_valid_no_commit():
+    with loader.start() as (test, rs):
+        rs.git.commit(message="Empty", allow_empty=True)
+        rs.helper(GitMasteryHelper).create_start_tag()
+        rs.files.create_or_update(
+            ".gitignore",
+            """
+            many/*
+            !many/file22.txt
+            ignore_me.txt
+            this/**/runaway.txt
+            """,
+        )
+
+        output = test.run()
+        assert_output(
+            output,
+            GitAutograderStatus.UNSUCCESSFUL,
+            [MISSING_COMMITS],
+        )
+
+
+def test_no_change_no_commit():
+    with loader.start() as (test, rs):
+        rs.git.commit(message="Empty", allow_empty=True)
+        rs.helper(GitMasteryHelper).create_start_tag()
+        rs.files.create_or_update(
+            ".gitignore",
+            """
+            many/*
+            why_am_i_hidden.txt
+            """,
+        )
+
+        output = test.run()
+        assert_output(
+            output,
+            GitAutograderStatus.UNSUCCESSFUL,
+            [
+                STILL_IGNORING_FILE_22,
+                STILL_HIDING,
+                NOT_IGNORING_IGNORE_ME,
+                NOT_IGNORING_RUNAWAY,
+                MISSING_COMMITS,
+            ],
+        )
+
+
+def test_no_commit_latest_update():
+    with loader.start() as (test, rs):
+        rs.git.commit(message="Empty", allow_empty=True)
+        rs.helper(GitMasteryHelper).create_start_tag()
+        _create_and_commit_file(
+            rs,
+            ".gitignore",
+            """
+            many/*
+            why_am_i_hidden.txt
+            """,
+            "Add .gitignore",
+        )
+
+        rs.files.create_or_update(
+            ".gitignore",
+            """
+            many/*
+            !many/file22.txt
+            ignore_me.txt
+            this/**/runaway.txt
+            """,
+        )
+
+        output = test.run()
+        assert_output(
+            output,
+            GitAutograderStatus.UNSUCCESSFUL,
+            [MISSING_COMMITS],
         )

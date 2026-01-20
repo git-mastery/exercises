@@ -1,3 +1,5 @@
+import os
+
 import tempfile
 from pathlib import Path
 from typing import List
@@ -9,7 +11,7 @@ from git_autograder import (
     GitAutograderStatus,
 )
 
-MISSING_COMMITS = "You have not made any commits yet!"
+MISSING_COMMITS = "You have not committed the relevant changes yet!"
 STILL_IGNORING_FILE_22 = "You are still ignoring many/file22.txt."
 STILL_HIDING = (
     "You are still ignoring why_am_i_hidden.txt. Find where the file is and fix that."
@@ -31,13 +33,27 @@ MISSING_GITIGNORE = "You are missing the .gitignore file! Try to reset the exerc
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     main_branch = exercise.repo.branches.branch("main")
 
-    if len(main_branch.user_commits) == 0:
-        raise exercise.wrong_answer([MISSING_COMMITS])
+    exercise_dir = exercise.exercise_path
+    repo_name = exercise.config.exercise_repo.repo_name
+    repo_folder_path = os.path.join(exercise_dir, repo_name)
+    gitignore_file_path = os.path.join(repo_folder_path, ".gitignore")
 
-    with main_branch.latest_commit.file(".gitignore") as gitignore_file:
-        if gitignore_file is None:
-            raise exercise.wrong_answer([MISSING_GITIGNORE])
-        gitignore_file_contents = gitignore_file
+    if not os.path.isfile(gitignore_file_path):
+        raise exercise.wrong_answer([MISSING_GITIGNORE])
+
+    with open(gitignore_file_path, "r", encoding="utf-8") as gitignore_file:
+        gitignore_file_contents = gitignore_file.read()
+
+    no_user_commit = len(main_branch.user_commits) == 0
+
+    # Verify that user has commited the ignore,
+    # by comparing the local file and the committed file taken from the repo
+    with main_branch.latest_commit.file(".gitignore") as commited_gitignore_file:
+        if (
+            commited_gitignore_file is None
+            or commited_gitignore_file != gitignore_file_contents
+        ):
+            no_user_commit = True
 
     # Verify the state of the ignore by recreating the necessary files and checking if
     # Git ignores them directly in a separate temporary Git repository
@@ -80,6 +96,9 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
             comments.append(NOT_IGNORING_RUNAWAY)
         elif "this/**/runaway.txt" not in gitignore_file_contents.splitlines():
             comments.append(NOT_PATTERN_MATCHING_RUNAWAY)
+
+        if no_user_commit:
+            comments.append(MISSING_COMMITS)
 
         if comments:
             raise exercise.wrong_answer(comments)
