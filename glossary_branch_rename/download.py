@@ -30,22 +30,9 @@ def setup(verbose: bool = False):
 
     run_command(["git", "fetch", "--all", "--prune"], verbose)
 
-    run_command(
-        ["git","branch", "--track", "ABC", "origin/ABC"],
-        verbose,
-    )
-    run_command(
-        ["git", "branch", "--track", "DEF", "origin/DEF"],
-        verbose,
-    )
-    run_command(
-        ["git","branch", "--track", "STU", "origin/STU"],
-        verbose,
-    )
-    run_command(
-        ["git","branch", "--track", "VWX", "origin/VWX"],
-        verbose,
-    )
+    branches = ["ABC", "DEF", "STU", "VWX"]
+    for branch in branches:
+        run_command(["git", "branch", "--track", branch, f"origin/{branch}"], verbose)
 
     run_command(["git", "checkout", "main"], verbose)
     create_start_tag(verbose)
