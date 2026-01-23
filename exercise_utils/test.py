@@ -249,7 +249,7 @@ class GitAutograderTestLoader:
             with test as (test, rs, rs_remote):
                 yield test, rs, rs_remote
         else:
-            with test as (test, rs):
+            with test as (test, rs, rs_remote):
                 yield test, rs
 
 
