@@ -54,7 +54,8 @@ class GitAutograderTest:
         self.include_remote_repo = include_remote_repo
         self.__rs: Optional[RepoSmith] = None
         self.__rs_remote: Optional[RepoSmith] = None
-        self.__rs_context: Optional[ContextManager[Tuple[RepoSmith, Optional[RepoSmith]]]] = None
+        self.__rs_context: Optional[ContextManager[RepoSmith]] = None
+        self.__rs_remote_context: Optional[ContextManager[RepoSmith]] = None
         self.__temp_dir: Optional[tempfile.TemporaryDirectory] = None
         self.__patches: List[mock._patch] = []
 
@@ -158,20 +159,28 @@ class GitAutograderTest:
         # run all commands within the repo
         os.chdir(repo_path)
 
+        # Create remote repo first if needed
+        if self.include_remote_repo:
+            self.__rs_remote_context = create_repo_smith(False)
+            self.__rs_remote = self.__rs_remote_context.__enter__()
+            # Initialize as bare repo
+            self.__rs_remote.repo = Repo.init(
+                self.__rs_remote.repo.working_dir, bare=True
+            )
+
+        # Create local repo
         if self.clone_from is not None:
             self.__rs_context = create_repo_smith(
                 False,
                 existing_path=repo_path.absolute().as_posix(),
                 clone_from=self.clone_from,
-                include_remote_repo=self.include_remote_repo,
             )
         else:
             self.__rs_context = create_repo_smith(
                 False,
                 existing_path=repo_path.absolute().as_posix(),
-                include_remote_repo=self.include_remote_repo,
             )
-        self.__rs, self.__rs_remote = self.__rs_context.__enter__()
+        self.__rs = self.__rs_context.__enter__()
         self.__rs.add_helper(GitMasteryHelper)
 
         if self.include_remote_repo:
@@ -193,6 +202,9 @@ class GitAutograderTest:
 
         if self.__rs_context is not None:
             self.__rs_context.__exit__(exc_type, exc_val, None)
+
+        if self.__rs_remote_context is not None:
+            self.__rs_remote_context.__exit__(exc_type, exc_val, None)
 
 
 class GitAutograderTestLoader:
