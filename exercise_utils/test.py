@@ -57,6 +57,7 @@ class GitAutograderTest:
         self.__rs_context: Optional[ContextManager[RepoSmith]] = None
         self.__rs_remote_context: Optional[ContextManager[RepoSmith]] = None
         self.__temp_dir: Optional[tempfile.TemporaryDirectory] = None
+        self.__remote_temp_dir: Optional[tempfile.TemporaryDirectory] = None
         self.__patches: List[mock._patch] = []
 
     @property
@@ -175,8 +176,8 @@ class GitAutograderTest:
         self.__rs = self.__rs_context.__enter__()
 
         if self.include_remote_repo:
-            remote_temp_dir = tempfile.TemporaryDirectory()
-            remote_temp_path = Path(remote_temp_dir.name)
+            self.__remote_temp_dir = tempfile.TemporaryDirectory()
+            remote_temp_path = Path(self.__remote_temp_dir.name)
             remote_repo_path = remote_temp_path / repo_name
             os.makedirs(remote_repo_path, exist_ok=True)
             self.__rs_remote_context = create_repo_smith(
@@ -207,6 +208,9 @@ class GitAutograderTest:
 
         if self.__rs_remote_context is not None:
             self.__rs_remote_context.__exit__(exc_type, exc_val, None)
+        
+        if self.__remote_temp_dir is not None:
+            self.__remote_temp_dir.cleanup()
 
 
 class GitAutograderTestLoader:
@@ -241,7 +245,7 @@ class GitAutograderTestLoader:
         clone_from: Optional[str] = None,
         mock_answers: Optional[Dict[str, str]] = None,
         include_remote_repo: bool = False,
-    ) -> Iterator[Tuple]:
+    ) -> Iterator[Any]:
         test = GitAutograderTest(
             self.exercise_name,
             self.grade_func,
