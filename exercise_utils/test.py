@@ -3,7 +3,7 @@ import tempfile
 from contextlib import contextmanager
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Callable, ContextManager, Dict, Iterator, List, Literal, Optional, Tuple, overload
+from typing import Any, Callable, ContextManager, Dict, Iterator, List, Literal, Optional, Self, Tuple, overload
 from unittest import mock
 
 import pytz
@@ -104,7 +104,7 @@ class GitAutograderTest:
         return output
 
 
-    def __enter__(self) -> Any:
+    def __enter__(self) -> Tuple[Self, RepoSmith, RepoSmith | None]:
         # We will mock all accesses to the config to avoid reading the file itself
         # Only the exercise name and repo_name matters, everything else isn't used
         repo_name = "repo"
@@ -180,7 +180,7 @@ class GitAutograderTest:
             remote_repo_path = remote_temp_path / repo_name
             os.makedirs(remote_repo_path, exist_ok=True)
             self.__rs_remote_context = create_repo_smith(
-                False, 
+                False,
                 existing_path=remote_repo_path.absolute().as_posix()
             )
             self.__rs_remote = self.__rs_remote_context.__enter__()
@@ -188,6 +188,7 @@ class GitAutograderTest:
         self.__rs.add_helper(GitMasteryHelper)
 
         return self, self.rs, self.rs_remote
+
 
     def __exit__(
         self,
@@ -249,11 +250,12 @@ class GitAutograderTestLoader:
             include_remote_repo,
         )
         if include_remote_repo:
-            with test as (test, rs, rs_remote):
-                yield test, rs, rs_remote
+            with test as (ctx, rs, rs_remote):
+                yield ctx, rs, rs_remote
         else:
-            with test as (test, rs, rs_remote):
-                yield test, rs
+            # extract only rs if include_remote_repo is False
+            with test as (ctx, rs, rs_remote):
+                yield ctx, rs
 
 
 def assert_output(
