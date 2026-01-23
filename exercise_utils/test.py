@@ -161,12 +161,13 @@ class GitAutograderTest:
 
         # Create remote repo first if needed
         if self.include_remote_repo:
-            self.__rs_remote_context = create_repo_smith(False)
-            self.__rs_remote = self.__rs_remote_context.__enter__()
-            # Initialize as bare repo
-            self.__rs_remote.repo = Repo.init(
-                self.__rs_remote.repo.working_dir, bare=True
+            # Create a bare repository in a temp directory
+            remote_temp_dir = tempfile.mkdtemp()
+            remote_repo = Repo.init(remote_temp_dir, bare=True)
+            self.__rs_remote_context = create_repo_smith(
+                False, existing_path=remote_temp_dir
             )
+            self.__rs_remote = self.__rs_remote_context.__enter__()
 
         # Create local repo
         if self.clone_from is not None:
