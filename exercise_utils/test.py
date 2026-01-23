@@ -3,7 +3,7 @@ import tempfile
 from contextlib import contextmanager
 from datetime import datetime
 from pathlib import Path
-from typing import Callable, ContextManager, Dict, Iterator, List, Optional, Self, Tuple
+from typing import Any, Callable, ContextManager, Dict, Iterator, List, Literal, Optional, Self, Tuple, overload
 from unittest import mock
 
 import pytz
@@ -103,7 +103,8 @@ class GitAutograderTest:
         assert output is not None
         return output
 
-    def __enter__(self) -> Tuple[Self, RepoSmith, *tuple[RepoSmith]]:
+
+    def __enter__(self) -> Any:
         # We will mock all accesses to the config to avoid reading the file itself
         # Only the exercise name and repo_name matters, everything else isn't used
         repo_name = "repo"
@@ -163,7 +164,7 @@ class GitAutograderTest:
         if self.include_remote_repo:
             # Create a bare repository in a temp directory
             remote_temp_dir = tempfile.mkdtemp()
-            remote_repo = Repo.init(remote_temp_dir, bare=True)
+            Repo.init(remote_temp_dir, bare=True)
             self.__rs_remote_context = create_repo_smith(
                 False, existing_path=remote_temp_dir
             )
@@ -184,10 +185,7 @@ class GitAutograderTest:
         self.__rs = self.__rs_context.__enter__()
         self.__rs.add_helper(GitMasteryHelper)
 
-        if self.include_remote_repo:
-            return self, self.rs, self.rs_remote
-
-        return self, self.rs
+        return self, self.rs, self.rs_remote
 
     def __exit__(
         self,
@@ -217,13 +215,29 @@ class GitAutograderTestLoader:
         self.exercise_name = exercise_name
         self.grade_func = grade_func
 
+    @overload
+    def start(
+        self,
+        clone_from: Optional[str] = None,
+        mock_answers: Optional[Dict[str, str]] = None,
+        include_remote_repo: Literal[False] = False,
+    ) -> ContextManager[Tuple[GitAutograderTest, RepoSmith]]: ...
+
+    @overload
+    def start(
+        self,
+        clone_from: Optional[str] = None,
+        mock_answers: Optional[Dict[str, str]] = None,
+        include_remote_repo: Literal[True] = True,
+    ) -> ContextManager[Tuple[GitAutograderTest, RepoSmith, RepoSmith]]: ...
+
     @contextmanager
     def start(
         self,
         clone_from: Optional[str] = None,
         mock_answers: Optional[Dict[str, str]] = None,
         include_remote_repo: bool = False,
-    ) -> Iterator[Tuple[GitAutograderTest, RepoSmith, *tuple[RepoSmith]]]:
+    ) -> Iterator[Tuple]:
         test = GitAutograderTest(
             self.exercise_name,
             self.grade_func,
@@ -231,8 +245,12 @@ class GitAutograderTestLoader:
             mock_answers,
             include_remote_repo,
         )
-        with test as result:
-            yield result
+        if include_remote_repo:
+            with test as (test, rs, rs_remote):
+                yield test, rs, rs_remote
+        else:
+            with test as (test, rs):
+                yield test, rs
 
 
 def assert_output(
