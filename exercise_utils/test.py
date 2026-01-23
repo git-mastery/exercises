@@ -3,7 +3,7 @@ import tempfile
 from contextlib import contextmanager
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Callable, ContextManager, Dict, Iterator, List, Literal, Optional, Self, Tuple, overload
+from typing import Any, Callable, ContextManager, Dict, Iterator, List, Literal, Optional, Tuple, overload
 from unittest import mock
 
 import pytz
@@ -160,9 +160,7 @@ class GitAutograderTest:
         # run all commands within the repo
         os.chdir(repo_path)
 
-        # Create remote repo first if needed
         if self.include_remote_repo:
-            # Create a bare repository in a temp directory
             remote_temp_dir = tempfile.mkdtemp()
             Repo.init(remote_temp_dir, bare=True)
             self.__rs_remote_context = create_repo_smith(
@@ -170,7 +168,6 @@ class GitAutograderTest:
             )
             self.__rs_remote = self.__rs_remote_context.__enter__()
 
-        # Create local repo
         if self.clone_from is not None:
             self.__rs_context = create_repo_smith(
                 False,
