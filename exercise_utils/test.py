@@ -53,7 +53,8 @@ class GitAutograderTest:
         self.mock_answers = mock_answers
         self.include_remote_repo = include_remote_repo
         self.__rs: Optional[RepoSmith] = None
-        self.__rs_context: Optional[ContextManager[RepoSmith]] = None
+        self.__rs_remote: Optional[RepoSmith] = None
+        self.__rs_context: Optional[ContextManager[Tuple[RepoSmith, Optional[RepoSmith]]]] = None
         self.__temp_dir: Optional[tempfile.TemporaryDirectory] = None
         self.__patches: List[mock._patch] = []
 
@@ -61,6 +62,10 @@ class GitAutograderTest:
     def rs(self) -> RepoSmith:
         assert self.__rs is not None
         return self.__rs
+    
+    @property
+    def rs_remote(self) -> Optional[RepoSmith]:
+        return self.__rs_remote
 
     def run(self) -> GitAutograderOutput:
         output: Optional[GitAutograderOutput] = None
@@ -97,7 +102,7 @@ class GitAutograderTest:
         assert output is not None
         return output
 
-    def __enter__(self) -> Tuple[Self, RepoSmith]:
+    def __enter__(self) -> Tuple[Self, RepoSmith, *tuple[RepoSmith]]:
         # We will mock all accesses to the config to avoid reading the file itself
         # Only the exercise name and repo_name matters, everything else isn't used
         repo_name = "repo"
@@ -166,8 +171,11 @@ class GitAutograderTest:
                 existing_path=repo_path.absolute().as_posix(),
                 include_remote_repo=self.include_remote_repo,
             )
-        self.__rs = self.__rs_context.__enter__()
+        self.__rs, self.__rs_remote = self.__rs_context.__enter__()
         self.__rs.add_helper(GitMasteryHelper)
+
+        if self.include_remote_repo:
+            return self, self.rs, self.rs_remote
 
         return self, self.rs
 
@@ -202,7 +210,7 @@ class GitAutograderTestLoader:
         clone_from: Optional[str] = None,
         mock_answers: Optional[Dict[str, str]] = None,
         include_remote_repo: bool = False,
-    ) -> Iterator[Tuple[GitAutograderTest, RepoSmith]]:
+    ) -> Iterator[Tuple[GitAutograderTest, RepoSmith, *tuple[RepoSmith]]]:
         test = GitAutograderTest(
             self.exercise_name,
             self.grade_func,
@@ -210,8 +218,8 @@ class GitAutograderTestLoader:
             mock_answers,
             include_remote_repo,
         )
-        with test as (ctx, rs):
-            yield (ctx, rs)
+        with test as result:
+            yield result
 
 
 def assert_output(
