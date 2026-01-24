@@ -183,9 +183,7 @@ class GitAutograderTest:
                 False,
                 existing_path=repo_path.absolute().as_posix(),
             )
-
         self.__rs = self.__rs_context.__enter__()
-
         self.__rs.add_helper(GitMasteryHelper)
 
         if self.include_remote_repo:
