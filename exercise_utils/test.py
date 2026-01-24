@@ -3,7 +3,19 @@ import tempfile
 from contextlib import contextmanager
 from datetime import datetime
 from pathlib import Path
-from typing import Any, Callable, ContextManager, Dict, Iterator, List, Literal, Optional, Self, Tuple, overload
+from typing import (
+    Any,
+    Callable,
+    ContextManager,
+    Dict,
+    Iterator,
+    List,
+    Literal,
+    Optional,
+    Self,
+    Tuple,
+    overload,
+)
 from unittest import mock
 
 import pytz
@@ -64,7 +76,7 @@ class GitAutograderTest:
     def rs(self) -> RepoSmith:
         assert self.__rs is not None
         return self.__rs
-    
+
     @property
     def rs_remote(self) -> Optional[RepoSmith]:
         return self.__rs_remote
@@ -103,7 +115,6 @@ class GitAutograderTest:
 
         assert output is not None
         return output
-
 
     def __enter__(self) -> Tuple[Self, RepoSmith, RepoSmith | None]:
         # We will mock all accesses to the config to avoid reading the file itself
@@ -175,21 +186,20 @@ class GitAutograderTest:
 
         self.__rs = self.__rs_context.__enter__()
 
+        self.__rs.add_helper(GitMasteryHelper)
+
         if self.include_remote_repo:
             self.__remote_temp_dir = tempfile.TemporaryDirectory()
             remote_temp_path = Path(self.__remote_temp_dir.name)
             remote_repo_path = remote_temp_path / repo_name
             os.makedirs(remote_repo_path, exist_ok=True)
             self.__rs_remote_context = create_repo_smith(
-                False,
-                existing_path=remote_repo_path.absolute().as_posix()
+                False, existing_path=remote_repo_path.absolute().as_posix()
             )
             self.__rs_remote = self.__rs_remote_context.__enter__()
-
-        self.__rs.add_helper(GitMasteryHelper)
+            self.__rs_remote.add_helper(GitMasteryHelper)
 
         return self, self.rs, self.rs_remote
-
 
     def __exit__(
         self,
@@ -208,7 +218,7 @@ class GitAutograderTest:
 
         if self.__rs_remote_context is not None:
             self.__rs_remote_context.__exit__(exc_type, exc_val, None)
-        
+
         if self.__remote_temp_dir is not None:
             self.__remote_temp_dir.cleanup()
 
