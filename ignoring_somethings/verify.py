@@ -40,17 +40,19 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
 
     if not os.path.isfile(gitignore_file_path):
         raise exercise.wrong_answer([MISSING_GITIGNORE])
-    
-    with open(gitignore_file_path, "r", encoding = "utf-8") as gitignore_file:
+
+    with open(gitignore_file_path, "r", encoding="utf-8") as gitignore_file:
         gitignore_file_contents = gitignore_file.read()
 
     no_user_commit = len(main_branch.user_commits) == 0
 
-    # Verify that user has commited the ignore, 
+    # Verify that user has commited the ignore,
     # by comparing the local file and the committed file taken from the repo
     with main_branch.latest_commit.file(".gitignore") as commited_gitignore_file:
-        if (commited_gitignore_file is None
-            or commited_gitignore_file != gitignore_file_contents):
+        if (
+            commited_gitignore_file is None
+            or commited_gitignore_file != gitignore_file_contents
+        ):
             no_user_commit = True
 
     # Verify the state of the ignore by recreating the necessary files and checking if
@@ -94,7 +96,7 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
             comments.append(NOT_IGNORING_RUNAWAY)
         elif "this/**/runaway.txt" not in gitignore_file_contents.splitlines():
             comments.append(NOT_PATTERN_MATCHING_RUNAWAY)
-        
+
         if no_user_commit:
             comments.append(MISSING_COMMITS)
 

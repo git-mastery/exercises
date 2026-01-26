@@ -153,6 +153,7 @@ def test_not_pattern_matching():
             [NOT_PATTERN_MATCHING_RUNAWAY],
         )
 
+
 def test_valid_no_commit():
     with loader.start() as (test, rs):
         rs.git.commit(message="Empty", allow_empty=True)
@@ -164,7 +165,7 @@ def test_valid_no_commit():
             !many/file22.txt
             ignore_me.txt
             this/**/runaway.txt
-            """
+            """,
         )
 
         output = test.run()
@@ -173,6 +174,7 @@ def test_valid_no_commit():
             GitAutograderStatus.UNSUCCESSFUL,
             [MISSING_COMMITS],
         )
+
 
 def test_no_change_no_commit():
     with loader.start() as (test, rs):
@@ -183,7 +185,7 @@ def test_no_change_no_commit():
             """
             many/*
             why_am_i_hidden.txt
-            """
+            """,
         )
 
         output = test.run()
@@ -195,9 +197,10 @@ def test_no_change_no_commit():
                 STILL_HIDING,
                 NOT_IGNORING_IGNORE_ME,
                 NOT_IGNORING_RUNAWAY,
-                MISSING_COMMITS
+                MISSING_COMMITS,
             ],
         )
+
 
 def test_no_commit_latest_update():
     with loader.start() as (test, rs):
@@ -210,7 +213,7 @@ def test_no_commit_latest_update():
             many/*
             why_am_i_hidden.txt
             """,
-            "Add .gitignore"
+            "Add .gitignore",
         )
 
         rs.files.create_or_update(
@@ -220,7 +223,7 @@ def test_no_commit_latest_update():
             !many/file22.txt
             ignore_me.txt
             this/**/runaway.txt
-            """
+            """,
         )
 
         output = test.run()
