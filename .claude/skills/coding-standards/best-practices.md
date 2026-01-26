@@ -1,173 +1,35 @@
 ﻿# best-practices.md
 
-## DRY (Don't Repeat Yourself)
-
-### Extract Common Logic
-
-**Bad:**
-```python
-def fork_repo(repo_name: str, fork_name: str, verbose: bool):
-    result = subprocess.run(["gh", "repo", "fork", repo_name], capture_output=True)
-    if verbose:
-        print(result.stdout)
-
-def delete_repo(repo_name: str, verbose: bool):
-    result = subprocess.run(["gh", "repo", "delete", repo_name], capture_output=True)
-    if verbose:
-        print(result.stdout)
-```
-
-**Good:**
-```python
-def run(command: List[str], verbose: bool) -> CommandResult:
-    result = subprocess.run(command, capture_output=True)
-    if verbose:
-        print(result.stdout)
-    return CommandResult(result)
-
-def fork_repo(repo_name: str, fork_name: str, verbose: bool):
-    run(["gh", "repo", "fork", repo_name], verbose)
-
-def delete_repo(repo_name: str, verbose: bool):
-    run(["gh", "repo", "delete", repo_name], verbose)
-```
+## DRY
+Extract common logic into helpers.
 
 ## Error Handling
+Use early returns and specific exceptions.
 
-### Early Returns
-
-**Good:**
 ```python
-def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
-    if not os.path.exists(shopping_list_file_path):
-        raise exercise.wrong_answer([SHOPPING_LIST_FILE_MISSING])
-    
-    if not added_items:
-        comments.append(NO_ADD)
-    
-    if not deleted_items:
-        comments.append(NO_REMOVE)
-    
-    if comments:
-        raise exercise.wrong_answer(comments)
-    
+def verify(exercise):
+    if not os.path.exists(file_path):
+        raise exercise.wrong_answer([FILE_MISSING])
+    if not items:
+        raise exercise.wrong_answer([NO_ITEMS])
     return exercise.to_output(["Success"], GitAutograderStatus.SUCCESSFUL)
 ```
 
-### Specific Exceptions
-
-```python
-try:
-    result = subprocess.run(command, check=True)
-except FileNotFoundError:
-    # Handle missing command
-    pass
-except PermissionError:
-    # Handle permission issues
-    pass
-except subprocess.CalledProcessError as e:
-    # Handle command failure
-    pass
-```
-
-## Composition Over Inheritance
-
-### Prefer Helper Classes
-
-**Good:**
-```python
-class GitMasteryHelper(Helper):
-    def __init__(self, repo: Repo, verbose: bool) -> None:
-        super().__init__(repo, verbose)
-    
-    def create_start_tag(self) -> None:
-        # Specific functionality
-        pass
-
-# Usage
-rs.add_helper(GitMasteryHelper)
-rs.helper(GitMasteryHelper).create_start_tag()
-```
-
 ## Function Design
+- Single responsibility
+- < 50 lines
+- < 5 parameters
+- Early returns
 
-### Single Responsibility
-
-Each function should do **one thing**:
-
-**Bad:**
+## Context Managers
 ```python
-def setup_and_verify(exercise):
-    # Setup
-    create_files()
-    init_repo()
-    # Verify
-    check_files()
-    check_commits()
-    return result
-```
+with open(filepath) as f:
+    content = f.read()
 
-**Good:**
-```python
-def setup(exercise):
-    create_files()
-    init_repo()
-
-def verify(exercise):
-    check_files()
-    check_commits()
-    return result
-```
-
-### Small Functions
-
-Keep functions short (< 50 lines ideally):
-
-```python
-def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
-    validate_file_exists(exercise)
-    current_list = parse_shopping_list(exercise)
-    changes = detect_changes(current_list)
-    validate_changes(exercise, changes)
-    return success_output(exercise)
-```
-
-### Clear Parameters
-
-Limit parameters (< 5 preferred):
-
-**OK:**
-```python
-def run(command: List[str], verbose: bool) -> CommandResult:
+with loader.start() as (test, rs):
+    # test setup
     ...
 ```
-
-**Many params - consider config object:**
-```python
-# If you need many parameters:
-@dataclass
-class MergeConfig:
-    target_branch: str
-    ff: bool
-    message: Optional[str]
-    verbose: bool
-
-def merge(config: MergeConfig) -> None:
-    ...
-```
-
-## Variable Scope
-
-### Keep Scope Small
-
-```python
-def verify(exercise):
-    # Only define when needed
-    repo_path = exercise.exercise_path
-    
-    if needs_shopping_list:
-        # Define close to usage
-        shopping_list_path = os.path.join(repo_path, "shopping-list.txt")
         with open(shopping_list_path) as f:
             content = f.read()
 ```

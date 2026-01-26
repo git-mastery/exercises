@@ -1,20 +1,24 @@
 ﻿# documentation.md
 
 ## Module Docstrings
-
-Every module should have a docstring at the top:
-
 ```python
-"""Wrapper for Git CLI commands."""
-
-import os
-from typing import List
+"""One-line module summary."""
 ```
 
-**Guidelines:**
-- One-line summary of module purpose
-- Use triple double quotes `"""`
-- End with period
+## Function Docstrings
+```python
+def tag(tag_name: str, verbose: bool) -> None:
+    """Tags the latest commit with the given tag_name."""
+    ...
+```
+
+## Comments
+```python
+# Explain why, not what
+run_command(["git", "init", "--initial-branch=main"], verbose)  # Force main as default
+
+# TODO(username): Description of future work
+```
 
 ## Function Docstrings
 
