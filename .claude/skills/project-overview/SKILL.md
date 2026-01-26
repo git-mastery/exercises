@@ -55,7 +55,6 @@ pytest . -s -vv                  # Test all
 ruff format . && ruff check .    # Format & lint
 ./new.sh                         # Create exercise
 ```
-```
 
 Or use the provided script:
 ```bash

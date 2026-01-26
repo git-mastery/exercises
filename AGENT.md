@@ -52,7 +52,6 @@ After loading skills, AI understands:
 1. **Be specific about which skill**: "Follow exercise-development skill for creating download.py"
 2. **Reference example files**: Skills already point to examples like [amateur_detective/test_verify.py](amateur_detective/test_verify.py)
 3. **Check standards before committing**: "Does this follow coding-standards skill?"
-4. **Use for learning**: "Explain the testing patterns from .claude/skills/testing/"
 
 ## Quick Reference
 
