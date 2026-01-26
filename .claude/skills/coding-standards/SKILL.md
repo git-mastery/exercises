@@ -5,92 +5,63 @@ description: Code style and quality guidelines. Use when writing or reviewing co
 
 # Coding Standards
 
-## Overview
-Follow these standards to ensure consistency, readability, and maintainability.
-
-## Quick Rules
-
-### Style
-- **Line length**: 88 characters (Black/Ruff default)
-- **Indentation**: 4 spaces
-- **Formatter**: ruff (`ruff format .`)
-- **Linter**: ruff (`ruff check .`)
-- **Type checker**: mypy
-
-### Naming
-- **Functions/variables**: `snake_case`
-- **Constants**: `UPPER_SNAKE_CASE`  
-- **Classes**: `PascalCase`
-- **Directories**: `kebab-case`
-
-### Type Hints
-```python
-# Always include types
-def my_function(param: str, verbose: bool) -> Optional[str]:
-    pass
-```
-
-## Detailed Guides
-
-📄 **[style-guide.md](style-guide.md)** - Formatting, line length, imports, indentation
-
-📄 **[naming-conventions.md](naming-conventions.md)** - Functions, classes, files, directories
-
-📄 **[type-hints.md](type-hints.md)** - Using type annotations, common patterns
-
-📄 **[documentation.md](documentation.md)** - Docstrings, comments, when to document
-
-📄 **[best-practices.md](best-practices.md)** - DRY, composition, error handling, patterns
-
-## Quick Checks
-
+## Tools
 ```bash
-# Format code
-ruff format .
-
-# Check linting  
-ruff check .
-
-# Auto-fix
-ruff check --fix .
-
-# Type check
-mypy <directory>/
-
-# All checks
-ruff format . && ruff check . && mypy .
+ruff format .                 # Format code
+ruff check .                  # Check linting
+ruff check --fix .           # Auto-fix issues
+mypy <directory>/            # Type checking
 ```
 
-## Common Patterns
+## Style
+- **88 char** line length
+- **4 spaces** indentation
+- **Double quotes** for strings
+- 2 blank lines between functions
 
-### Import Organization
+## Naming
+- **Functions/Variables**: `snake_case`
+- **Constants**: `UPPER_SNAKE_CASE`
+- **Classes**: `PascalCase`
+- **Tests**: `test_description`
+- **Directories**: `kebab-case`
+- Actions: `create_*`, `add_*`, `remove_*`
+- Queries: `get_*`, `has_*`, `is_*`
+
+## Type Hints
+Always include on function signatures:
 ```python
-# 1. Standard library
-import os
-from typing import List, Optional
+def func(name: str, count: int, verbose: bool) -> None:
+    ...
 
-# 2. Third party
+def get_data(path: Optional[str] = None) -> List[str]:
+    ...
+```
+
+## Imports
+Order: stdlib → third-party → local (blank lines between)
+```python
+import os
+from typing import List
+
 from git_autograder import GitAutograderExercise
 
-# 3. Local
-from exercise_utils.git import add, commit
+from exercise_utils.git import commit
 ```
 
-### Function Documentation
+## Documentation
 ```python
-def merge_with_message(
-    target_branch: str, ff: bool, message: str, verbose: bool
-) -> None:
-    """Merge target branch with custom message.
-    
-    Args:
-        target_branch: Branch to merge
-        ff: Allow fast-forward if True
-        message: Custom commit message
-        verbose: Print output if True
-    """
-    pass
+def tag(tag_name: str, verbose: bool) -> None:
+    """Tags the latest commit with the given tag_name."""
+    ...
 ```
+
+## Best Practices
+- **DRY**: Extract common logic
+- **Early returns**: Check errors first
+- **Single responsibility**: Functions < 50 lines, < 5 params
+- **Context managers**: Use `with` for resources
+- **Constants at top**: Module-level `UPPER_CASE`
 
 ## Anti-Patterns
 

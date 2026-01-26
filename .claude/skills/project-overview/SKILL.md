@@ -1,153 +1,60 @@
 ---
 name: project-overview
-description: High-level overview of the Git-Mastery exercises repository. Use when first learning about the project or need quick orientation.
+description: Overview of Git-Mastery exercises repository. Use when first learning about the project.
 user-invocable: false
 ---
 
-# Git-Mastery Exercises Repository
+# Git-Mastery Exercises
 
 ## Overview
-This repository contains 40+ modular, self-contained Git exercises designed to teach specific Git concepts through hands-on practice with automated validation.
+40+ modular Git exercises with automated validation using pytest and git-autograder.
 
-## Repository Purpose
-- **Education**: Teach Git concepts through practical, isolated exercises
-- **Validation**: Automated testing of student solutions using pytest and git-autograder
-- **Modularity**: Each exercise is completely self-contained and independent
-- **Consistency**: Shared utilities ensure uniform patterns across all exercises
+## Exercise Types
 
-## Core Architecture
-
-### 1. Exercise Types
-
-#### Standard Exercises (40+ directories)
-**Location**: Root directory (e.g., `amateur_detective/`, `branch_bender/`, `conflict_mediator/`)
-
-**Purpose**: Guided exercises with specific objectives, instructions, and automated validation.
-
-**Structure**:
+### Standard Exercises (40+ directories)
 ```
 <exercise_name>/
-├── __init__.py           # Python package marker
-├── download.py           # Setup logic - creates exercise repo state
-├── verify.py             # Validation logic with verify() function
-├── test_verify.py        # Pytest tests for verification logic
-├── README.md             # Student-facing exercise instructions
-└── res/                  # (Optional) Exercise-specific resources
+├── download.py           # Setup logic
+├── verify.py             # Validation with git-autograder
+├── test_verify.py        # Pytest tests
+├── README.md             # Instructions
+└── res/                  # Optional resources
 ```
 
-**Key Characteristics**:
-- Each exercise has a `download.py` that sets up the initial Git repository state
-- `verify.py` contains composable validation rules using git-autograder
-- `test_verify.py` uses pytest to test the verification logic
-- Exercises may require Git only (`__requires_git__`) or both Git and GitHub (`__requires_github__`)
-- Start tags are created using `create_start_tag()` from `exercise_utils/gitmastery.py`
+**Categories**:
+- History: `amateur_detective/`, `view_commits/`
+- Branching: `branch_bender/`, `branch_delete/`, `bonsai_tree/`
+- Working Dir: `sensors_checkout/`, `sensors_diff/`, `sensors_reset/`
+- Staging: `staging_intervention/`, `stage_fright/`
+- Merging: `conflict_mediator/`, `merge_squash/`
+- Remotes: `fetch_and_pull/`, `push_over/`, `fork_repo/`
+- Tags: `tags_add/`, `tags_push/`
 
-**Example Exercises by Category**:
-- **History/Investigation**: `amateur_detective/`, `view_commits/`, `log_and_order/`
-- **Branching**: `branch_bender/`, `branch_delete/`, `branch_rename/`, `branch_forward/`, `bonsai_tree/`
-- **Working Directory**: `sensors_checkout/`, `sensors_diff/`, `sensors_reset/`, `sensors_revert/`
-- **Staging**: `staging_intervention/`, `stage_fright/`
-- **Merging**: `conflict_mediator/`, `merge_squash/`, `merge_undo/`
-- **Remotes**: `fetch_and_pull/`, `push_over/`, `clone_repo/`, `fork_repo/`, `remote_control/`
-- **Tags**: `tags_add/`, `tags_push/`, `tags_update/`
+### Hands-On Scripts (`hands_on/`)
+Single-file demonstrations without validation. Examples: `add_files.py`, `branch_delete.py`.
 
-#### Hands-On Scripts
-**Location**: `hands_on/` directory
+## Shared Utilities (`exercise_utils/`)
+- **git.py**: Git command wrappers
+- **github_cli.py**: GitHub CLI wrappers
+- **cli.py**: CLI execution helpers
+- **gitmastery.py**: Start tag creation
+- **test.py**: Test scaffolding
+- **file.py**: File operations
 
-**Purpose**: Exploratory learning scripts that demonstrate Git operations without validation.
+## Dependencies
+- Python 3.8+
+- git-autograder 6.*, repo-smith, pytest
+- ruff, mypy (dev tools)
+- Git CLI, GitHub CLI (gh)
 
-**Structure**:
-```
-hands_on/
-├── add_files.py
-├── branch_delete.py
-├── create_branch.py
-├── remote_branch_pull.py
-└── ... (20+ standalone scripts)
-```
-
-**Key Characteristics**:
-- Each file is a standalone Python script demonstrating a specific Git operation
-- No `download.py`, `verify.py`, or `test_verify.py` files
-- Users run scripts directly to observe Git behavior
-- Ideal for experimentation and understanding command effects
-- Scripts follow naming pattern: `<git_operation>.py`
-
-### 2. Shared Utilities
-
-**Location**: `exercise_utils/` directory
-
-**Purpose**: Provide consistent, reusable wrappers for common operations across all exercises.
-
-**Core Modules**:
-
-#### `git.py`
-- Wrappers for Git CLI commands
-- Functions: `add()`, `commit()`, `empty_commit()`, `checkout()`, `merge()`, `tag()`, `init()`, `push()`, `clone_repo_with_git()`, `add_remote()`, `remove_remote()`, `track_remote_branch()`
-- All functions accept `verbose: bool` parameter for output control
-
-#### `github_cli.py`
-- Wrappers for GitHub CLI (gh) commands
-- Functions: `fork_repo()`, `clone_repo_with_gh()`, `delete_repo()`, `create_repo()`, `get_github_username()`, `has_repo()`
-- Requires GitHub CLI to be installed and authenticated
-
-#### `cli.py`
-- General CLI execution helpers
-- Functions: `run()`, `run_command()`, `run_command_no_exit()`
-- Returns `CommandResult` dataclass with success status and output
-
-#### `gitmastery.py`
-- Git-Mastery specific utilities
-- `create_start_tag(verbose: bool)`: Creates exercise start tag from first commit hash
-- Tag format: `git-mastery-start-<first_commit_hash>`
-
-#### `test.py`
-- Test scaffolding for exercise verification
-- `GitMasteryHelper`: Helper class extending repo-smith's Helper
-- `GitAutograderTestLoader`: Loads and runs exercise tests
-- `GitAutograderTest`: Test wrapper for exercise grading
-- `assert_output()`: Assertion helper for validation output
-
-#### `file.py`
-- File operation helpers
-- Functions for creating, updating, and appending to files consistently
-
-### 3. Dependencies & Environment
-
-**Python Version**: Python 3.8+ (primary development: Python 3.13)
-
-**Core Dependencies** (from `requirements.txt`):
-- **git-autograder** (v6.*): Exercise validation framework
-- **repo-smith**: Repository state creation and manipulation
-- **pytest**: Testing framework
-- **PyYAML**: YAML parsing
-- **PyGithub**: GitHub API interactions
-- **requests**: HTTP library
-
-**Developer Tools**:
-- **ruff**: Python linter and formatter
-- **mypy**: Static type checker
-
-**External Requirements**:
-- Git CLI (required for all exercises)
-- GitHub CLI (`gh`) - required for exercises with `__requires_github__ = True`
-- Bash environment (for shell scripts)
-
-### 4. Development Workflow
-
-#### Setup Environment
+## Common Commands
 ```bash
-# Create virtual environment
-python -m venv venv
-
-# Activate (Linux/macOS)
-source venv/bin/activate
-
-# Activate (Windows)
-source venv/Scripts/activate
-
-# Install dependencies
-pip install -r requirements.txt
+./setup.sh                       # Setup venv
+./test.sh <exercise>             # Test exercise
+pytest . -s -vv                  # Test all
+ruff format . && ruff check .    # Format & lint
+./new.sh                         # Create exercise
+```
 ```
 
 Or use the provided script:

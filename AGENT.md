@@ -1,95 +1,84 @@
-# Git-Mastery Exercises - AI Assistant Context
+# Git-Mastery Exercises - AI Agent Guide
 
-This repository contains modular Git exercises with automated validation. Each exercise teaches specific Git concepts through hands-on practice.
+This repository uses the **Agent Skills** standard for AI documentation. All detailed instructions are in `.claude/skills/`.
 
-## Quick Start for AI Assistants
+## For AI Agents
 
-This project uses the **Agent Skills** standard for AI documentation. Detailed instructions are in `.claude/skills/`:
+**Start here**: Load `.claude/skills/` to understand the repository.
 
-- **[project-overview](file:.claude/skills/project-overview/SKILL.md)**: Repository structure, architecture, and workflows
-- **[exercise-development](file:.claude/skills/exercise-development/SKILL.md)**: Creating and modifying exercises
-- **[exercise-utils](file:.claude/skills/exercise-utils/SKILL.md)**: Shared utility modules reference
-- **[coding-standards](file:.claude/skills/coding-standards/SKILL.md)**: Code style and quality guidelines
-- **[testing](file:.claude/skills/testing/SKILL.md)**: Testing patterns and best practices
+Available skills:
+- **[project-overview](file:.claude/skills/project-overview/SKILL.md)**: Repository overview, structure, dependencies
+- **[exercise-development](file:.claude/skills/exercise-development/SKILL.md)**: Creating exercises (standard vs hands-on)
+- **[exercise-utils](file:.claude/skills/exercise-utils/SKILL.md)**: Utility modules API reference
+- **[coding-standards](file:.claude/skills/coding-standards/SKILL.md)**: Code style, naming, type hints
 
-## Repository Structure
+**What each skill tells you**:
+- `project-overview`: 40+ exercises structure, exercise_utils/ modules, dependencies, common commands
+- `exercise-development`: How to create standard exercises (download.py, verify.py, test_verify.py, README.md) and hands-on scripts
+- `exercise-utils`: API docs for git.py, github_cli.py, cli.py, file.py, gitmastery.py, test.py modules
+- `coding-standards`: ruff/mypy usage, naming conventions, type hints, imports, best practices
 
+## For Human Developers
+
+**When working with AI agents** (GitHub Copilot, Claude, etc.) **on this repository**:
+
+### First Time Setup
+1. Ask AI to "read the skills in .claude/skills/ directory"
+2. AI will understand: repo structure, coding standards, testing patterns, utility APIs
+
+### Common Workflows
+
+**Creating a new exercise:**
 ```
-exercises/
-├── <exercise_name>/          # 40+ self-contained exercises
-│   ├── download.py           # Setup logic
-│   ├── verify.py             # Validation logic
-│   ├── test_verify.py        # Pytest tests
-│   ├── README.md             # Student instructions
-│   └── res/                  # (Optional) Resources
-├── hands_on/                 # Exploratory scripts (no validation)
-├── exercise_utils/           # Shared utilities
-│   ├── git.py                # Git command wrappers
-│   ├── github_cli.py         # GitHub CLI wrappers
-│   ├── cli.py                # General CLI helpers
-│   ├── gitmastery.py         # Git-Mastery specific helpers
-│   ├── file.py               # File operations
-│   └── test.py               # Test scaffolding
-├── .claude/skills/           # AI assistant documentation
-├── setup.sh                  # Environment setup
-├── test.sh                   # Test runner
-└── requirements.txt          # Python dependencies
+"Create a new standard exercise called 'branch-merge-conflict' that teaches handling merge conflicts. 
+Follow the patterns in .claude/skills/exercise-development/"
 ```
 
-## Key Principles
+**Fixing a test:**
+```
+"Fix the failing test in amateur_detective/test_verify.py. 
+Check .claude/skills/testing/ for test patterns."
+```
 
-1. **Use Shared Utilities**: Always use functions from `exercise_utils/` instead of raw subprocess calls
-2. **Exercise Isolation**: Each exercise is completely independent and self-contained
-3. **Composable Validation**: Use git-autograder's rule system for validation
-4. **Comprehensive Testing**: Every exercise must have thorough test coverage
-5. **Type Safety**: Use type hints for all functions
+**Using utility functions:**
+```
+"Update grocery_shopping/download.py to use exercise_utils functions. 
+See .claude/skills/exercise-utils/ for available APIs."
+```
 
-## Common Tasks
+**Code review:**
+```
+"Review this code against coding standards in .claude/skills/coding-standards/"
+```
 
-### Create New Exercise
+### What AI Knows From Skills
+
+After loading skills, AI understands:
+- **Structure**: Each exercise has download.py, verify.py, test_verify.py, README.md
+- **Patterns**: Use `exercise_utils.*` instead of subprocess, call `create_start_tag()` last
+- **Testing**: Required scenarios (no answers, wrong answers, success), `loader.start()` pattern
+- **Standards**: 88-char lines, snake_case, type hints, import order
+- **APIs**: All functions in exercise_utils/ (git.py, github_cli.py, etc.)
+
+### Tips for Best Results
+
+1. **Be specific about which skill**: "Follow exercise-development skill for creating download.py"
+2. **Reference example files**: Skills already point to examples like [amateur_detective/test_verify.py](amateur_detective/test_verify.py)
+3. **Check standards before committing**: "Does this follow coding-standards skill?"
+4. **Use for learning**: "Explain the testing patterns from .claude/skills/testing/"
+
+## Quick Reference
+
 ```bash
-./new.sh  # Interactive scaffolding
-```
-
-### Test Exercise
-```bash
-./test.sh <exercise_name>  # Runs pytest with verbose output
-```
-
-### Setup Environment
-```bash
-./setup.sh  # Creates venv and installs dependencies
+./setup.sh                    # Setup environment
+./new.sh                      # Create exercise (interactive)
+./test.sh <exercise>          # Test one exercise
+pytest . -s -vv               # Test all
+ruff format . && ruff check . # Format & lint
 ```
 
 ## Tech Stack
 
-- **Python**: 3.8+ (development on 3.13)
-- **Testing**: pytest, git-autograder, repo-smith
-- **Quality**: ruff (linting/formatting), mypy (type checking)
-- **External**: Git CLI, GitHub CLI (gh)
-
-## Development Workflow
-
-1. Understand exercise requirements from issue/discussion
-2. Use `./new.sh` to scaffold exercise structure
-3. Implement `download.py` (setup), `verify.py` (validation), `README.md` (instructions)
-4. Write comprehensive tests in `test_verify.py`
-5. Run `./test.sh <exercise>` to verify
-6. Ensure code passes: `ruff format . && ruff check . && mypy .`
-
-## Documentation
-
-- **Developer Guide**: https://git-mastery.github.io/developers
-- **Exercise Directory**: https://git-mastery.github.io/exercises
-- **Contributing**: [.github/CONTRIBUTING.md](.github/CONTRIBUTING.md)
-
-## For More Details
-
-Load the skills in `.claude/skills/` for comprehensive documentation on:
-- Repository architecture and patterns
-- Exercise development lifecycle
-- Utility module API reference
-- Coding standards and conventions
-- Testing strategies and patterns
-
-Each skill file follows the Agent Skills standard and provides detailed, actionable guidance for working with this repository.
+- Python 3.8+, pytest, git-autograder, repo-smith
+- ruff (lint/format), mypy (types)
+- Git CLI, GitHub CLI (gh)

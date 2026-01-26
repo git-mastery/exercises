@@ -44,20 +44,6 @@ description: Guidelines for creating and modifying Git-Mastery exercises. Use wh
 - Common patterns
 - Examples
 
-### Common Patterns
-📄 **[common-patterns.md](common-patterns.md)** - Reusable code patterns for exercises
-- Repository setup patterns
-- GitHub integration patterns
-- Validation patterns
-- File operation patterns
-
-### Testing Exercises
-📄 **[testing-exercises.md](testing-exercises.md)** - How to test your exercises
-- Running tests
-- Manual testing
-- Debugging test failures
-- Pre-commit checklist
-
 ## Quick Start
 
 ### Create Standard Exercise
