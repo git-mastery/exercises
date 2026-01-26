@@ -4,50 +4,37 @@ This repository uses the **Agent Skills** standard for AI documentation. All det
 
 ## For AI Agents
 
-**Start here**: Load `.claude/skills/` to understand the repository.
+**Workflow**: 
+1. Read this AGENT.md to understand available skills
+2. Based on your task, load relevant skills from `.claude/skills/`
+3. Reference actual code files linked in skills
 
-Available skills:
+**Available skills**:
 - **[project-overview](file:.claude/skills/project-overview/SKILL.md)**: Repository overview, structure, dependencies
 - **[exercise-development](file:.claude/skills/exercise-development/SKILL.md)**: Creating exercises (standard vs hands-on)
 - **[exercise-utils](file:.claude/skills/exercise-utils/SKILL.md)**: Utility modules API reference
 - **[coding-standards](file:.claude/skills/coding-standards/SKILL.md)**: Code style, naming, type hints
 
-**What each skill tells you**:
-- `project-overview`: 40+ exercises structure, exercise_utils/ modules, dependencies, common commands
-- `exercise-development`: How to create standard exercises (download.py, verify.py, test_verify.py, README.md) and hands-on scripts
-- `exercise-utils`: API docs for git.py, github_cli.py, cli.py, file.py, gitmastery.py, test.py modules
-- `coding-standards`: ruff/mypy usage, naming conventions, type hints, imports, best practices
+**When to load each skill**:
+- Creating/modifying exercises → `exercise-development`
+- Using utility functions → `exercise-utils`
+- Code review/formatting → `coding-standards`
+- Understanding repo structure → `project-overview`
 
 ## For Human Developers
 
-**When working with AI agents** (GitHub Copilot, Claude, etc.) **on this repository**:
+**Working with AI agents**: Simply state your task. AI will read AGENT.md, identify needed skills, and load them automatically.
 
-### First Time Setup
-1. Ask AI to "read the skills in .claude/skills/ directory"
-2. AI will understand: repo structure, coding standards, testing patterns, utility APIs
+**Example tasks**:
+```
+"Create a new exercise about merge conflicts"
 
-### Common Workflows
+"Fix the test in amateur_detective/test_verify.py"
 
-**Creating a new exercise:**
-```
-"Create a new standard exercise called 'branch-merge-conflict' that teaches handling merge conflicts. 
-Follow the patterns in .claude/skills/exercise-development/"
-```
+"Update grocery_shopping/download.py to use exercise_utils"
 
-**Fixing a test:**
-```
-"Fix the failing test in amateur_detective/test_verify.py. 
-Check .claude/skills/testing/ for test patterns."
-```
+"Review this code against our standards"
 
-**Using utility functions:**
-```
-"Update grocery_shopping/download.py to use exercise_utils functions. 
-See .claude/skills/exercise-utils/ for available APIs."
-```
-
-**Code review:**
-```
 "Review this code against coding standards in .claude/skills/coding-standards/"
 ```
 
