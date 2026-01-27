@@ -5,7 +5,6 @@ from exercise_utils.github_cli import (
     get_github_username,
     has_repo,
 )
-from exercise_utils.gitmastery import create_start_tag
 
 REPO_OWNER = "git-mastery"
 REPO_NAME = "samplerepo-funny-glossary"
@@ -24,5 +23,3 @@ def setup(verbose: bool = False):
     )
 
     clone_repo_with_git(f"https://github.com/{username}/{FORK_NAME}", verbose, ".")
-
-    create_start_tag(verbose)
