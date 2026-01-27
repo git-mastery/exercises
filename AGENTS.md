@@ -65,6 +65,6 @@ ruff format . && ruff check . # Format & lint
 
 ## Tech Stack
 
-- Python 3.8+, pytest, git-autograder, repo-smith
+- Python 3.13+, pytest, git-autograder, repo-smith
 - ruff (lint/format), mypy (types)
 - Git CLI, GitHub CLI (gh)

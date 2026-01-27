@@ -49,7 +49,7 @@ Use the `new.sh` script to generate exercise structure:
 
 ### Required Function
 ```python
-def download(verbose: bool):
+def setup(verbose: bool = False):
     """Setup the exercise repository."""
     # Implementation here
 ```

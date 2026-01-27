@@ -42,7 +42,7 @@ Single-file demonstrations without validation. Examples: `add_files.py`, `branch
 - **file.py**: File operations
 
 ## Dependencies
-- Python 3.8+
+- Python 3.13+
 - git-autograder 6.*, repo-smith, pytest
 - ruff, mypy (dev tools)
 - Git CLI, GitHub CLI (gh)
