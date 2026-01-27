@@ -3,7 +3,7 @@
 ## Overview
 Utilities for running CLI commands with error handling.
 
-See [exercise_utils/cli.py](../../exercise_utils/cli.py) for implementation.
+See [exercise_utils/cli.py](../../../exercise_utils/cli.py) for implementation.
 
 ## Key Functions
 - `run(command, verbose, env={}, exit_on_error=False)` → `CommandResult`
@@ -15,5 +15,5 @@ See [exercise_utils/cli.py](../../exercise_utils/cli.py) for implementation.
 
 ## Usage Examples
 See usages in:
-- [exercise_utils/git.py](../../exercise_utils/git.py)
-- [exercise_utils/github_cli.py](../../exercise_utils/github_cli.py)
+- [exercise_utils/git.py](../../../exercise_utils/git.py)
+- [exercise_utils/github_cli.py](../../../exercise_utils/github_cli.py)

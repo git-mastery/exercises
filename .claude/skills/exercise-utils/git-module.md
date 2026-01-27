@@ -3,7 +3,7 @@
 ## Overview
 Wrapper functions for Git CLI commands.
 
-See [exercise_utils/git.py](../../exercise_utils/git.py) for all functions.
+See [exercise_utils/git.py](../../../exercise_utils/git.py) for all functions.
 
 ## Functions
 - `init(verbose)`, `add(files, verbose)`, `commit(message, verbose)`, `empty_commit(message, verbose)`

@@ -109,4 +109,3 @@ if count > MAX_RETRIES:
 
 - **[exercise-development](../exercise-development/SKILL.md)** - Applying standards
 - **[exercise-utils](../exercise-utils/SKILL.md)** - Using utilities correctly
-- **[testing](../testing/SKILL.md)** - Test code standards

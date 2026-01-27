@@ -105,4 +105,3 @@ cli.py          # No dependencies (base module)
 
 - **[exercise-development](../exercise-development/SKILL.md)** - Using utilities in exercises
 - **[coding-standards](../coding-standards/SKILL.md)** - Code conventions
-- **[testing](../testing/SKILL.md)** - Using test utilities

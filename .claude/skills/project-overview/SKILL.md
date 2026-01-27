@@ -93,11 +93,25 @@ The script generates the complete exercise structure with all required files.
 
 ### 5. Exercise Configuration
 
-Each exercise has a `.gitmastery-exercise.json` file (not present in current structure but referenced in docs):
+Each exercise has a `.gitmastery-exercise.json` file
 ```json
 {
-  "exercise_name": "kebab-case-name",
-  "tags": ["branch", "merge", "intermediate"]
+  "exercise_name": "amateur-detective",
+  "tags": [
+    "git-status"
+  ],
+  "requires_git": true,
+  "requires_github": false,
+  "base_files": {
+    "answers.txt": "answers.txt"
+  },
+  "exercise_repo": {
+    "repo_type": "local",
+    "repo_name": "crime-scene",
+    "repo_title": null,
+    "create_fork": null,
+    "init": true
+  }
 }
 ```
 
@@ -168,9 +182,7 @@ def test_something():
 
 ### Documentation
 - **README.md**: Main project documentation (currently minimal)
-- **summary.md**: Comprehensive repository structure documentation
 - **.github/CONTRIBUTING.md**: Contributor guidelines with detailed setup instructions
-- **.github/copilot-instructions.md**: AI assistant guidelines (for GitHub Copilot)
 
 ### CI/CD
 - GitHub Actions workflows in `.github/workflows/`
@@ -213,7 +225,6 @@ When modifying this repository:
 ## Additional Resources
 
 For detailed information, see:
-- [exercise-development](./exercise-development/SKILL.md) - Creating and modifying exercises
-- [exercise-utils](./exercise-utils/SKILL.md) - Using shared utility modules
-- [coding-standards](./coding-standards/SKILL.md) - Code style and quality guidelines
-- [testing](./testing/SKILL.md) - Testing strategies and patterns
+- [exercise-development](../exercise-development/SKILL.md) - Creating and modifying exercises
+- [exercise-utils](../exercise-utils/SKILL.md) - Using shared utility modules
+- [coding-standards](../coding-standards/SKILL.md) - Code style and quality guidelines

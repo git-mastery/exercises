@@ -3,7 +3,7 @@
 ## Overview
 File creation and modification utilities.
 
-See [exercise_utils/file.py](../../exercise_utils/file.py) for implementation.
+See [exercise_utils/file.py](../../../exercise_utils/file.py) for implementation.
 
 ## Functions
 - `create_or_update_file(filepath, contents=None)` - Create/overwrite file, auto-creates directories

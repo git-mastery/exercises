@@ -86,7 +86,8 @@ python hands_on/my_demo.py
 
 ### Required Elements (Standard Exercises)
 - `__init__.py` - Package marker
-- `download.py` - With `__requires_git__`, `__requires_github__`, `download()`
+- `gitmastery-exercise.json` - Configuration
+- `download.py` - `setup(verbose: bool = False)`
 - `verify.py` - With `verify()` function
 - `test_verify.py` - With `REPOSITORY_NAME` and test functions
 - `README.md` - With scenario, task, hints
@@ -112,5 +113,4 @@ python hands_on/my_demo.py
 
 - **[exercise-utils](../exercise-utils/SKILL.md)** - Utility functions reference
 - **[coding-standards](../coding-standards/SKILL.md)** - Code style guidelines
-- **[testing](../testing/SKILL.md)** - Testing strategies
 - **[project-overview](../project-overview/SKILL.md)** - Repository structure
