@@ -23,8 +23,6 @@ def setup(verbose: bool = False):
         verbose,
     )
 
-    clone_repo_with_git(
-        f"https://github.com/{username}/{FORK_NAME}", verbose, "funny-glossary"
-    )
+    clone_repo_with_git(f"https://github.com/{username}/{FORK_NAME}", verbose, ".")
 
     create_start_tag(verbose)
