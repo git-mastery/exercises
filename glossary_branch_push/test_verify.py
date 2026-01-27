@@ -19,8 +19,6 @@ loader = GitAutograderTestLoader(REPOSITORY_NAME, verify)
 @contextmanager
 def base_setup() -> Iterator[Tuple[GitAutograderTest, RepoSmith]]:
     with loader.start(include_remote_repo=True) as (test, rs, rs_remote):
-        rs.git.commit(message="Initial commit", allow_empty=True)
-
         remote_path = str(rs_remote.repo.git_dir)
         rs.git.remote_add("origin", remote_path)
 

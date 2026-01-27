@@ -12,7 +12,7 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     origin_remote.remote.fetch()
 
     try:
-        remote_pqr = exercise.repo.repo.refs["origin/PQR"]
+        exercise.repo.repo.refs["origin/PQR"]
     except (IndexError, KeyError):
         raise exercise.wrong_answer([PQR_BRANCH_NOT_PUSHED])
 
