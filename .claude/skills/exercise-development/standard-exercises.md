@@ -47,12 +47,6 @@ Use the `new.sh` script to generate exercise structure:
 
 **Purpose**: Set up the initial Git repository state for the exercise.
 
-### Required Variables
-```python
-__requires_git__ = True      # Always required
-__requires_github__ = False  # Set True if exercise uses GitHub
-```
-
 ### Required Function
 ```python
 def download(verbose: bool):

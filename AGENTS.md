@@ -5,7 +5,7 @@ This repository uses the **Agent Skills** standard for AI documentation. All det
 ## For AI Agents
 
 **Workflow**: 
-1. Read this AGENT.md to understand available skills
+1. Read this AGENTS.md to understand available skills
 2. Based on your task, load relevant skills from `.claude/skills/`
 3. Reference actual code files linked in skills
 
@@ -23,7 +23,7 @@ This repository uses the **Agent Skills** standard for AI documentation. All det
 
 ## For Human Developers
 
-**Working with AI agents**: Simply state your task. AI will read AGENT.md, identify needed skills, and load them automatically.
+**Working with AI agents**: Simply state your task. AI will read AGENTS.md, identify needed skills, and load them automatically.
 
 **Example tasks**:
 ```

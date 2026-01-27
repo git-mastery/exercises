@@ -86,7 +86,7 @@ python hands_on/my_demo.py
 
 ### Required Elements (Standard Exercises)
 - `__init__.py` - Package marker
-- `gitmastery-exercise.json` - Configuration
+- `.gitmastery-exercise.json` - Configuration
 - `download.py` - `setup(verbose: bool = False)`
 - `verify.py` - With `verify()` function
 - `test_verify.py` - With `REPOSITORY_NAME` and test functions
@@ -101,7 +101,7 @@ python hands_on/my_demo.py
 ### Standard Exercise Examples
 - **Simple**: `amateur_detective/` - Answer validation
 - **Branching**: `branch_bender/` - Branch operations
-- **Remote**: `remote_branch_pull/` - GitHub integration
+- **Remote**: `remote_control/` - GitHub integration
 - **Complex**: `conflict_mediator/` - Merge conflicts
 
 ### Hands-On Examples
