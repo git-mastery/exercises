@@ -57,12 +57,9 @@ def setup(verbose: bool = False):
 ### Pattern: Local Repository Only
 ```python
 import os
-from exercise_utils.git import init, add, commit
+from exercise_utils.git import add, commit
 from exercise_utils.gitmastery import create_start_tag
 from exercise_utils.file import create_or_update_file
-
-__requires_git__ = True
-__requires_github__ = False
 
 def setup(verbose: bool = False):
     # Create initial files
@@ -115,7 +112,7 @@ def setup(verbose: bool = False):
 ```
 
 ### Best Practices
-- Use utility functions from `exercise_utils/` - never raw subprocess calls]
+- Use utility functions from `exercise_utils/` - never raw subprocess calls
 - Keep setup simple and focused on learning objectives
 - Use verbose parameter for all utility calls
 
