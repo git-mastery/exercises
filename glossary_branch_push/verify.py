@@ -8,9 +8,6 @@ PQR_BRANCH_NOT_PUSHED = "Branch 'PQR' has not been pushed to the remote."
 
 
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
-    origin_remote = exercise.repo.remotes.remote("origin")
-    origin_remote.remote.fetch()
-
     try:
         exercise.repo.repo.refs["origin/PQR"]
     except (IndexError, KeyError):
