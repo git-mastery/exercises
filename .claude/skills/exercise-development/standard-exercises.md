@@ -87,14 +87,11 @@ from exercise_utils.git import clone_repo_with_git, checkout, add, commit, push
 from exercise_utils.github_cli import get_github_username, fork_repo, delete_repo, has_repo
 from exercise_utils.file import append_to_file
 
-__requires_git__ = True
-__requires_github__ = True
-
 TARGET_REPO = "git-mastery/sample-repo"
 FORK_NAME = "gitmastery-sample-repo"
 LOCAL_DIR = "sample-repo"
 
-def download(verbose: bool):
+def setup(verbose: bool = False):
     username = get_github_username(verbose)
     full_repo_name = f"{username}/{FORK_NAME}"
     
@@ -118,11 +115,9 @@ def download(verbose: bool):
 ```
 
 ### Best Practices
-- Use utility functions from `exercise_utils/` - never raw subprocess calls
-- Always call `create_start_tag()` as the final step
+- Use utility functions from `exercise_utils/` - never raw subprocess calls]
 - Keep setup simple and focused on learning objectives
 - Use verbose parameter for all utility calls
-- Set appropriate `__requires_*__` flags
 
 ## Step 3: Write README.md
 
