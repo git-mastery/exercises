@@ -17,6 +17,6 @@ def setup(verbose: bool = False):
     if has_repo(FORK_NAME, True, verbose):
         delete_repo(FORK_NAME, verbose)
 
-    fork_repo(f"{REPO_OWNER}/{REPO_NAME}", FORK_NAME, verbose, True)
+    fork_repo(f"{REPO_OWNER}/{REPO_NAME}", FORK_NAME, verbose, False)
 
     clone_repo_with_gh(f"https://github.com/{username}/{FORK_NAME}", verbose, ".")
