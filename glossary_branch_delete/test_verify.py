@@ -25,6 +25,11 @@ def base_setup() -> Iterator[Tuple[GitAutograderTest, RepoSmith]]:
         remote_path = str(rs_remote.repo.git_dir)
         rs.git.remote_add("origin", remote_path)
 
+        # doesnt create a branch on remote
+        rs_remote.git.commit(allow_empty=True, message="Initial commit")
+        rs_remote.git.checkout("TEST", branch=True)
+
+        # works
         rs.git.checkout("VWX", branch=True)
         rs.git.commit(allow_empty=True, message="Empty commit")
         rs.git.push("origin", "VWX")
