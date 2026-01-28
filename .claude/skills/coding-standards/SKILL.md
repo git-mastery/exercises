@@ -31,7 +31,7 @@ mypy <directory>/            # Type checking
 - **Constants**: `UPPER_SNAKE_CASE`
 - **Classes**: `PascalCase`
 - **Tests**: `test_description`
-- **Directories**: `kebab-case`
+- **Directories**: `snake-case`
 - Actions: `create_*`, `add_*`, `remove_*`
 - Queries: `get_*`, `has_*`, `is_*`
 

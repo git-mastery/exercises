@@ -163,7 +163,7 @@ def test_something():
 ### File Organization
 - **One exercise per directory**: No shared state between exercises
 - **Self-contained resources**: All exercise resources in `res/` subdirectory
-- **Standard naming**: Use kebab-case for exercise directories
+- **Standard naming**: Use snake-case for exercise directories
 - **Python packages**: Every exercise directory has `__init__.py`
 
 ### Git Operations
