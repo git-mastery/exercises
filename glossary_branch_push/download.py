@@ -1,10 +1,9 @@
-import os
-
-from exercise_utils.cli import run_command
 from exercise_utils.file import create_or_update_file
-from exercise_utils.git import add, checkout, clone_repo_with_git, commit
+from exercise_utils.git import add, checkout, commit
 from exercise_utils.github_cli import (
+    clone_repo_with_gh,
     delete_repo,
+    fork_repo,
     get_github_username,
     has_repo,
 )
@@ -23,14 +22,9 @@ def setup(verbose: bool = False):
     if has_repo(FORK_NAME, True, verbose):
         delete_repo(FORK_NAME, verbose)
 
-    run_command(
-        ["gh", "repo", "fork", f"{REPO_OWNER}/{REPO_NAME}", "--fork-name", FORK_NAME],
-        verbose,
-    )
+    fork_repo(f"{REPO_OWNER}/{REPO_NAME}", FORK_NAME, verbose, True)
 
-    clone_repo_with_git(
-        f"https://github.com/{username}/{FORK_NAME}", verbose, "."
-    )
+    clone_repo_with_gh(f"https://github.com/{username}/{FORK_NAME}", verbose, ".")
 
     checkout("PQR", True, verbose)
 
