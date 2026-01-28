@@ -8,7 +8,14 @@ BRANCH_NOT_CREATED = "The local {branch} branch is not created."
 BRANCH_NOT_TRACKING = "The local {branch} branch does not track origin/{branch}."
 BRANCH_MISSING = "The local {branch} branch does not exist."
 COMMIT_MISSING = "New commit in the remote {branch} branch is not pulled to the local {branch} branch."
+LOCAL_COMMIT_MISSING = "The original local commit on DEF is missing. You may have lost your work instead of merging."
 
+def get_commit_from_message(commits, message):
+    """Find a commit with the given message from a list of commits."""
+    for commit in commits:
+        if message.strip() == commit.message.strip():
+            return commit
+    return None
 
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     repo = exercise.repo 
@@ -49,10 +56,12 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         def_branch = repo.branches.branch("DEF").branch
         remote_def = def_branch.tracking_branch()
         if remote_def:
-            local_commits = set(commit.hexsha for commit in repo.branches.branch("DEF").commits)
+            local_commits = repo.branches.branch("DEF").commits
             remote_commit_hexsha = remote_def.commit.hexsha
-            if remote_commit_hexsha not in local_commits:
+            if remote_commit_hexsha not in set(commit.hexsha for commit in local_commits):
                 comments.append(COMMIT_MISSING.format(branch="DEF"))
+            if not get_commit_from_message(local_commits, "Add 'documentation'"):
+                comments.append(LOCAL_COMMIT_MISSING)
         else:
             comments.append(BRANCH_NOT_TRACKING.format(branch="DEF"))
 
