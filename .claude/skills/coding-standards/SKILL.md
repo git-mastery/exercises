@@ -5,6 +5,13 @@ description: Code style and quality guidelines. Use when writing or reviewing co
 
 # Coding Standards
 
+## Prerequisites
+
+**This skill is standalone** - you can use it directly for code review and style checks.
+
+**Referenced by**: 
+- **[exercise-development](../exercise-development/SKILL.md)** - Uses these standards during exercise creation
+
 ## Tools
 ```bash
 ruff format .                 # Format code
@@ -44,6 +51,13 @@ One-line docstrings for simple functions. See [exercise_utils/git.py](../../../e
 - **Context managers**: Use `with` for resources
 - **Constants at top**: Module-level `UPPER_CASE`
 
+## Common Mistakes to Avoid
+- ❌ Calling `git` directly instead of using exercise_utils/git.py
+- ❌ Forgetting to call `create_start_tag()` at end of download.py
+- ❌ Not using `verbose` parameter in utility functions
+- ❌ Hardcoding paths instead of using `Path(__file__).parent`
+- ❌ Creating test without `test_` prefix
+
 ## Anti-Patterns
 
 **❌ Don't**:
@@ -60,12 +74,13 @@ One-line docstrings for simple functions. See [exercise_utils/git.py](../../../e
 
 ## Pre-Commit Checklist
 
-- ✓ `ruff format .` - Code formatted
-- ✓ `ruff check .` - No lint errors
-- ✓ `mypy .` - Type hints valid
-- ✓ Docstrings on public functions
-- ✓ No hardcoded values
-- ✓ Imports organized
+- [ ] Ran `ruff format .`
+- [ ] Ran `ruff check .`
+- [ ] Ran `mypy <exercise>/`
+- [ ] All tests pass: `./test.sh <exercise>`
+- [ ] Docstrings on public functions
+- [ ] No hardcoded values
+- [ ] Imports organized
 
 ## Related Skills
 

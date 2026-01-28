@@ -3,15 +3,12 @@
 ## Overview
 Utilities for running CLI commands with error handling.
 
-See [exercise_utils/cli.py](../../../exercise_utils/cli.py) for implementation.
+**When to use**: Low-level CLI execution - typically you'll use git.py or github_cli.py wrappers instead.
 
 ## Key Functions
-- `run(command, verbose, env={}, exit_on_error=False)` → `CommandResult`
-  - Returns result with `.stdout`, `.returncode`, `.is_success()`
-- `run_command(command, verbose)` → `str | exits`
-  - Simple runner, exits on failure
-- `run_command_no_exit(command, verbose)` → `str | None`
-  - Returns None on failure
+**Core operations**: run commands with error handling, capture output, control exit behavior
+
+Full API: [exercise_utils/cli.py](../../../exercise_utils/cli.py)
 
 ## Usage Examples
 See usages in:

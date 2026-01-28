@@ -3,12 +3,12 @@
 ## Overview
 Testing utilities for exercise validation.
 
-See [exercise_utils/test.py](../../../exercise_utils/test.py) for implementation.
+**When to use**: Writing test_verify.py files - provides loader pattern and assertion helpers. 5 test scenarios are required to ensure comprehensive coverage: no answers, partial, wrong, mixed, and all correct.
 
 ## Core Classes
-- `GitAutograderTestLoader(exercise_name, grade_func)` - Test runner factory
-- `GitMasteryHelper` - Repo-smith helper with `create_start_tag()` method
-- `assert_output(output, expected_status, expected_comments=[])` - Assertion helper
+**Core operations**: test loader factory, Git-Mastery helper, output assertions
+
+Full API: [exercise_utils/test.py](../../../exercise_utils/test.py)
 
 ## Usage Examples
 See test files:

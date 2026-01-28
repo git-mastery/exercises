@@ -10,16 +10,27 @@ This repository uses the **Agent Skills** standard for AI documentation. All det
 3. Reference actual code files linked in skills
 
 **Available skills**:
-- **[project-overview](file:.claude/skills/project-overview/SKILL.md)**: Repository overview, structure, dependencies
-- **[exercise-development](file:.claude/skills/exercise-development/SKILL.md)**: Creating exercises (standard vs hands-on)
-- **[exercise-utils](file:.claude/skills/exercise-utils/SKILL.md)**: Utility modules API reference
-- **[coding-standards](file:.claude/skills/coding-standards/SKILL.md)**: Code style, naming, type hints
+- **[project-overview](.claude/skills/project-overview/SKILL.md)**: Repository overview, structure, dependencies
+- **[exercise-development](.claude/skills/exercise-development/SKILL.md)**: Creating exercises (standard vs hands-on)
+- **[exercise-utils](.claude/skills/exercise-utils/SKILL.md)**: Utility modules API reference
+- **[coding-standards](.claude/skills/coding-standards/SKILL.md)**: Code style, naming, type hints
 
 **When to load each skill**:
 - Creating/modifying exercises → `exercise-development`
 - Using utility functions → `exercise-utils`
 - Code review/formatting → `coding-standards`
 - Understanding repo structure → `project-overview`
+
+**Recommended workflow**:
+- **Load only skills needed** for current task (don't load all 4 unnecessarily)
+- **Read supporting docs** (*.md files) only when main SKILL.md references them
+- **Verify example links** before using code patterns to ensure they match current implementation
+
+**Skill dependencies**:
+- **First time?** → Start with `project-overview`
+- **Creating exercise?** → `exercise-development` (references `exercise-utils`, `coding-standards`)
+- **Using utilities?** → `exercise-utils` (standalone)
+- **Code review?** → `coding-standards` (standalone)
 
 ## For Human Developers
 
@@ -35,7 +46,7 @@ This repository uses the **Agent Skills** standard for AI documentation. All det
 
 "Review this code against our standards"
 
-"Review this code against coding standards in .claude/skills/coding-standards/"
+"Review this code against coding-standards skill"
 ```
 
 ### What AI Knows From Skills

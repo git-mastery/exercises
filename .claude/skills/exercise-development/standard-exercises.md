@@ -154,6 +154,11 @@ pytest <exercise-name>/test_verify.py::test_name -s -vv
 2. Check mock answers match validation rules
 3. Verify `REPOSITORY_NAME` matches directory name
 4. Ensure imports are correct
+5. **Common patterns**:
+   - Forgot to call `loader.start()` before `test.run()`
+   - Mock answers dictionary keys don't match question text exactly
+   - Test function missing `test_` prefix
+   - Wrong exercise name in `GitAutograderTestLoader`
 
 ### Download Script Errors
 1. Check `__requires_git__` and `__requires_github__` flags
@@ -166,6 +171,12 @@ pytest <exercise-name>/test_verify.py::test_name -s -vv
 2. Check that `validate()` is called on chain
 3. Ensure correct status returned
 4. Test with actual exercise setup
+
+### Style/Quality Issues
+See [coding-standards skill](../coding-standards/SKILL.md) for:
+- Formatting with ruff
+- Type checking with mypy
+- Code style guidelines
 
 ## Pre-Submission Checklist
 

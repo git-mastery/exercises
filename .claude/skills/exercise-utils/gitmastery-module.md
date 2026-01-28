@@ -3,11 +3,11 @@
 ## Overview
 Git-Mastery specific utility for creating start tags.
 
-See [exercise_utils/gitmastery.py](../../../exercise_utils/gitmastery.py) for implementation.
+**When to use**: After creating initial repository state, before student modifications.
 
 ## Function
-`create_start_tag(verbose)` - Creates tag `git-mastery-start-<hash>` on first commit.
+**Core operation**: create_start_tag() - tags first commit for exercise reset
 
-**When to use:** After creating initial repository state, before student modifications.
+Full API: [exercise_utils/gitmastery.py](../../../exercise_utils/gitmastery.py)
 
 **Testing alternative:** Use `GitMasteryHelper` in tests (see test-module.md).

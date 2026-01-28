@@ -5,6 +5,15 @@ description: Guidelines for creating and modifying Git-Mastery exercises. Use wh
 
 # Exercise Development
 
+## Prerequisites
+
+**Recommended to read first**:
+- **[project-overview](../project-overview/SKILL.md)** - Understand repository structure and conventions
+
+**Referenced by this skill**:
+- **[exercise-utils](../exercise-utils/SKILL.md)** - Utility functions you'll use in download.py
+- **[coding-standards](../coding-standards/SKILL.md)** - Code style for quality checks
+
 ## Quick Guide
 
 ### Two Types of Content

@@ -5,6 +5,13 @@ description: Reference for shared utility modules. Use when working with Git com
 
 # Exercise Utils Reference
 
+## Prerequisites
+
+**Context** (optional): 
+- **[project-overview](../project-overview/SKILL.md)** - Helpful for understanding how utilities fit into repository structure
+
+**This skill is standalone** - you can use it directly when working with utility functions.
+
 ## Overview
 The `exercise_utils/` package provides reusable wrappers for common operations. **Always use these instead of raw subprocess calls.**
 

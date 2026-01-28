@@ -9,6 +9,11 @@ user-invocable: false
 ## Overview
 40+ modular Git exercises with automated validation using pytest and git-autograder.
 
+## Prerequisites for Contributing
+- **GitHub Issue Templates**: Use "exercise discussion" template for proposals, "request exercise repository" for remote repos
+- **Pull Requests**: Must reference an approved issue from exercise discussion
+- **Approval Required**: Wait for maintainer approval before implementing exercises
+
 ## Exercise Types
 
 ### Standard Exercises (40+ directories)
