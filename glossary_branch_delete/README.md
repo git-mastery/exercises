@@ -1,1 +1,1 @@
-https://git-mastery.org/lessons/remoteBranchPush/exercise-glossary-branch-push.html
+https://git-mastery.org/lessons/remoteBranchDelete/exercise-glossary-branch-delete.html
