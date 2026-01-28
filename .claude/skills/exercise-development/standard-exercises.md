@@ -47,72 +47,15 @@ Use the `new.sh` script to generate exercise structure:
 
 **Purpose**: Set up the initial Git repository state for the exercise.
 
-### Required Function
-```python
-def setup(verbose: bool = False):
-    """Setup the exercise repository."""
-    # Implementation here
-```
+**Examples**:
+- Local repo: See [grocery_shopping/download.py](../../../grocery_shopping/download.py)
+- GitHub integration: See [fork_repo/download.py](../../../fork_repo/download.py)
 
-### Pattern: Local Repository Only
-```python
-import os
-from exercise_utils.git import add, commit
-from exercise_utils.gitmastery import create_start_tag
-from exercise_utils.file import create_or_update_file
+**Required function**: `def setup(verbose: bool = False)`
 
-def setup(verbose: bool = False):
-    # Create initial files
-    create_or_update_file("file1.txt", "Initial content")
-    create_or_update_file("file2.txt", "More content")
-    
-    # Setup Git repository
-    add(["file1.txt", "file2.txt"], verbose)
-    commit("Initial commit", verbose)
-    
-    # Make changes for exercise
-    create_or_update_file("file3.txt", "New file")
-    
-    # Create start tag (always last step)
-    create_start_tag(verbose)
-```
-
-### Pattern: With GitHub Integration
-```python
-import os
-from exercise_utils.git import clone_repo_with_git, checkout, add, commit, push
-from exercise_utils.github_cli import get_github_username, fork_repo, delete_repo, has_repo
-from exercise_utils.file import append_to_file
-
-TARGET_REPO = "git-mastery/sample-repo"
-FORK_NAME = "gitmastery-sample-repo"
-LOCAL_DIR = "sample-repo"
-
-def setup(verbose: bool = False):
-    username = get_github_username(verbose)
-    full_repo_name = f"{username}/{FORK_NAME}"
-    
-    # Clean up existing fork if present
-    if has_repo(full_repo_name, True, verbose):
-        delete_repo(full_repo_name, verbose)
-    
-    # Create fork
-    fork_repo(TARGET_REPO, FORK_NAME, verbose, False)
-    
-    # Clone locally
-    clone_repo_with_git(f"https://github.com/{full_repo_name}", verbose, LOCAL_DIR)
-    os.chdir(LOCAL_DIR)
-    
-    # Make changes
-    checkout("feature-branch", True, verbose)
-    append_to_file("README.md", "\nNew content")
-    add(["README.md"], verbose)
-    commit("Update README", verbose)
-    push("origin", "feature-branch", verbose)
-```
-
-### Best Practices
+**Key points**:
 - Use utility functions from `exercise_utils/` - never raw subprocess calls
+- Always call `create_start_tag()` as the final step
 - Keep setup simple and focused on learning objectives
 - Use verbose parameter for all utility calls
 
@@ -120,58 +63,17 @@ def setup(verbose: bool = False):
 
 **Purpose**: Student-facing instructions for the exercise.
 
-### Required Sections
+**Examples**: See any exercise README like [amateur_detective/README.md](../../../amateur_detective/README.md)
 
+**Required sections**:
 1. **Title**: Exercise name (h1)
 2. **Scenario/Context**: Engaging story that motivates the exercise
 3. **Task**: Clear, actionable objectives
-4. **Hints**: Progressive disclosure of help
+4. **Hints**: Progressive disclosure of help (3-5 hints in collapsible details)
 
-### Template
-```markdown
-# exercise-name
-
-## Scenario
-[Engaging story or context that motivates the exercise.
-Make it relatable and interesting.]
-
-## Task
-[Clear description of what students need to accomplish]
-
-Use `git <command>` to [specific action].
-
-[Additional requirements or constraints]
-
-Update your answers in `answers.txt`.
-
-## Hints
-
-<details>
-<summary>Hint 1</summary>
-
-[First level of help - general guidance]
-
-</details>
-
-<details>
-<summary>Hint 2</summary>
-
-[Second level - more specific direction]
-
-</details>
-
-<details>
-<summary>Hint 3</summary>
-
-[Third level - nearly direct answer]
-
-</details>
-```
-
-### Best Practices
+**Best practices**:
 - Use engaging scenarios that make Git concepts relatable
 - Be specific about expected outcomes
-- Provide 3-5 progressive hints
 - Mention specific Git commands when appropriate
 - Keep instructions concise and scannable
 
@@ -179,178 +81,45 @@ Update your answers in `answers.txt`.
 
 **Purpose**: Validate student's solution using composable rules.
 
-### Required Imports
-```python
-from git_autograder import (
-    GitAutograderExercise,
-    GitAutograderOutput,
-    GitAutograderStatus,
-)
-from git_autograder.answers.rules import HasExactValueRule, NotEmptyRule
-# Import other rules as needed
-```
+**Examples**:
+- Answer-based: See [amateur_detective/verify.py](../../../amateur_detective/verify.py)
+- Repository state: See [grocery_shopping/verify.py](../../../grocery_shopping/verify.py)
+- Branch validation: See [branch_compare/verify.py](../../../branch_compare/verify.py)
 
-### Required Function
-```python
-def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
-    """Verify the student's solution."""
-    # Validation logic here
-```
+**Required function**: `def verify(exercise: GitAutograderExercise) -> GitAutograderOutput`
 
-### Pattern: Answer-Based Validation
-For exercises where students provide answers in `answers.txt`:
-
-```python
-QUESTION_ONE = "Which file was modified?"
-QUESTION_TWO = "Which commit was the change made in?"
-
-def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
-    (
-        exercise.answers.add_validation(QUESTION_ONE, NotEmptyRule())
-        .add_validation(QUESTION_ONE, HasExactValueRule("expected_file.txt"))
-        .add_validation(QUESTION_TWO, NotEmptyRule())
-        .add_validation(QUESTION_TWO, HasExactValueRule("abc123"))
-        .validate()
-    )
-    
-    return exercise.to_output(
-        ["Congratulations! You solved the exercise!"],
-        GitAutograderStatus.SUCCESSFUL,
-    )
-```
-
-### Pattern: Repository State Validation
-For exercises checking Git repository state:
-
-```python
-from git_autograder.repo.rules import HasBranchRule, HasCommitWithMessageRule
-
-def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
-    (
-        exercise.repo.add_validation(HasBranchRule("feature-branch"))
-        .add_validation(HasCommitWithMessageRule("Add new feature"))
-        .validate()
-    )
-    
-    return exercise.to_output(
-        ["Great work! The repository is in the correct state."],
-        GitAutograderStatus.SUCCESSFUL,
-    )
-```
-
-### Validation Rule Categories
+**Validation rule categories**:
 - **Answer rules**: `NotEmptyRule`, `HasExactValueRule`, `MatchesPatternRule`
 - **Repository rules**: `HasBranchRule`, `HasCommitRule`, `HasRemoteRule`
 - **Commit rules**: `HasCommitWithMessageRule`, `CommitCountRule`
 - **File rules**: `FileExistsRule`, `FileContentsRule`
 
-### Best Practices
+**Best practices**:
 - Chain validations using fluent API
 - Provide clear, actionable success messages
 - Use status codes appropriately (SUCCESSFUL, UNSUCCESSFUL)
-- Test edge cases in your validation logic
 - Keep validation focused on learning objectives
 
 ## Step 5: Write test_verify.py
 
 **Purpose**: Test the verification logic with various scenarios.
 
-### Required Imports
-```python
-from exercise_utils.test import GitAutograderTestLoader, assert_output
-from git_autograder import GitAutograderStatus
-from git_autograder.answers.rules import HasExactValueRule, NotEmptyRule
+**Examples**:
+- Answer-based: See [amateur_detective/test_verify.py](../../../amateur_detective/test_verify.py)
+- Repository state: See [grocery_shopping/test_verify.py](../../../grocery_shopping/test_verify.py)
 
-from .verify import QUESTION_ONE, QUESTION_TWO, verify
-```
+**Required setup**:
+- `REPOSITORY_NAME = "exercise-name"` (must match directory)
+- `loader = GitAutograderTestLoader(REPOSITORY_NAME, verify)`
 
-### Required Setup
-```python
-REPOSITORY_NAME = "exercise-name"  # Must match exercise directory name
+**Required test scenarios**:
+1. No answers/changes
+2. Partial answers/completion
+3. Wrong answers/approach
+4. Mixed (some correct, some wrong)
+5. All correct
 
-loader = GitAutograderTestLoader(REPOSITORY_NAME, verify)
-```
-
-### Required Test Scenarios
-
-#### 1. No Answers
-```python
-def test_no_answers():
-    """Test when student provides no answers."""
-    with loader.start(mock_answers={QUESTION_ONE: "", QUESTION_TWO: ""}) as (test, _):
-        output = test.run()
-        assert_output(
-            output,
-            GitAutograderStatus.UNSUCCESSFUL,
-            [
-                NotEmptyRule.EMPTY.format(question=QUESTION_ONE),
-                NotEmptyRule.EMPTY.format(question=QUESTION_TWO),
-            ],
-        )
-```
-
-#### 2. Partial Answers
-```python
-def test_partial_answers():
-    """Test when some answers missing."""
-    with loader.start(
-        mock_answers={QUESTION_ONE: "correct", QUESTION_TWO: ""}
-    ) as (test, _):
-        output = test.run()
-        assert_output(
-            output,
-            GitAutograderStatus.UNSUCCESSFUL,
-            [NotEmptyRule.EMPTY.format(question=QUESTION_TWO)],
-        )
-```
-
-#### 3. Wrong Answers
-```python
-def test_wrong_answers():
-    """Test when answers are incorrect."""
-    with loader.start(
-        mock_answers={QUESTION_ONE: "wrong", QUESTION_TWO: "also_wrong"}
-    ) as (test, _):
-        output = test.run()
-        assert_output(
-            output,
-            GitAutograderStatus.UNSUCCESSFUL,
-            [
-                HasExactValueRule.NOT_EXACT.format(question=QUESTION_ONE),
-                HasExactValueRule.NOT_EXACT.format(question=QUESTION_TWO),
-            ],
-        )
-```
-
-#### 4. Mixed Answers
-```python
-def test_mixed_answers():
-    """Test mix of correct and incorrect answers."""
-    with loader.start(
-        mock_answers={QUESTION_ONE: "correct", QUESTION_TWO: "wrong"}
-    ) as (test, _):
-        output = test.run()
-        assert_output(
-            output,
-            GitAutograderStatus.UNSUCCESSFUL,
-            [HasExactValueRule.NOT_EXACT.format(question=QUESTION_TWO)],
-        )
-```
-
-#### 5. Correct Answers
-```python
-def test_correct_answers():
-    """Test successful completion with all correct answers."""
-    with loader.start(
-        mock_answers={QUESTION_ONE: "correct", QUESTION_TWO: "also_correct"}
-    ) as (test, _):
-        output = test.run()
-        assert_output(
-            output,
-            GitAutograderStatus.SUCCESSFUL,
-            ["Congratulations! You solved the exercise!"],
-        )
-```
+**Pattern**: Use `loader.start(mock_answers={...})` context manager, then `test.run()` and `assert_output()`
 
 ## Step 6: Add Resources (Optional)
 
@@ -362,30 +131,14 @@ def test_correct_answers():
 - Scripts that students interact with
 - Images or diagrams for README
 
-**Accessing resources**:
-```python
-import os
-from pathlib import Path
-
-# In download.py
-resource_dir = Path(__file__).parent / "res"
-sample_file = resource_dir / "sample.txt"
-
-# Copy to exercise directory
-import shutil
-shutil.copy(sample_file, ".")
-```
+**Accessing**: Use `Path(__file__).parent / "res"` to get resource directory
 
 ## Testing Your Exercise
 
 ### Run Tests
 ```bash
 ./test.sh <exercise-name>
-```
-
-### Run Specific Test
-```bash
-pytest <exercise-name>/test_verify.py::test_correct_answers -s -vv
+pytest <exercise-name>/test_verify.py::test_name -s -vv
 ```
 
 ### Manual Testing
@@ -405,7 +158,7 @@ pytest <exercise-name>/test_verify.py::test_correct_answers -s -vv
 ### Download Script Errors
 1. Check `__requires_git__` and `__requires_github__` flags
 2. Verify Git/GitHub CLI is available
-3. Test with verbose mode: `download(verbose=True)`
+3. Test with verbose mode: `setup(verbose=True)`
 4. Check file paths are relative to exercise directory
 
 ### Validation Not Working

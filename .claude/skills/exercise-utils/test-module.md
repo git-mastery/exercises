@@ -16,10 +16,4 @@ See test files:
 - [grocery_shopping/test_verify.py](../../../grocery_shopping/test_verify.py)
 
 ## Loader Pattern
-```python
-loader = GitAutograderTestLoader("exercise-name", verify)
-with loader.start() as (test, rs):
-    # setup with rs (RepoSmith)
-    output = test.run()
-    assert_output(output, GitAutograderStatus.SUCCESSFUL)
-```
+See [amateur_detective/test_verify.py](../../../amateur_detective/test_verify.py) and [grocery_shopping/test_verify.py](../../../grocery_shopping/test_verify.py) for complete examples.

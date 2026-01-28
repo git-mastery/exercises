@@ -25,63 +25,20 @@ The `exercise_utils/` package provides reusable wrappers for common operations. 
 
 ## Quick Reference
 
-### Most Common Functions
+**Most common functions**:
+- Git: `init()`, `add()`, `commit()`, `checkout()`, `merge()`, `push()`
+- GitHub: `fork_repo()`, `get_github_username()`, `clone_repo_with_gh()`
+- File: `create_or_update_file()`, `append_to_file()`
+- Start tag: `create_start_tag()` (always last in download.py)
+- Testing: `GitAutograderTestLoader`, `assert_output()`
 
-```python
-# Git operations
-from exercise_utils.git import init, add, commit, checkout
-init(verbose)
-add(["file.txt"], verbose)
-commit("Initial commit", verbose)
-checkout("branch-name", create_branch=True, verbose=verbose)
-
-# GitHub operations  
-from exercise_utils.github_cli import fork_repo, get_github_username
-username = get_github_username(verbose)
-fork_repo("owner/repo", "fork-name", verbose)
-
-# File operations
-from exercise_utils.file import create_or_update_file, append_to_file
-create_or_update_file("file.txt", "content")
-append_to_file("log.txt", "new entry\n")
-
-# Start tag (always last in download.py)
-from exercise_utils.gitmastery import create_start_tag
-create_start_tag(verbose)
-
-# Testing
-from exercise_utils.test import GitAutograderTestLoader, assert_output
-loader = GitAutograderTestLoader(REPO_NAME, verify)
-with loader.start(mock_answers={}) as (test, _):
-    output = test.run()
-    assert_output(output, status, messages)
-```
+**Examples**: See [grocery_shopping/download.py](../../../grocery_shopping/download.py) and [amateur_detective/test_verify.py](../../../amateur_detective/test_verify.py).
 
 ## Common Patterns
 
-### Complete Exercise Setup
-```python
-from exercise_utils.git import init, add, commit
-from exercise_utils.file import create_or_update_file
-from exercise_utils.gitmastery import create_start_tag
+**Complete exercise setup**: See [grocery_shopping/download.py](../../../grocery_shopping/download.py)
 
-def download(verbose: bool):
-    create_or_update_file("README.md", "# Project\n")
-    init(verbose)
-    add(["README.md"], verbose)
-    commit("Initial commit", verbose)
-    create_start_tag(verbose)  # Always last
-```
-
-### GitHub Fork Pattern
-```python
-from exercise_utils.github_cli import get_github_username, fork_repo
-from exercise_utils.git import clone_repo_with_git
-
-username = get_github_username(verbose)
-fork_repo("git-mastery/repo", "my-fork", verbose)
-clone_repo_with_git(f"https://github.com/{username}/my-fork", verbose)
-```
+**GitHub fork pattern**: See [fork_repo/download.py](../../../fork_repo/download.py)
 
 ## Key Principles
 

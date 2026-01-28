@@ -29,32 +29,13 @@ mypy <directory>/            # Type checking
 - Queries: `get_*`, `has_*`, `is_*`
 
 ## Type Hints
-Always include on function signatures:
-```python
-def func(name: str, count: int, verbose: bool) -> None:
-    ...
-
-def get_data(path: Optional[str] = None) -> List[str]:
-    ...
-```
+Always include on function signatures. See [exercise_utils/git.py](../../../exercise_utils/git.py) for examples.
 
 ## Imports
-Order: stdlib → third-party → local (blank lines between)
-```python
-import os
-from typing import List
-
-from git_autograder import GitAutograderExercise
-
-from exercise_utils.git import commit
-```
+Order: stdlib → third-party → local (blank lines between). See any exercise file for examples like [grocery_shopping/verify.py](../../../grocery_shopping/verify.py).
 
 ## Documentation
-```python
-def tag(tag_name: str, verbose: bool) -> None:
-    """Tags the latest commit with the given tag_name."""
-    ...
-```
+One-line docstrings for simple functions. See [exercise_utils/git.py](../../../exercise_utils/git.py) for examples.
 
 ## Best Practices
 - **DRY**: Extract common logic
@@ -65,36 +46,17 @@ def tag(tag_name: str, verbose: bool) -> None:
 
 ## Anti-Patterns
 
-### ❌ Don't
-```python
-# Raw subprocess
-import subprocess
-subprocess.run(["git", "add", "file.txt"])
+**❌ Don't**:
+- Raw subprocess calls
+- Missing type hints
+- Magic values/hardcoded numbers
 
-# No type hints
-def process(data):
-    return data.strip()
+**✅ Do**:
+- Use exercise_utils wrappers (see [exercise_utils/git.py](../../../exercise_utils/git.py))
+- Add type hints on all functions
+- Use named constants
 
-# Magic values
-if count > 5:
-    pass
-```
-
-### ✅ Do
-```python
-# Use wrappers
-from exercise_utils.git import add
-add(["file.txt"], verbose)
-
-# Type hints
-def process(data: str) -> str:
-    return data.strip()
-
-# Named constants
-MAX_RETRIES = 5
-if count > MAX_RETRIES:
-    pass
-```
+**Examples**: See [grocery_shopping/download.py](../../../grocery_shopping/download.py) for proper patterns.
 
 ## Pre-Commit Checklist
 
