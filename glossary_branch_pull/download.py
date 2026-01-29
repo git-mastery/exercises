@@ -29,6 +29,6 @@ def setup(verbose: bool = False):
 
     checkout("DEF", False, verbose)
     run_command(["git", "reset", "--hard", "HEAD~1"], verbose)
-    create_or_update_file("e.txt", "documentation: Evidence that someone once cared.\n")
-    add(["e.txt"], verbose)
+    create_or_update_file("d.txt", "documentation: Evidence that someone once cared.\n")
+    add(["d.txt"], verbose)
     commit("Add 'documentation'", verbose)

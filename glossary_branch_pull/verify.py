@@ -10,6 +10,7 @@ BRANCH_MISSING = "The local {branch} branch does not exist."
 COMMIT_MISSING = "New commit in the remote {branch} branch is not pulled to the local {branch} branch."
 LOCAL_COMMIT_MISSING = "The original local commit on DEF is missing. You may have lost your work instead of merging."
 
+
 def get_commit_from_message(commits, message):
     """Find a commit with the given message from a list of commits."""
     for commit in commits:
