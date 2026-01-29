@@ -16,8 +16,61 @@ REPOSITORY_NAME = "side-track"
 loader = GitAutograderTestLoader(REPOSITORY_NAME, verify)
 
 
+def test_base():
+    with loader.start() as (test, rs):
+        rs.git.commit(message="Initial commit", allow_empty=True)
+        rs.helper(GitMasteryHelper).create_start_tag()
+        rs.git.checkout("bug-fix", branch=True)
+        rs.files.create_or_update(
+            "greet.py",
+            """
+            def greet(name):
+                print(f"Hi {name}")
+            """,
+        )
+        rs.git.add("greet.py")
+        rs.git.commit(message="Fix greet function", allow_empty=False)
+        rs.files.create_or_update(
+            "calculator.py",
+            """
+            def add(a, b):
+                return a + b
+
+
+            def subtract(a, b):
+                return a - b
+
+
+            def divide(a, b):
+                return a / b
+
+
+            def multiply(a, b):
+                return a * b
+            """,
+        )
+        rs.git.add("calculator.py")
+        rs.git.commit(message="Fix add function", allow_empty=False)
+        rs.git.checkout("main")
+
+        output = test.run()
+        assert_output(
+            output,
+            GitAutograderStatus.SUCCESSFUL,
+        )
+
+
+def test_missing_branch():
+    with loader.start() as (test, rs):
+        output = test.run()
+        assert_output(
+            output, GitAutograderStatus.UNSUCCESSFUL, [MISSING_BUG_FIX_BRANCH]
+        )
+
+
 def test_uncommitted():
     with loader.start() as (test, rs):
+        rs.git.checkout("bug-fix", branch=True)
         rs.files.create_or_update("test.txt", "hi")
         rs.git.add("test.txt")
         rs.git.commit(message="Start")
@@ -30,7 +83,26 @@ def test_uncommitted():
 def test_not_main():
     with loader.start() as (test, rs):
         rs.git.commit(message="Empty", allow_empty=True)
+        rs.helper(GitMasteryHelper).create_start_tag()
         rs.git.checkout("bug-fix", branch=True)
+        rs.files.create_or_update(
+            "greet.py",
+            """
+            def greet(name):
+                print(f"Hi {name}")
+            """,
+        )
+        rs.git.add("greet.py")
+        rs.git.commit(message="Fix greet function", allow_empty=False)
+        rs.files.create_or_update(
+            "calculator.py",
+            """
+            def add(a, b):
+                return a + b
+            """,
+        )
+        rs.git.add("calculator.py")
+        rs.git.commit(message="Fix add function", allow_empty=False)
 
         output = test.run()
         assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [NOT_ON_MAIN])
@@ -51,7 +123,22 @@ def test_missing_commits():
         rs.git.commit(message="Empty", allow_empty=True)
         rs.helper(GitMasteryHelper).create_start_tag()
         rs.git.checkout("bug-fix", branch=True)
-        rs.git.commit(message="Empty", allow_empty=True)
+        rs.files.create_or_update(
+            "greet.py",
+            """
+            def greet(name):
+                print(f"Hi {name}")
+            """,
+        )
+        rs.files.create_or_update(
+            "calculator.py",
+            """
+            def add(a, b):
+                return a + b
+            """,
+        )
+        rs.git.add(all=True)
+        rs.git.commit(message="Add", allow_empty=False)
         rs.git.checkout("main")
 
         output = test.run()

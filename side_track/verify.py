@@ -23,6 +23,7 @@ NOT_ON_MAIN = (
 DETACHED_HEAD = "You should not be in a detached HEAD state! Run git checkout main to get back to main"
 GREET_NOT_FIXED = "You have not fixed the greet function in greet.py"
 CALCULATOR_NOT_FIXED = "You have not fixed the add function in calculator.py"
+SUCCESS_MESSAGE = "Great work with using git branch and git checkout to fix the bugs!"
 
 
 def execute_function(
@@ -39,13 +40,8 @@ def execute_function(
 
 
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
-    main_branch = exercise.repo.branches.branch("main")
-    if exercise.repo.repo.is_dirty():
-        raise exercise.wrong_answer([UNCOMMITTED_CHANGES])
-
     try:
-        if exercise.repo.repo.active_branch.name != "main":
-            raise exercise.wrong_answer([NOT_ON_MAIN])
+        active_branch_name = exercise.repo.repo.active_branch.name
     except TypeError:
         raise exercise.wrong_answer([DETACHED_HEAD])
 
@@ -55,8 +51,9 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     try:
         bug_fix_branch = exercise.repo.branches.branch("bug-fix")
         bug_fix_branch.checkout()
-        if len(bug_fix_branch.user_commits) < 2:
-            raise exercise.wrong_answer([MISSING_COMMITS])
+
+        if exercise.repo.repo.is_dirty():
+            raise exercise.wrong_answer([UNCOMMITTED_CHANGES])
 
         repo_path: str | os.PathLike = cast(GitAutograderRepo, exercise.repo).repo_path
         # Ensure that they applied the right fix by testing the greet function
@@ -91,13 +88,17 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         if comments:
             raise exercise.wrong_answer(comments)
 
+        if len(bug_fix_branch.user_commits) < 2:
+            raise exercise.wrong_answer([MISSING_COMMITS])
+
+        if active_branch_name != "main":
+            raise exercise.wrong_answer([NOT_ON_MAIN])
+
         return exercise.to_output(
-            ["Great work with using git branch and git checkout to fix the bugs!"],
+            [SUCCESS_MESSAGE],
             GitAutograderStatus.SUCCESSFUL,
         )
     except (GitAutograderWrongAnswerException, GitAutograderInvalidStateException):
         raise
     except Exception:
         raise exercise.wrong_answer(["Something bad happened"])
-    finally:
-        main_branch.checkout()
