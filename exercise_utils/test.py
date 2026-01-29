@@ -219,9 +219,8 @@ class GitAutograderTest:
         if self.__rs_remote_context is not None:
             self.__rs_remote_context.__exit__(exc_type, exc_val, None)
 
-        os.chdir(Path(self.__temp_dir.name).parent)
-
         if self.__temp_dir is not None:
+            os.chdir(Path(self.__temp_dir.name).parent)
             self.__temp_dir.cleanup()
 
         if self.__remote_temp_dir is not None:
