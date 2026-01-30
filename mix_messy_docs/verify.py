@@ -37,6 +37,7 @@ EXPECTED_LINES = [
 
 
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
+    # Step 1: create development branch from tag v1.0from 
     development_branch = exercise.repo.branches.branch_or_none("development")
     if development_branch is None:
         raise exercise.wrong_answer([MISSING_DEVELOPMENT_BRANCH])
@@ -51,6 +52,7 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         # Not branched from this but maybe somewhere earlier
         raise exercise.wrong_answer([WRONG_BRANCH_POINT])
 
+    # TODO: refactor this, do not use reflog for checking merges
     reflog = development_branch.reflog
     merge_logs = [log for log in reflog if "merge" in log.action][::-1]
     has_feature_search_merge = (
@@ -61,27 +63,23 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         and merge_logs[1].action == "commit (merge)"
         and "feature-delete" in merge_logs[1].message
     )
+    # Step 2: merge feature-search to development branch, delete feature-search branch
     if not has_feature_search_merge:
         raise exercise.wrong_answer([MERGE_FEATURE_SEARCH_FIRST, RESET_MESSAGE])
-
-    if not has_feature_delete_commit_merge:
-        raise exercise.wrong_answer([MERGE_FEATURE_DELETE_SECOND, RESET_MESSAGE])
-
+    
     feature_search_branch = exercise.repo.branches.branch_or_none("feature-search")
-    feature_delete_branch = exercise.repo.branches.branch_or_none("feature-delete")
+
     if feature_search_branch is not None:
         raise exercise.wrong_answer([FEATURE_SEARCH_BRANCH_STILL_EXISTS])
 
+    # Step 3: merge feature-delete to development branch, delete feature-delete branch
+    feature_delete_branch = exercise.repo.branches.branch_or_none("feature-delete")
+
     if feature_delete_branch is not None:
         raise exercise.wrong_answer([FEATURE_DELETE_BRANCH_STILL_EXISTS])
-
-    feature_list_branch = exercise.repo.branches.branch_or_none("feature-list")
-    list_branch = exercise.repo.branches.branch_or_none("list")
-    if feature_list_branch is None:
-        if list_branch is not None:
-            raise exercise.wrong_answer([LIST_BRANCH_STILL_EXISTS])
-        else:
-            raise exercise.wrong_answer([FEATURE_LIST_BRANCH_MISSING])
+    
+    if not has_feature_delete_commit_merge:
+        raise exercise.wrong_answer([MERGE_FEATURE_DELETE_SECOND, RESET_MESSAGE])
 
     with exercise.repo.files.file_or_none("features.md") as features_file:
         if features_file is None:
@@ -92,6 +90,14 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         ]
         if contents != EXPECTED_LINES:
             raise exercise.wrong_answer([FEATURES_FILE_CONTENT_INVALID])
+        
+    # Step 4: rename list branch to feature-list
+    feature_list_branch = exercise.repo.branches.branch_or_none("feature-list")
+    list_branch = exercise.repo.branches.branch_or_none("list")
+    if feature_list_branch is None:
+        raise exercise.wrong_answer([FEATURE_LIST_BRANCH_MISSING])
+    if list_branch is not None:
+        raise exercise.wrong_answer([LIST_BRANCH_STILL_EXISTS])
 
     return exercise.to_output(
         [
