@@ -20,6 +20,7 @@ MERGE_FEATURE_SEARCH_FIRST = "You need to merge 'feature-search' first!"
 MERGE_FEATURE_DELETE_SECOND = "You need to merge 'feature-delete' second!"
 MISSING_FEATURES_FILE = "You are missing 'features.md'!"
 FEATURES_FILE_CONTENT_INVALID = "Contents of 'features.md' is not valid! Try again!"
+MERGE_WRONG_ORDER = "Merges are in wrong order! feature-search should be merged before feature-delete."
 
 RESET_MESSAGE = 'Reset the repository using "gitmastery progress reset" and start again'
 
@@ -37,7 +38,7 @@ EXPECTED_LINES = [
 
 
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
-    # Step 1: create development branch from tag v1.0from 
+    # Step 1: create development branch from tag v1.0
     development_branch = exercise.repo.branches.branch_or_none("development")
     if development_branch is None:
         raise exercise.wrong_answer([MISSING_DEVELOPMENT_BRANCH])
@@ -52,34 +53,50 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         # Not branched from this but maybe somewhere earlier
         raise exercise.wrong_answer([WRONG_BRANCH_POINT])
 
-    # TODO: refactor this, do not use reflog for checking merges
-    reflog = development_branch.reflog
-    merge_logs = [log for log in reflog if "merge" in log.action][::-1]
-    has_feature_search_merge = (
-        len(merge_logs) >= 1 and merge_logs[0].action == "merge feature-search"
-    )
-    has_feature_delete_commit_merge = (
-        len(merge_logs) >= 2
-        and merge_logs[1].action == "commit (merge)"
-        and "feature-delete" in merge_logs[1].message
-    )
+    commits_since_tag = list(exercise.repo.repo.iter_commits(
+        f"{tag_commit.hexsha}..{development_commit.hexsha}"
+    ))
+    merge_commits = [commit for commit in commits_since_tag if len(commit.parents) > 1]
+    
     # Step 2: merge feature-search to development branch, delete feature-search branch
+    feature_search_merges = [
+        commit for commit in merge_commits
+        if "feature-search" in commit.message.lower()
+    ]
+    
+    has_feature_search_merge = len(feature_search_merges) > 0
     if not has_feature_search_merge:
         raise exercise.wrong_answer([MERGE_FEATURE_SEARCH_FIRST, RESET_MESSAGE])
     
     feature_search_branch = exercise.repo.branches.branch_or_none("feature-search")
-
     if feature_search_branch is not None:
         raise exercise.wrong_answer([FEATURE_SEARCH_BRANCH_STILL_EXISTS])
+    
 
     # Step 3: merge feature-delete to development branch, delete feature-delete branch
-    feature_delete_branch = exercise.repo.branches.branch_or_none("feature-delete")
+    feature_delete_merges = [
+        commit for commit in merge_commits
+        if "feature-delete" in commit.message.lower()
+    ]
 
+    has_feature_delete_merge = len(feature_delete_merges) > 0
+    if not has_feature_delete_merge:
+        raise exercise.wrong_answer([MERGE_FEATURE_DELETE_SECOND, RESET_MESSAGE])
+    
+    feature_delete_branch = exercise.repo.branches.branch_or_none("feature-delete")
     if feature_delete_branch is not None:
         raise exercise.wrong_answer([FEATURE_DELETE_BRANCH_STILL_EXISTS])
-    
-    if not has_feature_delete_commit_merge:
-        raise exercise.wrong_answer([MERGE_FEATURE_DELETE_SECOND, RESET_MESSAGE])
+
+    # Verify order of merges
+    if has_feature_search_merge and has_feature_delete_merge:
+        search_merge = feature_search_merges[-1]
+        delete_merge = feature_delete_merges[-1]
+        
+        if not exercise.repo.repo.is_ancestor(search_merge.hexsha, delete_merge.hexsha):
+            raise exercise.wrong_answer([
+                MERGE_WRONG_ORDER,
+                RESET_MESSAGE
+            ])
 
     with exercise.repo.files.file_or_none("features.md") as features_file:
         if features_file is None:
