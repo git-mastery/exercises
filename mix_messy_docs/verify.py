@@ -92,7 +92,7 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         search_merge = feature_search_merges[-1]
         delete_merge = feature_delete_merges[-1]
         
-        if not exercise.repo.repo.is_ancestor(search_merge.hexsha, delete_merge.hexsha):
+        if not exercise.repo.repo.is_ancestor(search_merge, delete_merge):
             raise exercise.wrong_answer([
                 MERGE_WRONG_ORDER,
                 RESET_MESSAGE
