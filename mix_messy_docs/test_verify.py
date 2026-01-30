@@ -7,6 +7,7 @@ from .verify import (
     LIST_BRANCH_STILL_EXISTS,
     MERGE_FEATURE_DELETE_SECOND,
     MERGE_FEATURE_SEARCH_FIRST,
+    MERGE_WRONG_ORDER,
     MISSING_DEVELOPMENT_BRANCH,
     RESET_MESSAGE,
     WRONG_BRANCH_POINT,
@@ -137,7 +138,7 @@ def test_no_merge_feature_search():
         rs.git.add(all=True)
         rs.git.commit(no_edit=True)
 
-        rs.git.branch("feature-search", delete=True)
+        rs.git.branch("feature-search", delete=True, force=True)
         rs.git.branch("feature-delete", delete=True)
 
         rs.files.create_or_update("features.md", FEATURES)
@@ -180,6 +181,9 @@ def test_no_merge_feature_delete():
         rs.git.commit(message="Commit on development", allow_empty=True)
         rs.git.merge("feature-search", no_ff=True)
 
+        rs.git.branch("feature-search", delete=True)
+        rs.git.branch("feature-delete", delete=True, force=True)
+
         rs.files.create_or_update("features.md", FEATURES)
 
         output = test.run()
@@ -213,6 +217,10 @@ def test_list_branch_exists():
 
         rs.git.checkout("main")
         rs.git.checkout("list", branch=True)
+        rs.git.commit(message="Feature list changes", allow_empty=True)
+
+        rs.git.checkout("main")
+        rs.git.checkout("feature-list", branch=True)
         rs.git.commit(message="Feature list changes", allow_empty=True)
 
         rs.git.checkout("main")
@@ -328,4 +336,51 @@ def test_contents_wrong():
             output,
             GitAutograderStatus.UNSUCCESSFUL,
             [FEATURES_FILE_CONTENT_INVALID],
+        )
+
+
+def test_wrong_merge_order():
+    with loader.start() as (test, rs):
+        rs.git.commit(message="Empty", allow_empty=True)
+        rs.helper(GitMasteryHelper).create_start_tag()
+
+        rs.files.create_or_update("conflict.txt", "Hello world")
+        rs.git.add(all=True)
+        rs.git.commit(message="Expected branch point")
+        rs.git.tag("v1.0")
+
+        rs.git.checkout("feature-search", branch=True)
+        rs.files.create_or_update("conflict.txt", "Hello world!")
+        rs.git.add(all=True)
+        rs.git.commit(message="Feature search changes")
+
+        rs.git.checkout("main")
+        rs.git.checkout("feature-delete", branch=True)
+        rs.files.create_or_update("conflict.txt", "Hello world?")
+        rs.git.add(all=True)
+        rs.git.commit(message="Feature delete changes")
+
+        rs.git.checkout("main")
+        rs.git.checkout("feature-list", branch=True)
+        rs.git.commit(message="Feature list changes", allow_empty=True)
+
+        rs.git.checkout("main")
+        rs.git.checkout("development", branch=True)
+        rs.git.commit(message="Commit on development", allow_empty=True)
+        rs.git.merge("feature-delete", no_ff=True)
+        rs.git.merge("feature-search", no_ff=True)
+        rs.files.create_or_update("conflict.txt", "New contents")
+        rs.git.add(all=True)
+        rs.git.commit(no_edit=True)
+
+        rs.git.branch("feature-search", delete=True)
+        rs.git.branch("feature-delete", delete=True)
+
+        rs.files.create_or_update("features.md", FEATURES)
+
+        output = test.run()
+        assert_output(
+            output,
+            GitAutograderStatus.UNSUCCESSFUL,
+            [MERGE_WRONG_ORDER, RESET_MESSAGE],
         )
