@@ -107,3 +107,12 @@ def get_fork_name(
         forkname = result.stdout.splitlines()[0]
         return forkname
     return ""
+
+
+def get_github_git_protocol(verbose: bool) -> str:
+    """returns GitHub CLI's preferred Git transport protocol"""
+    result = run(["gh", "config", "get", "git_protocol"], verbose)
+    if result.is_success():
+        protocol = result.stdout.splitlines()[0]
+        return protocol
+    return ""
