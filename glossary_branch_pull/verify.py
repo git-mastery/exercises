@@ -66,13 +66,13 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     if not repo.branches.has_branch("DEF"):
         comments.append(BRANCH_MISSING.format(branch="DEF"))
     else:
+        def_commits = repo.branches.branch("DEF").commits
+        if not get_commit_from_message(def_commits, "Add 'documentation'"):
+            comments.append(LOCAL_COMMIT_MISSING)
         try:
             remote_def = exercise.repo.repo.refs["origin/DEF"]
-            def_commits = repo.branches.branch("DEF").commits
             if not get_commit_from_hexsha(def_commits, remote_def.commit.hexsha):
                 comments.append(REMOTE_COMMIT_MISSING.format(branch="DEF"))
-            if not get_commit_from_message(def_commits, "Add 'documentation'"):
-                comments.append(LOCAL_COMMIT_MISSING)
         except (IndexError, KeyError):
             comments.append(BRANCH_NOT_TRACKING.format(branch="DEF"))
             pass 
