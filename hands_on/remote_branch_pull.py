@@ -31,7 +31,7 @@ def download(verbose: bool):
 
     os.chdir(LOCAL_DIR)
 
-    # remove_remote("upstream")
+    remove_remote("upstream", verbose)
     checkout("hiring", True, verbose)
     append_to_file("employees.txt", "Receptionist: Pam\n")
     add(["employees.txt"], verbose)
