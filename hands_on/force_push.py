@@ -4,7 +4,7 @@ from exercise_utils.git import add_remote, remove_remote
 from exercise_utils.github_cli import (
     clone_repo_with_gh,
     create_repo,
-    get_github_git_protocol,
+    get_remote_url,
     get_github_username,
 )
 
@@ -18,16 +18,13 @@ WORK_DIR = "things"
 
 def download(verbose: bool):
     username = get_github_username(verbose)
-    remote_url = f"https://github.com/{username}/{REPO_NAME}"
+    remote_repo = f"{username}/{REPO_NAME}"
+    remote_url = get_remote_url(remote_repo, verbose)
 
     create_repo(REPO_NAME, verbose)
     clone_repo_with_gh(UPSTREAM_REPO, verbose, WORK_DIR)
     os.chdir(WORK_DIR)
     remove_remote("origin", verbose)
-
-    github_protocol = get_github_git_protocol(verbose)
-    if github_protocol == "ssh":
-        remote_url = f"git@github.com:{username}/{REPO_NAME}.git"
 
     add_remote(
         "origin",

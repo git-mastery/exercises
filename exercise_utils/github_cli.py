@@ -116,3 +116,15 @@ def get_fork_name(
         forkname = result.stdout.splitlines()[0]
         return forkname
     return ""
+
+
+def get_remote_url(repository_name: str, verbose: bool) -> str:
+    """Returns a remote repo url based on the configured git protocol"""
+    remote_url = f"https://github.com/{repository_name}.git"
+    preferred_protocol = get_github_git_protocol(verbose)
+
+    if preferred_protocol == "ssh":
+        remote_url = f"git@github.com:{repository_name}.git"
+    
+    return remote_url
+
