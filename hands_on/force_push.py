@@ -27,7 +27,7 @@ def download(verbose: bool):
 
     github_protocol = get_github_git_protocol(verbose)
     if github_protocol == "ssh":
-        remote_url = f"gihub@github.com:{username}/{REPO_NAME}.git"
+        remote_url = f"github@github.com:{username}/{REPO_NAME}.git"
 
     add_remote(
         "origin",
