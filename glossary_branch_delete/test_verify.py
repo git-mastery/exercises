@@ -69,3 +69,15 @@ def test_vwx_exists_locally():
             GitAutograderStatus.UNSUCCESSFUL,
             [VWX_BRANCH_EXISTS_LOCALLY],
         )
+
+
+def test_vwx_exists_both():
+    with base_setup() as (test, rs):
+        rs.git.checkout("VWX")
+
+        output = test.run()
+        assert_output(
+            output,
+            GitAutograderStatus.UNSUCCESSFUL,
+            [VWX_BRANCH_EXISTS_LOCALLY, VWX_BRANCH_EXISTS_REMOTELY],
+        )
