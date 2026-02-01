@@ -14,7 +14,6 @@ def download(verbose: bool):
     git_protocol = get_github_git_protocol(verbose)
     if git_protocol == "ssh":
         ahead_repo = "git@github.com:git-mastery/samplerepo-finances-2.git"
-    info("protocol: " + git_protocol)
     clone_repo_with_git(
         "https://github.com/git-mastery/samplerepo-finances.git", verbose
     )
