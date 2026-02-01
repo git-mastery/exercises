@@ -8,9 +8,6 @@ from exercise_utils.github_cli import (
     has_repo,
 )
 
-__requires_git__ = True
-__requires_github__ = True
-
 REPO_OWNER = "git-mastery"
 REPO_NAME = "samplerepo-funny-glossary"
 
