@@ -392,6 +392,22 @@
     }
   },
   {
+    "exercise_name": "glossary-branch-push",
+    "tags": [
+      "git-push"
+    ],
+    "requires_git": true,
+    "requires_github": true,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "local",
+      "repo_name": "funny-glossary",
+      "repo_title": null,
+      "create_fork": null,
+      "init": false
+    }
+  },
+  {
     "exercise_name": "sensors-reset",
     "tags": [
       "git-reset"

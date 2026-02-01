@@ -94,6 +94,7 @@
 | Exercise | Download Command |
 |----------|------------------|
 | [push-over](https://git-mastery.github.io/exercises/push_over) | `gitmastery download push-over` |
+| [glossary-branch-push](https://git-mastery.github.io/exercises/glossary_branch_push) | `gitmastery download glossary-branch-push` |
 
 # git-remote
 
