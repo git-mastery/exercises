@@ -83,7 +83,8 @@ def test_def_local_commit_missing():
 
         rs.git.checkout("DEF")
         rs.git.reset("HEAD~1", hard=True)
-        rs.git.run(["git", "pull", "origin", "DEF"])
+        rs.git.fetch("origin")
+        rs.git.merge("origin/DEF")
 
         output = test.run()
         assert_output(
@@ -101,10 +102,12 @@ def test_successful_changes():
         rs.git.push("origin", "STU")
 
         rs.git.checkout("ABC")
-        rs.git.run(["git", "pull", "origin", "ABC"])
+        rs.git.fetch("origin")
+        rs.git.merge("origin/ABC")
 
         rs.git.checkout("DEF")
-        rs.git.run(["git", "pull", "origin", "DEF"])
+        rs.git.fetch("origin")
+        rs.git.merge("origin/DEF")
 
         output = test.run()
         assert_output(output, GitAutograderStatus.SUCCESSFUL)
