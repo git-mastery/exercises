@@ -19,7 +19,7 @@ WORK_DIR = "things"
 def download(verbose: bool):
     username = get_github_username(verbose)
     remote_url = f"https://github.com/{username}/{REPO_NAME}"
-    
+
     create_repo(REPO_NAME, verbose)
     clone_repo_with_gh(UPSTREAM_REPO, verbose, WORK_DIR)
     os.chdir(WORK_DIR)
@@ -27,7 +27,7 @@ def download(verbose: bool):
 
     github_protocol = get_github_git_protocol(verbose)
     if github_protocol == "ssh":
-        remote_url = f"gihub@github.com:{username}/{REPO_NAME}"
+        remote_url = f"gihub@github.com:{username}/{REPO_NAME}.git"
 
     add_remote(
         "origin",
