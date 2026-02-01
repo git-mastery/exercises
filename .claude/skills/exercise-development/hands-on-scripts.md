@@ -5,20 +5,32 @@ Hands-on scripts are simple demonstration scripts that show Git operations witho
 ## When to Create Hands-On Scripts
 
 Use hands-on scripts when:
-- **Demonstrating** how a Git command works
-- **Showing effects** of operations (e.g., what happens when you delete a branch)
-- **Exploratory learning** without right/wrong answers
-- **Quick demonstrations** that don't need validation
-- **Teaching through observation** rather than assessment
+- Demonstrating how a Git command works
+- Showing effects of operations (e.g., what happens when you delete a branch)
+- Exploratory learning without right/wrong answers
+- Quick demonstrations that don't need validation
+- Teaching through observation rather than assessment
 
 ## Implementation Steps
 
 ### 1. Create Script File
 
-Simply create a new `.py` file in the `hands_on/` directory:
+Use the scaffolding script:
 
 ```bash
-# No scaffolding needed - just create the file
+./new.sh
+# Choose "hands-on" or "h"
+```
+
+**Prompts:**
+1. **Hands-on name**: Enter name after "hp-" prefix (e.g., entering "branch-demo" creates "hp-branch-demo")
+2. **Requires Git?**: Default yes (if script uses Git commands)
+3. **Requires GitHub?**: Default yes (set to no if script doesn't need GitHub CLI)
+
+**Generated file**: `hands_on/<name>.py` with `__requires_git__`, `__requires_github__`, and `download(verbose: bool)` function
+
+**Manual creation** (if needed):
+```bash
 touch hands_on/my_demo.py
 ```
 

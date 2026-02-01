@@ -173,10 +173,12 @@ pytest <exercise-name>/test_verify.py::test_name -s -vv
 4. Test with actual exercise setup
 
 ### Style/Quality Issues
-See [coding-standards skill](../coding-standards/SKILL.md) for:
-- Formatting with ruff
-- Type checking with mypy
-- Code style guidelines
+Run quality checks:
+- Format: `ruff format .`
+- Lint: `ruff check .`
+- Type check: `mypy <exercise-name>/`
+
+See [AGENTS.md](../../../AGENTS.md) for coding standards.
 
 ## Pre-Submission Checklist
 

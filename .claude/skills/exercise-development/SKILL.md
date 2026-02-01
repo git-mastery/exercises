@@ -5,15 +5,6 @@ description: Guidelines for creating and modifying Git-Mastery exercises. Use wh
 
 # Exercise Development
 
-## Prerequisites
-
-**Recommended to read first**:
-- **[project-overview](../project-overview/SKILL.md)** - Understand repository structure and conventions
-
-**Referenced by this skill**:
-- **[exercise-utils](../exercise-utils/SKILL.md)** - Utility functions you'll use in download.py
-- **[coding-standards](../coding-standards/SKILL.md)** - Code style for quality checks
-
 ## Quick Guide
 
 ### Two Types of Content
@@ -32,22 +23,22 @@ description: Guidelines for creating and modifying Git-Mastery exercises. Use wh
 
 | Use Standard Exercise When... | Use Hands-On Script When... |
 |------------------------------|----------------------------|
-| ✓ Need to assess understanding | ✓ Just demonstrating a concept |
-| ✓ Have specific success criteria | ✓ Exploring open-ended scenarios |
-| ✓ Want automated grading | ✓ Showing command effects |
-| ✓ Building structured curriculum | ✓ Quick experimentation |
+| Need to assess understanding | Just demonstrating a concept |
+| Have specific success criteria | Exploring open-ended scenarios |
+| Want automated grading | Showing command effects |
+| Building structured curriculum | Quick experimentation |
 
 ## Detailed Guides
 
 ### Standard Exercises
-📄 **[standard-exercises.md](standard-exercises.md)** - Complete guide to creating exercises with validation
+**[standard-exercises.md](standard-exercises.md)** - Complete guide to creating exercises with validation
 - Proposal and approval process
 - Scaffolding with `./new.sh`
 - Implementing download.py, verify.py, test_verify.py, README.md
 - Testing and troubleshooting
 
 ### Hands-On Scripts
-📄 **[hands-on-scripts.md](hands-on-scripts.md)** - Quick guide to creating demonstration scripts
+**[hands-on-scripts.md](hands-on-scripts.md)** - Quick guide to creating demonstration scripts
 - When and why to create
 - Implementation steps
 - Common patterns
@@ -76,14 +67,13 @@ ruff format . && ruff check . && mypy <exercise-name>/
 
 ### Create Hands-On Script
 ```bash
-# 1. Create file
-touch hands_on/my_demo.py
+# Use scaffolding
+./new.sh
+# Choose "hands-on"
 
-# 2. Implement download(verbose: bool)
-#    Add __requires_git__ and __requires_github__
-
-# 3. Test manually
-python hands_on/my_demo.py
+# Implement download(verbose: bool) function
+# Test manually
+python hands_on/<script_name>.py
 ```
 
 ## Exercise Conventions
@@ -121,5 +111,3 @@ python hands_on/my_demo.py
 ## Related Skills
 
 - **[exercise-utils](../exercise-utils/SKILL.md)** - Utility functions reference
-- **[coding-standards](../coding-standards/SKILL.md)** - Code style guidelines
-- **[project-overview](../project-overview/SKILL.md)** - Repository structure

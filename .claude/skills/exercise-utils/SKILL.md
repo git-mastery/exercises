@@ -5,30 +5,22 @@ description: Reference for shared utility modules. Use when working with Git com
 
 # Exercise Utils Reference
 
-## Prerequisites
-
-**Context** (optional): 
-- **[project-overview](../project-overview/SKILL.md)** - Helpful for understanding how utilities fit into repository structure
-
-**This skill is standalone** - you can use it directly when working with utility functions.
-
-## Overview
 The `exercise_utils/` package provides reusable wrappers for common operations. **Always use these instead of raw subprocess calls.**
 
 ## Quick Navigation
 
 ### Module References
-📄 **[git-module.md](git-module.md)** - Git command wrappers (`init`, `add`, `commit`, `checkout`, `merge`, `push`, etc.)
+**[git-module.md](git-module.md)** - Git command wrappers (`init`, `add`, `commit`, `checkout`, `merge`, `push`, etc.)
 
-📄 **[github-module.md](github-module.md)** - GitHub CLI wrappers (`fork_repo`, `create_repo`, `delete_repo`, etc.)
+**[github-module.md](github-module.md)** - GitHub CLI wrappers (`fork_repo`, `create_repo`, `delete_repo`, etc.)
 
-📄 **[cli-module.md](cli-module.md)** - General CLI execution (`run`, `run_command`, `CommandResult`)
+**[cli-module.md](cli-module.md)** - General CLI execution (`run`, `run_command`, `CommandResult`)
 
-📄 **[file-module.md](file-module.md)** - File operations (`create_or_update_file`, `append_to_file`)
+**[file-module.md](file-module.md)** - File operations (`create_or_update_file`, `append_to_file`)
 
-📄 **[gitmastery-module.md](gitmastery-module.md)** - Git-Mastery specific (`create_start_tag`)
+**[gitmastery-module.md](gitmastery-module.md)** - Git-Mastery specific (`create_start_tag`)
 
-📄 **[test-module.md](test-module.md)** - Test scaffolding (`GitAutograderTestLoader`, `assert_output`)
+**[test-module.md](test-module.md)** - Test scaffolding (`GitAutograderTestLoader`, `assert_output`)
 
 ## Quick Reference
 
@@ -68,4 +60,3 @@ cli.py          # No dependencies (base module)
 ## Related Skills
 
 - **[exercise-development](../exercise-development/SKILL.md)** - Using utilities in exercises
-- **[coding-standards](../coding-standards/SKILL.md)** - Code conventions
