@@ -10,6 +10,7 @@ from git_autograder import GitAutograderStatus
 from repo_smith.repo_smith import RepoSmith
 
 from .verify import (
+    VWX_BRANCH_EXISTS_LOCALLY,
     VWX_BRANCH_EXISTS_REMOTELY,
     verify,
 )
@@ -42,6 +43,7 @@ def base_setup() -> Iterator[Tuple[GitAutograderTest, RepoSmith]]:
 def test_base():
     with base_setup() as (test, rs):
         rs.git.push("origin", ":VWX")
+        rs.repo.delete_head("VWX", force=True)
 
         output = test.run()
         assert_output(output, GitAutograderStatus.SUCCESSFUL)
@@ -54,4 +56,16 @@ def test_vwx_exists_remotely():
             output,
             GitAutograderStatus.UNSUCCESSFUL,
             [VWX_BRANCH_EXISTS_REMOTELY],
+        )
+
+
+def test_vwx_exists_locally():
+    with base_setup() as (test, rs):
+        rs.git.checkout("VWX")
+
+        output = test.run()
+        assert_output(
+            output,
+            GitAutograderStatus.UNSUCCESSFUL,
+            [VWX_BRANCH_EXISTS_LOCALLY],
         )

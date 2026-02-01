@@ -1,3 +1,4 @@
+from exercise_utils.git import checkout
 from exercise_utils.github_cli import (
     clone_repo_with_gh,
     delete_repo,
@@ -20,3 +21,7 @@ def setup(verbose: bool = False):
     fork_repo(f"{REPO_OWNER}/{REPO_NAME}", FORK_NAME, verbose, False)
 
     clone_repo_with_gh(f"https://github.com/{username}/{FORK_NAME}", verbose, ".")
+
+    # creates VWX branch locally, tracking remote branch
+    checkout("VWX", False, verbose)
+    checkout("main", False, verbose)
