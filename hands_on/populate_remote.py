@@ -5,6 +5,7 @@ from exercise_utils.git import add, add_remote, commit, init
 from exercise_utils.github_cli import (
     create_repo,
     delete_repo,
+    get_github_git_protocol,
     get_github_username,
     has_repo,
 )
@@ -23,6 +24,7 @@ def download(verbose: bool):
 
 def _setup_local_repository(verbose: bool):
     os.makedirs("things")
+
     os.chdir("things")
     init(verbose)
 
@@ -60,7 +62,13 @@ def _create_things_repository(verbose: bool):
 
 def _link_repositories(verbose: bool):
     full_repo_name = _get_full_repo_name(verbose)
-    add_remote("origin", f"https://github.com/{full_repo_name}", verbose)
+    remote_url = f"https://github.com/{full_repo_name}"
+    github_protocol =get_github_git_protocol(verbose)
+
+    if github_protocol == "ssh":
+        remote_url = f"git@github.com:{full_repo_name}.git"
+
+    add_remote("origin", remote_url, verbose)
 
 
 def _get_full_repo_name(verbose: bool) -> str:
