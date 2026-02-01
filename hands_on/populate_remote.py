@@ -63,7 +63,7 @@ def _create_things_repository(verbose: bool):
 def _link_repositories(verbose: bool):
     full_repo_name = _get_full_repo_name(verbose)
     remote_url = f"https://github.com/{full_repo_name}"
-    github_protocol =get_github_git_protocol(verbose)
+    github_protocol = get_github_git_protocol(verbose)
 
     if github_protocol == "ssh":
         remote_url = f"git@github.com:{full_repo_name}.git"
