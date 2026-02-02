@@ -1,11 +1,8 @@
-import os
-from pathlib import Path
-
-from exercise_utils.cli import run_command
 from exercise_utils.github_cli import clone_repo_with_gh, delete_repo, fork_repo, get_github_username, has_repo
-from exercise_utils.gitmastery import create_start_tag
+from exercise_utils.git import remove_remote, track_remote_branch
 
 UPSTREAM_REPO = "git-mastery/samplerepo-funny-glossary"
+BRANCHES = ["ABC", "DEF", "STU", "VWX"]
 
 
 def setup(verbose: bool = False):
@@ -22,4 +19,7 @@ def setup(verbose: bool = False):
         verbose,
         ".",
     )
-    
+    remove_remote("upstream", verbose)
+
+    for branch in BRANCHES:
+        track_remote_branch("origin", branch, verbose)
