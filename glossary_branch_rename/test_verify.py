@@ -24,32 +24,17 @@ loader = GitAutograderTestLoader(REPOSITORY_NAME, verify)
 @contextmanager
 def base_setup() -> Iterator[Tuple[GitAutograderTest, RepoSmith]]:
     with loader.start(include_remote_repo=True) as (test, rs, rs_remote):
-        # get the current set up repo, so that we can navigate back to this
-        # directory after setting up "remote" repo, and proceed with "local" repo
-        root_path = os.getcwd()
-
         remote_worktree_dir = rs_remote.repo.working_tree_dir
-        if remote_worktree_dir is None:
-            raise ValueError("Remote repo has no working tree.")
-
-        remote_worktree = os.fspath(remote_worktree_dir)
-        os.chdir(remote_worktree)
-        rs_remote.git.commit(message="Empty", allow_empty=True)
-        for remote_branch_name in BRANCHES:
-            rs_remote.git.branch(remote_branch_name)
-
-        os.chdir(root_path)
-
+        
         # set up local repo
         rs.git.commit(message="Empty", allow_empty=True)
         rs.git.remote_add("origin", str(remote_worktree_dir))
-        rs.git.fetch("origin")
-
-        for remote_branch_names in BRANCHES:
-            rs.git.branch(remote_branch_names, f"origin/{remote_branch_names}")
         
-        os.chdir(root_path)
+        for remote_branch_name in BRANCHES:
+            rs_remote.git.branch(remote_branch_name)
 
+        rs.git.push("origin", all=True)
+        
         yield test, rs
 
 def test_base():
@@ -124,7 +109,7 @@ def test_local_old_branch_still_exists():
         rs.git.push("origin", f":{BRANCH_TO_RENAME}")
 
         output = test.run()
-        assert_output(output, GitAutograderStatus.UNSUCCESSFUL,[STU_LOCAL_PRESENT,])
+        assert_output(output, GitAutograderStatus.UNSUCCESSFUL,[STU_LOCAL_PRESENT])
 
 def test_remote_old_branch_still_exists():
     with base_setup() as (test, rs):

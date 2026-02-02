@@ -2,34 +2,24 @@ import os
 from pathlib import Path
 
 from exercise_utils.cli import run_command
-from exercise_utils.github_cli import delete_repo, fork_repo, get_github_username, has_repo
+from exercise_utils.github_cli import clone_repo_with_gh, delete_repo, fork_repo, get_github_username, has_repo
 from exercise_utils.gitmastery import create_start_tag
-from exercise_utils.git import clone_repo_with_git
+
+UPSTREAM_REPO = "git-mastery/samplerepo-funny-glossary"
 
 
 def setup(verbose: bool = False):
-    UPSTREAM_REPO = "git-mastery/samplerepo-funny-glossary"
-
     username = get_github_username(verbose)
-    assert username is not None
-    fork_name = f"{username}-gitmastery-samplerepo-funny-glossary"
+    FORK_NAME = f"{username}-gitmastery-samplerepo-funny-glossary"
 
-    if has_repo(fork_name, True, verbose):
-        delete_repo(fork_name, verbose)
+    if has_repo(FORK_NAME, True, verbose):
+        delete_repo(FORK_NAME, verbose)
 
-    fork_repo(UPSTREAM_REPO, fork_name, verbose, default_branch_only=False)
+    fork_repo(UPSTREAM_REPO, FORK_NAME, verbose, default_branch_only=False)
 
-    clone_repo_with_git(
-        f"https://github.com/{username}/{fork_name}.git",
+    clone_repo_with_gh(
+        f"{username}/{FORK_NAME}",
         verbose,
         ".",
     )
-
-    run_command(["git", "fetch", "--all", "--prune"], verbose)
-
-    branches = ["ABC", "DEF", "STU", "VWX"]
-    for branch in branches:
-        run_command(["git", "branch", "--track", branch, f"origin/{branch}"], verbose)
-
-    run_command(["git", "checkout", "main"], verbose)
-    create_start_tag(verbose)
+    
