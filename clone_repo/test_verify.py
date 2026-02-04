@@ -77,11 +77,13 @@ def test_pass(exercise: GitAutograderExercise):
         patch("clone_repo.verify.has_shapes_folder", return_value=True),
         patch(
             "clone_repo.verify.remote",
-            side_effect=lambda name: fake_origin
-            if name == "origin"
-            else fake_upstream
-            if name == "upstream"
-            else None,
+            side_effect=lambda name: (
+                fake_origin
+                if name == "origin"
+                else fake_upstream
+                if name == "upstream"
+                else None
+            ),
         ),
     ):
         output = verify(exercise)

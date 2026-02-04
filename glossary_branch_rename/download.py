@@ -1,4 +1,10 @@
-from exercise_utils.github_cli import clone_repo_with_gh, delete_repo, fork_repo, get_github_username, has_repo
+from exercise_utils.github_cli import (
+    clone_repo_with_gh,
+    delete_repo,
+    fork_repo,
+    get_github_username,
+    has_repo,
+)
 from exercise_utils.git import remove_remote, track_remote_branch
 
 UPSTREAM_REPO = "git-mastery/samplerepo-funny-glossary"
