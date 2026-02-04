@@ -57,12 +57,18 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
 
     tag_commit = exercise.repo.repo.tags["v1.0"].commit
     development_commit = development_branch.latest_commit
-    branched_from_tag_hexsha = exercise.repo.repo.git.merge_base(
-        tag_commit.hexsha, development_commit.hexsha
+
+    # Check if development branch was created from v1.0
+    main_branch = exercise.repo.branches.branch("main")  # main branch must exist
+    merge_base = exercise.repo.repo.git.merge_base(
+        main_branch.latest_commit.hexsha, development_commit.hexsha
     )
-    # Alternative is to use reflog which states where the branch is created from
-    if branched_from_tag_hexsha != tag_commit.hexsha:
-        # Not branched from this but maybe somewhere earlier
+    commits_between = list(
+        exercise.repo.repo.iter_commits(f"{tag_commit.hexsha}..{merge_base}")
+    )
+    if commits_between:
+        # There are commits on main after v1.0 that are ancestors of development
+        # This means development wasn't created from v1.0
         raise exercise.wrong_answer([WRONG_BRANCH_POINT])
 
     commits_since_tag = list(
