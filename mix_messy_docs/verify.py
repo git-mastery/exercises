@@ -1,3 +1,4 @@
+from git import Commit
 from git_autograder import (
     GitAutograderOutput,
     GitAutograderExercise,
@@ -39,6 +40,15 @@ EXPECTED_LINES = [
 ]
 
 
+def _get_commit_message(commit: Commit) -> str:
+    """Normalize commit message to string."""
+    if commit.message is None:
+        return ""
+    if isinstance(commit.message, (bytes, bytearray, memoryview)):
+        return bytes(commit.message).decode("utf-8", errors="ignore")
+    return commit.message
+
+
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     # Step 1: create development branch from tag v1.0
     development_branch = exercise.repo.branches.branch_or_none("development")
@@ -66,12 +76,15 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     feature_search_merges = [
         commit
         for commit in merge_commits
-        if "feature-search" in str(commit.message).lower()
+        if all(
+            keyword in _get_commit_message(commit).lower()
+            for keyword in ["feature-search", "merge", "development"]
+        )
     ]
 
     has_feature_search_merge = len(feature_search_merges) > 0
     if not has_feature_search_merge:
-        raise exercise.wrong_answer([MERGE_FEATURE_SEARCH_FIRST, RESET_MESSAGE])
+        raise exercise.wrong_answer([MERGE_FEATURE_SEARCH_FIRST])
 
     feature_search_branch = exercise.repo.branches.branch_or_none("feature-search")
     if feature_search_branch is not None:
@@ -81,24 +94,26 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     feature_delete_merges = [
         commit
         for commit in merge_commits
-        if "feature-delete" in str(commit.message).lower()
+        if all(
+            keyword in _get_commit_message(commit).lower()
+            for keyword in ["feature-delete", "merge", "development"]
+        )
     ]
 
     has_feature_delete_merge = len(feature_delete_merges) > 0
     if not has_feature_delete_merge:
-        raise exercise.wrong_answer([MERGE_FEATURE_DELETE_SECOND, RESET_MESSAGE])
+        raise exercise.wrong_answer([MERGE_FEATURE_DELETE_SECOND])
 
     feature_delete_branch = exercise.repo.branches.branch_or_none("feature-delete")
     if feature_delete_branch is not None:
         raise exercise.wrong_answer([FEATURE_DELETE_BRANCH_STILL_EXISTS])
 
     # Verify order of merges
-    if has_feature_search_merge and has_feature_delete_merge:
-        search_merge = feature_search_merges[-1]
-        delete_merge = feature_delete_merges[-1]
+    search_merge = feature_search_merges[-1]
+    delete_merge = feature_delete_merges[-1]
 
-        if not exercise.repo.repo.is_ancestor(search_merge, delete_merge):
-            raise exercise.wrong_answer([MERGE_WRONG_ORDER, RESET_MESSAGE])
+    if not exercise.repo.repo.is_ancestor(search_merge, delete_merge):
+        raise exercise.wrong_answer([MERGE_WRONG_ORDER, RESET_MESSAGE])
 
     with exercise.repo.files.file_or_none("features.md") as features_file:
         if features_file is None:
@@ -114,8 +129,11 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     feature_list_branch = exercise.repo.branches.branch_or_none("feature-list")
     list_branch = exercise.repo.branches.branch_or_none("list")
     if feature_list_branch is None:
-        raise exercise.wrong_answer([FEATURE_LIST_BRANCH_MISSING])
-    if list_branch is not None:
+        if list_branch is not None:
+            raise exercise.wrong_answer([LIST_BRANCH_STILL_EXISTS])
+        else:
+            raise exercise.wrong_answer([FEATURE_LIST_BRANCH_MISSING])
+    elif list_branch is not None:
         raise exercise.wrong_answer([LIST_BRANCH_STILL_EXISTS])
 
     return exercise.to_output(

@@ -138,7 +138,7 @@ def test_no_merge_feature_search():
         rs.git.add(all=True)
         rs.git.commit(no_edit=True)
 
-        rs.git.branch("feature-search", delete=True, force=True)
+        rs.git.branch("feature-search", delete=True)
         rs.git.branch("feature-delete", delete=True)
 
         rs.files.create_or_update("features.md", FEATURES)
@@ -147,7 +147,7 @@ def test_no_merge_feature_search():
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,
-            [MERGE_FEATURE_SEARCH_FIRST, RESET_MESSAGE],
+            [MERGE_FEATURE_SEARCH_FIRST],
         )
 
 
@@ -190,7 +190,7 @@ def test_no_merge_feature_delete():
         assert_output(
             output,
             GitAutograderStatus.UNSUCCESSFUL,
-            [MERGE_FEATURE_DELETE_SECOND, RESET_MESSAGE],
+            [MERGE_FEATURE_DELETE_SECOND],
         )
 
 
