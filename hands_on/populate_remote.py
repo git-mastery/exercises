@@ -24,7 +24,6 @@ def download(verbose: bool):
 
 def _setup_local_repository(verbose: bool):
     os.makedirs("things")
-
     os.chdir("things")
     init(verbose)
 
