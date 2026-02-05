@@ -5,6 +5,7 @@ from exercise_utils.file import create_or_update_file, append_to_file
 from exercise_utils.git import add, init, commit, add_remote
 from exercise_utils.github_cli import (
     delete_repo,
+    get_remote_url,
     has_repo,
     get_github_username,
     create_repo,
@@ -18,6 +19,8 @@ REPO_NAME = "gitmastery-things"
 
 def download(verbose: bool):
     username = get_github_username(verbose)
+    remote_repo = f"{username}/{REPO_NAME}"
+    remote_url = get_remote_url(remote_repo, verbose)
 
     os.makedirs("things")
     os.chdir("things")
@@ -61,6 +64,6 @@ def download(verbose: bool):
         delete_repo(REPO_NAME, verbose)
 
     create_repo(REPO_NAME, verbose)
-    add_remote("origin", f"https://github.com/{username}/{REPO_NAME}", verbose)
+    add_remote("origin", remote_url, verbose)
 
     run_command(["git", "push", "-u", "origin", "main"], verbose)
