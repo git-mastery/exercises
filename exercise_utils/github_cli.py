@@ -58,7 +58,7 @@ def get_github_git_protocol(verbose: bool) -> str:
     """returns GitHub CLI's preferred Git transport protocol"""
     result = run(["gh", "config", "get", "git_protocol"], verbose)
     if result.is_success():
-        protocol = result.stdout.splitlines()[0]
+        protocol = result.stdout.splitlines()[0].strip()
         return protocol
     return ""
 
