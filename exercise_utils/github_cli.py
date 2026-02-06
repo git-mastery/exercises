@@ -54,6 +54,15 @@ def get_github_username(verbose: bool) -> str:
     return ""
 
 
+def get_github_git_protocol(verbose: bool) -> str:
+    """returns GitHub CLI's preferred Git transport protocol"""
+    result = run(["gh", "config", "get", "git_protocol"], verbose)
+    if result.is_success():
+        protocol = result.stdout.splitlines()[0].strip()
+        return protocol
+    return ""
+
+
 def has_repo(repo_name: str, is_fork: bool, verbose: bool) -> bool:
     """Returns if the given repository exists under the current user's repositories."""
     command = ["gh", "repo", "view", repo_name]
@@ -107,3 +116,14 @@ def get_fork_name(
         forkname = result.stdout.splitlines()[0]
         return forkname
     return ""
+
+
+def get_remote_url(repository_name: str, verbose: bool) -> str:
+    """Returns a remote repo url based on the configured git protocol"""
+    remote_url = f"https://github.com/{repository_name}.git"
+    preferred_protocol = get_github_git_protocol(verbose)
+
+    if preferred_protocol == "ssh":
+        remote_url = f"git@github.com:{repository_name}.git"
+
+    return remote_url
