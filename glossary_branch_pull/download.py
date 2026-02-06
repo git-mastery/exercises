@@ -1,7 +1,8 @@
 from exercise_utils.cli import run_command
 from exercise_utils.file import create_or_update_file
-from exercise_utils.git import add, checkout, clone_repo_with_git, commit, push
+from exercise_utils.git import add, checkout, commit, remove_remote
 from exercise_utils.github_cli import (
+    clone_repo_with_gh,
     get_github_username,
     fork_repo,
     has_repo,
@@ -20,7 +21,8 @@ def setup(verbose: bool = False):
         delete_repo(full_repo_name, verbose)
 
     fork_repo(TARGET_REPO, FORK_NAME, verbose, False)
-    clone_repo_with_git(f"https://github.com/{full_repo_name}", verbose, ".")
+    clone_repo_with_gh(f"{username}/{FORK_NAME}", verbose, ".")
+    remove_remote("upstream", verbose)
 
     run_command(["git", "branch", "-dr", "origin/VWX"], verbose)
 
