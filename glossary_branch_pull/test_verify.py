@@ -28,12 +28,12 @@ def base_setup() -> Iterator[Tuple[GitAutograderTest, RepoSmith]]:
 
         rs.git.checkout("ABC", branch=True)
         rs.git.commit(allow_empty=True, message="Add 'cache'")
-        rs.git.push("origin", "ABC")
+        rs.git.push("origin", "ABC", set_upstream=True)
         rs.git.reset("HEAD~1", hard=True)
 
         rs.git.checkout("DEF", branch=True)
         rs.git.commit(allow_empty=True, message="Add 'exception'")
-        rs.git.push("origin", "DEF")
+        rs.git.push("origin", "DEF", set_upstream=True)
         rs.git.reset("HEAD~1", hard=True)
         rs.git.commit(allow_empty=True, message="Add 'documentation'")
 
@@ -96,10 +96,10 @@ def test_def_local_commit_missing():
 def test_successful_changes():
     with base_setup() as (test, rs):
         rs.git.checkout("VWX", branch=True)
-        rs.git.push("origin", "VWX")
+        rs.git.push("origin", "VWX", set_upstream=True)
 
         rs.git.checkout("STU", branch=True)
-        rs.git.push("origin", "STU")
+        rs.git.push("origin", "STU", set_upstream=True)
 
         rs.git.checkout("ABC")
         rs.git.fetch("origin")

@@ -36,32 +36,29 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     if not repo.branches.has_branch("STU"):
         comments.append(BRANCH_MISSING.format(branch="STU"))
     else:
-        try:
-            exercise.repo.repo.refs["origin/STU"]
-        except (IndexError, KeyError):
+        stu_branch = repo.branches.branch("STU").branch
+        remote_stu = stu_branch.tracking_branch()
+        if not remote_stu or remote_stu.name != "origin/STU":
             comments.append(BRANCH_NOT_TRACKING.format(branch="STU"))
-            pass 
 
     if not repo.branches.has_branch("VWX"):
         comments.append(BRANCH_MISSING.format(branch="VWX"))
     else:
-        try:
-            exercise.repo.repo.refs["origin/VWX"]
-        except (IndexError, KeyError):
+        vwx_branch = repo.branches.branch("VWX").branch
+        remote_vwx = vwx_branch.tracking_branch()
+        if not remote_vwx or remote_vwx.name != "origin/VWX":
             comments.append(BRANCH_NOT_TRACKING.format(branch="VWX"))
-            pass 
 
     if not repo.branches.has_branch("ABC"):
         comments.append(BRANCH_MISSING.format(branch="ABC"))
     else:
-        try:
-            remote_abc = exercise.repo.repo.refs["origin/ABC"]
-            abc_commits = repo.branches.branch("ABC").commits
-            if not get_commit_from_hexsha(abc_commits, remote_abc.commit.hexsha):
-                comments.append(REMOTE_COMMIT_MISSING.format(branch="ABC"))
-        except (IndexError, KeyError):
+        abc_commits = repo.branches.branch("ABC").commits
+        abc_branch = repo.branches.branch("ABC").branch
+        remote_abc = abc_branch.tracking_branch()
+        if not remote_abc or remote_abc.name != "origin/ABC":
             comments.append(BRANCH_NOT_TRACKING.format(branch="ABC"))
-            pass 
+        elif not get_commit_from_hexsha(abc_commits, remote_abc.commit.hexsha):
+                comments.append(REMOTE_COMMIT_MISSING.format(branch="ABC"))
             
     if not repo.branches.has_branch("DEF"):
         comments.append(BRANCH_MISSING.format(branch="DEF"))
@@ -69,13 +66,12 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         def_commits = repo.branches.branch("DEF").commits
         if not get_commit_from_message(def_commits, "Add 'documentation'"):
             comments.append(LOCAL_COMMIT_MISSING)
-        try:
-            remote_def = exercise.repo.repo.refs["origin/DEF"]
-            if not get_commit_from_hexsha(def_commits, remote_def.commit.hexsha):
-                comments.append(REMOTE_COMMIT_MISSING.format(branch="DEF"))
-        except (IndexError, KeyError):
+        def_branch = repo.branches.branch("DEF").branch
+        remote_def = def_branch.tracking_branch()
+        if not remote_def or remote_def.name != "origin/DEF":
             comments.append(BRANCH_NOT_TRACKING.format(branch="DEF"))
-            pass 
+        elif not get_commit_from_hexsha(def_commits, remote_def.commit.hexsha):
+                comments.append(REMOTE_COMMIT_MISSING.format(branch="DEF"))
 
     if comments:
         raise exercise.wrong_answer(comments)
