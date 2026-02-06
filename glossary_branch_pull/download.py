@@ -35,6 +35,7 @@ def setup(verbose: bool = False):
         "d.txt",
         """
         documentation: Evidence that someone once cared.
-        """)
+        """,
+    )
     add(["d.txt"], verbose)
     commit("Add 'documentation'", verbose)
