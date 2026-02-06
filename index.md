@@ -94,6 +94,7 @@
 | Exercise | Download Command |
 |----------|------------------|
 | [glossary-branch-rename](https://git-mastery.github.io/exercises/glossary_branch_rename) | `gitmastery download glossary-branch-rename` |
+| [glossary-branch-pull](https://git-mastery.github.io/exercises/glossary_branch_pull) | `gitmastery download glossary-branch-pull` |
 | [push-over](https://git-mastery.github.io/exercises/push_over) | `gitmastery download push-over` |
 | [glossary-branch-push](https://git-mastery.github.io/exercises/glossary_branch_push) | `gitmastery download glossary-branch-push` |
 | [glossary-branch-delete](https://git-mastery.github.io/exercises/glossary_branch_delete) | `gitmastery download glossary-branch-delete` |

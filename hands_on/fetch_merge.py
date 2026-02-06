@@ -1,4 +1,3 @@
-from logging import info
 from exercise_utils.cli import run_command
 import os
 

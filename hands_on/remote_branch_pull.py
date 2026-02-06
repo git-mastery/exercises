@@ -1,7 +1,7 @@
 import os
 
 from exercise_utils.file import append_to_file
-from exercise_utils.git import add, checkout, clone_repo_with_git, commit, push, remove_remote
+from exercise_utils.git import add, checkout, commit, push, remove_remote
 from exercise_utils.github_cli import (
     clone_repo_with_gh,
     get_github_username,

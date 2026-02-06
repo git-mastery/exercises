@@ -125,6 +125,5 @@ def get_remote_url(repository_name: str, verbose: bool) -> str:
 
     if preferred_protocol == "ssh":
         remote_url = f"git@github.com:{repository_name}.git"
-    
-    return remote_url
 
+    return remote_url
