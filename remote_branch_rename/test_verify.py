@@ -15,6 +15,7 @@ from .verify import (
     IMPROVE_LOADING_LOCAL_STILL_EXISTS,
     IMPROVE_LOADING_REMOTE_MISSING,
     IMPROVE_LOADING_REMOTE_OLD_PRESENT,
+    NO_RENAME_EVIDENCE_IMPROVE_LOADING,
     verify,
 )
 
@@ -67,6 +68,19 @@ def test_rename_improve_loading_wrong():
             output,
             GitAutograderStatus.UNSUCCESSFUL,
             [IMPROVE_LOADING_LOCAL_MISSING],
+        )
+
+
+def test_improve_loading_no_rename_evidence():
+    with base_setup() as (test, rs):
+        rs.git.branch("improve-loading")
+        rs.git.branch("improve-loadding", delete=True)
+
+        output = test.run()
+        assert_output(
+            output,
+            GitAutograderStatus.UNSUCCESSFUL,
+            [NO_RENAME_EVIDENCE_IMPROVE_LOADING],
         )
 
 
