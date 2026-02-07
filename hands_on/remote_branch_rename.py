@@ -1,6 +1,5 @@
 import os
-from exercise_utils.cli import run_command
-from exercise_utils.git import checkout, remove_remote
+from exercise_utils.git import remove_remote
 from exercise_utils.github_cli import (
     clone_repo_with_gh,
     delete_repo,
