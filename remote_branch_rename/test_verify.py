@@ -6,7 +6,6 @@ from repo_smith.repo_smith import RepoSmith
 from exercise_utils.test import (
     GitAutograderTest,
     GitAutograderTestLoader,
-    GitMasteryHelper,
     assert_output,
 )
 from git_autograder import GitAutograderStatus
@@ -27,11 +26,10 @@ loader = GitAutograderTestLoader(REPOSITORY_NAME, verify)
 @contextmanager
 def base_setup() -> Iterator[Tuple[GitAutograderTest, RepoSmith]]:
     with loader.start(include_remote_repo=True) as (test, rs, rs_remote):
-        remote_worktree_dir = rs_remote.repo.working_tree_dir
+        remote_path = str(rs_remote.repo.git_dir)
 
-        rs.git.commit(message="Empty", allow_empty=True)
-        rs.helper(GitMasteryHelper).create_start_tag()
-        rs.git.remote_add("origin", str(remote_worktree_dir))
+        rs.git.commit(message="Improved loading of page", allow_empty=True)
+        rs.git.remote_add("origin", remote_path)
         rs.git.branch("improve-loadding")
         rs.git.push("origin", "improve-loadding")
 
