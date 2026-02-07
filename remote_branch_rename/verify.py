@@ -14,7 +14,7 @@ NO_RENAME_EVIDENCE_IMPROVE_LOADING = (
     "Local branch 'improve-loadding' was not renamed to 'improve-loading'!"
 )
 IMPROVE_LOADING_REMOTE_MISSING = "Remote branch 'improve-loading' is missing, did you correctly push the renamed branch to the remote?"
-IMPROVE_LOADING_REMOTE_OLD_PRESENT = "Remote branch 'improve-loadding' still exists! Remember to rename it to 'improve-loadding'"
+IMPROVE_LOADING_REMOTE_OLD_PRESENT = "Remote branch 'improve-loadding' still exists! Remember to rename it to 'improve-loading'"
 
 
 def branch_has_rename_evidence(
