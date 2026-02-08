@@ -25,10 +25,7 @@ def branch_has_rename_evidence(
 
     login -> feat/login -> feature/login
     """
-    branch = exercise.repo.branches.branch_or_none(new_branch)
-    if branch is None:
-        # If new_branch not present at all
-        return False
+    branch = exercise.repo.branches.branch(new_branch)
 
     rename_regex = re.compile("^renamed refs/heads/(.+) to refs/heads/(.+)$")
     for entry in branch.reflog[::-1]:
