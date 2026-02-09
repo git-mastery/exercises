@@ -13,17 +13,17 @@ RENAMED_LOCAL_MISSING = f"Local branch {RENAMED_BRANCH} is missing."
 STU_REMOTE_PRESENT = f"Remote branch {STU_BRANCH} still exists."
 RENAMED_REMOTE_MISSING = f"Remote branch {RENAMED_BRANCH} is missing."
 NO_RENAME_EVIDENCE = f"Local branch '{STU_BRANCH}' was not renamed to '{RENAMED_BRANCH}'!"
-RESET_MESSAGE = 'Reset the repository using "gitmastery progress reset" and start again'
+RESET_MESSAGE = 'If needed, reset the repository using "gitmastery progress reset" and start again.'
 
 
 def branch_has_rename_evidence(
     exercise: GitAutograderExercise, new_branch: str, old_branch: str
 ) -> bool:
-    """Performs a DFS on the branch renames starting with login till feature/login.
+    """Performs a DFS on the branch renames starting with STU till S-to-Z.
 
     This is necessary since the renames could be performed in parts:
 
-    login -> feat/login -> feature/login
+    STU -> S-to-U -> S-to-Z
     """
     branch = exercise.repo.branches.branch(new_branch)
 
