@@ -32,3 +32,4 @@ def setup(verbose: bool = False):
 
     add(["r.txt"], verbose)
     commit("Add 'refactoring'", verbose)
+    checkout("main", False, verbose)

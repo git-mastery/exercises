@@ -39,3 +39,4 @@ def setup(verbose: bool = False):
     )
     add(["d.txt"], verbose)
     commit("Add 'documentation'", verbose)
+    checkout("main", False, verbose)
