@@ -12,8 +12,12 @@ STU_LOCAL_PRESENT = f"Local branch {STU_BRANCH} still exists."
 RENAMED_LOCAL_MISSING = f"Local branch {RENAMED_BRANCH} is missing."
 STU_REMOTE_PRESENT = f"Remote branch {STU_BRANCH} still exists."
 RENAMED_REMOTE_MISSING = f"Remote branch {RENAMED_BRANCH} is missing."
-NO_RENAME_EVIDENCE = f"Local branch '{STU_BRANCH}' was not renamed to '{RENAMED_BRANCH}'!"
-RESET_MESSAGE = 'If needed, reset the repository using "gitmastery progress reset" and start again.'
+NO_RENAME_EVIDENCE = (
+    f"Local branch '{STU_BRANCH}' was not renamed to '{RENAMED_BRANCH}'!"
+)
+RESET_MESSAGE = (
+    'If needed, reset the repository using "gitmastery progress reset" and start again.'
+)
 
 
 def branch_has_rename_evidence(
@@ -69,7 +73,7 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
 
     if comments:
         raise exercise.wrong_answer(comments)
-    
+
     if not branch_has_rename_evidence(exercise, RENAMED_BRANCH, STU_BRANCH):
         raise exercise.wrong_answer([NO_RENAME_EVIDENCE, RESET_MESSAGE])
 
