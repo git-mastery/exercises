@@ -10,6 +10,8 @@ from exercise_utils.test import (
 from repo_smith.repo_smith import RepoSmith
 
 from .verify import (
+    NO_RENAME_EVIDENCE,
+    RESET_MESSAGE,
     verify,
     STU_LOCAL_PRESENT,
     STU_REMOTE_PRESENT,
@@ -126,3 +128,20 @@ def test_remote_old_branch_still_exists():
 
         output = test.run()
         assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [STU_REMOTE_PRESENT])
+
+def test_no_rename_evidence():
+    with base_setup() as (test, rs):
+        rs.git.checkout(EXPECTED_NEW_BRANCH_NAME, branch=True)
+        rs.git.push("origin", EXPECTED_NEW_BRANCH_NAME)
+        rs.git.branch(BRANCH_TO_RENAME, delete=True)
+        rs.git.push("origin", f":{BRANCH_TO_RENAME}")
+
+        output = test.run()
+        assert_output(
+            output,
+            GitAutograderStatus.UNSUCCESSFUL,
+            [
+                NO_RENAME_EVIDENCE,
+                RESET_MESSAGE,
+            ],
+        )
