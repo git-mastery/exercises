@@ -127,3 +127,119 @@ def get_remote_url(repository_name: str, verbose: bool) -> str:
         remote_url = f"git@github.com:{repository_name}.git"
 
     return remote_url
+
+
+def create_pr(title: str, body: str, base: str, head: str, verbose: bool) -> bool:
+    """Create a pull request."""
+    command = [
+        "gh",
+        "pr",
+        "create",
+        "--title",
+        title,
+        "--body",
+        body,
+        "--base",
+        base,
+        "--head",
+        head,
+    ]
+
+    result = run(command, verbose)
+    return result.is_success()
+
+
+def view_pr(pr_number: int, verbose: bool) -> dict[str, str]:
+    """View pull request details."""
+    fields = "title,body,state,author,headRefName,baseRefName,comments,reviews"
+
+    result = run(
+        ["gh", "pr", "view", str(pr_number), "--json", fields],
+        verbose,
+    )
+
+    if result.is_success():
+        import json
+
+        return json.loads(result.stdout)
+    return {}
+
+
+def comment_on_pr(pr_number: int, comment: str, verbose: bool) -> bool:
+    """Add a comment to a pull request."""
+    result = run(
+        ["gh", "pr", "comment", str(pr_number), "--body", comment],
+        verbose,
+    )
+    return result.is_success()
+
+
+def list_prs(state: str, verbose: bool) -> list[dict[str, str]]:
+    """
+    List pull requests.
+    PR state filter ('open', 'closed', 'merged', 'all')
+    """
+    result = run(
+        [
+            "gh",
+            "pr",
+            "list",
+            "--state",
+            state,
+            "--json",
+            "number,title,state,author,headRefName,baseRefName",
+        ],
+        verbose,
+    )
+
+    if result.is_success():
+        import json
+
+        return json.loads(result.stdout)
+    return []
+
+
+def merge_pr(
+    pr_number: int, merge_method: str, verbose: bool, delete_branch: bool = True
+) -> bool:
+    """
+    Merge a pull request.
+    Merge method ('merge', 'squash', 'rebase')
+    """
+    command = ["gh", "pr", "merge", str(pr_number), f"--{merge_method}"]
+
+    if delete_branch:
+        command.append("--delete-branch")
+
+    result = run(command, verbose)
+    return result.is_success()
+
+
+def close_pr(pr_number: int, verbose: bool, comment: Optional[str] = None) -> bool:
+    """Close a pull request without merging."""
+    command = ["gh", "pr", "close", str(pr_number)]
+
+    if comment:
+        command.extend(["--comment", comment])
+
+    result = run(command, verbose)
+    return result.is_success()
+
+
+def review_pr(pr_number: int, comment: str, action: str, verbose: bool) -> bool:
+    """
+    Submit a review on a pull request.
+    Review action ('approve', 'request-changes', 'comment')
+    """
+    command = [
+        "gh",
+        "pr",
+        "review",
+        str(pr_number),
+        "--body",
+        comment,
+        f"--{action}",
+    ]
+
+    result = run(command, verbose)
+    return result.is_success()
