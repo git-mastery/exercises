@@ -135,10 +135,14 @@ def create_pr(title: str, body: str, base: str, head: str, verbose: bool) -> boo
         "gh",
         "pr",
         "create",
-        "--title", title,
-        "--body", body,
-        "--base", base,
-        "--head", head,
+        "--title",
+        title,
+        "--body",
+        body,
+        "--base",
+        base,
+        "--head",
+        head,
     ]
 
     result = run(command, verbose)
@@ -150,13 +154,7 @@ def view_pr(pr_number: int, verbose: bool) -> dict[str, str]:
     fields = "title,body,state,author,headRefName,baseRefName,comments,reviews"
 
     result = run(
-        [
-            "gh",
-            "pr",
-            "view",
-            str(pr_number),
-            "--json", fields
-        ],
+        ["gh", "pr", "view", str(pr_number), "--json", fields],
         verbose,
     )
 
