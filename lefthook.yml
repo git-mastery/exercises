@@ -1,5 +1,5 @@
 pre-commit:
-  parallel: true
+  parallel: false
   commands:
     ruff-lint:
       glob: "*.py"
@@ -13,4 +13,4 @@ pre-commit:
 
     mypy:
       glob: "*.py"
-      run: mypy {staged_files}
+      run: mypy .
