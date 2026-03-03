@@ -1,6 +1,12 @@
-from repo_smith.repo_smith import RepoSmith
-
-from exercise_utils.github_cli import get_github_username
+import os
+from exercise_utils.cli import run_command
+from exercise_utils.git import add_remote, remove_remote
+from exercise_utils.github_cli import (
+    clone_repo_with_gh,
+    create_repo,
+    get_remote_url,
+    _get_github_username,
+)
 
 __requires_git__ = True
 __requires_github__ = True
@@ -10,16 +16,19 @@ UPSTREAM_REPO = "git-mastery/samplerepo-things"
 WORK_DIR = "things"
 
 
-def download(rs: RepoSmith):
-    username = get_github_username(rs)
+def download(verbose: bool):
+    username = _get_github_username(verbose)
+    remote_repo = f"{username}/{REPO_NAME}"
+    remote_url = get_remote_url(remote_repo, verbose)
 
-    rs.gh.repo_create(username, REPO_NAME, public=True)
-    rs.gh.repo_clone(username, REPO_NAME, WORK_DIR)
-    rs.files.cd(WORK_DIR)
-    rs.git.remote_remove("origin")
+    create_repo(REPO_NAME, verbose)
+    clone_repo_with_gh(UPSTREAM_REPO, verbose, WORK_DIR)
+    os.chdir(WORK_DIR)
+    remove_remote("origin", verbose)
 
-    rs.git.remote_add(
+    add_remote(
         "origin",
-        f"https://github.com/{username}/{REPO_NAME}",
+        remote_url,
+        verbose,
     )
-    rs.git.run(["git", "push", "-u", "origin", "main"])
+    run_command(["git", "push", "-u", "origin", "main"], verbose)
