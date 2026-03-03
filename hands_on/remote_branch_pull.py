@@ -3,10 +3,10 @@ import os
 from exercise_utils.file import append_to_file
 from exercise_utils.git import add, checkout, commit, push, remove_remote
 from exercise_utils.github_cli import (
+    _get_github_username,
     clone_repo_with_gh,
-    get_github_username,
     fork_repo,
-    has_repo,
+    _has_repo,
     delete_repo,
 )
 
@@ -20,10 +20,10 @@ LOCAL_DIR = "samplerepo-company"
 
 
 def download(verbose: bool):
-    username = get_github_username(verbose)
+    username = _get_github_username(verbose)
     full_repo_name = f"{username}/{FORK_NAME}"
 
-    if has_repo(full_repo_name, True, verbose):
+    if _has_repo(full_repo_name, True, verbose):
         delete_repo(full_repo_name, verbose)
 
     fork_repo(TARGET_REPO, FORK_NAME, verbose, False)
