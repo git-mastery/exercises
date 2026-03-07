@@ -129,6 +129,7 @@ def test_remote_old_branch_still_exists():
         output = test.run()
         assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [STU_REMOTE_PRESENT])
 
+
 def test_no_rename_evidence():
     with base_setup() as (test, rs):
         rs.git.checkout(EXPECTED_NEW_BRANCH_NAME, branch=True)

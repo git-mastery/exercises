@@ -10,26 +10,26 @@
 | Exercise | Download Command |
 |----------|------------------|
 | [remote-branch-rename](https://git-mastery.github.io/exercises/remote_branch_rename) | `gitmastery download remote-branch-rename` |
-| [bonsai-tree](https://git-mastery.github.io/exercises/bonsai_tree) | `gitmastery download bonsai-tree` |
+| [side-track](https://git-mastery.github.io/exercises/side_track) | `gitmastery download side-track` |
+| [merge-undo](https://git-mastery.github.io/exercises/merge_undo) | `gitmastery download merge-undo` |
 | [branch-delete](https://git-mastery.github.io/exercises/branch_delete) | `gitmastery download branch-delete` |
 | [mix-messy-docs](https://git-mastery.github.io/exercises/mix_messy_docs) | `gitmastery download mix-messy-docs` |
-| [branch-rename](https://git-mastery.github.io/exercises/branch_rename) | `gitmastery download branch-rename` |
-| [branch-compare](https://git-mastery.github.io/exercises/branch_compare) | `gitmastery download branch-compare` |
-| [merge-squash](https://git-mastery.github.io/exercises/merge_squash) | `gitmastery download merge-squash` |
 | [ff-undo](https://git-mastery.github.io/exercises/ff_undo) | `gitmastery download ff-undo` |
-| [branch-forward](https://git-mastery.github.io/exercises/branch_forward) | `gitmastery download branch-forward` |
-| [side-track](https://git-mastery.github.io/exercises/side_track) | `gitmastery download side-track` |
-| [mix-messy-graph](https://git-mastery.github.io/exercises/mix_messy_graph) | `gitmastery download mix-messy-graph` |
-| [merge-undo](https://git-mastery.github.io/exercises/merge_undo) | `gitmastery download merge-undo` |
+| [branch-compare](https://git-mastery.github.io/exercises/branch_compare) | `gitmastery download branch-compare` |
+| [bonsai-tree](https://git-mastery.github.io/exercises/bonsai_tree) | `gitmastery download bonsai-tree` |
 | [branch-previous](https://git-mastery.github.io/exercises/branch_previous) | `gitmastery download branch-previous` |
+| [merge-squash](https://git-mastery.github.io/exercises/merge_squash) | `gitmastery download merge-squash` |
+| [branch-forward](https://git-mastery.github.io/exercises/branch_forward) | `gitmastery download branch-forward` |
+| [mix-messy-graph](https://git-mastery.github.io/exercises/mix_messy_graph) | `gitmastery download mix-messy-graph` |
+| [branch-rename](https://git-mastery.github.io/exercises/branch_rename) | `gitmastery download branch-rename` |
 
 # git-checkout
 
 | Exercise | Download Command |
 |----------|------------------|
+| [side-track](https://git-mastery.github.io/exercises/side_track) | `gitmastery download side-track` |
 | [bonsai-tree](https://git-mastery.github.io/exercises/bonsai_tree) | `gitmastery download bonsai-tree` |
 | [sensors-checkout](https://git-mastery.github.io/exercises/sensors_checkout) | `gitmastery download sensors-checkout` |
-| [side-track](https://git-mastery.github.io/exercises/side_track) | `gitmastery download side-track` |
 
 # git-clone
 
@@ -48,8 +48,8 @@
 
 | Exercise | Download Command |
 |----------|------------------|
-| [sensors-diff](https://git-mastery.github.io/exercises/sensors_diff) | `gitmastery download sensors-diff` |
 | [branch-compare](https://git-mastery.github.io/exercises/branch_compare) | `gitmastery download branch-compare` |
+| [sensors-diff](https://git-mastery.github.io/exercises/sensors_diff) | `gitmastery download sensors-diff` |
 | [view-commits](https://git-mastery.github.io/exercises/view_commits) | `gitmastery download view-commits` |
 
 # git-fetch
@@ -75,13 +75,13 @@
 
 | Exercise | Download Command |
 |----------|------------------|
-| [branch-bender](https://git-mastery.github.io/exercises/branch_bender) | `gitmastery download branch-bender` |
-| [conflict-mediator](https://git-mastery.github.io/exercises/conflict_mediator) | `gitmastery download conflict-mediator` |
-| [merge-squash](https://git-mastery.github.io/exercises/merge_squash) | `gitmastery download merge-squash` |
+| [merge-undo](https://git-mastery.github.io/exercises/merge_undo) | `gitmastery download merge-undo` |
 | [ff-undo](https://git-mastery.github.io/exercises/ff_undo) | `gitmastery download ff-undo` |
+| [merge-squash](https://git-mastery.github.io/exercises/merge_squash) | `gitmastery download merge-squash` |
 | [branch-forward](https://git-mastery.github.io/exercises/branch_forward) | `gitmastery download branch-forward` |
 | [mix-messy-graph](https://git-mastery.github.io/exercises/mix_messy_graph) | `gitmastery download mix-messy-graph` |
-| [merge-undo](https://git-mastery.github.io/exercises/merge_undo) | `gitmastery download merge-undo` |
+| [branch-bender](https://git-mastery.github.io/exercises/branch_bender) | `gitmastery download branch-bender` |
+| [conflict-mediator](https://git-mastery.github.io/exercises/conflict_mediator) | `gitmastery download conflict-mediator` |
 
 # git-pull
 
@@ -93,29 +93,29 @@
 
 | Exercise | Download Command |
 |----------|------------------|
-| [glossary-branch-rename](https://git-mastery.github.io/exercises/glossary_branch_rename) | `gitmastery download glossary-branch-rename` |
-| [glossary-branch-pull](https://git-mastery.github.io/exercises/glossary_branch_pull) | `gitmastery download glossary-branch-pull` |
-| [push-over](https://git-mastery.github.io/exercises/push_over) | `gitmastery download push-over` |
 | [glossary-branch-push](https://git-mastery.github.io/exercises/glossary_branch_push) | `gitmastery download glossary-branch-push` |
 | [glossary-branch-delete](https://git-mastery.github.io/exercises/glossary_branch_delete) | `gitmastery download glossary-branch-delete` |
+| [push-over](https://git-mastery.github.io/exercises/push_over) | `gitmastery download push-over` |
+| [glossary-branch-pull](https://git-mastery.github.io/exercises/glossary_branch_pull) | `gitmastery download glossary-branch-pull` |
+| [glossary-branch-rename](https://git-mastery.github.io/exercises/glossary_branch_rename) | `gitmastery download glossary-branch-rename` |
 
 # git-remote
 
 | Exercise | Download Command |
 |----------|------------------|
 | [clone-repo](https://git-mastery.github.io/exercises/clone_repo) | `gitmastery download clone-repo` |
-| [push-over](https://git-mastery.github.io/exercises/push_over) | `gitmastery download push-over` |
 | [link-me](https://git-mastery.github.io/exercises/link_me) | `gitmastery download link-me` |
+| [push-over](https://git-mastery.github.io/exercises/push_over) | `gitmastery download push-over` |
 
 # git-reset
 
 | Exercise | Download Command |
 |----------|------------------|
-| [sensors-revert](https://git-mastery.github.io/exercises/sensors_revert) | `gitmastery download sensors-revert` |
-| [merge-squash](https://git-mastery.github.io/exercises/merge_squash) | `gitmastery download merge-squash` |
-| [ff-undo](https://git-mastery.github.io/exercises/ff_undo) | `gitmastery download ff-undo` |
-| [sensors-reset](https://git-mastery.github.io/exercises/sensors_reset) | `gitmastery download sensors-reset` |
 | [merge-undo](https://git-mastery.github.io/exercises/merge_undo) | `gitmastery download merge-undo` |
+| [sensors-reset](https://git-mastery.github.io/exercises/sensors_reset) | `gitmastery download sensors-reset` |
+| [ff-undo](https://git-mastery.github.io/exercises/ff_undo) | `gitmastery download ff-undo` |
+| [merge-squash](https://git-mastery.github.io/exercises/merge_squash) | `gitmastery download merge-squash` |
+| [sensors-revert](https://git-mastery.github.io/exercises/sensors_revert) | `gitmastery download sensors-revert` |
 
 # git-restore
 
@@ -140,8 +140,8 @@
 
 | Exercise | Download Command |
 |----------|------------------|
-| [tags-push](https://git-mastery.github.io/exercises/tags_push) | `gitmastery download tags-push` |
 | [tags-update](https://git-mastery.github.io/exercises/tags_update) | `gitmastery download tags-update` |
+| [tags-push](https://git-mastery.github.io/exercises/tags_push) | `gitmastery download tags-push` |
 | [tags-add](https://git-mastery.github.io/exercises/tags_add) | `gitmastery download tags-add` |
 
 # github-fork
