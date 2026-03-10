@@ -33,3 +33,9 @@ def update_config_fields(updates: dict[str, Any]) -> None:
         cursor[keys[-1]] = value
 
     config_path.write_text(json.dumps(config, indent=2))
+
+def add_pr_config(pr_number: int, repo_full_name: str) -> None:
+    update_config_fields({
+        "exercise_repo.pr_number": pr_number,
+        "exercise_repo.repo_full_name": repo_full_name,
+    })
