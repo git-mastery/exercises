@@ -1,7 +1,7 @@
 """Wrapper for Github CLI commands."""
 # TODO: The following should be built using the builder pattern
 
-from typing import Optional
+from typing import Any, Optional
 
 from exercise_utils.cli import run
 
@@ -129,7 +129,14 @@ def get_remote_url(repository_name: str, verbose: bool) -> str:
     return remote_url
 
 
-def create_pr(title: str, body: str, base: str, head: str, verbose: bool) -> bool:
+def create_pr(
+    title: str,
+    body: str,
+    base: str,
+    head: str,
+    verbose: bool,
+    repo_full_name: str,
+) -> bool:
     """Create a pull request."""
     command = [
         "gh",
@@ -145,16 +152,32 @@ def create_pr(title: str, body: str, base: str, head: str, verbose: bool) -> boo
         head,
     ]
 
+    command = _append_repo_flag(command, repo_full_name)
+
     result = run(command, verbose)
     return result.is_success()
 
 
-def view_pr(pr_number: int, verbose: bool) -> dict[str, str]:
+def _append_repo_flag(command: list[str], repo_full_name: str) -> list[str]:
+    """Append --repo flag. PR commands require explicit repository context."""
+    if repo_full_name.strip() == "":
+        raise ValueError(
+            "repo_full_name must be provided for deterministic PR commands"
+        )
+
+    command.extend(["--repo", repo_full_name])
+    return command
+
+
+def view_pr(pr_number: int, verbose: bool, repo_full_name: str) -> dict[str, Any]:
     """View pull request details."""
     fields = "title,body,state,author,headRefName,baseRefName,comments,reviews"
 
+    command = ["gh", "pr", "view", str(pr_number), "--json", fields]
+    command = _append_repo_flag(command, repo_full_name)
+
     result = run(
-        ["gh", "pr", "view", str(pr_number), "--json", fields],
+        command,
         verbose,
     )
 
@@ -165,32 +188,40 @@ def view_pr(pr_number: int, verbose: bool) -> dict[str, str]:
     return {}
 
 
-def comment_on_pr(pr_number: int, comment: str, verbose: bool) -> bool:
+def comment_on_pr(
+    pr_number: int,
+    comment: str,
+    verbose: bool,
+    repo_full_name: str,
+) -> bool:
     """Add a comment to a pull request."""
+    command = ["gh", "pr", "comment", str(pr_number), "--body", comment]
+    command = _append_repo_flag(command, repo_full_name)
+
     result = run(
-        ["gh", "pr", "comment", str(pr_number), "--body", comment],
+        command,
         verbose,
     )
     return result.is_success()
 
 
-def list_prs(state: str, verbose: bool) -> list[dict[str, str]]:
+def list_prs(state: str, verbose: bool, repo_full_name: str) -> list[dict[str, Any]]:
     """
     List pull requests.
     PR state filter ('open', 'closed', 'merged', 'all')
     """
-    result = run(
-        [
-            "gh",
-            "pr",
-            "list",
-            "--state",
-            state,
-            "--json",
-            "number,title,state,author,headRefName,baseRefName",
-        ],
-        verbose,
-    )
+    command = [
+        "gh",
+        "pr",
+        "list",
+        "--state",
+        state,
+        "--json",
+        "number,title,state,author,headRefName,baseRefName",
+    ]
+    command = _append_repo_flag(command, repo_full_name)
+
+    result = run(command, verbose)
 
     if result.is_success():
         import json
@@ -200,7 +231,11 @@ def list_prs(state: str, verbose: bool) -> list[dict[str, str]]:
 
 
 def merge_pr(
-    pr_number: int, merge_method: str, verbose: bool, delete_branch: bool = True
+    pr_number: int,
+    merge_method: str,
+    verbose: bool,
+    repo_full_name: str,
+    delete_branch: bool = True,
 ) -> bool:
     """
     Merge a pull request.
@@ -211,22 +246,37 @@ def merge_pr(
     if delete_branch:
         command.append("--delete-branch")
 
+    command = _append_repo_flag(command, repo_full_name)
+
     result = run(command, verbose)
     return result.is_success()
 
 
-def close_pr(pr_number: int, verbose: bool, comment: Optional[str] = None) -> bool:
+def close_pr(
+    pr_number: int,
+    verbose: bool,
+    repo_full_name: str,
+    comment: Optional[str] = None,
+) -> bool:
     """Close a pull request without merging."""
     command = ["gh", "pr", "close", str(pr_number)]
 
     if comment:
         command.extend(["--comment", comment])
 
+    command = _append_repo_flag(command, repo_full_name)
+
     result = run(command, verbose)
     return result.is_success()
 
 
-def review_pr(pr_number: int, comment: str, action: str, verbose: bool) -> bool:
+def review_pr(
+    pr_number: int,
+    comment: str,
+    action: str,
+    verbose: bool,
+    repo_full_name: str,
+) -> bool:
     """
     Submit a review on a pull request.
     Review action ('approve', 'request-changes', 'comment')
@@ -241,5 +291,44 @@ def review_pr(pr_number: int, comment: str, action: str, verbose: bool) -> bool:
         f"--{action}",
     ]
 
+    command = _append_repo_flag(command, repo_full_name)
+
     result = run(command, verbose)
     return result.is_success()
+
+
+def get_latest_pr_number_by_author(
+    username: str, repo_full_name: str, verbose: bool
+) -> Optional[int]:
+    """Return the latest pull request number created by username in the repo."""
+    command = [
+        "gh",
+        "pr",
+        "list",
+        "--author",
+        username,
+        "--state",
+        "all",
+        "--limit",
+        "1",
+        "--json",
+        "number",
+    ]
+    command = _append_repo_flag(command, repo_full_name)
+
+    result = run(command, verbose)
+    if not result.is_success():
+        return None
+
+    import json
+
+    try:
+        prs = json.loads(result.stdout)
+    except json.JSONDecodeError:
+        return None
+
+    if not prs:
+        return None
+
+    pr_number = prs[0].get("number")
+    return pr_number if isinstance(pr_number, int) else None

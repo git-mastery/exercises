@@ -64,28 +64,62 @@ class RoleMarker:
     # GitHub PR operations with automatic role markers
 
     def create_pr(
-        self, title: str, body: str, base: str, head: str, verbose: bool
+        self,
+        title: str,
+        body: str,
+        base: str,
+        head: str,
+        verbose: bool,
+        repo_full_name: str,
     ) -> bool:
         """Create a pull request with automatic role markers."""
         return github_cli.create_pr(
-            self._format_text(title), self._format_text(body), base, head, verbose
+            self._format_text(title),
+            self._format_text(body),
+            base,
+            head,
+            verbose,
+            repo_full_name,
         )
 
-    def comment_on_pr(self, pr_number: int, comment: str, verbose: bool) -> bool:
+    def comment_on_pr(
+        self,
+        pr_number: int,
+        comment: str,
+        verbose: bool,
+        repo_full_name: str,
+    ) -> bool:
         """Add a comment to a pull request with automatic role marker."""
-        return github_cli.comment_on_pr(pr_number, self._format_text(comment), verbose)
+        return github_cli.comment_on_pr(
+            pr_number, self._format_text(comment), verbose, repo_full_name
+        )
 
     def review_pr(
-        self, pr_number: int, comment: str, action: str, verbose: bool
+        self,
+        pr_number: int,
+        comment: str,
+        action: str,
+        verbose: bool,
+        repo_full_name: str,
     ) -> bool:
         """Submit a review on a pull request with automatic role marker.     True if review was submitted successfully, False otherwise"""
         return github_cli.review_pr(
-            pr_number, self._format_text(comment), action, verbose
+            pr_number,
+            self._format_text(comment),
+            action,
+            verbose,
+            repo_full_name,
         )
 
     def close_pr(
-        self, pr_number: int, verbose: bool, comment: Optional[str] = None
+        self,
+        pr_number: int,
+        verbose: bool,
+        repo_full_name: str,
+        comment: Optional[str] = None,
     ) -> bool:
         """Close a pull request without merging."""
         formatted_comment = self._format_text(comment) if comment else None
-        return github_cli.close_pr(pr_number, verbose, formatted_comment)
+        return github_cli.close_pr(
+            pr_number, verbose, repo_full_name, formatted_comment
+        )
