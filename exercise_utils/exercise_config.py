@@ -1,10 +1,9 @@
-# exercise_utils/json_config.py
 import json
 from pathlib import Path
 from typing import Any
 
 
-def update_json_fields(config_path: Path, updates: dict[str, Any]) -> None:
+def update_config_fields(updates: dict[str, Any]) -> None:
     """
     Update a JSON file using dotted-path keys.
 
@@ -15,6 +14,11 @@ def update_json_fields(config_path: Path, updates: dict[str, Any]) -> None:
         "teammate_role": "teammate-bob",
     }
     """
+    config_path = Path("../.gitmastery-exercise.json")
+    if not config_path.exists():
+        raise FileNotFoundError(
+            f".gitmastery-exercise.json file not found at {config_path.resolve()}"
+        )
     config = json.loads(config_path.read_text())
 
     for dotted_path, value in updates.items():

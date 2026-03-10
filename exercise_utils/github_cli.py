@@ -1,6 +1,7 @@
 """Wrapper for Github CLI commands."""
 # TODO: The following should be built using the builder pattern
 
+import re
 from typing import Any, Optional
 
 from exercise_utils.cli import run
@@ -134,9 +135,9 @@ def create_pr(
     body: str,
     base: str,
     head: str,
-    verbose: bool,
     repo_full_name: str,
-) -> bool:
+    verbose: bool,
+) -> Optional[int]:
     """Create a pull request."""
     command = [
         "gh",
@@ -155,7 +156,14 @@ def create_pr(
     command = _append_repo_flag(command, repo_full_name)
 
     result = run(command, verbose)
-    return result.is_success()
+    if not result.is_success():
+        return None
+
+    match = re.search(r"/pull/(\d+)", result.stdout)
+    if match is None:
+        return None
+
+    return int(match.group(1))
 
 
 def _append_repo_flag(command: list[str], repo_full_name: str) -> list[str]:
@@ -169,7 +177,7 @@ def _append_repo_flag(command: list[str], repo_full_name: str) -> list[str]:
     return command
 
 
-def view_pr(pr_number: int, verbose: bool, repo_full_name: str) -> dict[str, Any]:
+def view_pr(pr_number: int, repo_full_name: str, verbose: bool) -> dict[str, Any]:
     """View pull request details."""
     fields = "title,body,state,author,headRefName,baseRefName,comments,reviews"
 
@@ -184,15 +192,18 @@ def view_pr(pr_number: int, verbose: bool, repo_full_name: str) -> dict[str, Any
     if result.is_success():
         import json
 
-        return json.loads(result.stdout)
+        try:
+            return json.loads(result.stdout)
+        except json.JSONDecodeError:
+            return {}
     return {}
 
 
 def comment_on_pr(
     pr_number: int,
     comment: str,
-    verbose: bool,
     repo_full_name: str,
+    verbose: bool,
 ) -> bool:
     """Add a comment to a pull request."""
     command = ["gh", "pr", "comment", str(pr_number), "--body", comment]
@@ -205,7 +216,7 @@ def comment_on_pr(
     return result.is_success()
 
 
-def list_prs(state: str, verbose: bool, repo_full_name: str) -> list[dict[str, Any]]:
+def list_prs(state: str, repo_full_name: str, verbose: bool) -> list[dict[str, Any]]:
     """
     List pull requests.
     PR state filter ('open', 'closed', 'merged', 'all')
@@ -226,16 +237,19 @@ def list_prs(state: str, verbose: bool, repo_full_name: str) -> list[dict[str, A
     if result.is_success():
         import json
 
-        return json.loads(result.stdout)
+        try:
+            return json.loads(result.stdout)
+        except json.JSONDecodeError:
+            return []
     return []
 
 
 def merge_pr(
     pr_number: int,
     merge_method: str,
-    verbose: bool,
     repo_full_name: str,
     delete_branch: bool = True,
+    verbose: bool = False,
 ) -> bool:
     """
     Merge a pull request.
@@ -254,9 +268,9 @@ def merge_pr(
 
 def close_pr(
     pr_number: int,
-    verbose: bool,
     repo_full_name: str,
     comment: Optional[str] = None,
+    verbose: bool = False,
 ) -> bool:
     """Close a pull request without merging."""
     command = ["gh", "pr", "close", str(pr_number)]
@@ -274,8 +288,8 @@ def review_pr(
     pr_number: int,
     comment: str,
     action: str,
-    verbose: bool,
     repo_full_name: str,
+    verbose: bool,
 ) -> bool:
     """
     Submit a review on a pull request.

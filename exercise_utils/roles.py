@@ -69,29 +69,29 @@ class RoleMarker:
         body: str,
         base: str,
         head: str,
-        verbose: bool,
         repo_full_name: str,
-    ) -> bool:
+        verbose: bool,
+    ) -> Optional[int]:
         """Create a pull request with automatic role markers."""
         return github_cli.create_pr(
             self._format_text(title),
             self._format_text(body),
             base,
             head,
-            verbose,
             repo_full_name,
+            verbose,
         )
 
     def comment_on_pr(
         self,
         pr_number: int,
         comment: str,
-        verbose: bool,
         repo_full_name: str,
+        verbose: bool,
     ) -> bool:
         """Add a comment to a pull request with automatic role marker."""
         return github_cli.comment_on_pr(
-            pr_number, self._format_text(comment), verbose, repo_full_name
+            pr_number, self._format_text(comment), repo_full_name, verbose
         )
 
     def review_pr(
@@ -99,27 +99,27 @@ class RoleMarker:
         pr_number: int,
         comment: str,
         action: str,
-        verbose: bool,
         repo_full_name: str,
+        verbose: bool,
     ) -> bool:
         """Submit a review on a pull request with automatic role marker.     True if review was submitted successfully, False otherwise"""
         return github_cli.review_pr(
             pr_number,
             self._format_text(comment),
             action,
-            verbose,
             repo_full_name,
+            verbose,
         )
 
     def close_pr(
         self,
         pr_number: int,
-        verbose: bool,
         repo_full_name: str,
         comment: Optional[str] = None,
+        verbose: bool = False,
     ) -> bool:
         """Close a pull request without merging."""
         formatted_comment = self._format_text(comment) if comment else None
         return github_cli.close_pr(
-            pr_number, verbose, repo_full_name, formatted_comment
+            pr_number, repo_full_name, formatted_comment, verbose
         )
