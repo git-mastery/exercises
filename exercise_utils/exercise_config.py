@@ -10,7 +10,7 @@ def update_config_fields(updates: dict[str, Any]) -> None:
     Example updates:
     {
         "exercise_repo.pr_number": 1,
-        "exercise_repo.repo_full_name": "owner/repo",
+        "exercise_repo.pr_repo_full_name": "owner/repo",
         "teammate_role": "teammate-bob",
     }
     """
@@ -34,8 +34,11 @@ def update_config_fields(updates: dict[str, Any]) -> None:
 
     config_path.write_text(json.dumps(config, indent=2))
 
-def add_pr_config(pr_number: int, repo_full_name: str) -> None:
-    update_config_fields({
-        "exercise_repo.pr_number": pr_number,
-        "exercise_repo.repo_full_name": repo_full_name,
-    })
+
+def add_pr_config(pr_number: int, pr_repo_full_name: str) -> None:
+    update_config_fields(
+        {
+            "exercise_repo.pr_number": pr_number,
+            "exercise_repo.pr_repo_full_name": pr_repo_full_name,
+        }
+    )

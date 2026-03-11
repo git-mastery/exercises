@@ -135,7 +135,7 @@ def create_pr(
     body: str,
     base: str,
     head: str,
-    repo_full_name: str,
+    repo_name: str,
     verbose: bool,
 ) -> Optional[int]:
     """Create a pull request."""
@@ -153,7 +153,7 @@ def create_pr(
         head,
     ]
 
-    command = _append_repo_flag(command, repo_full_name)
+    command = _append_repo_flag(command, repo_name)
 
     result = run(command, verbose)
     if not result.is_success():
@@ -166,23 +166,21 @@ def create_pr(
     return int(match.group(1))
 
 
-def _append_repo_flag(command: list[str], repo_full_name: str) -> list[str]:
+def _append_repo_flag(command: list[str], repo_name: str) -> list[str]:
     """Append --repo flag. PR commands require explicit repository context."""
-    if repo_full_name.strip() == "":
-        raise ValueError(
-            "repo_full_name must be provided for deterministic PR commands"
-        )
+    if repo_name.strip() == "":
+        raise ValueError("repo_name must be provided for deterministic PR commands")
 
-    command.extend(["--repo", repo_full_name])
+    command.extend(["--repo", repo_name])
     return command
 
 
-def view_pr(pr_number: int, repo_full_name: str, verbose: bool) -> dict[str, Any]:
+def view_pr(pr_number: int, repo_name: str, verbose: bool) -> dict[str, Any]:
     """View pull request details."""
     fields = "title,body,state,author,headRefName,baseRefName,comments,reviews"
 
     command = ["gh", "pr", "view", str(pr_number), "--json", fields]
-    command = _append_repo_flag(command, repo_full_name)
+    command = _append_repo_flag(command, repo_name)
 
     result = run(
         command,
@@ -202,12 +200,12 @@ def view_pr(pr_number: int, repo_full_name: str, verbose: bool) -> dict[str, Any
 def comment_on_pr(
     pr_number: int,
     comment: str,
-    repo_full_name: str,
+    repo_name: str,
     verbose: bool,
 ) -> bool:
     """Add a comment to a pull request."""
     command = ["gh", "pr", "comment", str(pr_number), "--body", comment]
-    command = _append_repo_flag(command, repo_full_name)
+    command = _append_repo_flag(command, repo_name)
 
     result = run(
         command,
@@ -216,7 +214,7 @@ def comment_on_pr(
     return result.is_success()
 
 
-def list_prs(state: str, repo_full_name: str, verbose: bool) -> list[dict[str, Any]]:
+def list_prs(state: str, repo_name: str, verbose: bool) -> list[dict[str, Any]]:
     """
     List pull requests.
     PR state filter ('open', 'closed', 'merged', 'all')
@@ -230,7 +228,7 @@ def list_prs(state: str, repo_full_name: str, verbose: bool) -> list[dict[str, A
         "--json",
         "number,title,state,author,headRefName,baseRefName",
     ]
-    command = _append_repo_flag(command, repo_full_name)
+    command = _append_repo_flag(command, repo_name)
 
     result = run(command, verbose)
 
@@ -247,7 +245,7 @@ def list_prs(state: str, repo_full_name: str, verbose: bool) -> list[dict[str, A
 def merge_pr(
     pr_number: int,
     merge_method: str,
-    repo_full_name: str,
+    repo_name: str,
     delete_branch: bool = True,
     verbose: bool = False,
 ) -> bool:
@@ -260,7 +258,7 @@ def merge_pr(
     if delete_branch:
         command.append("--delete-branch")
 
-    command = _append_repo_flag(command, repo_full_name)
+    command = _append_repo_flag(command, repo_name)
 
     result = run(command, verbose)
     return result.is_success()
@@ -268,7 +266,7 @@ def merge_pr(
 
 def close_pr(
     pr_number: int,
-    repo_full_name: str,
+    repo_name: str,
     comment: Optional[str] = None,
     verbose: bool = False,
 ) -> bool:
@@ -278,7 +276,7 @@ def close_pr(
     if comment:
         command.extend(["--comment", comment])
 
-    command = _append_repo_flag(command, repo_full_name)
+    command = _append_repo_flag(command, repo_name)
 
     result = run(command, verbose)
     return result.is_success()
@@ -288,7 +286,7 @@ def review_pr(
     pr_number: int,
     comment: str,
     action: str,
-    repo_full_name: str,
+    repo_name: str,
     verbose: bool,
 ) -> bool:
     """
@@ -305,14 +303,14 @@ def review_pr(
         f"--{action}",
     ]
 
-    command = _append_repo_flag(command, repo_full_name)
+    command = _append_repo_flag(command, repo_name)
 
     result = run(command, verbose)
     return result.is_success()
 
 
 def get_latest_pr_number_by_author(
-    username: str, repo_full_name: str, verbose: bool
+    username: str, repo_name: str, verbose: bool
 ) -> Optional[int]:
     """Return the latest pull request number created by username in the repo."""
     command = [
@@ -328,7 +326,7 @@ def get_latest_pr_number_by_author(
         "--json",
         "number",
     ]
-    command = _append_repo_flag(command, repo_full_name)
+    command = _append_repo_flag(command, repo_name)
 
     result = run(command, verbose)
     if not result.is_success():

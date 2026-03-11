@@ -69,7 +69,7 @@ class RoleMarker:
         body: str,
         base: str,
         head: str,
-        repo_full_name: str,
+        repo_name: str,
         verbose: bool,
     ) -> Optional[int]:
         """Create a pull request with automatic role markers."""
@@ -78,7 +78,7 @@ class RoleMarker:
             self._format_text(body),
             base,
             head,
-            repo_full_name,
+            repo_name,
             verbose,
         )
 
@@ -86,12 +86,12 @@ class RoleMarker:
         self,
         pr_number: int,
         comment: str,
-        repo_full_name: str,
+        repo_name: str,
         verbose: bool,
     ) -> bool:
         """Add a comment to a pull request with automatic role marker."""
         return github_cli.comment_on_pr(
-            pr_number, self._format_text(comment), repo_full_name, verbose
+            pr_number, self._format_text(comment), repo_name, verbose
         )
 
     def review_pr(
@@ -99,7 +99,7 @@ class RoleMarker:
         pr_number: int,
         comment: str,
         action: str,
-        repo_full_name: str,
+        repo_name: str,
         verbose: bool,
     ) -> bool:
         """Submit a review on a pull request with automatic role marker.     True if review was submitted successfully, False otherwise"""
@@ -107,19 +107,17 @@ class RoleMarker:
             pr_number,
             self._format_text(comment),
             action,
-            repo_full_name,
+            repo_name,
             verbose,
         )
 
     def close_pr(
         self,
         pr_number: int,
-        repo_full_name: str,
+        repo_name: str,
         comment: Optional[str] = None,
         verbose: bool = False,
     ) -> bool:
         """Close a pull request without merging."""
         formatted_comment = self._format_text(comment) if comment else None
-        return github_cli.close_pr(
-            pr_number, repo_full_name, formatted_comment, verbose
-        )
+        return github_cli.close_pr(pr_number, repo_name, formatted_comment, verbose)
