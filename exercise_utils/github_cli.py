@@ -1,10 +1,16 @@
 """Wrapper for Github CLI commands."""
 # TODO: The following should be built using the builder pattern
 
+import json
 import re
 from typing import Any, Optional
 
 from exercise_utils.cli import run
+
+
+_PR_STATES = {"open", "closed", "merged", "all"}
+_PR_MERGE_METHODS = {"merge", "squash", "rebase"}
+_PR_REVIEW_ACTIONS = {"request-changes", "comment"}
 
 
 def fork_repo(
@@ -137,23 +143,15 @@ def create_pr(
     head: str,
     repo_name: str,
     verbose: bool,
+    draft: bool = False,
 ) -> Optional[int]:
     """Create a pull request."""
-    command = [
-        "gh",
-        "pr",
-        "create",
-        "--title",
-        title,
-        "--body",
-        body,
-        "--base",
-        base,
-        "--head",
-        head,
-    ]
-
-    command = _append_repo_flag(command, repo_name)
+    command = _build_pr_command("create", repo_name=repo_name)
+    command = _append_value_flag(command, "--title", title)
+    command = _append_value_flag(command, "--body", body)
+    command = _append_value_flag(command, "--base", base)
+    command = _append_value_flag(command, "--head", head)
+    command = _append_bool_flag(command, draft, "--draft")
 
     result = run(command, verbose)
     if not result.is_success():
@@ -171,16 +169,53 @@ def _append_repo_flag(command: list[str], repo_name: str) -> list[str]:
     if repo_name.strip() == "":
         raise ValueError("repo_name must be provided for deterministic PR commands")
 
-    command.extend(["--repo", repo_name])
-    return command
+    return [*command, "--repo", repo_name]
+
+
+def _validate_choice(value: str, allowed: set[str], field_name: str) -> str:
+    """Validate a string argument against a known set of values."""
+    if value not in allowed:
+        allowed_values = ", ".join(sorted(allowed))
+        raise ValueError(
+            f"Invalid {field_name}: {value}. Allowed values: {allowed_values}"
+        )
+    return value
+
+
+def _build_pr_command(subcommand: str, *args: str, repo_name: str) -> list[str]:
+    """Build a gh pr command and append deterministic repository context."""
+    return _append_repo_flag(["gh", "pr", subcommand, *args], repo_name)
+
+
+def _append_bool_flag(command: list[str], enabled: bool, flag: str) -> list[str]:
+    """Append a CLI flag when the related boolean option is enabled."""
+    return [*command, flag] if enabled else command
+
+
+def _append_value_flag(command: list[str], flag: str, value: str) -> list[str]:
+    """Append a value-taking CLI option in --flag=value form."""
+    return [*command, f"{flag}={value}"]
+
+
+def _parse_json_or_default(raw_output: str, default: Any) -> Any:
+    """Parse JSON output and return a default value on decode failure."""
+    try:
+        return json.loads(raw_output)
+    except json.JSONDecodeError:
+        return default
 
 
 def view_pr(pr_number: int, repo_name: str, verbose: bool) -> dict[str, Any]:
     """View pull request details."""
     fields = "title,body,state,author,headRefName,baseRefName,comments,reviews"
 
-    command = ["gh", "pr", "view", str(pr_number), "--json", fields]
-    command = _append_repo_flag(command, repo_name)
+    command = _build_pr_command(
+        "view",
+        str(pr_number),
+        "--json",
+        fields,
+        repo_name=repo_name,
+    )
 
     result = run(
         command,
@@ -188,12 +223,8 @@ def view_pr(pr_number: int, repo_name: str, verbose: bool) -> dict[str, Any]:
     )
 
     if result.is_success():
-        import json
-
-        try:
-            return json.loads(result.stdout)
-        except json.JSONDecodeError:
-            return {}
+        parsed = _parse_json_or_default(result.stdout, {})
+        return parsed if isinstance(parsed, dict) else {}
     return {}
 
 
@@ -204,8 +235,8 @@ def comment_on_pr(
     verbose: bool,
 ) -> bool:
     """Add a comment to a pull request."""
-    command = ["gh", "pr", "comment", str(pr_number), "--body", comment]
-    command = _append_repo_flag(command, repo_name)
+    command = _build_pr_command("comment", str(pr_number), repo_name=repo_name)
+    command = _append_value_flag(command, "--body", comment)
 
     result = run(
         command,
@@ -219,26 +250,21 @@ def list_prs(state: str, repo_name: str, verbose: bool) -> list[dict[str, Any]]:
     List pull requests.
     PR state filter ('open', 'closed', 'merged', 'all')
     """
-    command = [
-        "gh",
-        "pr",
+    validated_state = _validate_choice(state, _PR_STATES, "state")
+    command = _build_pr_command(
         "list",
         "--state",
-        state,
+        validated_state,
         "--json",
         "number,title,state,author,headRefName,baseRefName",
-    ]
-    command = _append_repo_flag(command, repo_name)
+        repo_name=repo_name,
+    )
 
     result = run(command, verbose)
 
     if result.is_success():
-        import json
-
-        try:
-            return json.loads(result.stdout)
-        except json.JSONDecodeError:
-            return []
+        parsed = _parse_json_or_default(result.stdout, [])
+        return parsed if isinstance(parsed, list) else []
     return []
 
 
@@ -253,12 +279,19 @@ def merge_pr(
     Merge a pull request.
     Merge method ('merge', 'squash', 'rebase')
     """
-    command = ["gh", "pr", "merge", str(pr_number), f"--{merge_method}"]
+    validated_merge_method = _validate_choice(
+        merge_method,
+        _PR_MERGE_METHODS,
+        "merge_method",
+    )
+    command = _build_pr_command(
+        "merge",
+        str(pr_number),
+        f"--{validated_merge_method}",
+        repo_name=repo_name,
+    )
 
-    if delete_branch:
-        command.append("--delete-branch")
-
-    command = _append_repo_flag(command, repo_name)
+    command = _append_bool_flag(command, delete_branch, "--delete-branch")
 
     result = run(command, verbose)
     return result.is_success()
@@ -268,15 +301,19 @@ def close_pr(
     pr_number: int,
     repo_name: str,
     comment: Optional[str] = None,
+    delete_branch: bool = False,
     verbose: bool = False,
 ) -> bool:
     """Close a pull request without merging."""
-    command = ["gh", "pr", "close", str(pr_number)]
+    command = _build_pr_command(
+        "close",
+        str(pr_number),
+        repo_name=repo_name,
+    )
+    command = _append_bool_flag(command, delete_branch, "--delete-branch")
 
     if comment:
-        command.extend(["--comment", comment])
-
-    command = _append_repo_flag(command, repo_name)
+        command = _append_value_flag(command, "--comment", comment)
 
     result = run(command, verbose)
     return result.is_success()
@@ -291,19 +328,12 @@ def review_pr(
 ) -> bool:
     """
     Submit a review on a pull request.
-    Review action ('approve', 'request-changes', 'comment')
+    Review action ('request-changes', 'comment')
     """
-    command = [
-        "gh",
-        "pr",
-        "review",
-        str(pr_number),
-        "--body",
-        comment,
-        f"--{action}",
-    ]
-
-    command = _append_repo_flag(command, repo_name)
+    validated_action = _validate_choice(action, _PR_REVIEW_ACTIONS, "action")
+    command = _build_pr_command("review", str(pr_number), repo_name=repo_name)
+    command = _append_value_flag(command, "--body", comment)
+    command.append(f"--{validated_action}")
 
     result = run(command, verbose)
     return result.is_success()
@@ -313,9 +343,7 @@ def get_latest_pr_number_by_author(
     username: str, repo_name: str, verbose: bool
 ) -> Optional[int]:
     """Return the latest pull request number created by username in the repo."""
-    command = [
-        "gh",
-        "pr",
+    command = _build_pr_command(
         "list",
         "--author",
         username,
@@ -325,19 +353,17 @@ def get_latest_pr_number_by_author(
         "1",
         "--json",
         "number",
-    ]
-    command = _append_repo_flag(command, repo_name)
+        repo_name=repo_name,
+    )
 
     result = run(command, verbose)
     if not result.is_success():
         return None
 
-    import json
-
-    try:
-        prs = json.loads(result.stdout)
-    except json.JSONDecodeError:
+    parsed = _parse_json_or_default(result.stdout, None)
+    if not isinstance(parsed, list):
         return None
+    prs = parsed
 
     if not prs:
         return None
