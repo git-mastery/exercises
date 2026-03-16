@@ -6,6 +6,7 @@ from .verify import (
     MAIN_WRONG_COMMIT,
     MERGES_NOT_UNDONE,
     RESET_MESSAGE,
+    MAIN_BRANCH_MISSING,
     verify,
 )
 
@@ -102,3 +103,30 @@ def test_main_wrong_commit():
             GitAutograderStatus.UNSUCCESSFUL,
             [MAIN_WRONG_COMMIT, RESET_MESSAGE],
         )
+
+def test_not_main():
+    with loader.start() as (test, rs):
+        _create_and_commit_file(rs, "rick.txt", "Scientist", "Add Rick")
+        _create_and_commit_file(rs, "morty.txt", "Boy", "Add Morty")
+
+        rs.git.checkout("daughter", branch=True)
+        _create_and_commit_file(rs, "beth.txt", "Vet", "Add Beth")
+
+        rs.git.checkout("main")
+        rs.git.checkout("son-in-law", branch=True)
+        _create_and_commit_file(rs, "jerry.txt", "Salesman", "Add Jerry")
+
+        rs.git.checkout("main")
+        _create_and_commit_file(
+            rs,
+            "morty.txt",
+            """
+            Boy
+            Grandson
+            """,
+            "Mention Morty is grandson",
+        )
+        rs.git.branch("master", old_branch="main", move=True)
+
+        output = test.run()
+        assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [MAIN_BRANCH_MISSING])
