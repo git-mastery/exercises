@@ -104,7 +104,8 @@ def test_main_wrong_commit():
             [MAIN_WRONG_COMMIT, RESET_MESSAGE],
         )
 
-def test_not_main():
+
+def test_main_branch_missing():
     with loader.start() as (test, rs):
         _create_and_commit_file(rs, "rick.txt", "Scientist", "Add Rick")
         _create_and_commit_file(rs, "morty.txt", "Boy", "Add Morty")
