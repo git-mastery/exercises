@@ -212,10 +212,9 @@ def view_pr(pr_number: int, repo_name: str, verbose: bool) -> dict[str, Any]:
     command = _build_pr_command(
         "view",
         str(pr_number),
-        "--json",
-        fields,
         repo_name=repo_name,
     )
+    command = _append_value_flag(command, "--json", fields)
 
     result = run(
         command,
@@ -251,14 +250,10 @@ def list_prs(state: str, repo_name: str, verbose: bool) -> list[dict[str, Any]]:
     PR state filter ('open', 'closed', 'merged', 'all')
     """
     validated_state = _validate_choice(state, _PR_STATES, "state")
-    command = _build_pr_command(
-        "list",
-        "--state",
-        validated_state,
-        "--json",
-        "number,title,state,author,headRefName,baseRefName",
-        repo_name=repo_name,
-    )
+    fields = "number,title,state,author,headRefName,baseRefName"
+    command = _build_pr_command("list", repo_name=repo_name)
+    command = _append_value_flag(command, "--state", validated_state)
+    command = _append_value_flag(command, "--json", fields)
 
     result = run(command, verbose)
 
@@ -343,18 +338,11 @@ def get_latest_pr_number_by_author(
     username: str, repo_name: str, verbose: bool
 ) -> Optional[int]:
     """Return the latest pull request number created by username in the repo."""
-    command = _build_pr_command(
-        "list",
-        "--author",
-        username,
-        "--state",
-        "all",
-        "--limit",
-        "1",
-        "--json",
-        "number",
-        repo_name=repo_name,
-    )
+    command = _build_pr_command("list", repo_name=repo_name)
+    command = _append_value_flag(command, "--author", username)
+    command = _append_value_flag(command, "--state", "all")
+    command = _append_value_flag(command, "--limit", "1")
+    command = _append_value_flag(command, "--json", "number")
 
     result = run(command, verbose)
     if not result.is_success():
