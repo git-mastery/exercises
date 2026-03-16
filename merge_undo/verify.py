@@ -12,6 +12,7 @@ SUCCESS_MESSAGE = "Great work with undoing the merges! Try listing the directory
 
 
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
+    
     main_branch = exercise.repo.branches.branch_or_none("main")
 
     if not main_branch:
