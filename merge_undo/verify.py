@@ -5,7 +5,6 @@ from git_autograder import (
 )
 
 MAIN_BRANCH_MISSING = "Main branch is missing, please reset the exercise and try again."
-DETACHED_HEAD = "You should not be in a detached HEAD state! Use git checkout main to get back to main"
 MERGES_NOT_UNDONE = "It appears the merge commits are still in the history of the 'main' branch. This shouldn't be the case"
 MAIN_WRONG_COMMIT = "The 'main' branch is not pointing to the correct commit. It should be pointing to the commit made just before the merges."
 RESET_MESSAGE = 'Reset the repository using "gitmastery progress reset" and start again'
