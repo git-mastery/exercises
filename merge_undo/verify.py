@@ -4,7 +4,7 @@ from git_autograder import (
     GitAutograderStatus,
 )
 
-MAIN_BRANCH_MISSING = "Main branch is missing, please reset the exercise and try again."
+MAIN_BRANCH_MISSING = "Main branch is missing, you can reset the exercises if needed and try again."
 MERGES_NOT_UNDONE = "It appears the merge commits are still in the history of the 'main' branch. This shouldn't be the case"
 MAIN_WRONG_COMMIT = "The 'main' branch is not pointing to the correct commit. It should be pointing to the commit made just before the merges."
 RESET_MESSAGE = 'Reset the repository using "gitmastery progress reset" and start again'
