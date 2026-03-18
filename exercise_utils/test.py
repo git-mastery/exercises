@@ -132,6 +132,8 @@ class GitAutograderTest:
                 repo_title=None,
                 create_fork=None,
                 init=True,
+                pr_number=None,
+                pr_repo_full_name=None,
             ),
             downloaded_at=None,
         )
