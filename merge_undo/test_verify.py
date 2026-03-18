@@ -5,8 +5,8 @@ from repo_smith.repo_smith import RepoSmith
 from .verify import (
     MAIN_WRONG_COMMIT,
     MERGES_NOT_UNDONE,
-    NOT_ON_MAIN,
     RESET_MESSAGE,
+    MAIN_BRANCH_MISSING,
     verify,
 )
 
@@ -105,7 +105,7 @@ def test_main_wrong_commit():
         )
 
 
-def test_not_main():
+def test_main_branch_missing():
     with loader.start() as (test, rs):
         _create_and_commit_file(rs, "rick.txt", "Scientist", "Add Rick")
         _create_and_commit_file(rs, "morty.txt", "Boy", "Add Morty")
@@ -127,7 +127,7 @@ def test_not_main():
             """,
             "Mention Morty is grandson",
         )
-        rs.git.checkout("daughter")
+        rs.git.branch("master", old_branch="main", move=True)
 
         output = test.run()
-        assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [NOT_ON_MAIN])
+        assert_output(output, GitAutograderStatus.UNSUCCESSFUL, [MAIN_BRANCH_MISSING])
