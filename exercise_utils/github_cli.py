@@ -334,27 +334,35 @@ def review_pr(
     return result.is_success()
 
 
-def get_latest_pr_number_by_author(
+def get_pr_numbers_by_author(
     username: str, repo_name: str, verbose: bool
-) -> Optional[int]:
-    """Return the latest pull request number created by username in the repo."""
+) -> list[int]:
+    """Return the latest opened pull request numbers created by username in the repo."""
     command = _build_pr_command("list", repo_name=repo_name)
     command = _append_value_flag(command, "--author", username)
-    command = _append_value_flag(command, "--state", "all")
-    command = _append_value_flag(command, "--limit", "1")
+    command = _append_value_flag(command, "--state", "open")
     command = _append_value_flag(command, "--json", "number")
 
     result = run(command, verbose)
     if not result.is_success():
-        return None
+        return []
 
-    parsed = _parse_json_or_default(result.stdout, None)
-    if not isinstance(parsed, list):
-        return None
-    prs = parsed
+    import json
 
-    if not prs:
-        return None
+    try:
+        prs = json.loads(result.stdout)
+    except json.JSONDecodeError:
+        return []
+    
+    pr_numbers = [pr.get("number") for pr in prs if isinstance(pr.get("number"), int)]
+    pr_numbers.sort()
+    return pr_numbers
 
-    pr_number = prs[0].get("number")
-    return pr_number if isinstance(pr_number, int) else None
+def get_latest_pr_number_by_author(
+    username: str, repo_full_name: str, verbose: bool
+) -> Optional[int]:
+    """Return the latest open pull request number created by username in the repo."""
+    if pr_numbers := get_pr_numbers_by_author(username, repo_full_name, verbose):
+        return pr_numbers[-1]
+    raise ValueError(f"No open PRs found for user {username} in repo {repo_full_name}.")
+
