@@ -3,7 +3,13 @@ from pathlib import Path
 from typing import Any
 
 
+EXERCISE_CONFIG_FILE_NAME = ".gitmastery-exercise.json"
+
+
 def _merge_config_fields(config: dict[str, Any], updates: dict[str, Any]) -> None:
+    """
+    Recursively updates a JSON-like configuration as specified by the provided dictionary.
+    """
     for key, value in updates.items():
         if isinstance(value, dict):
             current_value = config.get(key)
@@ -15,7 +21,7 @@ def _merge_config_fields(config: dict[str, Any], updates: dict[str, Any]) -> Non
         config[key] = value
 
 
-def update_config_fields(updates: dict[str, Any]) -> None:
+def update_config_fields(updates: dict[str, Any], config_path: Path) -> None:
     """
     Update fields in .gitmastery-exercise.json.
 
@@ -28,7 +34,7 @@ def update_config_fields(updates: dict[str, Any]) -> None:
         "teammate": "teammate-bob",
     }
     """
-    config_path = Path("../.gitmastery-exercise.json")
+    config_path = Path(config_path)
     if not config_path.exists():
         raise FileNotFoundError(
             f".gitmastery-exercise.json file not found at {config_path.resolve()}"
@@ -39,12 +45,18 @@ def update_config_fields(updates: dict[str, Any]) -> None:
     config_path.write_text(json.dumps(config, indent=2))
 
 
-def add_pr_config(pr_number: int, pr_repo_full_name: str) -> None:
+def add_pr_config(
+    config_path: Path,
+    pr_number: int | None = None,
+    pr_repo_full_name: str | None = None,
+) -> None:
+    """Adds a PR config to .gitmastery-exercise.json."""
     update_config_fields(
         {
             "exercise_repo": {
                 "pr_number": pr_number,
                 "pr_repo_full_name": pr_repo_full_name,
             }
-        }
+        },
+        config_path=config_path / ".gitmastery-exercise.json",
     )
