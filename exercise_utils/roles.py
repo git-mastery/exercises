@@ -5,7 +5,8 @@ from exercise_utils import git, github_cli
 
 
 class RoleMarker:
-    """Wrapper for git and GitHub operations with automatic role marker formatting.
+    """
+    Wrapper for git and GitHub operations with automatic role marker formatting.
 
     Usage:
         bob = RoleMarker("teammate-bob")
@@ -21,7 +22,8 @@ class RoleMarker:
 
     @staticmethod
     def format(role: str, text: str) -> str:
-        """Format text with a role marker.
+        """
+        Format text with a role marker.
         Example:
             format('teammate-alice', 'Add feature') -> '[ROLE:teammate-alice] Add feature'
         """
@@ -102,7 +104,10 @@ class RoleMarker:
         repo_name: str,
         verbose: bool,
     ) -> bool:
-        """Submit a review on a pull request with automatic role marker.     True if review was submitted successfully, False otherwise"""
+        """
+        Submit a review on a pull request with automatic role marker.
+        True if review was submitted successfully, False otherwise
+        """
         return github_cli.review_pr(
             pr_number,
             self._format_text(comment),
