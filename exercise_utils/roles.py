@@ -73,6 +73,7 @@ class RoleMarker:
         head: str,
         repo_name: str,
         verbose: bool,
+        draft: bool = False,
     ) -> Optional[int]:
         """Create a pull request with automatic role markers."""
         return github_cli.create_pr(
@@ -82,6 +83,7 @@ class RoleMarker:
             head,
             repo_name,
             verbose,
+            draft,
         )
 
     def comment_on_pr(
@@ -121,8 +123,11 @@ class RoleMarker:
         pr_number: int,
         repo_name: str,
         comment: Optional[str] = None,
+        delete_branch: bool = False,
         verbose: bool = False,
     ) -> bool:
         """Close a pull request without merging."""
         formatted_comment = self._format_text(comment) if comment else None
-        return github_cli.close_pr(pr_number, repo_name, formatted_comment, verbose)
+        return github_cli.close_pr(
+            pr_number, repo_name, formatted_comment, delete_branch, verbose
+        )
