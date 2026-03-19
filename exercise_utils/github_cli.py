@@ -244,16 +244,27 @@ def comment_on_pr(
     return result.is_success()
 
 
-def list_prs(state: str, repo_name: str, verbose: bool) -> list[dict[str, Any]]:
+def list_prs(
+    state: str,
+    repo_name: str,
+    verbose: bool,
+    limit: int = 30,
+    search: Optional[str] = None,
+) -> list[dict[str, Any]]:
     """
     List pull requests.
     PR state filter ('open', 'closed', 'merged', 'all')
+    Optional search query using GitHub search syntax.
     """
     validated_state = _validate_choice(state, _PR_STATES, "state")
     fields = "number,title,state,author,headRefName,baseRefName"
     command = _build_pr_command("list", repo_name=repo_name)
     command = _append_value_flag(command, "--state", validated_state)
     command = _append_value_flag(command, "--json", fields)
+    command = _append_value_flag(command, "--limit", str(limit))
+
+    if search is not None and search.strip() != "":
+        command = _append_value_flag(command, "--search", search)
 
     result = run(command, verbose)
 
@@ -334,9 +345,7 @@ def review_pr(
     return result.is_success()
 
 
-def get_pr_numbers_by_author(
-    username: str, repo_name: str, verbose: bool
-) -> list[int]:
+def get_pr_numbers_by_author(username: str, repo_name: str, verbose: bool) -> list[int]:
     """Return the latest opened pull request numbers created by username in the repo."""
     command = _build_pr_command("list", repo_name=repo_name)
     command = _append_value_flag(command, "--author", username)
@@ -353,10 +362,11 @@ def get_pr_numbers_by_author(
         prs = json.loads(result.stdout)
     except json.JSONDecodeError:
         return []
-    
+
     pr_numbers = [pr.get("number") for pr in prs if isinstance(pr.get("number"), int)]
     pr_numbers.sort()
     return pr_numbers
+
 
 def get_latest_pr_number_by_author(
     username: str, repo_full_name: str, verbose: bool
@@ -365,4 +375,3 @@ def get_latest_pr_number_by_author(
     if pr_numbers := get_pr_numbers_by_author(username, repo_full_name, verbose):
         return pr_numbers[-1]
     raise ValueError(f"No open PRs found for user {username} in repo {repo_full_name}.")
-
