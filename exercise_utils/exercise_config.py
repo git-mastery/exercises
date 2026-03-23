@@ -11,6 +11,9 @@ def _merge_config_fields(config: dict[str, Any], updates: dict[str, Any]) -> Non
     Recursively updates a JSON-like configuration as specified by the provided dictionary.
     """
     for key, value in updates.items():
+        if not value:
+            continue
+
         if isinstance(value, dict):
             current_value = config.get(key)
             if not isinstance(current_value, dict):
