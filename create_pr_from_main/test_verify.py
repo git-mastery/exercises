@@ -54,21 +54,7 @@ def exercise(tmp_path: Path) -> GitAutograderExercise:
 
     with patch(
         "git_autograder.pr.fetch_pull_request_data",
-        return_value={
-            "title": "",
-            "body": "",
-            "state": "OPEN",
-            "author": {"login": "dummy"},
-            "baseRefName": "main",
-            "headRefName": "main",
-            "isDraft": False,
-            "mergedAt": None,
-            "mergedBy": None,
-            "createdAt": None,
-            "latestReviews": {"nodes": []},
-            "comments": {"nodes": []},
-            "commits": {"nodes": []},
-        },
+        return_value={},
     ):
         return GitAutograderExercise(exercise_path=tmp_path)
 
