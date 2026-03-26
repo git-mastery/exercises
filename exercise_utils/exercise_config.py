@@ -11,9 +11,6 @@ def _merge_config_fields(config: dict[str, Any], updates: dict[str, Any]) -> Non
     Recursively updates a JSON-like configuration as specified by the provided dictionary.
     """
     for key, value in updates.items():
-        if not value:
-            continue
-
         if isinstance(value, dict):
             current_value = config.get(key)
             if not isinstance(current_value, dict):
@@ -53,13 +50,13 @@ def add_pr_config(
     pr_number: int | None = None,
     pr_repo_full_name: str | None = None,
 ) -> None:
-    """Adds a PR config to .gitmastery-exercise.json."""
+    exercise_repo_updates: dict[str, int | str] = {}
+    if pr_number is not None:
+        exercise_repo_updates["pr_number"] = pr_number
+    if pr_repo_full_name is not None:
+        exercise_repo_updates["pr_repo_full_name"] = pr_repo_full_name
+
     update_config_fields(
-        {
-            "exercise_repo": {
-                "pr_number": pr_number,
-                "pr_repo_full_name": pr_repo_full_name,
-            }
-        },
+        {"exercise_repo": exercise_repo_updates},
         config_path=config_path / ".gitmastery-exercise.json",
     )
