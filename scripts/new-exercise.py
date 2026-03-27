@@ -109,14 +109,11 @@ def create_download_py_file() -> None:
     # TODO: conditionally add the git tagging only when requires_repo is True
     with open("download.py", "w") as download_script_file:
         download_script = """
-        from exercise_utils.cli import run_command
-        from exercise_utils.gitmastery import create_start_tag
-
-        __resources__ = {}
+        __resources__ = {} # Delete if no resources needed
 
 
         def setup(verbose: bool = False):
-            create_start_tag(verbose)
+            pass
         """
         download_script_file.write(textwrap.dedent(download_script).lstrip())
 
