@@ -10,16 +10,14 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Set up Python
-        uses: actions/setup-python@v4
-        with:
-          python-version: "3.11"
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
 
       - name: Generate exercise-directory.md
         run: |
-          python scripts/create-exercise-directory.py
+          uv run python scripts/create-exercise-directory.py
           mv exercise-directory.md index.md
 
       - name: Deploy to gh-pages
