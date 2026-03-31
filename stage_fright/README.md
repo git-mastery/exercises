@@ -1,1 +1,1 @@
-See https://git-mastery.github.io/lessons/stage/exercise-stage-fright.html
+See https://git-mastery.org/lessons/stage/exercise-stage-fright.html

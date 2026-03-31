@@ -1,1 +1,1 @@
-See https://git-mastery.github.io/lessons/pull/exercise-fetch-and-pull.html
+See https://git-mastery.org/lessons/pull/exercise-fetch-and-pull.html

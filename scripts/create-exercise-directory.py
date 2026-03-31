@@ -47,7 +47,7 @@ def generate_markdown(tag_map):
         lines.append("|----------|------------------|")
         for name, command in tag_map[tag]:
             lines.append(
-                f"| [{name}](https://git-mastery.github.io/exercises/{name.replace('-', '_')}) | `{command}` |"
+                f"| [{name}](https://git-mastery.org/exercises/{name.replace('-', '_')}) | `{command}` |"
             )
         lines.append("")  # blank line between sections
     return "\n".join(lines)

@@ -1,1 +1,1 @@
-See https://git-mastery.github.io/lessons/merge/exercise-ff-undo.html
+See https://git-mastery.org/lessons/merge/exercise-ff-undo.html

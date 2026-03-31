@@ -1,1 +1,1 @@
-See https://git-mastery.github.io/lessons/branchRename/exercise-branch-rename.html
+See https://git-mastery.org/lessons/branchRename/exercise-branch-rename.html

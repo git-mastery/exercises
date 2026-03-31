@@ -1,1 +1,1 @@
-See https://git-mastery.github.io/lessons/remoteBranchPull/exercise-glossary-branch-pull.html
+See https://git-mastery.org/lessons/remoteBranchPull/exercise-glossary-branch-pull.html

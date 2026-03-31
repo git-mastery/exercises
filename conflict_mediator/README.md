@@ -1,1 +1,1 @@
-See https://git-mastery.github.io/lessons/mergeConflicts/exercise-conflict-mediator.html
+See https://git-mastery.org/lessons/mergeConflicts/exercise-conflict-mediator.html

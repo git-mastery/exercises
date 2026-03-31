@@ -1,1 +1,1 @@
-See https://git-mastery.github.io/lessons/branchDelete/exercise-branch-delete.html
+See https://git-mastery.org/lessons/branchDelete/exercise-branch-delete.html
