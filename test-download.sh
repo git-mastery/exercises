@@ -1,3 +1,3 @@
 #!/bin/bash
 
-uv run python scripts/test-download.py "$1"
+PYTHONPATH=. uv run python scripts/test-download.py "$1"
