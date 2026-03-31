@@ -1,1 +1,1 @@
-See https://git-mastery.github.io/lessons/setRemote/exercise-link-me.html
+See https://git-mastery.org/lessons/setRemote/exercise-link-me.html

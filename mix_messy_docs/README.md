@@ -1,1 +1,1 @@
-See https://git-mastery.github.io/lessons/branchDelete/exercise-mix-messy-docs.html
+See https://git-mastery.org/lessons/branchDelete/exercise-mix-messy-docs.html

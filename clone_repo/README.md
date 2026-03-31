@@ -1,1 +1,1 @@
-See https://git-mastery.github.io/lessons/clone/exercise-clone-repo.html
+See https://git-mastery.org/lessons/clone/exercise-clone-repo.html

@@ -1,1 +1,1 @@
-See https://git-mastery.github.io/lessons/commit/exercise-grocery-shopping.html
+See https://git-mastery.org/lessons/commit/exercise-grocery-shopping.html

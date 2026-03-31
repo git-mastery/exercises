@@ -1,1 +1,1 @@
-See https://git-mastery.github.io/lessons/branchDelete/exercise-mix-messy-graph.html
+See https://git-mastery.orgns/branchDelete/exercise-mix-messy-graph.html
