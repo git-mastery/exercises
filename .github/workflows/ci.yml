@@ -15,27 +15,25 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version: "3.13"
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
 
       - name: Run validation script
         run: |
-          python scripts/validate-exercise-config.py
+          uv run python scripts/validate-exercise-config.py
 
   unit_tests:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Setup Python
-        uses: actions/setup-python@v5
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
         with:
-          python-version: "3.13"
+          enable-cache: true
       - name: Install dependencies
         run: |
-          pip install -r requirements.txt
+          uv sync --locked --group test
       - name: Set up Git
         run: |
           git config --global user.name "github-actions"
@@ -43,20 +41,20 @@ jobs:
           git config --global init.defaultBranch main
       - name: Run unit tests
         run: |
-          python -m pytest -s -vv
+          uv run pytest -s -vv
 
   mypy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-      - name: Setup Python
-        uses: actions/setup-python@v5
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
         with:
-          python-version: "3.13"
+          enable-cache: true
       - name: Install dependencies
         run: |
-          pip install -r requirements.txt
+          uv sync --locked --group dev
       - name: Set up Git
         run: |
           git config --global user.name "github-actions"
@@ -64,7 +62,7 @@ jobs:
           git config --global init.defaultBranch main
       - name: Run mypy
         run: |
-          python -m mypy .
+          uv run mypy .
 
   format:
     runs-on: ubuntu-latest
@@ -75,17 +73,17 @@ jobs:
         with:
           ref: main
           fetch-depth: 0
-      - name: Setup Python
-        uses: actions/setup-python@v5
+      - name: Install uv
+        uses: astral-sh/setup-uv@v7
         with:
-          python-version: "3.13"
+          enable-cache: true
       - name: Install dependencies
         run: |
-          pip install -r requirements.txt
+          uv sync --locked --group dev
       - name: Run formatter using ruff
         run: |
-          ruff check --fix
-          ruff format
+          uv run ruff check --fix
+          uv run ruff format
       - name: Saving changes
         run: |
           git config --global user.name "github-actions"

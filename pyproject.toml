@@ -1,0 +1,20 @@
+[project]
+name = "cs3281-exercises"
+version = "0.1.0"
+requires-python = ">=3.13"
+dependencies = [
+    "git-autograder",
+    "PyYAML",
+    "PyGithub",
+    "requests",
+    "repo-smith"
+]
+
+[dependency-groups]
+test = ["pytest"]
+dev = [
+    "lefthook",
+    "ruff",
+    "mypy",
+    "types-requests",
+]
