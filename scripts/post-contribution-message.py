@@ -38,7 +38,7 @@ Before you request for a review, please ensure that you have tested your changes
 
 ### Prerequisites
 
-Ensure that you have the `gitmastery` app installed locally ([instructions](https://git-mastery.github.io/companion-app/index.html))
+Ensure that you have the `gitmastery` app installed locally ([instructions](https://git-mastery.org/companion-app/index.html))
 
 ### Testing steps
 

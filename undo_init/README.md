@@ -1,1 +1,1 @@
-See https://git-mastery.github.io/lessons/init/exercise-undo-init.html
+See https://git-mastery.org/lessons/init/exercise-undo-init.html

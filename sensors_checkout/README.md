@@ -1,1 +1,1 @@
-See https://git-mastery.github.io/lessons/checkout/exercise-sensors-checkout.html
+See https://git-mastery.org/lessons/checkout/exercise-sensors-checkout.html

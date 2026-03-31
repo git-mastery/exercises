@@ -1,1 +1,1 @@
-See https://git-mastery.github.io/lessons/tag/exercise-tags-add.html
+See https://git-mastery.org/lessons/tag/exercise-tags-add.html

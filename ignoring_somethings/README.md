@@ -1,1 +1,1 @@
-See https://git-mastery.github.io/lessons/ignore/exercise-ignoring-something.html
+See https://git-mastery.org/lessons/ignore/exercise-ignoring-something.html

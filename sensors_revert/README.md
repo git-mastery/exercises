@@ -1,1 +1,1 @@
-See https://git-mastery.github.io/lessons/revert/exercise-sensors-revert.html
+See https://git-mastery.org/lessons/revert/exercise-sensors-revert.html

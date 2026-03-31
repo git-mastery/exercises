@@ -1,1 +1,1 @@
-See https://git-mastery.github.io/lessons/fork/exercise-fork-repo.html
+See https://git-mastery.org/lessons/fork/exercise-fork-repo.html

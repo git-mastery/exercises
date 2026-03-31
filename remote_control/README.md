@@ -1,1 +1,1 @@
-See https://git-mastery.github.io/lessons/createRemoteRepo/exercise-remote-control.html
+See https://git-mastery.org/lessons/createRemoteRepo/exercise-remote-control.html

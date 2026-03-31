@@ -1,1 +1,1 @@
-See https://git-mastery.github.io/lessons/diff/exercise-sensors-diff.html
+See https://git-mastery.org/lessons/diff/exercise-sensors-diff.html

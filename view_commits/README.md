@@ -1,1 +1,1 @@
-See https://git-mastery.github.io/lessons/show/exercise-view-commits.html
+See https://git-mastery.org/lessons/show/exercise-view-commits.html
