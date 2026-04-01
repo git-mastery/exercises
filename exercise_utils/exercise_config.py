@@ -50,6 +50,7 @@ def add_pr_config(
     pr_number: int | None = None,
     pr_repo_full_name: str | None = None,
 ) -> None:
+    """Adds a PR config to .gitmastery-exercise.json."""
     exercise_repo_updates: dict[str, int | str] = {}
     if pr_number is not None:
         exercise_repo_updates["pr_number"] = pr_number
