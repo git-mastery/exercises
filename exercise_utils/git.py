@@ -98,3 +98,7 @@ def clone_repo_with_git(
         run(["git", "clone", repository_url, name], verbose)
     else:
         run(["git", "clone", repository_url], verbose)
+
+def delete_remote_tracking_branch_locally(remote: str, branch: str, verbose: bool) -> None:
+    """Deletes a remote-tracking branch reference locally"""
+    run_command(["git", "branch", "-dr", f"{remote}/{branch}"], verbose)
