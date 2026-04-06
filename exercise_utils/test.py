@@ -329,10 +329,13 @@ class GitAutograderTestLoader:
             with open(exercise_path / ".gitmastery-exercise.json", "w") as f:
                 json.dump(config, f)
 
-            with mock.patch(
-                "git_autograder.pr.fetch_pull_request_data",
-                return_value={},
-            ):
+            if has_pr_context:
+                with mock.patch(
+                    "git_autograder.pr.fetch_pull_request_data",
+                    return_value={},
+                ):
+                    yield GitAutograderExercise(exercise_path=exercise_path)
+            else:
                 yield GitAutograderExercise(exercise_path=exercise_path)
 
 
