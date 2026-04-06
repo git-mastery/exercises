@@ -320,13 +320,12 @@ class GitAutograderTestLoader:
             }
 
             if has_pr_context:
-                if not pr_number:
+                if pr_number is None:
                     pr_number = 1
-                if not pr_repo_full_name:
+                if pr_repo_full_name is None:
                     pr_repo_full_name = "dummy/repo"
                 exercise_repo["pr_number"] = pr_number
                 exercise_repo["pr_repo_full_name"] = pr_repo_full_name
-
             with open(exercise_path / ".gitmastery-exercise.json", "w") as f:
                 json.dump(config, f)
 
