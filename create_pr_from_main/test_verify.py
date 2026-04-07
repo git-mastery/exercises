@@ -47,7 +47,6 @@ def _run_verify(
         pr_repo_full_name="dummy/repo"
     ) as exercise:
         with (
-            patch("create_pr_from_main.verify.get_github_username", return_value="dummy"),
             patch(
                 "create_pr_from_main.verify.get_pr_numbers_by_author",
                 return_value=pr_numbers,
