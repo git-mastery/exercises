@@ -1,11 +1,12 @@
 import os
 
-from exercise_utils.git import run_command, remove_remote
+from exercise_utils.git import remove_remote, run_command
 from exercise_utils.github_cli import (
-    get_github_username, fork_repo,
-    has_repo,
-    delete_repo,
     clone_repo_with_gh,
+    delete_repo,
+    fork_repo,
+    get_github_username,
+    has_repo,
 )
 
 __requires_git__ = True
@@ -14,6 +15,7 @@ __requires_github__ = True
 TARGET_REPO = "git-mastery/samplerepo-company"
 FORK_NAME = "gitmastery-samplerepo-company"
 LOCAL_DIR = "samplerepo-company"
+
 
 def download(verbose: bool):
     username = get_github_username(verbose)
