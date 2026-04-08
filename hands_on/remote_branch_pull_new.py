@@ -1,7 +1,6 @@
 import os
 
-from exercise_utils.file import append_to_file
-from exercise_utils.git import delete_remote_tracking_branch_locally, remove_remote,  add, checkout, commit, push
+from exercise_utils.git import run_command, remove_remote
 from exercise_utils.github_cli import (
     get_github_username, fork_repo,
     has_repo,
@@ -29,4 +28,4 @@ def download(verbose: bool):
     os.chdir(LOCAL_DIR)
 
     remove_remote("upstream", verbose)
-    delete_remote_tracking_branch_locally("origin", "track-sales", verbose)
+    run_command(["git", "branch", "-dr", "origin/track-sales"], verbose)
