@@ -30,10 +30,3 @@ def download(verbose: bool):
 
     remove_remote("upstream", verbose)
     delete_remote_tracking_branch_locally("origin", "track-sales", verbose)
-
-    checkout("hiring", True, verbose)
-    append_to_file("employees.txt", "Receptionist: Pam\n")
-    add(["employees.txt"], verbose)
-    commit("Add Pam to employees.txt", verbose)
-
-    push("origin", "hiring", verbose)
