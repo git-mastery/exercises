@@ -299,8 +299,10 @@ class GitAutograderTestLoader:
             repo_dir = exercise_path / repo_name
             repo_dir.mkdir(parents=True, exist_ok=True)
 
-            if init:
-                Repo.init(repo_dir)
+            if repo_type == "local":
+                repo_dir.mkdir(parents=True, exist_ok=True)
+                if init:
+                    Repo.init(repo_dir)
 
             exercise_repo: Dict[str, Any] = {
                 "repo_type": repo_type,
