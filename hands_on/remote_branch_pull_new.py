@@ -12,9 +12,9 @@ from exercise_utils.github_cli import (
 __requires_git__ = True
 __requires_github__ = True
 
-TARGET_REPO = "git-mastery/samplerepo-company"
-FORK_NAME = "gitmastery-samplerepo-company"
-LOCAL_DIR = "samplerepo-company"
+TARGET_REPO = "git-mastery/samplerepo-company-2"
+FORK_NAME = "gitmastery-samplerepo-company-2"
+LOCAL_DIR = "samplerepo-company-2"
 
 
 def download(verbose: bool):
