@@ -14,7 +14,7 @@ __requires_github__ = True
 
 TARGET_REPO = "git-mastery/samplerepo-company-2"
 FORK_NAME = "gitmastery-samplerepo-company-2"
-LOCAL_DIR = "samplerepo-company-2"
+LOCAL_DIR = "samplerepo-company"
 
 
 def download(verbose: bool):
