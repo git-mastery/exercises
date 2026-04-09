@@ -1,6 +1,6 @@
 import os
 
-from exercise_utils.git import remove_remote, run_command
+from exercise_utils.git import remove_remote, run_command, track_remote_branch
 from exercise_utils.github_cli import (
     clone_repo_with_gh,
     delete_repo,
@@ -30,4 +30,5 @@ def download(verbose: bool):
     os.chdir(LOCAL_DIR)
 
     remove_remote("upstream", verbose)
+    track_remote_branch("origin", "track-sales", verbose)
     run_command(["git", "branch", "-dr", "origin/track-sales"], verbose)
