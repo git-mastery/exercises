@@ -1,18 +1,100 @@
 [
   {
-    "exercise_name": "branch-forward",
+    "exercise_name": "glossary-branch-push",
     "tags": [
-      "git-branch",
-      "git-merge"
+      "git-push"
     ],
     "requires_git": true,
-    "requires_github": false,
+    "requires_github": true,
     "base_files": {},
     "exercise_repo": {
       "repo_type": "local",
-      "repo_name": "love-story",
+      "repo_name": "funny-glossary",
       "repo_title": null,
       "create_fork": null,
+      "init": false
+    }
+  },
+  {
+    "exercise_name": "link-me",
+    "tags": [
+      "git-remote"
+    ],
+    "requires_git": true,
+    "requires_github": true,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "local",
+      "repo_name": "link-this",
+      "init": true,
+      "create_fork": null,
+      "repo_title": null
+    }
+  },
+  {
+    "exercise_name": "glossary-branch-pull",
+    "tags": [
+      "git-push"
+    ],
+    "requires_git": true,
+    "requires_github": true,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "local",
+      "repo_name": "funny-glossary",
+      "repo_title": null,
+      "create_fork": null,
+      "init": false
+    }
+  },
+  {
+    "exercise_name": "glossary-branch-rename",
+    "tags": [
+      "git-push"
+    ],
+    "requires_git": true,
+    "requires_github": true,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "local",
+      "repo_name": "funny-glossary",
+      "repo_title": null,
+      "create_fork": null,
+      "init": false
+    }
+  },
+  {
+    "exercise_name": "remote-branch-rename",
+    "tags": [
+      "git-branch"
+    ],
+    "requires_git": true,
+    "requires_github": true,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "remote",
+      "repo_name": "rename-me",
+      "repo_title": "tidy-branches",
+      "create_fork": true,
+      "init": null
+    }
+  },
+  {
+    "exercise_name": "view-commits",
+    "tags": [
+      "git-diff",
+      "git-show"
+    ],
+    "requires_git": true,
+    "requires_github": true,
+    "base_files": {
+      "answers.txt": "answers.txt"
+    },
+    "exercise_repo": {
+      "repo_type": "remote",
+      "repo_name": "duty-roster",
+      "repo_title": "gm-duty-roster",
+      "create_fork": false,
       "init": true
     }
   },
@@ -47,306 +129,6 @@
     }
   },
   {
-    "exercise_name": "clone-repo",
-    "tags": [
-      "git-clone",
-      "git-remote"
-    ],
-    "requires_git": true,
-    "requires_github": true,
-    "base_files": {},
-    "exercise_repo": {
-      "repo_type": "ignore",
-      "repo_name": "clone_repo",
-      "repo_title": null,
-      "create_fork": null,
-      "init": null
-    }
-  },
-  {
-    "exercise_name": "bonsai-tree",
-    "tags": [
-      "git-branch",
-      "git-checkout"
-    ],
-    "requires_git": true,
-    "requires_github": false,
-    "base_files": {},
-    "exercise_repo": {
-      "repo_type": "local",
-      "repo_name": "care-notes",
-      "repo_title": null,
-      "create_fork": null,
-      "init": true
-    }
-  },
-  {
-    "exercise_name": "branch-delete",
-    "tags": [
-      "git-branch"
-    ],
-    "requires_git": true,
-    "requires_github": false,
-    "base_files": {},
-    "exercise_repo": {
-      "repo_type": "local",
-      "repo_name": "delete-my-branches",
-      "repo_title": null,
-      "create_fork": null,
-      "init": true
-    }
-  },
-  {
-    "exercise_name": "fork-repo",
-    "tags": [
-      "github-fork"
-    ],
-    "requires_git": true,
-    "requires_github": true,
-    "base_files": {},
-    "exercise_repo": {
-      "repo_type": "ignore",
-      "repo_name": "ignore-me",
-      "repo_title": null,
-      "create_fork": null,
-      "init": true
-    }
-  },
-  {
-    "exercise_name": "branch-compare",
-    "tags": [
-      "git-branch",
-      "git-diff"
-    ],
-    "requires_git": true,
-    "requires_github": false,
-    "base_files": {
-      "answers.txt": "answers.txt"
-    },
-    "exercise_repo": {
-      "repo_type": "local",
-      "repo_name": "data-streams",
-      "repo_title": null,
-      "create_fork": null,
-      "init": true
-    }
-  },
-  {
-    "exercise_name": "branch-previous",
-    "tags": [
-      "git-branch"
-    ],
-    "requires_git": true,
-    "requires_github": false,
-    "base_files": {},
-    "exercise_repo": {
-      "repo_type": "local",
-      "repo_name": "horror-story",
-      "repo_title": null,
-      "create_fork": null,
-      "init": true
-    }
-  },
-  {
-    "exercise_name": "mix-messy-docs",
-    "tags": [
-      "git-branch"
-    ],
-    "requires_git": true,
-    "requires_github": true,
-    "base_files": {},
-    "exercise_repo": {
-      "repo_type": "remote",
-      "repo_name": "user-docs",
-      "repo_title": "gm-user-docs",
-      "create_fork": false,
-      "init": null
-    }
-  },
-  {
-    "exercise_name": "link-me",
-    "tags": [
-      "git-remote"
-    ],
-    "requires_git": true,
-    "requires_github": true,
-    "base_files": {},
-    "exercise_repo": {
-      "repo_type": "local",
-      "repo_name": "link-this",
-      "init": true,
-      "create_fork": null,
-      "repo_title": null
-    }
-  },
-  {
-    "exercise_name": "glossary-branch-push",
-    "tags": [
-      "git-push"
-    ],
-    "requires_git": true,
-    "requires_github": true,
-    "base_files": {},
-    "exercise_repo": {
-      "repo_type": "local",
-      "repo_name": "funny-glossary",
-      "repo_title": null,
-      "create_fork": null,
-      "init": false
-    }
-  },
-  {
-    "exercise_name": "mix-messy-graph",
-    "tags": [
-      "git-branch",
-      "git-merge"
-    ],
-    "requires_git": true,
-    "requires_github": true,
-    "base_files": {},
-    "exercise_repo": {
-      "repo_type": "remote",
-      "repo_name": "user-docs",
-      "repo_title": "gm-user-docs",
-      "create_fork": false,
-      "init": null
-    }
-  },
-  {
-    "exercise_name": "grocery-shopping",
-    "tags": [
-      "git-add",
-      "git-commit"
-    ],
-    "requires_git": true,
-    "requires_github": false,
-    "base_files": {},
-    "exercise_repo": {
-      "repo_type": "local",
-      "repo_name": "shopping-list",
-      "init": true,
-      "create_fork": null,
-      "repo_title": null
-    }
-  },
-  {
-    "exercise_name": "sensors-checkout",
-    "tags": [
-      "git-checkout"
-    ],
-    "requires_git": true,
-    "requires_github": true,
-    "base_files": {
-      "answers.txt": "answers.txt"
-    },
-    "exercise_repo": {
-      "repo_type": "remote",
-      "repo_name": "sensors",
-      "repo_title": "gm-sensors",
-      "create_fork": false,
-      "init": null
-    }
-  },
-  {
-    "exercise_name": "ignoring-somethings",
-    "tags": [
-      "gitignore"
-    ],
-    "requires_git": true,
-    "requires_github": false,
-    "base_files": {},
-    "exercise_repo": {
-      "repo_type": "local",
-      "repo_name": "files",
-      "init": true,
-      "create_fork": null,
-      "repo_title": null
-    }
-  },
-  {
-    "exercise_name": "remote-branch-rename",
-    "tags": [
-      "git-branch"
-    ],
-    "requires_git": true,
-    "requires_github": true,
-    "base_files": {},
-    "exercise_repo": {
-      "repo_type": "remote",
-      "repo_name": "rename-me",
-      "repo_title": "tidy-branches",
-      "create_fork": true,
-      "init": null
-    }
-  },
-  {
-    "exercise_name": "glossary-branch-delete",
-    "tags": [
-      "git-push"
-    ],
-    "requires_git": true,
-    "requires_github": true,
-    "base_files": {},
-    "exercise_repo": {
-      "repo_type": "local",
-      "repo_name": "funny-glossary",
-      "repo_title": null,
-      "create_fork": null,
-      "init": false
-    }
-  },
-  {
-    "exercise_name": "fetch-and-pull",
-    "tags": [
-      "git-fetch",
-      "git-pull"
-    ],
-    "requires_git": true,
-    "requires_github": true,
-    "base_files": {},
-    "exercise_repo": {
-      "repo_type": "remote",
-      "repo_name": "gm-shapes",
-      "repo_title": "gm-shapes",
-      "create_fork": false,
-      "init": null
-    }
-  },
-  {
-    "exercise_name": "merge-squash",
-    "tags": [
-      "git-branch",
-      "git-merge",
-      "git-reset"
-    ],
-    "requires_git": true,
-    "requires_github": false,
-    "base_files": {},
-    "exercise_repo": {
-      "repo_type": "local",
-      "repo_name": "friends-cast",
-      "repo_title": null,
-      "create_fork": null,
-      "init": true
-    }
-  },
-  {
-    "exercise_name": "undo-init",
-    "tags": [
-      "git-init"
-    ],
-    "requires_git": true,
-    "requires_github": false,
-    "base_files": {},
-    "exercise_repo": {
-      "repo_type": "local-ignore",
-      "repo_name": "my-notes",
-      "repo_title": null,
-      "create_fork": null,
-      "init": false
-    }
-  },
-  {
     "exercise_name": "conflict-mediator",
     "tags": [
       "git-merge",
@@ -358,209 +140,6 @@
     "exercise_repo": {
       "repo_type": "local",
       "repo_name": "conflict",
-      "repo_title": null,
-      "create_fork": null,
-      "init": true
-    }
-  },
-  {
-    "exercise_name": "sensors-reset",
-    "tags": [
-      "git-reset"
-    ],
-    "requires_git": true,
-    "requires_github": true,
-    "base_files": {},
-    "exercise_repo": {
-      "repo_type": "remote",
-      "repo_name": "sensors",
-      "repo_title": "gm-sensors",
-      "create_fork": false,
-      "init": null
-    }
-  },
-  {
-    "exercise_name": "tags-update",
-    "tags": [
-      "git-tag"
-    ],
-    "requires_git": true,
-    "requires_github": true,
-    "base_files": {},
-    "exercise_repo": {
-      "repo_type": "remote",
-      "repo_name": "duty-roster",
-      "repo_title": "gm-duty-roster",
-      "create_fork": false,
-      "init": null
-    }
-  },
-  {
-    "exercise_name": "merge-undo",
-    "tags": [
-      "git-branch",
-      "git-merge",
-      "git-reset"
-    ],
-    "requires_git": true,
-    "requires_github": false,
-    "base_files": {},
-    "exercise_repo": {
-      "repo_type": "local",
-      "repo_name": "play-characters",
-      "repo_title": null,
-      "create_fork": null,
-      "init": true
-    }
-  },
-  {
-    "exercise_name": "glossary-branch-pull",
-    "tags": [
-      "git-push"
-    ],
-    "requires_git": true,
-    "requires_github": true,
-    "base_files": {},
-    "exercise_repo": {
-      "repo_type": "local",
-      "repo_name": "funny-glossary",
-      "repo_title": null,
-      "create_fork": null,
-      "init": false
-    }
-  },
-  {
-    "exercise_name": "ff-undo",
-    "tags": [
-      "git-branch",
-      "git-merge",
-      "git-reset"
-    ],
-    "requires_git": true,
-    "requires_github": false,
-    "base_files": {},
-    "exercise_repo": {
-      "repo_type": "local",
-      "repo_name": "play-characters",
-      "repo_title": null,
-      "create_fork": null,
-      "init": true
-    }
-  },
-  {
-    "exercise_name": "push-over",
-    "tags": [
-      "git-remote",
-      "git-commit",
-      "git-push"
-    ],
-    "requires_git": true,
-    "requires_github": true,
-    "base_files": {},
-    "exercise_repo": {
-      "repo_name": "push-this",
-      "repo_title": "push-over",
-      "repo_type": "remote",
-      "init": null,
-      "create_fork": true
-    }
-  },
-  {
-    "exercise_name": "view-commits",
-    "tags": [
-      "git-diff",
-      "git-show"
-    ],
-    "requires_git": true,
-    "requires_github": true,
-    "base_files": {
-      "answers.txt": "answers.txt"
-    },
-    "exercise_repo": {
-      "repo_type": "remote",
-      "repo_name": "duty-roster",
-      "repo_title": "gm-duty-roster",
-      "create_fork": false,
-      "init": true
-    }
-  },
-  {
-    "exercise_name": "branch-bender",
-    "tags": [
-      "git-merge"
-    ],
-    "requires_git": true,
-    "requires_github": false,
-    "base_files": {},
-    "exercise_repo": {
-      "repo_type": "local",
-      "repo_name": "webapp",
-      "repo_title": null,
-      "create_fork": null,
-      "init": true
-    }
-  },
-  {
-    "exercise_name": "amateur-detective",
-    "tags": [
-      "git-status"
-    ],
-    "requires_git": true,
-    "requires_github": false,
-    "base_files": {
-      "answers.txt": "answers.txt"
-    },
-    "exercise_repo": {
-      "repo_type": "local",
-      "repo_name": "crime-scene",
-      "repo_title": null,
-      "create_fork": null,
-      "init": true
-    }
-  },
-  {
-    "exercise_name": "staging-intervention",
-    "tags": [
-      "git-restore"
-    ],
-    "requires_git": true,
-    "requires_github": false,
-    "base_files": {},
-    "exercise_repo": {
-      "repo_type": "local",
-      "repo_name": "intervention",
-      "repo_title": null,
-      "create_fork": null,
-      "init": true
-    }
-  },
-  {
-    "exercise_name": "sensors-revert",
-    "tags": [
-      "git-reset"
-    ],
-    "requires_git": true,
-    "requires_github": true,
-    "base_files": {},
-    "exercise_repo": {
-      "repo_type": "remote",
-      "repo_name": "sensors",
-      "repo_title": "gm-sensors",
-      "create_fork": false,
-      "init": null
-    }
-  },
-  {
-    "exercise_name": "branch-rename",
-    "tags": [
-      "git-branch"
-    ],
-    "requires_git": true,
-    "requires_github": false,
-    "base_files": {},
-    "exercise_repo": {
-      "repo_type": "local",
-      "repo_name": "rename-this",
       "repo_title": null,
       "create_fork": null,
       "init": true
@@ -585,36 +164,73 @@
     }
   },
   {
-    "exercise_name": "side-track",
+    "exercise_name": "mix-messy-docs",
     "tags": [
-      "git-branch",
-      "git-checkout"
-    ],
-    "requires_git": true,
-    "requires_github": false,
-    "base_files": {},
-    "exercise_repo": {
-      "repo_type": "local",
-      "repo_name": "branch-me",
-      "repo_title": null,
-      "create_fork": null,
-      "init": true
-    }
-  },
-  {
-    "exercise_name": "tags-add",
-    "tags": [
-      "git-tag"
+      "git-branch"
     ],
     "requires_git": true,
     "requires_github": true,
     "base_files": {},
     "exercise_repo": {
       "repo_type": "remote",
-      "repo_name": "duty-roster",
+      "repo_name": "user-docs",
+      "repo_title": "gm-user-docs",
       "create_fork": false,
-      "repo_title": "gm-duty-roster",
-      "init": false
+      "init": null
+    }
+  },
+  {
+    "exercise_name": "push-over",
+    "tags": [
+      "git-remote",
+      "git-commit",
+      "git-push"
+    ],
+    "requires_git": true,
+    "requires_github": true,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_name": "push-this",
+      "repo_title": "push-over",
+      "repo_type": "remote",
+      "init": null,
+      "create_fork": true
+    }
+  },
+  {
+    "exercise_name": "merge-undo",
+    "tags": [
+      "git-branch",
+      "git-merge",
+      "git-reset"
+    ],
+    "requires_git": true,
+    "requires_github": false,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "local",
+      "repo_name": "play-characters",
+      "repo_title": null,
+      "create_fork": null,
+      "init": true
+    }
+  },
+  {
+    "exercise_name": "ff-undo",
+    "tags": [
+      "git-branch",
+      "git-merge",
+      "git-reset"
+    ],
+    "requires_git": true,
+    "requires_github": false,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "local",
+      "repo_name": "play-characters",
+      "repo_title": null,
+      "create_fork": null,
+      "init": true
     }
   },
   {
@@ -636,19 +252,53 @@
     }
   },
   {
-    "exercise_name": "glossary-branch-rename",
+    "exercise_name": "grocery-shopping",
     "tags": [
-      "git-push"
+      "git-add",
+      "git-commit"
+    ],
+    "requires_git": true,
+    "requires_github": false,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "local",
+      "repo_name": "shopping-list",
+      "init": true,
+      "create_fork": null,
+      "repo_title": null
+    }
+  },
+  {
+    "exercise_name": "tags-add",
+    "tags": [
+      "git-tag"
     ],
     "requires_git": true,
     "requires_github": true,
     "base_files": {},
     "exercise_repo": {
+      "repo_type": "remote",
+      "repo_name": "duty-roster",
+      "create_fork": false,
+      "repo_title": "gm-duty-roster",
+      "init": false
+    }
+  },
+  {
+    "exercise_name": "bonsai-tree",
+    "tags": [
+      "git-branch",
+      "git-checkout"
+    ],
+    "requires_git": true,
+    "requires_github": false,
+    "base_files": {},
+    "exercise_repo": {
       "repo_type": "local",
-      "repo_name": "funny-glossary",
+      "repo_name": "care-notes",
       "repo_title": null,
       "create_fork": null,
-      "init": false
+      "init": true
     }
   },
   {
@@ -665,6 +315,257 @@
       "repo_title": "gm-duty-roster",
       "create_fork": true,
       "init": null
+    }
+  },
+  {
+    "exercise_name": "ignoring-somethings",
+    "tags": [
+      "gitignore"
+    ],
+    "requires_git": true,
+    "requires_github": false,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "local",
+      "repo_name": "files",
+      "init": true,
+      "create_fork": null,
+      "repo_title": null
+    }
+  },
+  {
+    "exercise_name": "sensors-revert",
+    "tags": [
+      "git-reset"
+    ],
+    "requires_git": true,
+    "requires_github": true,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "remote",
+      "repo_name": "sensors",
+      "repo_title": "gm-sensors",
+      "create_fork": false,
+      "init": null
+    }
+  },
+  {
+    "exercise_name": "branch-compare",
+    "tags": [
+      "git-branch",
+      "git-diff"
+    ],
+    "requires_git": true,
+    "requires_github": false,
+    "base_files": {
+      "answers.txt": "answers.txt"
+    },
+    "exercise_repo": {
+      "repo_type": "local",
+      "repo_name": "data-streams",
+      "repo_title": null,
+      "create_fork": null,
+      "init": true
+    }
+  },
+  {
+    "exercise_name": "branch-forward",
+    "tags": [
+      "git-branch",
+      "git-merge"
+    ],
+    "requires_git": true,
+    "requires_github": false,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "local",
+      "repo_name": "love-story",
+      "repo_title": null,
+      "create_fork": null,
+      "init": true
+    }
+  },
+  {
+    "exercise_name": "under-control",
+    "tags": [
+      "git-init"
+    ],
+    "requires_git": false,
+    "requires_github": false,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "local",
+      "repo_name": "control-me",
+      "init": false,
+      "create_fork": null,
+      "repo_title": null
+    }
+  },
+  {
+    "exercise_name": "merge-squash",
+    "tags": [
+      "git-branch",
+      "git-merge",
+      "git-reset"
+    ],
+    "requires_git": true,
+    "requires_github": false,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "local",
+      "repo_name": "friends-cast",
+      "repo_title": null,
+      "create_fork": null,
+      "init": true
+    }
+  },
+  {
+    "exercise_name": "mix-messy-graph",
+    "tags": [
+      "git-branch",
+      "git-merge"
+    ],
+    "requires_git": true,
+    "requires_github": true,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "remote",
+      "repo_name": "user-docs",
+      "repo_title": "gm-user-docs",
+      "create_fork": false,
+      "init": null
+    }
+  },
+  {
+    "exercise_name": "branch-rename",
+    "tags": [
+      "git-branch"
+    ],
+    "requires_git": true,
+    "requires_github": false,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "local",
+      "repo_name": "rename-this",
+      "repo_title": null,
+      "create_fork": null,
+      "init": true
+    }
+  },
+  {
+    "exercise_name": "staging-intervention",
+    "tags": [
+      "git-restore"
+    ],
+    "requires_git": true,
+    "requires_github": false,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "local",
+      "repo_name": "intervention",
+      "repo_title": null,
+      "create_fork": null,
+      "init": true
+    }
+  },
+  {
+    "exercise_name": "fetch-and-pull",
+    "tags": [
+      "git-fetch",
+      "git-pull"
+    ],
+    "requires_git": true,
+    "requires_github": true,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "remote",
+      "repo_name": "gm-shapes",
+      "repo_title": "gm-shapes",
+      "create_fork": false,
+      "init": null
+    }
+  },
+  {
+    "exercise_name": "side-track",
+    "tags": [
+      "git-branch",
+      "git-checkout"
+    ],
+    "requires_git": true,
+    "requires_github": false,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "local",
+      "repo_name": "branch-me",
+      "repo_title": null,
+      "create_fork": null,
+      "init": true
+    }
+  },
+  {
+    "exercise_name": "undo-init",
+    "tags": [
+      "git-init"
+    ],
+    "requires_git": true,
+    "requires_github": false,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "local-ignore",
+      "repo_name": "my-notes",
+      "repo_title": null,
+      "create_fork": null,
+      "init": false
+    }
+  },
+  {
+    "exercise_name": "branch-bender",
+    "tags": [
+      "git-merge"
+    ],
+    "requires_git": true,
+    "requires_github": false,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "local",
+      "repo_name": "webapp",
+      "repo_title": null,
+      "create_fork": null,
+      "init": true
+    }
+  },
+  {
+    "exercise_name": "sensors-checkout",
+    "tags": [
+      "git-checkout"
+    ],
+    "requires_git": true,
+    "requires_github": true,
+    "base_files": {
+      "answers.txt": "answers.txt"
+    },
+    "exercise_repo": {
+      "repo_type": "remote",
+      "repo_name": "sensors",
+      "repo_title": "gm-sensors",
+      "create_fork": false,
+      "init": null
+    }
+  },
+  {
+    "exercise_name": "branch-delete",
+    "tags": [
+      "git-branch"
+    ],
+    "requires_git": true,
+    "requires_github": false,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "local",
+      "repo_name": "delete-my-branches",
+      "repo_title": null,
+      "create_fork": null,
+      "init": true
     }
   },
   {
@@ -686,19 +587,118 @@
     }
   },
   {
-    "exercise_name": "under-control",
+    "exercise_name": "tags-update",
     "tags": [
-      "git-init"
+      "git-tag"
     ],
-    "requires_git": false,
+    "requires_git": true,
+    "requires_github": true,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "remote",
+      "repo_name": "duty-roster",
+      "repo_title": "gm-duty-roster",
+      "create_fork": false,
+      "init": null
+    }
+  },
+  {
+    "exercise_name": "branch-previous",
+    "tags": [
+      "git-branch"
+    ],
+    "requires_git": true,
     "requires_github": false,
     "base_files": {},
     "exercise_repo": {
       "repo_type": "local",
-      "repo_name": "control-me",
-      "init": false,
+      "repo_name": "horror-story",
+      "repo_title": null,
       "create_fork": null,
-      "repo_title": null
+      "init": true
+    }
+  },
+  {
+    "exercise_name": "fork-repo",
+    "tags": [
+      "github-fork"
+    ],
+    "requires_git": true,
+    "requires_github": true,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "ignore",
+      "repo_name": "ignore-me",
+      "repo_title": null,
+      "create_fork": null,
+      "init": true
+    }
+  },
+  {
+    "exercise_name": "sensors-reset",
+    "tags": [
+      "git-reset"
+    ],
+    "requires_git": true,
+    "requires_github": true,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "remote",
+      "repo_name": "sensors",
+      "repo_title": "gm-sensors",
+      "create_fork": false,
+      "init": null
+    }
+  },
+  {
+    "exercise_name": "amateur-detective",
+    "tags": [
+      "git-status"
+    ],
+    "requires_git": true,
+    "requires_github": false,
+    "base_files": {
+      "answers.txt": "answers.txt"
+    },
+    "exercise_repo": {
+      "repo_type": "local",
+      "repo_name": "crime-scene",
+      "repo_title": null,
+      "create_fork": null,
+      "init": true
+    }
+  },
+  {
+    "exercise_name": "clone-repo",
+    "tags": [
+      "git-clone",
+      "git-remote"
+    ],
+    "requires_git": true,
+    "requires_github": true,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "ignore",
+      "repo_name": "clone_repo",
+      "repo_title": null,
+      "create_fork": null,
+      "init": null
+    }
+  },
+  {
+    "exercise_name": "glossary-branch-delete",
+    "tags": [
+      "git-push"
+    ],
+    "requires_git": true,
+    "requires_github": true,
+    "base_files": {},
+    "exercise_repo": {
+      "repo_type": "local",
+      "repo_name": "funny-glossary",
+      "repo_title": null,
+      "create_fork": null,
+      "init": false
     }
   }
 ]
