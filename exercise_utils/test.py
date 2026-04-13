@@ -1,3 +1,4 @@
+import json
 import os
 import tempfile
 from contextlib import contextmanager
@@ -274,6 +275,71 @@ class GitAutograderTestLoader:
             # extract only rs if include_remote_repo is False
             with test as (ctx, rs, rs_remote):
                 yield ctx, rs
+
+    @contextmanager
+    def start_mock_exercise(
+        self,
+        *,
+        tags: Optional[List[str]] = None,
+        requires_git: bool = True,
+        requires_github: bool = True,
+        base_files: Optional[Dict[str, str]] = None,
+        repo_type: str = "local",
+        repo_name: str = "ignore-me",
+        init: bool = True,
+        create_fork: Optional[bool] = None,
+        repo_title: Optional[str] = None,
+        has_pr_context: bool = False,
+        pr_number: Optional[int] = None,
+        pr_repo_full_name: Optional[str] = None,
+        downloaded_at: Optional[str] = None,
+    ) -> Iterator[GitAutograderExercise]:
+        with tempfile.TemporaryDirectory() as temp_dir:
+            exercise_path = Path(temp_dir)
+            repo_dir = exercise_path / repo_name
+            repo_dir.mkdir(parents=True, exist_ok=True)
+
+            if repo_type == "local":
+                repo_dir.mkdir(parents=True, exist_ok=True)
+                if init:
+                    Repo.init(repo_dir)
+
+            exercise_repo: Dict[str, Any] = {
+                "repo_type": repo_type,
+                "repo_name": repo_name,
+                "init": init,
+                "create_fork": create_fork,
+                "repo_title": repo_title,
+            }
+            config: Dict[str, Any] = {
+                "exercise_name": self.exercise_name,
+                "tags": tags or [],
+                "requires_git": requires_git,
+                "requires_github": requires_github,
+                "base_files": base_files or {},
+                "exercise_repo": exercise_repo,
+                "downloaded_at": downloaded_at,
+            }
+
+            if has_pr_context:
+                # If the user does not provide PR context, dummy values will be used.
+                if pr_number is None:
+                    pr_number = 1
+                if pr_repo_full_name is None:
+                    pr_repo_full_name = "dummy/repo"
+                exercise_repo["pr_number"] = pr_number
+                exercise_repo["pr_repo_full_name"] = pr_repo_full_name
+            with open(exercise_path / ".gitmastery-exercise.json", "w") as f:
+                json.dump(config, f)
+
+            if has_pr_context:
+                with mock.patch(
+                    "git_autograder.pr.fetch_pull_request_data",
+                    return_value={},
+                ):
+                    yield GitAutograderExercise(exercise_path=exercise_path)
+            else:
+                yield GitAutograderExercise(exercise_path=exercise_path)
 
 
 def assert_output(
