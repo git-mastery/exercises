@@ -25,80 +25,80 @@ loader = GitAutograderTestLoader(REPOSITORY_NAME, verify)
 
 
 def test_pass():
-    with loader.start_mock_exercise() as exercise:
-        with (
-            patch("tags_push.verify.get_username", return_value="dummy"),
-            patch(
-                "tags_push.verify.get_remote_tags",
-                return_value=[TAG_1_NAME, TAG_2_NAME],
-            ),
-        ):
-            output = verify(exercise)
-            assert_output(output, GitAutograderStatus.SUCCESSFUL)
+    with (
+        loader.start_mock_exercise() as exercise,
+        patch("tags_push.verify.get_username", return_value="dummy"),
+        patch(
+            "tags_push.verify.get_remote_tags",
+            return_value=[TAG_1_NAME, TAG_2_NAME],
+        ),
+    ):
+        output = verify(exercise)
+        assert_output(output, GitAutograderStatus.SUCCESSFUL)
 
 
 def test_improper_gh_setup():
-    with loader.start_mock_exercise() as exercise:
-        with (
-            patch("tags_push.verify.get_username", return_value=None),
-            patch(
-                "tags_push.verify.get_remote_tags",
-                return_value=[TAG_1_NAME, TAG_2_NAME],
-            ),
-            pytest.raises(GitAutograderWrongAnswerException) as exception,
-        ):
-            verify(exercise)
+    with (
+        loader.start_mock_exercise() as exercise,
+        patch("tags_push.verify.get_username", return_value=None),
+        patch(
+            "tags_push.verify.get_remote_tags",
+            return_value=[TAG_1_NAME, TAG_2_NAME],
+        ),
+        pytest.raises(GitAutograderWrongAnswerException) as exception,
+    ):
+        verify(exercise)
 
         assert exception.value.message == [IMPROPER_GH_CLI_SETUP]
 
 
 def test_beta_present():
-    with loader.start_mock_exercise() as exercise:
-        with (
-            patch("tags_push.verify.get_username", return_value="dummy"),
-            patch(
-                "tags_push.verify.get_remote_tags",
-                return_value=[TAG_1_NAME, TAG_2_NAME, TAG_DELETE_NAME],
-            ),
-            pytest.raises(GitAutograderWrongAnswerException) as exception,
-        ):
-            verify(exercise)
+    with (
+        loader.start_mock_exercise() as exercise,
+        patch("tags_push.verify.get_username", return_value="dummy"),
+        patch(
+            "tags_push.verify.get_remote_tags",
+            return_value=[TAG_1_NAME, TAG_2_NAME, TAG_DELETE_NAME],
+        ),
+        pytest.raises(GitAutograderWrongAnswerException) as exception,
+    ):
+        verify(exercise)
 
         assert exception.value.message == [TAG_DELETE_NOT_REMOVED]
 
 
 def test_tag_1_absent():
-    with loader.start_mock_exercise() as exercise:
-        with (
-            patch("tags_push.verify.get_username", return_value="dummy"),
-            patch("tags_push.verify.get_remote_tags", return_value=[TAG_2_NAME]),
-            pytest.raises(GitAutograderWrongAnswerException) as exception,
-        ):
-            verify(exercise)
+    with (
+        loader.start_mock_exercise() as exercise,
+        patch("tags_push.verify.get_username", return_value="dummy"),
+        patch("tags_push.verify.get_remote_tags", return_value=[TAG_2_NAME]),
+        pytest.raises(GitAutograderWrongAnswerException) as exception,
+    ):
+        verify(exercise)
 
         assert exception.value.message == [TAG_1_MISSING]
 
 
 def test_tag_2_absent():
-    with loader.start_mock_exercise() as exercise:
-        with (
-            patch("tags_push.verify.get_username", return_value="dummy"),
-            patch("tags_push.verify.get_remote_tags", return_value=[TAG_1_NAME]),
-            pytest.raises(GitAutograderWrongAnswerException) as exception,
-        ):
-            verify(exercise)
+    with (
+        loader.start_mock_exercise() as exercise,
+        patch("tags_push.verify.get_username", return_value="dummy"),
+        patch("tags_push.verify.get_remote_tags", return_value=[TAG_1_NAME]),
+        pytest.raises(GitAutograderWrongAnswerException) as exception,
+    ):
+        verify(exercise)
 
         assert exception.value.message == [TAG_2_MISSING]
 
 
 def test_all_wrong():
-    with loader.start_mock_exercise() as exercise:
-        with (
-            patch("tags_push.verify.get_username", return_value="dummy"),
-            patch("tags_push.verify.get_remote_tags", return_value=[TAG_DELETE_NAME]),
-            pytest.raises(GitAutograderWrongAnswerException) as exception,
-        ):
-            verify(exercise)
+    with (
+        loader.start_mock_exercise() as exercise,
+        patch("tags_push.verify.get_username", return_value="dummy"),
+        patch("tags_push.verify.get_remote_tags", return_value=[TAG_DELETE_NAME]),
+        pytest.raises(GitAutograderWrongAnswerException) as exception,
+    ):
+        verify(exercise)
 
     assert exception.value.message == [
         TAG_1_MISSING,

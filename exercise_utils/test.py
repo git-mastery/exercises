@@ -322,6 +322,7 @@ class GitAutograderTestLoader:
             }
 
             if has_pr_context:
+                # If the user does not provide PR context, dummy values will be used.
                 if pr_number is None:
                     pr_number = 1
                 if pr_repo_full_name is None:
