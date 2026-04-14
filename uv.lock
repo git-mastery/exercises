@@ -561,16 +561,16 @@ wheels = [
 
 [[package]]
 name = "repo-smith"
-version = "2.6.1"
+version = "2.7.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "gitpython" },
     { name = "pyyaml" },
     { name = "types-pyyaml" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/81/4b/58151429a13561392303af401e24275eb026b4fb78ab3756ecc6733ad3a9/repo_smith-2.6.1.tar.gz", hash = "sha256:1b0c18b159877caf1a05f74398f1a8d180375768e5871ce437680153920046bf", size = 34105, upload-time = "2026-01-26T09:08:20.574Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/bf/5c/360c42288245362732f655697143ebd097b5413c5edec30500049d718cca/repo_smith-2.7.0.tar.gz", hash = "sha256:3e436f2b913abf42b8bc80c32c9e0c9d6be64f92c1d115a5b501eb5d45af74e7", size = 71890, upload-time = "2026-04-14T14:56:29.739Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/c5/46/597a3cadf4df36eca76bfc9e5d952d83cd9a8f680c63c5b6b3117250edd6/repo_smith-2.6.1-py3-none-any.whl", hash = "sha256:48aa76393dacd8532a5f5654699e7dffc09606406099974a89b556ab6fa495b5", size = 35943, upload-time = "2026-01-26T09:08:19.44Z" },
+    { url = "https://files.pythonhosted.org/packages/41/65/23ce3613c580e4f6406868e896dff728757ffd4c0b9b1e28dbe1fbbc0384/repo_smith-2.7.0-py3-none-any.whl", hash = "sha256:8431b8e6dac72d5f79ce6524ed6c1d2140accaf0ba89017258c06be99ff89b1b", size = 35942, upload-time = "2026-04-14T14:56:28.538Z" },
 ]
 
 [[package]]
