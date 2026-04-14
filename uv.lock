@@ -227,7 +227,7 @@ wheels = [
 
 [[package]]
 name = "git-autograder"
-version = "6.6.0"
+version = "6.7.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "difflib-parser" },
@@ -236,9 +236,9 @@ dependencies = [
     { name = "repo-smith" },
     { name = "types-pytz" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/a7/d7/7217958d5f94864991263e0b21260860d739950103ff06202e7fcc120b79/git_autograder-6.6.0.tar.gz", hash = "sha256:ad8f5303db44e1dea81e0d6a8e29f5c7bc2dc3b6dfa6b07b3dd9d457f616fb9b", size = 17141, upload-time = "2026-01-04T15:14:45.075Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/51/3e/dad3cb45346992ec2867050285ec0d7cb558f08204333536f0b24e5261e1/git_autograder-6.7.0.tar.gz", hash = "sha256:a4abc1cef6ebf5f71d3d3be4d9c76059e480af466b01069ff226a0593e28c41c", size = 54854, upload-time = "2026-04-14T15:06:28.074Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/d2/94/daae941a4ac894b1b34b2cf75e3e7be1d4403f9c999d08cab17dc0ca9c3f/git_autograder-6.6.0-py3-none-any.whl", hash = "sha256:041c6e0d0fe986c8f7030223e0db2564dffe98c40d39ea53a711f1839566e9fd", size = 23612, upload-time = "2026-01-04T15:14:43.954Z" },
+    { url = "https://files.pythonhosted.org/packages/58/9c/6b467b8ab85cf591c342e43c78e81df7a2db1446227b27042b2d3d1c6486/git_autograder-6.7.0-py3-none-any.whl", hash = "sha256:9ce952a0d53522f3e7ea3d49d9ecb00acb7602eea669429d19fb19c371b3c420", size = 33437, upload-time = "2026-04-14T15:06:27.164Z" },
 ]
 
 [[package]]
