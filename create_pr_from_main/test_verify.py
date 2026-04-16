@@ -36,37 +36,37 @@ class FakeCommit:
 
 
 def _run_verify(
-    pr_numbers: list[int] = [],
+    pr_numbers: list[int] | None = None,
     head_branch: str = "",
     java_content: str | None = None,
 ):
+    if pr_numbers is None:
+        pr_numbers = []
     fake_commit = FakeCommit(java_content)
-    with loader.start_mock_exercise(
-        has_pr_context=True, 
-        pr_number=1, 
-        pr_repo_full_name="dummy/repo"
-    ) as exercise:
-        with (
-            patch(
-                "create_pr_from_main.verify.get_pr_numbers_by_author",
-                return_value=pr_numbers,
-            ),
-            patch("create_pr_from_main.verify.add_pr_config"),
-            patch.object(exercise, "fetch_pr", return_value=None),
-            patch.object(
-                GitAutograderPr,
-                "head_branch",
-                new_callable=PropertyMock,
-                return_value=head_branch,
-            ),
-            patch.object(
-                GitAutograderPr,
-                "last_user_commit",
-                new_callable=PropertyMock,
-                return_value=fake_commit,
-            ),
-        ):
-            return verify(exercise)
+    with (
+        loader.start_mock_exercise(
+            has_pr_context=True, pr_number=1, pr_repo_full_name="dummy/repo"
+        ) as exercise,
+        patch(
+            "create_pr_from_main.verify.get_pr_numbers_by_author",
+            return_value=pr_numbers,
+        ),
+        patch("create_pr_from_main.verify.add_pr_config"),
+        patch.object(exercise, "fetch_pr", return_value=None),
+        patch.object(
+            GitAutograderPr,
+            "head_branch",
+            new_callable=PropertyMock,
+            return_value=head_branch,
+        ),
+        patch.object(
+            GitAutograderPr,
+            "last_user_commit",
+            new_callable=PropertyMock,
+            return_value=fake_commit,
+        ),
+    ):
+        return verify(exercise)
 
 
 def test_success():
@@ -88,10 +88,7 @@ def test_pr_missing():
 
 def test_wrong_head_branch():
     with pytest.raises(GitAutograderWrongAnswerException) as exception:
-        _run_verify(
-            pr_numbers=[1],
-            head_branch="feature/pr-branch"
-        )
+        _run_verify(pr_numbers=[1], head_branch="feature/pr-branch")
 
     assert exception.value.message == [WRONG_HEAD_BRANCH]
 

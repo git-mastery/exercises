@@ -1,1 +1,1 @@
-See https://git-mastery.github.io/lessons/prsCreate/exercise-create-pr-from-main.html
+See https://git-mastery.org/lessons/prsCreate/exercise-create-pr-from-main.html

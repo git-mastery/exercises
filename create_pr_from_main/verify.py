@@ -12,7 +12,7 @@ from exercise_utils.github_cli import get_github_username, get_pr_numbers_by_aut
 
 JAVA_FILE_MISSING = "Java.txt file is missing in the latest commit on main branch."
 JAVA_INVALID_CONTENT = "The content in Java.txt in main branch is not correct."
-MUTIPLE_PRS = "Multiple PRs found. The lastest pr will be used in grading."
+MULTIPLE_PRS = "Multiple PRs found. The latest pr will be used in grading."
 PR_MISSING = "No PR is found."
 WRONG_HEAD_BRANCH = "The PR's head branch is not 'main'."
 
@@ -24,12 +24,12 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
     username = get_github_username(False)
     target_repo = f"git-mastery/{exercise.config.exercise_repo.repo_title}"
     comments = []
-    
+
     pr_numbers = get_pr_numbers_by_author(username, target_repo, False)
     if not pr_numbers:
         raise exercise.wrong_answer([PR_MISSING])
     if len(pr_numbers) > 1:
-        comments.append(MUTIPLE_PRS)
+        comments.append(MULTIPLE_PRS)
     pr_number = pr_numbers[-1]
 
     add_pr_config(pr_number=pr_number, config_path=Path("./"))
@@ -44,7 +44,9 @@ def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
         if content is None:
             comments.append(JAVA_FILE_MISSING)
             raise exercise.wrong_answer(comments)
-        extracted_content = [line.strip() for line in content.splitlines() if line.strip() != ""]
+        extracted_content = [
+            line.strip() for line in content.splitlines() if line.strip() != ""
+        ]
     if extracted_content != EXPECTED_CONTENT_STEP_3:
         comments.append(JAVA_INVALID_CONTENT)
         raise exercise.wrong_answer(comments)
