@@ -17,7 +17,7 @@ PR_MISSING = "No PR is found."
 WRONG_HEAD_BRANCH = "The PR's head branch is not 'main'."
 
 
-EXPECTED_CONTENT_STEP_3 = ["1955, by James Gosling"]
+EXPECTED_CONTENT_STEP_3 = ["1995, by James Gosling"]
 
 
 def verify(exercise: GitAutograderExercise) -> GitAutograderOutput:
