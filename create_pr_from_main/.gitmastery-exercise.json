@@ -1,0 +1,14 @@
+{
+  "exercise_name": "create-pr-from-main",
+  "tags": [],
+  "requires_git": true,
+  "requires_github": true,
+  "base_files": {},
+  "exercise_repo": {
+    "repo_type": "remote",
+    "repo_name": "languages",
+    "repo_title": "gm-languages",
+    "create_fork": true,
+    "init": null
+  }
+}
