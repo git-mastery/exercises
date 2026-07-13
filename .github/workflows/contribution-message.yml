@@ -13,7 +13,7 @@ jobs:
     steps:
       # DO NOT CHECKOUT TO HEAD UNSAFE (will checkout to head of the fork for pull_request_target trigger)
       - name: Checkout repository
-        uses: actions/checkout@v6
+        uses: actions/checkout@v7
 
       - name: Setup Python
         uses: actions/setup-python@v6
