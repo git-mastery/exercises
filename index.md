@@ -2,34 +2,34 @@
 
 | Exercise | Download Command |
 |----------|------------------|
-| [stage-fright](https://git-mastery.org/exercises/stage_fright) | `gitmastery download stage-fright` |
 | [grocery-shopping](https://git-mastery.org/exercises/grocery_shopping) | `gitmastery download grocery-shopping` |
+| [stage-fright](https://git-mastery.org/exercises/stage_fright) | `gitmastery download stage-fright` |
 
 # git-branch
 
 | Exercise | Download Command |
 |----------|------------------|
-| [side-track](https://git-mastery.org/exercises/side_track) | `gitmastery download side-track` |
 | [mix-messy-docs](https://git-mastery.org/exercises/mix_messy_docs) | `gitmastery download mix-messy-docs` |
-| [branch-previous](https://git-mastery.org/exercises/branch_previous) | `gitmastery download branch-previous` |
-| [branch-rename](https://git-mastery.org/exercises/branch_rename) | `gitmastery download branch-rename` |
-| [branch-delete](https://git-mastery.org/exercises/branch_delete) | `gitmastery download branch-delete` |
-| [ff-undo](https://git-mastery.org/exercises/ff_undo) | `gitmastery download ff-undo` |
-| [mix-messy-graph](https://git-mastery.org/exercises/mix_messy_graph) | `gitmastery download mix-messy-graph` |
-| [merge-squash](https://git-mastery.org/exercises/merge_squash) | `gitmastery download merge-squash` |
-| [branch-compare](https://git-mastery.org/exercises/branch_compare) | `gitmastery download branch-compare` |
 | [remote-branch-rename](https://git-mastery.org/exercises/remote_branch_rename) | `gitmastery download remote-branch-rename` |
+| [ff-undo](https://git-mastery.org/exercises/ff_undo) | `gitmastery download ff-undo` |
+| [branch-delete](https://git-mastery.org/exercises/branch_delete) | `gitmastery download branch-delete` |
 | [branch-forward](https://git-mastery.org/exercises/branch_forward) | `gitmastery download branch-forward` |
-| [merge-undo](https://git-mastery.org/exercises/merge_undo) | `gitmastery download merge-undo` |
+| [mix-messy-graph](https://git-mastery.org/exercises/mix_messy_graph) | `gitmastery download mix-messy-graph` |
 | [bonsai-tree](https://git-mastery.org/exercises/bonsai_tree) | `gitmastery download bonsai-tree` |
+| [branch-compare](https://git-mastery.org/exercises/branch_compare) | `gitmastery download branch-compare` |
+| [branch-rename](https://git-mastery.org/exercises/branch_rename) | `gitmastery download branch-rename` |
+| [branch-previous](https://git-mastery.org/exercises/branch_previous) | `gitmastery download branch-previous` |
+| [side-track](https://git-mastery.org/exercises/side_track) | `gitmastery download side-track` |
+| [merge-squash](https://git-mastery.org/exercises/merge_squash) | `gitmastery download merge-squash` |
+| [merge-undo](https://git-mastery.org/exercises/merge_undo) | `gitmastery download merge-undo` |
 
 # git-checkout
 
 | Exercise | Download Command |
 |----------|------------------|
+| [bonsai-tree](https://git-mastery.org/exercises/bonsai_tree) | `gitmastery download bonsai-tree` |
 | [side-track](https://git-mastery.org/exercises/side_track) | `gitmastery download side-track` |
 | [sensors-checkout](https://git-mastery.org/exercises/sensors_checkout) | `gitmastery download sensors-checkout` |
-| [bonsai-tree](https://git-mastery.org/exercises/bonsai_tree) | `gitmastery download bonsai-tree` |
 
 # git-clone
 
@@ -41,8 +41,8 @@
 
 | Exercise | Download Command |
 |----------|------------------|
-| [push-over](https://git-mastery.org/exercises/push_over) | `gitmastery download push-over` |
 | [grocery-shopping](https://git-mastery.org/exercises/grocery_shopping) | `gitmastery download grocery-shopping` |
+| [push-over](https://git-mastery.org/exercises/push_over) | `gitmastery download push-over` |
 
 # git-diff
 
@@ -62,8 +62,8 @@
 
 | Exercise | Download Command |
 |----------|------------------|
-| [under-control](https://git-mastery.org/exercises/under_control) | `gitmastery download under-control` |
 | [undo-init](https://git-mastery.org/exercises/undo_init) | `gitmastery download undo-init` |
+| [under-control](https://git-mastery.org/exercises/under_control) | `gitmastery download under-control` |
 
 # git-log
 
@@ -75,13 +75,13 @@
 
 | Exercise | Download Command |
 |----------|------------------|
+| [conflict-mediator](https://git-mastery.org/exercises/conflict_mediator) | `gitmastery download conflict-mediator` |
+| [branch-bender](https://git-mastery.org/exercises/branch_bender) | `gitmastery download branch-bender` |
 | [ff-undo](https://git-mastery.org/exercises/ff_undo) | `gitmastery download ff-undo` |
+| [branch-forward](https://git-mastery.org/exercises/branch_forward) | `gitmastery download branch-forward` |
 | [mix-messy-graph](https://git-mastery.org/exercises/mix_messy_graph) | `gitmastery download mix-messy-graph` |
 | [merge-squash](https://git-mastery.org/exercises/merge_squash) | `gitmastery download merge-squash` |
-| [branch-forward](https://git-mastery.org/exercises/branch_forward) | `gitmastery download branch-forward` |
-| [branch-bender](https://git-mastery.org/exercises/branch_bender) | `gitmastery download branch-bender` |
 | [merge-undo](https://git-mastery.org/exercises/merge_undo) | `gitmastery download merge-undo` |
-| [conflict-mediator](https://git-mastery.org/exercises/conflict_mediator) | `gitmastery download conflict-mediator` |
 
 # git-pull
 
@@ -93,26 +93,26 @@
 
 | Exercise | Download Command |
 |----------|------------------|
-| [push-over](https://git-mastery.org/exercises/push_over) | `gitmastery download push-over` |
-| [glossary-branch-rename](https://git-mastery.org/exercises/glossary_branch_rename) | `gitmastery download glossary-branch-rename` |
-| [glossary-branch-pull](https://git-mastery.org/exercises/glossary_branch_pull) | `gitmastery download glossary-branch-pull` |
-| [glossary-branch-push](https://git-mastery.org/exercises/glossary_branch_push) | `gitmastery download glossary-branch-push` |
 | [glossary-branch-delete](https://git-mastery.org/exercises/glossary_branch_delete) | `gitmastery download glossary-branch-delete` |
+| [glossary-branch-push](https://git-mastery.org/exercises/glossary_branch_push) | `gitmastery download glossary-branch-push` |
+| [glossary-branch-rename](https://git-mastery.org/exercises/glossary_branch_rename) | `gitmastery download glossary-branch-rename` |
+| [push-over](https://git-mastery.org/exercises/push_over) | `gitmastery download push-over` |
+| [glossary-branch-pull](https://git-mastery.org/exercises/glossary_branch_pull) | `gitmastery download glossary-branch-pull` |
 
 # git-remote
 
 | Exercise | Download Command |
 |----------|------------------|
-| [push-over](https://git-mastery.org/exercises/push_over) | `gitmastery download push-over` |
-| [link-me](https://git-mastery.org/exercises/link_me) | `gitmastery download link-me` |
 | [clone-repo](https://git-mastery.org/exercises/clone_repo) | `gitmastery download clone-repo` |
+| [link-me](https://git-mastery.org/exercises/link_me) | `gitmastery download link-me` |
+| [push-over](https://git-mastery.org/exercises/push_over) | `gitmastery download push-over` |
 
 # git-reset
 
 | Exercise | Download Command |
 |----------|------------------|
-| [sensors-reset](https://git-mastery.org/exercises/sensors_reset) | `gitmastery download sensors-reset` |
 | [ff-undo](https://git-mastery.org/exercises/ff_undo) | `gitmastery download ff-undo` |
+| [sensors-reset](https://git-mastery.org/exercises/sensors_reset) | `gitmastery download sensors-reset` |
 | [merge-squash](https://git-mastery.org/exercises/merge_squash) | `gitmastery download merge-squash` |
 | [sensors-revert](https://git-mastery.org/exercises/sensors_revert) | `gitmastery download sensors-revert` |
 | [merge-undo](https://git-mastery.org/exercises/merge_undo) | `gitmastery download merge-undo` |
@@ -140,9 +140,9 @@
 
 | Exercise | Download Command |
 |----------|------------------|
-| [tags-update](https://git-mastery.org/exercises/tags_update) | `gitmastery download tags-update` |
-| [tags-add](https://git-mastery.org/exercises/tags_add) | `gitmastery download tags-add` |
 | [tags-push](https://git-mastery.org/exercises/tags_push) | `gitmastery download tags-push` |
+| [tags-add](https://git-mastery.org/exercises/tags_add) | `gitmastery download tags-add` |
+| [tags-update](https://git-mastery.org/exercises/tags_update) | `gitmastery download tags-update` |
 
 # github-fork
 
